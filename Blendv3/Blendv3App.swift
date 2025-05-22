@@ -11,7 +11,7 @@ import SwiftUI
 struct Blendv3App: App {
     var body: some Scene {
         WindowGroup {
-            WalletView()
+            ContentView()
         }
     }
 }
