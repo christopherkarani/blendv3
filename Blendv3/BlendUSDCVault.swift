@@ -152,6 +152,11 @@ public class BlendUSDCVault: ObservableObject {
     /// Rate calculator service for real APY/APR calculations
     private let rateCalculator: BlendRateCalculatorProtocol
     
+    /// Dedicated diagnostics service for testing and debugging
+    private lazy var diagnosticsService: BlendPoolDiagnosticsService = {
+        return BlendPoolDiagnosticsService(signer: signer, networkType: networkType)
+    }()
+    
     /// Cancellables for Combine subscriptions
     private var cancellables = Set<AnyCancellable>()
     
@@ -612,11 +617,13 @@ public class BlendUSDCVault: ObservableObject {
 
     
     /// Diagnostic method to analyze current data vs real market data
+    /// Run comprehensive diagnostics to analyze pool stats
+    /// This method is kept for backward compatibility and redirects to the diagnostics service
     public func diagnosePoolStats() async throws {
         logger.info("🔬 DIAGNOSTICS: Starting comprehensive pool stats analysis")
         debugLogger.info("🔬 DIAGNOSTICS: Starting comprehensive pool stats analysis")
         
-        // Real market data for comparison
+        // Real market data for comparison (for reference only)
         let realData = [
             "USDC_Supplied": "112.28k",
             "USDC_Borrowed": "55.50k", 
@@ -634,75 +641,41 @@ public class BlendUSDCVault: ObservableObject {
             debugLogger.info("  \(key): \(value)")
         }
         
-        guard let client = sorobanClient else {
-            logger.error("SorobanClient not initialized")
-            debugLogger.error("SorobanClient not initialized")
-            throw BlendVaultError.notInitialized
-        }
-        
-        logger.info("🔍 Analyzing current get_reserve call...")
-        debugLogger.info("🔍 Analyzing current get_reserve call...")
-        
-        // Get reserve data for USDC
-        let reserveDataResult = try await client.invokeMethod(
-            name: "get_reserve",
-            args: [try SCValXDR.address(SCAddressXDR(contractId: BlendUSDCConstants.usdcAssetContractAddress))],
-            methodOptions: MethodOptions(
-                fee: 100_000,
-                timeoutInSeconds: 30,
-                simulate: true,
-                restore: false
-            )
-        )
-        
-        logger.info("📦 Raw Reserve Data Response:")
-        logger.info("  Type: \(String(describing: type(of: reserveDataResult)))")
-        logger.info("  Value: \(String(describing: reserveDataResult))")
-        debugLogger.info("📦 Raw Reserve Data Response:")
-        debugLogger.info("  Type: \(String(describing: type(of: reserveDataResult)))")
-        debugLogger.info("  Value: \(String(describing: reserveDataResult))")
-        
-        // Parse and log all raw values
-        guard case .map(let reserveMapOptional) = reserveDataResult,
-              let reserveMap = reserveMapOptional else {
-            logger.error("❌ Invalid reserve data format")
-            debugLogger.error("❌ Invalid reserve data format")
-            throw BlendVaultError.unknown("Invalid reserve data format")
-        }
-        
-        logger.info("🗂️ Reserve Map Structure (\(reserveMap.count) entries):")
-        debugLogger.info("🗂️ Reserve Map Structure (\(reserveMap.count) entries):")
-        
-        for entry in reserveMap {
-            if case .symbol(let key) = entry.key {
-                switch entry.val {
-                case .i128(let value):
-                    logger.info("    \(key): i128(hi=\(value.hi), lo=\(value.lo))")
-                    debugLogger.info("    \(key): i128(hi=\(value.hi), lo=\(value.lo))")
-                case .u32(let value):
-                    logger.info("    \(key): u32(\(value))")
-                    debugLogger.info("    \(key): u32(\(value))")
-                case .bool(let value):
-                    logger.info("    \(key): bool(\(value))")
-                    debugLogger.info("    \(key): bool(\(value))")
-                default:
-                    logger.info("    \(key): \(String(describing: entry.val))")
-                    debugLogger.info("    \(key): \(String(describing: entry.val))")
+        // Run diagnostics via the dedicated diagnostics service
+        do {
+            let report = try await runDiagnostics(level: .comprehensive)
+            
+            // Log relevant parts of the diagnostics report
+            if let backstopData = report.backstopData {
+                logger.info("🛡️ BACKSTOP ANALYSIS:")
+                logger.info("  Found backstop amount: \(formatDecimal(backstopData.totalBackstop))")
+                debugLogger.info("🛡️ BACKSTOP ANALYSIS:")
+                debugLogger.info("  Found backstop amount: \(formatDecimal(backstopData.totalBackstop))")
+            }
+            
+            // Compare with real-world data for validation
+            logger.info("📊 DIAGNOSTICS COMPARISON:")
+            logger.info("  Real backstop: 353.75k")
+            logger.info("  Real borrowed: 55.50k")
+            logger.info("  Real ratio: ~6.37x (not 1%)")
+            debugLogger.info("📊 DIAGNOSTICS COMPARISON:")
+            debugLogger.info("  Real backstop: 353.75k")
+            debugLogger.info("  Real borrowed: 55.50k")
+            debugLogger.info("  Real ratio: ~6.37x (not 1%)")
+            
+            // Any errors encountered in diagnostics
+            if !report.errors.isEmpty {
+                logger.warning("⚠️ Diagnostic issues found:")
+                for error in report.errors {
+                    logger.warning("  - [\(error.component)] \(error.message)")
                 }
             }
+            
+        } catch {
+            logger.error("❌ Diagnostics failed: \(error.localizedDescription)")
+            debugLogger.error("❌ Diagnostics failed: \(error.localizedDescription)")
+            throw error
         }
-        
-        // Now let's try to understand the backstop
-        logger.info("🛡️ BACKSTOP ANALYSIS:")
-        logger.info("  Real backstop: 353.75k")
-        logger.info("  Real borrowed: 55.50k")
-        logger.info("  Real ratio: ~6.37x (not 1%)")
-        logger.info("  🔍 Need to find where backstop data comes from...")
-        debugLogger.info("🛡️ BACKSTOP ANALYSIS:")
-        debugLogger.info("  Real backstop: 353.75k")
-        debugLogger.info("  Real borrowed: 55.50k")
-        debugLogger.info("  Real ratio: ~6.37x (not 1%)")
-        debugLogger.info("  🔍 Need to find where backstop data comes from...")
         
         // Check if we need to call a different method for backstop
         logger.info("📞 Testing pool-level methods...")
@@ -2318,131 +2291,49 @@ public class BlendUSDCVault: ObservableObject {
         }
     }
     
+    /// Run comprehensive diagnostics on the pool
+    /// - Parameter level: The diagnostic level (basic, advanced, comprehensive)
+    /// - Returns: A structured diagnostic report
+    public func runDiagnostics(level: DiagnosticsLevel = .comprehensive) async throws -> DiagnosticsReport {
+        logger.info("🔍 Running pool diagnostics at level: \(level)")
+        debugLogger.info("🔍 Running pool diagnostics at level: \(level)")
+        
+        do {
+            let report = try await diagnosticsService.runDiagnostics(level: level)
+            
+            logger.info("✅ Diagnostics completed with \(report.errors.count) errors")
+            debugLogger.info("✅ Diagnostics completed. Health status: \(report.isHealthy ? "Healthy" : "Unhealthy")")
+            
+            if !report.errors.isEmpty {
+                logger.warning("⚠️ Diagnostics errors:")
+                for error in report.errors {
+                    logger.warning("  - [\(error.component)] \(error.message)")
+                    debugLogger.warning("  - [\(error.component)] \(error.message)")
+                }
+            }
+            
+            return report
+        } catch {
+            logger.error("❌ Failed to run diagnostics: \(error.localizedDescription)")
+            debugLogger.error("❌ Failed to run diagnostics: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
     /// Test specific functions that might contain pool totals
+    /// This method is kept for backward compatibility and redirects to the diagnostics service
     public func testSpecificPoolFunctions() async throws {
-        logger.info("🎯 TESTING SPECIFIC POOL FUNCTIONS FOR EXACT VALUES")
-        debugLogger.info("🎯 TESTING SPECIFIC POOL FUNCTIONS FOR EXACT VALUES")
+        logger.info("🎯 TESTING SPECIFIC POOL FUNCTIONS FOR EXACT VALUES (via diagnostics service)")
+        debugLogger.info("🎯 TESTING SPECIFIC POOL FUNCTIONS FOR EXACT VALUES (via diagnostics service)")
         
-        guard let client = sorobanClient else {
-            throw BlendVaultError.notInitialized
-        }
-        
-        // Based on the Blend SDK documentation, let's try these specific functions
-        let specificFunctions: [(String, [SCValXDR])] = [
-            // Pool-level functions from Blend SDK
-            ("get_pool_data", []),
-            ("get_pool_config", []),
-            ("get_status", []),
-            
-            // Try functions that might aggregate reserves
-            ("get_reserves", []),
-            ("get_all_reserves", []),
-            ("list_reserves", []),
-            
-            // Try functions that might give totals
-            ("get_totals", []),
-            ("get_pool_totals", []),
-            ("get_aggregate_stats", []),
-            
-            // Try functions with pool address as parameter
-            ("get_pool_info", [try! SCValXDR.address(SCAddressXDR(contractId: BlendUSDCConstants.poolContractAddress))]),
-            ("pool_info", [try! SCValXDR.address(SCAddressXDR(contractId: BlendUSDCConstants.poolContractAddress))]),
-            
-            // Try backstop-related functions on the pool contract
-            ("get_backstop_info", []),
-            ("get_backstop_data", []),
-            ("backstop_info", []),
-            
-            // Try emission-related functions that might have totals
-            ("get_emissions_data", []),
-            ("get_pool_emissions", []),
-            
-            // Try oracle-related functions
-            ("get_oracle_data", []),
-            ("oracle_price", [try! SCValXDR.address(SCAddressXDR(contractId: BlendUSDCConstants.usdcAssetContractAddress))]),
-        ]
-        
-        debugLogger.info("🔍 Testing \(specificFunctions.count) specific functions...")
-        
-        for (functionName, args) in specificFunctions {
-            await testSpecificFunction(client: client, functionName: functionName, args: args)
-        }
-        
-        // Also test the pool factory contract
-        await testPoolFactoryFunctions()
+        _ = try await runDiagnostics(level: .comprehensive)
         
         debugLogger.info("🎯 ✅ SPECIFIC FUNCTION TESTS COMPLETED!")
     }
     
-    /// Test a specific function with given arguments
-    private func testSpecificFunction(client: SorobanClient, functionName: String, args: [SCValXDR]) async {
-        logger.info("🎯 Testing specific function: \(functionName) with \(args.count) args")
-        debugLogger.info("🎯 Testing specific function: \(functionName) with \(args.count) args")
-        
-        do {
-            let result = try await client.invokeMethod(
-                name: functionName,
-                args: args,
-                methodOptions: MethodOptions(
-                    fee: 100_000,
-                    timeoutInSeconds: 30,
-                    simulate: true,
-                    restore: false
-                )
-            )
-            
-            logger.info("✅ \(functionName) SUCCESS:")
-            logger.info("   Result: \(String(describing: result))")
-            debugLogger.info("✅ \(functionName) SUCCESS:")
-            debugLogger.info("   Result: \(String(describing: result))")
-            
-            // Parse for our target values
-            await parsePoolFunctionResult(functionName: functionName, result: result)
-            
-        } catch {
-            logger.info("❌ \(functionName) failed: \(error)")
-            debugLogger.info("❌ \(functionName) failed: \(error)")
-        }
-    }
+    // Diagnostic method moved to BlendPoolDiagnosticsService
     
-    /// Test pool factory functions that might have aggregated data
-    private func testPoolFactoryFunctions() async {
-        logger.info("🏭 TESTING POOL FACTORY FUNCTIONS")
-        
-        do {
-            let keyPair = try signer.getKeyPair()
-            let factoryAddress = BlendUSDCConstants.poolFactoryAddress
-            
-            logger.info("🏭 Testing pool factory contract: \(factoryAddress)")
-            
-            let factoryClientOptions = ClientOptions(
-                sourceAccountKeyPair: keyPair,
-                contractId: factoryAddress,
-                network: network,
-                rpcUrl: networkType == .testnet ? BlendUSDCConstants.RPC.testnet : BlendUSDCConstants.RPC.mainnet,
-                enableServerLogging: true
-            )
-            
-            let factoryClient = try await SorobanClient.forClientOptions(options: factoryClientOptions)
-            
-            // Test factory functions
-            let factoryFunctions: [(String, [SCValXDR])] = [
-                ("get_pool_data", [try! SCValXDR.address(SCAddressXDR(contractId: BlendUSDCConstants.poolContractAddress))]),
-                ("get_pool_info", [try! SCValXDR.address(SCAddressXDR(contractId: BlendUSDCConstants.poolContractAddress))]),
-                ("pool_data", [try! SCValXDR.address(SCAddressXDR(contractId: BlendUSDCConstants.poolContractAddress))]),
-                ("get_pools", []),
-                ("list_pools", []),
-                ("get_all_pools", []),
-            ]
-            
-            for (functionName, args) in factoryFunctions {
-                await testSpecificFunction(client: factoryClient, functionName: functionName, args: args)
-            }
-            
-        } catch {
-            logger.error("🏭 Failed to test pool factory: \(error)")
-        }
-    }
+    // Factory diagnostic methods moved to BlendPoolDiagnosticsService
     
     /// Get the actual pool statistics that match the dashboard
     public func getActualPoolStats() async throws -> ActualPoolStats {

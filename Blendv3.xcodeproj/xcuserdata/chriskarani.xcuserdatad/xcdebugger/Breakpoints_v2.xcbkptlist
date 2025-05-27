@@ -256,7 +256,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1152"
             endingLineNumber = "1152"
-            landmarkName = "getAllReserveData()"
+            landmarkName = "getReserveData(assetAddress:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
