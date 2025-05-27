@@ -8,6 +8,83 @@
 
 /* Begin PBXBuildFile section */
 		9ECC79BA2DDFF32A00530B03 /* stellarsdk in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECC79B92DDFF32A00530B03 /* stellarsdk */; };
+		9ED8DAF22DE5240300CB0059 /* TransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAF12DE5240300CB0059 /* TransactionSheet.swift */; };
+		9ED8DAF32DE5240300CB0059 /* BlendOracleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAAF2DE5240300CB0059 /* BlendOracleService.swift */; };
+		9ED8DAF42DE5240300CB0059 /* SmartContractDebugSystemSuccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DADE2DE5240300CB0059 /* SmartContractDebugSystemSuccess.swift */; };
+		9ED8DAF52DE5240300CB0059 /* DetailedPoolStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC12DE5240300CB0059 /* DetailedPoolStatisticsView.swift */; };
+		9ED8DAF62DE5240300CB0059 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC92DE5240300CB0059 /* NetworkService.swift */; };
+		9ED8DAF72DE5240300CB0059 /* BlendDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAAD2DE5240300CB0059 /* BlendDashboardView.swift */; };
+		9ED8DAF82DE5240300CB0059 /* SmartContractDateFormatterFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAD92DE5240300CB0059 /* SmartContractDateFormatterFix.swift */; };
+		9ED8DAF92DE5240300CB0059 /* BlendOracleServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB02DE5240300CB0059 /* BlendOracleServiceProtocol.swift */; };
+		9ED8DAFA2DE5240300CB0059 /* BlendApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAAC2DE5240300CB0059 /* BlendApp.swift */; };
+		9ED8DAFB2DE5240300CB0059 /* SmartContractDebugGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DADB2DE5240300CB0059 /* SmartContractDebugGuide.swift */; };
+		9ED8DAFC2DE5240300CB0059 /* SmartContractDebugDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DADA2DE5240300CB0059 /* SmartContractDebugDemo.swift */; };
+		9ED8DAFD2DE5240300CB0059 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DABB2DE5240300CB0059 /* CacheService.swift */; };
+		9ED8DAFE2DE5240300CB0059 /* DebugLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DABE2DE5240300CB0059 /* DebugLogView.swift */; };
+		9ED8DAFF2DE5240300CB0059 /* SmartContractInspectorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAE92DE5240300CB0059 /* SmartContractInspectorTest.swift */; };
+		9ED8DB002DE5240300CB0059 /* SmartContractDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAE02DE5240300CB0059 /* SmartContractDebugView.swift */; };
+		9ED8DB012DE5240300CB0059 /* RunSmartContractExploration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAD62DE5240300CB0059 /* RunSmartContractExploration.swift */; };
+		9ED8DB022DE5240300CB0059 /* SmartContractDebugViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAE12DE5240300CB0059 /* SmartContractDebugViewModel.swift */; };
+		9ED8DB032DE5240300CB0059 /* KeyPairSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC72DE5240300CB0059 /* KeyPairSigner.swift */; };
+		9ED8DB042DE5240300CB0059 /* SmartContractInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAE62DE5240300CB0059 /* SmartContractInspector.swift */; };
+		9ED8DB052DE5240300CB0059 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DABF2DE5240300CB0059 /* DependencyContainer.swift */; };
+		9ED8DB062DE5240300CB0059 /* SmartContractInspectorExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAE82DE5240300CB0059 /* SmartContractInspectorExample.swift */; };
+		9ED8DB072DE5240300CB0059 /* ReactiveRateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAD52DE5240300CB0059 /* ReactiveRateModifier.swift */; };
+		9ED8DB082DE5240300CB0059 /* TestSmartContractExploration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAEE2DE5240300CB0059 /* TestSmartContractExploration.swift */; };
+		9ED8DB092DE5240300CB0059 /* SmartContractInoutParameterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAE52DE5240300CB0059 /* SmartContractInoutParameterTest.swift */; };
+		9ED8DB0A2DE5240300CB0059 /* BlendUSDCVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB82DE5240300CB0059 /* BlendUSDCVault.swift */; };
+		9ED8DB0B2DE5240300CB0059 /* SmartContractExplorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAE22DE5240300CB0059 /* SmartContractExplorer.swift */; };
+		9ED8DB0C2DE5240300CB0059 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAEF2DE5240300CB0059 /* TestView.swift */; };
+		9ED8DB0D2DE5240300CB0059 /* BlendRateCalculatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB42DE5240300CB0059 /* BlendRateCalculatorProtocol.swift */; };
+		9ED8DB0E2DE5240300CB0059 /* FixedMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC52DE5240300CB0059 /* FixedMath.swift */; };
+		9ED8DB0F2DE5240300CB0059 /* PoolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DACE2DE5240300CB0059 /* PoolViewModel.swift */; };
+		9ED8DB102DE5240300CB0059 /* TestFullFunctionListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAED2DE5240300CB0059 /* TestFullFunctionListing.swift */; };
+		9ED8DB112DE5240300CB0059 /* SmartContractBatchInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAD72DE5240300CB0059 /* SmartContractBatchInspector.swift */; };
+		9ED8DB122DE5240300CB0059 /* SmartContractServerUrlFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAEB2DE5240300CB0059 /* SmartContractServerUrlFix.swift */; };
+		9ED8DB132DE5240300CB0059 /* SmartContractDebugTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DADF2DE5240300CB0059 /* SmartContractDebugTest.swift */; };
+		9ED8DB142DE5240300CB0059 /* BlendSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB52DE5240300CB0059 /* BlendSigner.swift */; };
+		9ED8DB152DE5240300CB0059 /* EnhancedBlendRateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC42DE5240300CB0059 /* EnhancedBlendRateCalculator.swift */; };
+		9ED8DB162DE5240300CB0059 /* Blendv3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB92DE5240300CB0059 /* Blendv3App.swift */; };
+		9ED8DB172DE5240300CB0059 /* BlendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DABA2DE5240300CB0059 /* BlendViewModel.swift */; };
+		9ED8DB182DE5240300CB0059 /* BlendUSDCConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB72DE5240300CB0059 /* BlendUSDCConstants.swift */; };
+		9ED8DB192DE5240300CB0059 /* PoolStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DACD2DE5240300CB0059 /* PoolStatisticsView.swift */; };
+		9ED8DB1A2DE5240300CB0059 /* SmartContractInoutParameterFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAE42DE5240300CB0059 /* SmartContractInoutParameterFix.swift */; };
+		9ED8DB1B2DE5240300CB0059 /* BlendAnalyticsDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAAA2DE5240300CB0059 /* BlendAnalyticsDashboard.swift */; };
+		9ED8DB1C2DE5240300CB0059 /* SmartContractInspectorVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAEA2DE5240300CB0059 /* SmartContractInspectorVerification.swift */; };
+		9ED8DB1D2DE5240300CB0059 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC82DE5240300CB0059 /* Logger.swift */; };
+		9ED8DB1E2DE5240300CB0059 /* SmartContractBatchInspectorDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAD82DE5240300CB0059 /* SmartContractBatchInspectorDemo.swift */; };
+		9ED8DB1F2DE5240300CB0059 /* SmartContractDebugLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DADC2DE5240300CB0059 /* SmartContractDebugLogger.swift */; };
+		9ED8DB202DE5240300CB0059 /* BlendDefaultSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAAE2DE5240300CB0059 /* BlendDefaultSigner.swift */; };
+		9ED8DB212DE5240300CB0059 /* TransactionHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAF02DE5240300CB0059 /* TransactionHistoryView.swift */; };
+		9ED8DB222DE5240300CB0059 /* BlendPoolStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB12DE5240300CB0059 /* BlendPoolStats.swift */; };
+		9ED8DB232DE5240300CB0059 /* BlendRateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB32DE5240300CB0059 /* BlendRateCalculator.swift */; };
+		9ED8DB252DE5240300CB0059 /* SmartContractDebugSystem-README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DADD2DE5240300CB0059 /* SmartContractDebugSystem-README.md */; };
+		9ED8DB262DE5240300CB0059 /* DEVELOPER_QUICK_START.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC22DE5240300CB0059 /* DEVELOPER_QUICK_START.md */; };
+		9ED8DB282DE5240300CB0059 /* blend_protocol_technical_analysis.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DAA92DE5240300CB0059 /* blend_protocol_technical_analysis.md */; };
+		9ED8DB292DE5240300CB0059 /* PRIORITY_3_IMPLEMENTATION.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DAD12DE5240300CB0059 /* PRIORITY_3_IMPLEMENTATION.md */; };
+		9ED8DB2A2DE5240300CB0059 /* POOL_STATS_GUIDE.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DACB2DE5240300CB0059 /* POOL_STATS_GUIDE.md */; };
+		9ED8DB2B2DE5240300CB0059 /* SmartContractInspector-README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DAE72DE5240300CB0059 /* SmartContractInspector-README.md */; };
+		9ED8DB2C2DE5240300CB0059 /* PRIORITY_4_IMPLEMENTATION.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DAD22DE5240300CB0059 /* PRIORITY_4_IMPLEMENTATION.md */; };
+		9ED8DB2D2DE5240300CB0059 /* IMPLEMENTATION_SUMMARY.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC62DE5240300CB0059 /* IMPLEMENTATION_SUMMARY.md */; };
+		9ED8DB2F2DE5240300CB0059 /* POOL_STATS_IMPLEMENTATION_PLAN.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DACC2DE5240300CB0059 /* POOL_STATS_IMPLEMENTATION_PLAN.md */; };
+		9ED8DB312DE5240300CB0059 /* SmartContractExplorer-README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DAE32DE5240300CB0059 /* SmartContractExplorer-README.md */; };
+		9ED8DB322DE5240300CB0059 /* DataAvailabilityAnalysis.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DABD2DE5240300CB0059 /* DataAvailabilityAnalysis.md */; };
+		9ED8DB332DE5240300CB0059 /* PROJECT_COMPLETION_SUMMARY.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DAD32DE5240300CB0059 /* PROJECT_COMPLETION_SUMMARY.md */; };
+		9ED8DB342DE5240300CB0059 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DACF2DE5240300CB0059 /* Preview Assets.xcassets */; };
+		9ED8DB362DE5278800CB0059 /* AccountChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB352DE5278800CB0059 /* AccountChecker.swift */; };
+		9ED8DB382DE5278D00CB0059 /* BackstopCalculatorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB372DE5278D00CB0059 /* BackstopCalculatorService.swift */; };
+		9ED8DB472DE5418A00CB0059 /* BackstopPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB462DE5418A00CB0059 /* BackstopPool.swift */; };
+		9ED8DB492DE541E200CB0059 /* QueuedWithdrawal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB482DE541E200CB0059 /* QueuedWithdrawal.swift */; };
+		9ED8DB4C2DE5420900CB0059 /* WithdrawalStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB4B2DE5420900CB0059 /* WithdrawalStatus.swift */; };
+		9ED8DB4E2DE5425100CB0059 /* EmissionsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB4D2DE5425100CB0059 /* EmissionsData.swift */; };
+		9ED8DB502DE5426500CB0059 /* BackstopStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB4F2DE5426500CB0059 /* BackstopStatus.swift */; };
+		9ED8DB522DE5427E00CB0059 /* UserEmissionsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB512DE5427E00CB0059 /* UserEmissionsState.swift */; };
+		9ED8DB542DE5429500CB0059 /* AuctionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB532DE5429500CB0059 /* AuctionData.swift */; };
+		9ED8DB562DE542B500CB0059 /* AuctionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB552DE542B500CB0059 /* AuctionType.swift */; };
+		9ED8DB582DE542FC00CB0059 /* AuctionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB572DE542FC00CB0059 /* AuctionStatus.swift */; };
+		9ED8DB5C2DE543A100CB0059 /* BackstopPoolReserveData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB5B2DE543A100CB0059 /* BackstopPoolReserveData.swift */; };
+		9ED8DB652DE5458200CB0059 /* InterestRateConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB642DE5458200CB0059 /* InterestRateConfig.swift */; };
+		9ED8DB672DE54FCA00CB0059 /* StellarContractID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB662DE54FCA00CB0059 /* StellarContractID.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,17 +105,90 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9ED8DAA92DE5240300CB0059 /* blend_protocol_technical_analysis.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = blend_protocol_technical_analysis.md; sourceTree = "<group>"; };
+		9ED8DAAA2DE5240300CB0059 /* BlendAnalyticsDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendAnalyticsDashboard.swift; sourceTree = "<group>"; };
+		9ED8DAAC2DE5240300CB0059 /* BlendApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendApp.swift; sourceTree = "<group>"; };
+		9ED8DAAD2DE5240300CB0059 /* BlendDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendDashboardView.swift; sourceTree = "<group>"; };
+		9ED8DAAE2DE5240300CB0059 /* BlendDefaultSigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendDefaultSigner.swift; sourceTree = "<group>"; };
+		9ED8DAAF2DE5240300CB0059 /* BlendOracleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendOracleService.swift; sourceTree = "<group>"; };
+		9ED8DAB02DE5240300CB0059 /* BlendOracleServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendOracleServiceProtocol.swift; sourceTree = "<group>"; };
+		9ED8DAB12DE5240300CB0059 /* BlendPoolStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendPoolStats.swift; sourceTree = "<group>"; };
+		9ED8DAB32DE5240300CB0059 /* BlendRateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendRateCalculator.swift; sourceTree = "<group>"; };
+		9ED8DAB42DE5240300CB0059 /* BlendRateCalculatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendRateCalculatorProtocol.swift; sourceTree = "<group>"; };
+		9ED8DAB52DE5240300CB0059 /* BlendSigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendSigner.swift; sourceTree = "<group>"; };
+		9ED8DAB72DE5240300CB0059 /* BlendUSDCConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendUSDCConstants.swift; sourceTree = "<group>"; };
+		9ED8DAB82DE5240300CB0059 /* BlendUSDCVault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendUSDCVault.swift; sourceTree = "<group>"; };
+		9ED8DAB92DE5240300CB0059 /* Blendv3App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blendv3App.swift; sourceTree = "<group>"; };
+		9ED8DABA2DE5240300CB0059 /* BlendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendViewModel.swift; sourceTree = "<group>"; };
+		9ED8DABB2DE5240300CB0059 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
+		9ED8DABD2DE5240300CB0059 /* DataAvailabilityAnalysis.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DataAvailabilityAnalysis.md; sourceTree = "<group>"; };
+		9ED8DABE2DE5240300CB0059 /* DebugLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogView.swift; sourceTree = "<group>"; };
+		9ED8DABF2DE5240300CB0059 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
+		9ED8DAC12DE5240300CB0059 /* DetailedPoolStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedPoolStatisticsView.swift; sourceTree = "<group>"; };
+		9ED8DAC22DE5240300CB0059 /* DEVELOPER_QUICK_START.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEVELOPER_QUICK_START.md; sourceTree = "<group>"; };
+		9ED8DAC42DE5240300CB0059 /* EnhancedBlendRateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnhancedBlendRateCalculator.swift; sourceTree = "<group>"; };
+		9ED8DAC52DE5240300CB0059 /* FixedMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedMath.swift; sourceTree = "<group>"; };
+		9ED8DAC62DE5240300CB0059 /* IMPLEMENTATION_SUMMARY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = IMPLEMENTATION_SUMMARY.md; sourceTree = "<group>"; };
+		9ED8DAC72DE5240300CB0059 /* KeyPairSigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPairSigner.swift; sourceTree = "<group>"; };
+		9ED8DAC82DE5240300CB0059 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		9ED8DAC92DE5240300CB0059 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		9ED8DACB2DE5240300CB0059 /* POOL_STATS_GUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = POOL_STATS_GUIDE.md; sourceTree = "<group>"; };
+		9ED8DACC2DE5240300CB0059 /* POOL_STATS_IMPLEMENTATION_PLAN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = POOL_STATS_IMPLEMENTATION_PLAN.md; sourceTree = "<group>"; };
+		9ED8DACD2DE5240300CB0059 /* PoolStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoolStatisticsView.swift; sourceTree = "<group>"; };
+		9ED8DACE2DE5240300CB0059 /* PoolViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoolViewModel.swift; sourceTree = "<group>"; };
+		9ED8DACF2DE5240300CB0059 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9ED8DAD12DE5240300CB0059 /* PRIORITY_3_IMPLEMENTATION.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PRIORITY_3_IMPLEMENTATION.md; sourceTree = "<group>"; };
+		9ED8DAD22DE5240300CB0059 /* PRIORITY_4_IMPLEMENTATION.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PRIORITY_4_IMPLEMENTATION.md; sourceTree = "<group>"; };
+		9ED8DAD32DE5240300CB0059 /* PROJECT_COMPLETION_SUMMARY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = PROJECT_COMPLETION_SUMMARY.md; sourceTree = "<group>"; };
+		9ED8DAD52DE5240300CB0059 /* ReactiveRateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveRateModifier.swift; sourceTree = "<group>"; };
+		9ED8DAD62DE5240300CB0059 /* RunSmartContractExploration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunSmartContractExploration.swift; sourceTree = "<group>"; };
+		9ED8DAD72DE5240300CB0059 /* SmartContractBatchInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractBatchInspector.swift; sourceTree = "<group>"; };
+		9ED8DAD82DE5240300CB0059 /* SmartContractBatchInspectorDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractBatchInspectorDemo.swift; sourceTree = "<group>"; };
+		9ED8DAD92DE5240300CB0059 /* SmartContractDateFormatterFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractDateFormatterFix.swift; sourceTree = "<group>"; };
+		9ED8DADA2DE5240300CB0059 /* SmartContractDebugDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractDebugDemo.swift; sourceTree = "<group>"; };
+		9ED8DADB2DE5240300CB0059 /* SmartContractDebugGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractDebugGuide.swift; sourceTree = "<group>"; };
+		9ED8DADC2DE5240300CB0059 /* SmartContractDebugLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractDebugLogger.swift; sourceTree = "<group>"; };
+		9ED8DADD2DE5240300CB0059 /* SmartContractDebugSystem-README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "SmartContractDebugSystem-README.md"; sourceTree = "<group>"; };
+		9ED8DADE2DE5240300CB0059 /* SmartContractDebugSystemSuccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractDebugSystemSuccess.swift; sourceTree = "<group>"; };
+		9ED8DADF2DE5240300CB0059 /* SmartContractDebugTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractDebugTest.swift; sourceTree = "<group>"; };
+		9ED8DAE02DE5240300CB0059 /* SmartContractDebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractDebugView.swift; sourceTree = "<group>"; };
+		9ED8DAE12DE5240300CB0059 /* SmartContractDebugViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractDebugViewModel.swift; sourceTree = "<group>"; };
+		9ED8DAE22DE5240300CB0059 /* SmartContractExplorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractExplorer.swift; sourceTree = "<group>"; };
+		9ED8DAE32DE5240300CB0059 /* SmartContractExplorer-README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "SmartContractExplorer-README.md"; sourceTree = "<group>"; };
+		9ED8DAE42DE5240300CB0059 /* SmartContractInoutParameterFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractInoutParameterFix.swift; sourceTree = "<group>"; };
+		9ED8DAE52DE5240300CB0059 /* SmartContractInoutParameterTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractInoutParameterTest.swift; sourceTree = "<group>"; };
+		9ED8DAE62DE5240300CB0059 /* SmartContractInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractInspector.swift; sourceTree = "<group>"; };
+		9ED8DAE72DE5240300CB0059 /* SmartContractInspector-README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "SmartContractInspector-README.md"; sourceTree = "<group>"; };
+		9ED8DAE82DE5240300CB0059 /* SmartContractInspectorExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractInspectorExample.swift; sourceTree = "<group>"; };
+		9ED8DAE92DE5240300CB0059 /* SmartContractInspectorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractInspectorTest.swift; sourceTree = "<group>"; };
+		9ED8DAEA2DE5240300CB0059 /* SmartContractInspectorVerification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractInspectorVerification.swift; sourceTree = "<group>"; };
+		9ED8DAEB2DE5240300CB0059 /* SmartContractServerUrlFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartContractServerUrlFix.swift; sourceTree = "<group>"; };
+		9ED8DAEC2DE5240300CB0059 /* stellar-ios-mac-sdk-master-3 */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "stellar-ios-mac-sdk-master-3"; sourceTree = "<group>"; };
+		9ED8DAED2DE5240300CB0059 /* TestFullFunctionListing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestFullFunctionListing.swift; sourceTree = "<group>"; };
+		9ED8DAEE2DE5240300CB0059 /* TestSmartContractExploration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSmartContractExploration.swift; sourceTree = "<group>"; };
+		9ED8DAEF2DE5240300CB0059 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		9ED8DAF02DE5240300CB0059 /* TransactionHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionHistoryView.swift; sourceTree = "<group>"; };
+		9ED8DAF12DE5240300CB0059 /* TransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSheet.swift; sourceTree = "<group>"; };
+		9ED8DB352DE5278800CB0059 /* AccountChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountChecker.swift; sourceTree = "<group>"; };
+		9ED8DB372DE5278D00CB0059 /* BackstopCalculatorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopCalculatorService.swift; sourceTree = "<group>"; };
+		9ED8DB462DE5418A00CB0059 /* BackstopPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopPool.swift; sourceTree = "<group>"; };
+		9ED8DB482DE541E200CB0059 /* QueuedWithdrawal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueuedWithdrawal.swift; sourceTree = "<group>"; };
+		9ED8DB4B2DE5420900CB0059 /* WithdrawalStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalStatus.swift; sourceTree = "<group>"; };
+		9ED8DB4D2DE5425100CB0059 /* EmissionsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmissionsData.swift; sourceTree = "<group>"; };
+		9ED8DB4F2DE5426500CB0059 /* BackstopStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopStatus.swift; sourceTree = "<group>"; };
+		9ED8DB512DE5427E00CB0059 /* UserEmissionsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEmissionsState.swift; sourceTree = "<group>"; };
+		9ED8DB532DE5429500CB0059 /* AuctionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionData.swift; sourceTree = "<group>"; };
+		9ED8DB552DE542B500CB0059 /* AuctionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionType.swift; sourceTree = "<group>"; };
+		9ED8DB572DE542FC00CB0059 /* AuctionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionStatus.swift; sourceTree = "<group>"; };
+		9ED8DB5B2DE543A100CB0059 /* BackstopPoolReserveData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopPoolReserveData.swift; sourceTree = "<group>"; };
+		9ED8DB642DE5458200CB0059 /* InterestRateConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestRateConfig.swift; sourceTree = "<group>"; };
+		9ED8DB662DE54FCA00CB0059 /* StellarContractID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarContractID.swift; sourceTree = "<group>"; };
 		9EE4A0E92DDFB939004BD597 /* Blendv3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blendv3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE4A0F92DDFB93A004BD597 /* Blendv3Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Blendv3Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE4A1032DDFB93A004BD597 /* Blendv3UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Blendv3UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		9EE4A0EB2DDFB939004BD597 /* Blendv3 */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Blendv3;
-			sourceTree = "<group>";
-		};
 		9EE4A0FC2DDFB93A004BD597 /* Blendv3Tests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Blendv3Tests;
@@ -77,10 +227,199 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9ED8DA912DE5237F00CB0059 /* Blendv3 */ = {
+			isa = PBXGroup;
+			children = (
+				9ED8DAC02DE5240300CB0059 /* DependencyInjection */,
+				9ED8DAD42DE5240300CB0059 /* Protocols */,
+				9ED8DB612DE5443000CB0059 /* Views */,
+				9ED8DB602DE543FB00CB0059 /* Docs */,
+				9ED8DB5F2DE543E800CB0059 /* Un */,
+				9ED8DB5D2DE543C000CB0059 /* Services */,
+				9ED8DB592DE5434300CB0059 /* Utilities */,
+				9ED8DB452DE5417300CB0059 /* Models */,
+				9ED8DAAC2DE5240300CB0059 /* BlendApp.swift */,
+				9ED8DAB12DE5240300CB0059 /* BlendPoolStats.swift */,
+				9ED8DAB82DE5240300CB0059 /* BlendUSDCVault.swift */,
+				9ED8DAB92DE5240300CB0059 /* Blendv3App.swift */,
+				9ED8DABA2DE5240300CB0059 /* BlendViewModel.swift */,
+				9ED8DABC2DE5240300CB0059 /* Constants */,
+				9ED8DABD2DE5240300CB0059 /* DataAvailabilityAnalysis.md */,
+				9ED8DABE2DE5240300CB0059 /* DebugLogView.swift */,
+				9ED8DAC12DE5240300CB0059 /* DetailedPoolStatisticsView.swift */,
+				9ED8DAC22DE5240300CB0059 /* DEVELOPER_QUICK_START.md */,
+				9ED8DAC32DE5240300CB0059 /* Documentation */,
+				9ED8DAC42DE5240300CB0059 /* EnhancedBlendRateCalculator.swift */,
+				9ED8DAC62DE5240300CB0059 /* IMPLEMENTATION_SUMMARY.md */,
+				9ED8DAC92DE5240300CB0059 /* NetworkService.swift */,
+				9ED8DACB2DE5240300CB0059 /* POOL_STATS_GUIDE.md */,
+				9ED8DACC2DE5240300CB0059 /* POOL_STATS_IMPLEMENTATION_PLAN.md */,
+				9ED8DACE2DE5240300CB0059 /* PoolViewModel.swift */,
+				9ED8DACF2DE5240300CB0059 /* Preview Assets.xcassets */,
+				9ED8DAD02DE5240300CB0059 /* Preview Content */,
+				9ED8DAD12DE5240300CB0059 /* PRIORITY_3_IMPLEMENTATION.md */,
+				9ED8DAD22DE5240300CB0059 /* PRIORITY_4_IMPLEMENTATION.md */,
+				9ED8DAD32DE5240300CB0059 /* PROJECT_COMPLETION_SUMMARY.md */,
+				9ED8DAD52DE5240300CB0059 /* ReactiveRateModifier.swift */,
+				9ED8DAD62DE5240300CB0059 /* RunSmartContractExploration.swift */,
+				9ED8DAD72DE5240300CB0059 /* SmartContractBatchInspector.swift */,
+				9ED8DAD82DE5240300CB0059 /* SmartContractBatchInspectorDemo.swift */,
+				9ED8DAD92DE5240300CB0059 /* SmartContractDateFormatterFix.swift */,
+				9ED8DADA2DE5240300CB0059 /* SmartContractDebugDemo.swift */,
+				9ED8DADB2DE5240300CB0059 /* SmartContractDebugGuide.swift */,
+				9ED8DADC2DE5240300CB0059 /* SmartContractDebugLogger.swift */,
+				9ED8DADD2DE5240300CB0059 /* SmartContractDebugSystem-README.md */,
+				9ED8DADE2DE5240300CB0059 /* SmartContractDebugSystemSuccess.swift */,
+				9ED8DADF2DE5240300CB0059 /* SmartContractDebugTest.swift */,
+				9ED8DAE02DE5240300CB0059 /* SmartContractDebugView.swift */,
+				9ED8DAE12DE5240300CB0059 /* SmartContractDebugViewModel.swift */,
+				9ED8DAE22DE5240300CB0059 /* SmartContractExplorer.swift */,
+				9ED8DAE32DE5240300CB0059 /* SmartContractExplorer-README.md */,
+				9ED8DAE42DE5240300CB0059 /* SmartContractInoutParameterFix.swift */,
+				9ED8DAE52DE5240300CB0059 /* SmartContractInoutParameterTest.swift */,
+				9ED8DAE62DE5240300CB0059 /* SmartContractInspector.swift */,
+				9ED8DAE72DE5240300CB0059 /* SmartContractInspector-README.md */,
+				9ED8DAE82DE5240300CB0059 /* SmartContractInspectorExample.swift */,
+				9ED8DAE92DE5240300CB0059 /* SmartContractInspectorTest.swift */,
+				9ED8DAEA2DE5240300CB0059 /* SmartContractInspectorVerification.swift */,
+				9ED8DAEB2DE5240300CB0059 /* SmartContractServerUrlFix.swift */,
+				9ED8DAEC2DE5240300CB0059 /* stellar-ios-mac-sdk-master-3 */,
+				9ED8DAED2DE5240300CB0059 /* TestFullFunctionListing.swift */,
+				9ED8DAEE2DE5240300CB0059 /* TestSmartContractExploration.swift */,
+				9ED8DAEF2DE5240300CB0059 /* TestView.swift */,
+				9ED8DAF02DE5240300CB0059 /* TransactionHistoryView.swift */,
+				9ED8DAF12DE5240300CB0059 /* TransactionSheet.swift */,
+			);
+			path = Blendv3;
+			sourceTree = "<group>";
+		};
+		9ED8DABC2DE5240300CB0059 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				9ED8DAB72DE5240300CB0059 /* BlendUSDCConstants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		9ED8DAC02DE5240300CB0059 /* DependencyInjection */ = {
+			isa = PBXGroup;
+			children = (
+				9ED8DABF2DE5240300CB0059 /* DependencyContainer.swift */,
+			);
+			path = DependencyInjection;
+			sourceTree = "<group>";
+		};
+		9ED8DAC32DE5240300CB0059 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Documentation;
+			sourceTree = "<group>";
+		};
+		9ED8DAD02DE5240300CB0059 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		9ED8DAD42DE5240300CB0059 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				9ED8DAB42DE5240300CB0059 /* BlendRateCalculatorProtocol.swift */,
+				9ED8DAB02DE5240300CB0059 /* BlendOracleServiceProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		9ED8DB452DE5417300CB0059 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9ED8DB632DE544DF00CB0059 /* Pool */,
+				9ED8DB4A2DE541F600CB0059 /* Backstop */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9ED8DB4A2DE541F600CB0059 /* Backstop */ = {
+			isa = PBXGroup;
+			children = (
+				9ED8DB5B2DE543A100CB0059 /* BackstopPoolReserveData.swift */,
+				9ED8DB572DE542FC00CB0059 /* AuctionStatus.swift */,
+				9ED8DB552DE542B500CB0059 /* AuctionType.swift */,
+				9ED8DB532DE5429500CB0059 /* AuctionData.swift */,
+				9ED8DB512DE5427E00CB0059 /* UserEmissionsState.swift */,
+				9ED8DB4F2DE5426500CB0059 /* BackstopStatus.swift */,
+				9ED8DB4D2DE5425100CB0059 /* EmissionsData.swift */,
+				9ED8DB4B2DE5420900CB0059 /* WithdrawalStatus.swift */,
+				9ED8DB462DE5418A00CB0059 /* BackstopPool.swift */,
+				9ED8DB482DE541E200CB0059 /* QueuedWithdrawal.swift */,
+			);
+			path = Backstop;
+			sourceTree = "<group>";
+		};
+		9ED8DB592DE5434300CB0059 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				9ED8DB662DE54FCA00CB0059 /* StellarContractID.swift */,
+				9ED8DAC52DE5240300CB0059 /* FixedMath.swift */,
+				9ED8DAB32DE5240300CB0059 /* BlendRateCalculator.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		9ED8DB5D2DE543C000CB0059 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				9ED8DAC82DE5240300CB0059 /* Logger.swift */,
+				9ED8DABB2DE5240300CB0059 /* CacheService.swift */,
+				9ED8DB372DE5278D00CB0059 /* BackstopCalculatorService.swift */,
+				9ED8DAAF2DE5240300CB0059 /* BlendOracleService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		9ED8DB5F2DE543E800CB0059 /* Un */ = {
+			isa = PBXGroup;
+			children = (
+				9ED8DAC72DE5240300CB0059 /* KeyPairSigner.swift */,
+				9ED8DAAE2DE5240300CB0059 /* BlendDefaultSigner.swift */,
+				9ED8DB352DE5278800CB0059 /* AccountChecker.swift */,
+				9ED8DAB52DE5240300CB0059 /* BlendSigner.swift */,
+			);
+			path = Un;
+			sourceTree = "<group>";
+		};
+		9ED8DB602DE543FB00CB0059 /* Docs */ = {
+			isa = PBXGroup;
+			children = (
+				9ED8DAA92DE5240300CB0059 /* blend_protocol_technical_analysis.md */,
+			);
+			path = Docs;
+			sourceTree = "<group>";
+		};
+		9ED8DB612DE5443000CB0059 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9ED8DACD2DE5240300CB0059 /* PoolStatisticsView.swift */,
+				9ED8DAAD2DE5240300CB0059 /* BlendDashboardView.swift */,
+				9ED8DAAA2DE5240300CB0059 /* BlendAnalyticsDashboard.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9ED8DB632DE544DF00CB0059 /* Pool */ = {
+			isa = PBXGroup;
+			children = (
+				9ED8DB642DE5458200CB0059 /* InterestRateConfig.swift */,
+			);
+			path = Pool;
+			sourceTree = "<group>";
+		};
 		9EE4A0E02DDFB939004BD597 = {
 			isa = PBXGroup;
 			children = (
-				9EE4A0EB2DDFB939004BD597 /* Blendv3 */,
+				9ED8DA912DE5237F00CB0059 /* Blendv3 */,
 				9EE4A0FC2DDFB93A004BD597 /* Blendv3Tests */,
 				9EE4A1062DDFB93A004BD597 /* Blendv3UITests */,
 				9EE4A0EA2DDFB939004BD597 /* Products */,
@@ -111,9 +450,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				9EE4A0EB2DDFB939004BD597 /* Blendv3 */,
 			);
 			name = Blendv3;
 			packageProductDependencies = (
@@ -181,6 +517,7 @@
 				TargetAttributes = {
 					9EE4A0E82DDFB939004BD597 = {
 						CreatedOnToolsVersion = 16.2;
+						LastSwiftMigration = 1620;
 					};
 					9EE4A0F82DDFB93A004BD597 = {
 						CreatedOnToolsVersion = 16.2;
@@ -221,6 +558,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ED8DB252DE5240300CB0059 /* SmartContractDebugSystem-README.md in Resources */,
+				9ED8DB262DE5240300CB0059 /* DEVELOPER_QUICK_START.md in Resources */,
+				9ED8DB282DE5240300CB0059 /* blend_protocol_technical_analysis.md in Resources */,
+				9ED8DB292DE5240300CB0059 /* PRIORITY_3_IMPLEMENTATION.md in Resources */,
+				9ED8DB2A2DE5240300CB0059 /* POOL_STATS_GUIDE.md in Resources */,
+				9ED8DB2B2DE5240300CB0059 /* SmartContractInspector-README.md in Resources */,
+				9ED8DB2C2DE5240300CB0059 /* PRIORITY_4_IMPLEMENTATION.md in Resources */,
+				9ED8DB2D2DE5240300CB0059 /* IMPLEMENTATION_SUMMARY.md in Resources */,
+				9ED8DB2F2DE5240300CB0059 /* POOL_STATS_IMPLEMENTATION_PLAN.md in Resources */,
+				9ED8DB312DE5240300CB0059 /* SmartContractExplorer-README.md in Resources */,
+				9ED8DB322DE5240300CB0059 /* DataAvailabilityAnalysis.md in Resources */,
+				9ED8DB332DE5240300CB0059 /* PROJECT_COMPLETION_SUMMARY.md in Resources */,
+				9ED8DB342DE5240300CB0059 /* Preview Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,6 +595,70 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ED8DAF22DE5240300CB0059 /* TransactionSheet.swift in Sources */,
+				9ED8DAF32DE5240300CB0059 /* BlendOracleService.swift in Sources */,
+				9ED8DAF42DE5240300CB0059 /* SmartContractDebugSystemSuccess.swift in Sources */,
+				9ED8DB582DE542FC00CB0059 /* AuctionStatus.swift in Sources */,
+				9ED8DAF52DE5240300CB0059 /* DetailedPoolStatisticsView.swift in Sources */,
+				9ED8DB4C2DE5420900CB0059 /* WithdrawalStatus.swift in Sources */,
+				9ED8DAF62DE5240300CB0059 /* NetworkService.swift in Sources */,
+				9ED8DAF72DE5240300CB0059 /* BlendDashboardView.swift in Sources */,
+				9ED8DAF82DE5240300CB0059 /* SmartContractDateFormatterFix.swift in Sources */,
+				9ED8DAF92DE5240300CB0059 /* BlendOracleServiceProtocol.swift in Sources */,
+				9ED8DAFA2DE5240300CB0059 /* BlendApp.swift in Sources */,
+				9ED8DAFB2DE5240300CB0059 /* SmartContractDebugGuide.swift in Sources */,
+				9ED8DAFC2DE5240300CB0059 /* SmartContractDebugDemo.swift in Sources */,
+				9ED8DAFD2DE5240300CB0059 /* CacheService.swift in Sources */,
+				9ED8DAFE2DE5240300CB0059 /* DebugLogView.swift in Sources */,
+				9ED8DAFF2DE5240300CB0059 /* SmartContractInspectorTest.swift in Sources */,
+				9ED8DB002DE5240300CB0059 /* SmartContractDebugView.swift in Sources */,
+				9ED8DB012DE5240300CB0059 /* RunSmartContractExploration.swift in Sources */,
+				9ED8DB522DE5427E00CB0059 /* UserEmissionsState.swift in Sources */,
+				9ED8DB022DE5240300CB0059 /* SmartContractDebugViewModel.swift in Sources */,
+				9ED8DB672DE54FCA00CB0059 /* StellarContractID.swift in Sources */,
+				9ED8DB652DE5458200CB0059 /* InterestRateConfig.swift in Sources */,
+				9ED8DB032DE5240300CB0059 /* KeyPairSigner.swift in Sources */,
+				9ED8DB042DE5240300CB0059 /* SmartContractInspector.swift in Sources */,
+				9ED8DB052DE5240300CB0059 /* DependencyContainer.swift in Sources */,
+				9ED8DB502DE5426500CB0059 /* BackstopStatus.swift in Sources */,
+				9ED8DB562DE542B500CB0059 /* AuctionType.swift in Sources */,
+				9ED8DB382DE5278D00CB0059 /* BackstopCalculatorService.swift in Sources */,
+				9ED8DB4E2DE5425100CB0059 /* EmissionsData.swift in Sources */,
+				9ED8DB492DE541E200CB0059 /* QueuedWithdrawal.swift in Sources */,
+				9ED8DB062DE5240300CB0059 /* SmartContractInspectorExample.swift in Sources */,
+				9ED8DB072DE5240300CB0059 /* ReactiveRateModifier.swift in Sources */,
+				9ED8DB082DE5240300CB0059 /* TestSmartContractExploration.swift in Sources */,
+				9ED8DB092DE5240300CB0059 /* SmartContractInoutParameterTest.swift in Sources */,
+				9ED8DB472DE5418A00CB0059 /* BackstopPool.swift in Sources */,
+				9ED8DB0A2DE5240300CB0059 /* BlendUSDCVault.swift in Sources */,
+				9ED8DB0B2DE5240300CB0059 /* SmartContractExplorer.swift in Sources */,
+				9ED8DB0C2DE5240300CB0059 /* TestView.swift in Sources */,
+				9ED8DB0D2DE5240300CB0059 /* BlendRateCalculatorProtocol.swift in Sources */,
+				9ED8DB0E2DE5240300CB0059 /* FixedMath.swift in Sources */,
+				9ED8DB0F2DE5240300CB0059 /* PoolViewModel.swift in Sources */,
+				9ED8DB5C2DE543A100CB0059 /* BackstopPoolReserveData.swift in Sources */,
+				9ED8DB102DE5240300CB0059 /* TestFullFunctionListing.swift in Sources */,
+				9ED8DB112DE5240300CB0059 /* SmartContractBatchInspector.swift in Sources */,
+				9ED8DB122DE5240300CB0059 /* SmartContractServerUrlFix.swift in Sources */,
+				9ED8DB132DE5240300CB0059 /* SmartContractDebugTest.swift in Sources */,
+				9ED8DB142DE5240300CB0059 /* BlendSigner.swift in Sources */,
+				9ED8DB152DE5240300CB0059 /* EnhancedBlendRateCalculator.swift in Sources */,
+				9ED8DB162DE5240300CB0059 /* Blendv3App.swift in Sources */,
+				9ED8DB172DE5240300CB0059 /* BlendViewModel.swift in Sources */,
+				9ED8DB182DE5240300CB0059 /* BlendUSDCConstants.swift in Sources */,
+				9ED8DB192DE5240300CB0059 /* PoolStatisticsView.swift in Sources */,
+				9ED8DB1A2DE5240300CB0059 /* SmartContractInoutParameterFix.swift in Sources */,
+				9ED8DB1B2DE5240300CB0059 /* BlendAnalyticsDashboard.swift in Sources */,
+				9ED8DB362DE5278800CB0059 /* AccountChecker.swift in Sources */,
+				9ED8DB1C2DE5240300CB0059 /* SmartContractInspectorVerification.swift in Sources */,
+				9ED8DB1D2DE5240300CB0059 /* Logger.swift in Sources */,
+				9ED8DB542DE5429500CB0059 /* AuctionData.swift in Sources */,
+				9ED8DB1E2DE5240300CB0059 /* SmartContractBatchInspectorDemo.swift in Sources */,
+				9ED8DB1F2DE5240300CB0059 /* SmartContractDebugLogger.swift in Sources */,
+				9ED8DB202DE5240300CB0059 /* BlendDefaultSigner.swift in Sources */,
+				9ED8DB212DE5240300CB0059 /* TransactionHistoryView.swift in Sources */,
+				9ED8DB222DE5240300CB0059 /* BlendPoolStats.swift in Sources */,
+				9ED8DB232DE5240300CB0059 /* BlendRateCalculator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +816,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Blendv3/Preview Content\"";
@@ -421,6 +836,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.beebop.peerTopeer.Blendv3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -431,6 +847,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Blendv3/Preview Content\"";

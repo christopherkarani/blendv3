@@ -5,21 +5,44 @@ import PackageDescription
 
 let package = Package(
     name: "Blendv3",
-    platforms: [.iOS(.v16)],
+    platforms: [
+        .iOS(.v16),
+        .macOS(.v13)
+    ],
+    products: [
+        .library(
+            name: "BlendCore",
+            targets: ["BlendCore"]
+        ),
+        .library(
+            name: "BlendUI",
+            targets: ["BlendUI"]
+        )
+    ],
     dependencies: [
-        // Stellar iOS SDK for blockchain interactions
-        .package(url: "https://github.com/Soneso/stellar-ios-mac-sdk.git", from: "3.1.0"),
-        
-        // KeychainSwift for secure key storage
-        .package(url: "https://github.com/evgenyneu/keychain-swift.git", from: "20.0.0")
+        // Add stellar SDK dependency when available
+        // .package(url: "https://github.com/Soneso/stellar-ios-mac-sdk", from: "2.5.0")
     ],
     targets: [
+        // Core functionality target
         .target(
-            name: "Blendv3",
-            dependencies: [
-                .product(name: "stellarsdk", package: "stellar-ios-mac-sdk"),
-                .product(name: "KeychainSwift", package: "keychain-swift")
-            ]
+            name: "BlendCore",
+            dependencies: [],
+            path: "Blendv3/Core"
+        ),
+        
+        // UI components target
+        .target(
+            name: "BlendUI",
+            dependencies: ["BlendCore"],
+            path: "Blendv3/Views"
+        ),
+        
+        // Test target
+        .testTarget(
+            name: "BlendCoreTests",
+            dependencies: ["BlendCore"],
+            path: "Blendv3Tests/Core"
         )
     ]
 )

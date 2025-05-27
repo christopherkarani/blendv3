@@ -29,12 +29,13 @@ func exampleUsage() async {
         try await vault.refreshPoolStats()
         if let stats = vault.poolStats {
             print("\n--- Pool Statistics ---")
-            print("Total Supplied: \(stats.totalSupplied) USDC")
-            print("Total Borrowed: \(stats.totalBorrowed) USDC")
-            print("Available Liquidity: \(stats.availableLiquidity) USDC")
-            print("Current APY: \(stats.currentAPY)%")
-            print("Utilization Rate: \(stats.utilizationRate * 100)%")
-            print("Backstop Reserve: \(stats.backstopReserve) USDC")
+            print("Total Supplied: \(stats.usdcReserveData.totalSupplied) USDC")
+            print("Total Borrowed: \(stats.usdcReserveData.totalBorrowed) USDC")
+            print("Available Liquidity: \(stats.usdcReserveData.availableLiquidity) USDC")
+            print("Supply APR: \(stats.usdcReserveData.supplyApr)%")
+            print("Borrow APR: \(stats.usdcReserveData.borrowApr)%")
+            print("Utilization Rate: \(stats.usdcReserveData.utilizationRate * 100)%")
+            print("Backstop Reserve: \(stats.backstopData.totalBackstop) USDC")
             print("Last Updated: \(stats.lastUpdated)")
         }
         
@@ -98,6 +99,34 @@ class BlendViewModel: ObservableObject {
         do {
             try await vault.refreshPoolStats()
             errorMessage = nil
+            
+            // Access comprehensive pool stats
+            if let comprehensiveStats = vault.comprehensivePoolStats {
+                print("🏊 Pool-wide Statistics:")
+                print("  Total Value Locked: \(comprehensiveStats.poolData.totalValueLocked)")
+                print("  Overall Utilization: \(comprehensiveStats.poolData.overallUtilization * 100)%")
+                print("  Health Score: \(comprehensiveStats.poolData.healthScore)")
+                print("  Active Reserves: \(comprehensiveStats.poolData.activeReserves)")
+                
+                print("\n📊 Individual Assets:")
+                for (symbol, assetData) in comprehensiveStats.allReserves {
+                    print("  \(symbol):")
+                    print("    Supplied: \(assetData.totalSupplied)")
+                    print("    Borrowed: \(assetData.totalBorrowed)")
+                    print("    APY: \(assetData.supplyApy)%")
+                    print("    Utilization: \(assetData.utilizationRate * 100)%")
+                }
+            }
+            
+            // Get quick summary
+            if let summary = vault.getPoolSummary() {
+                print("\n📈 Quick Summary:")
+                print("  TVL: \(summary.totalValueLocked)")
+                print("  Available Liquidity: \(summary.availableLiquidity)")
+                print("  Top Asset: \(summary.topAssetByTVL)")
+                print("  Average APY: \(summary.averageSupplyAPY)%")
+            }
+            
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -123,19 +152,19 @@ struct BlendView: View {
                     HStack {
                         Text("Total Supplied:")
                         Spacer()
-                        Text("\(stats.totalSupplied) USDC")
+                        Text("\(stats.usdcReserveData.totalSupplied) USDC")
                     }
                     
                     HStack {
                         Text("Current APY:")
                         Spacer()
-                        Text("\(stats.currentAPY)%")
+                        Text("\(stats.usdcReserveData.supplyApr)%")
                     }
                     
                     HStack {
                         Text("Available:")
                         Spacer()
-                        Text("\(stats.availableLiquidity) USDC")
+                        Text("\(stats.usdcReserveData.availableLiquidity) USDC")
                     }
                 }
                 .padding()
