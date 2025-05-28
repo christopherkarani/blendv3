@@ -1,0 +1,4 @@
+module Blendv3PackageTests {
+    header "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/Blendv3PackageTests.build/Blendv3PackageTests-Swift.h"
+    requires objc
+}

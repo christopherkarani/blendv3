@@ -18,6 +18,35 @@ case .tupleV0(let tupleCase):
 }
 ```
 
+## 🔖 Oracle Implementation To-Do List
+
+- [ ] **Model Updates**
+  - [ ] Update `PriceData.swift` model to align with contract structure
+  - [ ] Create `OracleAsset` enum if needed for Asset type representation
+
+- [ ] **Protocol Updates**
+  - [ ] Update `BlendOracleServiceProtocol.swift` with contract-aligned methods
+  - [ ] Add documentation for new methods
+
+- [ ] **Service Implementation**
+  - [ ] Implement `getOracleDecimals()` method
+  - [ ] Implement `getOracleResolution()` method
+  - [ ] Update `getPrice(asset:)` with correct contract call format
+  - [ ] Implement `getPrice(asset:timestamp:)` for historical prices
+  - [ ] Implement `getPrices(asset:records:)` for price history
+  - [ ] Update price parsing logic to handle i128 with proper scaling
+
+- [ ] **Testing**
+  - [ ] Update mock services to simulate contract responses
+  - [ ] Add unit tests for all contract functions
+  - [ ] Test with different price values and decimal scales
+  - [ ] Add integration tests with mock contract
+
+- [ ] **Integration**
+  - [ ] Update `DataService` to use enhanced oracle service
+  - [ ] Verify consistency in decimal handling
+  - [ ] Add end-to-end tests
+
 ## Testing
 
 Run the included test to verify everything works:

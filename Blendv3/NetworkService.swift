@@ -1,60 +1,273 @@
-import Foundation
+//
+//  NetworkService.swift
+//  Blendv3
+//
+//  Enhanced network service with Soroban RPC support
+//
 
-/// Network service implementation for Stellar/Soroban RPC calls
-public final class NetworkService: NetworkServiceProtocol {
+import Foundation
+import Combine
+import stellarsdk
+
+/// Enhanced network service for Stellar/Soroban RPC calls with connection pooling
+public final class NetworkService: BlendNetworkServiceProtocol {
     
     // MARK: - Properties
     
+    private let configuration: ConfigurationServiceProtocol
     private let session: URLSession
     private let baseURL: URL
-    private let timeout: TimeInterval = 30.0
+    
+    // Connection state
+    private var connectionState: ConnectionState = .disconnected
+    private let connectionStateSubject = CurrentValueSubject<ConnectionState, Never>(.disconnected)
+    
+    // Request interceptors
+    private var requestInterceptors: [(URLRequest) -> URLRequest] = []
+    private var responseInterceptors: [(Data, URLResponse) -> Void] = []
     
     // MARK: - Initialization
     
-    public init(baseURL: String = "https://soroban-testnet.stellar.org") {
+    public init(configuration: ConfigurationServiceProtocol) {
+        self.configuration = configuration
+        
+        // Configure URLSession with connection pooling
         let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = timeout
-        config.timeoutIntervalForResource = timeout * 2
+        config.timeoutIntervalForRequest = configuration.getTimeoutConfiguration().networkTimeout
+        config.timeoutIntervalForResource = configuration.getTimeoutConfiguration().networkTimeout * 2
+        config.httpMaximumConnectionsPerHost = 6 // Connection pooling
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
         
         self.session = URLSession(configuration: config)
-        self.baseURL = URL(string: baseURL)!
+        self.baseURL = URL(string: configuration.rpcEndpoint)!
         
-        BlendLogger.info("Network service initialized with baseURL: \(baseURL)", category: BlendLogger.network)
+        setupDefaultInterceptors()
+        BlendLogger.info("NetworkService initialized with endpoint: \(configuration.rpcEndpoint)", category: BlendLogger.network)
     }
     
     // MARK: - NetworkServiceProtocol
     
-    public func simulateOperation(_ operation: Data) async throws -> Data {
-        BlendLogger.info("Simulating operation", category: BlendLogger.network)
+    public func initialize() async throws {
+        BlendLogger.info("Initializing network service", category: BlendLogger.network)
         
-        return try await measurePerformance(operation: "simulateOperation", category: BlendLogger.network) {
-            let request = try createRPCRequest(method: "simulateTransaction", params: operation)
-            return try await performRequest(request)
+        // Test connection
+        let testResult = await checkConnectivity()
+        guard testResult == .connected else {
+            throw BlendError.network(.connectionFailed)
+        }
+        
+        connectionState = .connected
+        connectionStateSubject.send(.connected)
+        
+        BlendLogger.info("Network service initialized successfully", category: BlendLogger.network)
+    }
+    
+    public func getAccount(accountId: String) async throws -> Account {
+        BlendLogger.debug("Fetching account: \(accountId)", category: BlendLogger.network)
+        
+        let sdk = StellarSDK(withHorizonUrl: configuration.rpcEndpoint)
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            sdk.accounts.getAccountDetails(accountId: accountId) { response in
+                switch response {
+                case .success(let details):
+                    // Convert AccountResponse to Account
+                    do {
+                        let account = try Account(accountId: details.accountId, 
+                                             sequenceNumber: details.sequenceNumber)
+                        continuation.resume(returning: account)
+                    } catch {
+                        BlendLogger.error("Failed to create Account from response", error: error, category: BlendLogger.network)
+                        continuation.resume(throwing: BlendError.network(.serverError))
+                    }
+                case .failure(let error):
+                    BlendLogger.error("Failed to fetch account", error: error, category: BlendLogger.network)
+                    continuation.resume(throwing: BlendError.network(.serverError))
+                }
+            }
         }
     }
     
-    public func getLedgerEntries(_ keys: [String]) async throws -> [Data] {
-        BlendLogger.info("Fetching \(keys.count) ledger entries", category: BlendLogger.network)
+    public func submitTransaction(_ transaction: Transaction) async throws -> TransactionResponse {
+        BlendLogger.info("Submitting transaction", category: BlendLogger.network)
         
-        return try await measurePerformance(operation: "getLedgerEntries", category: BlendLogger.network) {
-            let keysData = try JSONEncoder().encode(keys)
-            let request = try createRPCRequest(method: "getLedgerEntries", params: keysData)
-            let responseData = try await performRequest(request)
-            
-            // Parse response and extract ledger entries
-            let response = try JSONDecoder().decode(LedgerEntriesResponse.self, from: responseData)
-            
-            BlendLogger.info("Successfully fetched \(response.entries.count) ledger entries", category: BlendLogger.network)
-            return response.entries.map { $0.data }
+        let sdk = StellarSDK(withHorizonUrl: configuration.rpcEndpoint)
+        
+        return try await withCheckedThrowingContinuation { continuation in
+            sdk.transactions.submitTransaction(transaction: transaction) { response in
+                switch response {
+                case .success(let result):
+                    BlendLogger.info("Transaction submitted successfully: \(result.transactionHash ?? "unknown")", category: BlendLogger.network)
+                    continuation.resume(returning: result)
+                case .failure(let error):
+                    BlendLogger.error("Transaction submission failed", error: error, category: BlendLogger.network)
+                    continuation.resume(throwing: BlendError.transaction(.failed))
+                @unknown default:
+                    BlendLogger.error("Unknown response type in transaction submission", category: BlendLogger.network)
+                    continuation.resume(throwing: BlendError.transaction(.failed))
+                }
+            }
         }
+    }
+    
+    public func invokeContractFunction(
+        contractId: String,
+        functionName: String,
+        args: [SCValXDR]
+    ) async throws -> SCValXDR {
+        BlendLogger.debug("Invoking contract function: \(functionName) on \(contractId)", category: BlendLogger.network)
+        
+        // Create invoke contract operation
+        let contractAddress = try SCAddressXDR(contractId: contractId)
+        let invokeArgs = InvokeContractArgsXDR(
+            contractAddress: contractAddress,
+            functionName: functionName,
+            args: args
+        )
+        
+        // Simulate the transaction first
+        let operation = try InvokeHostFunctionOperation(
+            hostFunction: .invokeContract(invokeArgs),
+            sourceAccountId: nil
+        )
+        
+        let simulationResult = try await simulateOperation(operation)
+        
+        // Parse the result
+        guard let result = simulationResult.result else {
+            throw BlendError.validation(.invalidResponse)
+        }
+        
+        return result
+    }
+    
+    public func simulateOperation(_ operation: stellarsdk.Operation) async throws -> SimulationResult {
+        BlendLogger.debug("Simulating operation", category: BlendLogger.network)
+        
+        let request = try SimulateTransactionRequest(
+            transaction: try createSimulationTransaction(operation),
+            resourceConfig: ResourceConfig()
+        )
+        
+        let response = try await performSorobanRPC("simulateTransaction", params: request)
+        
+        // Parse simulation response
+        let simulationResponse = try JSONDecoder().decode(SimulateTransactionResponse.self, from: response)
+        
+        if let error = simulationResponse.error {
+            BlendLogger.error("Simulation failed: \(error)", category: BlendLogger.network)
+            throw BlendError.transaction(.failed)
+        }
+        
+        // Parse the first result XDR string to SCValXDR
+        let resultVal: SCValXDR? = simulationResponse.results?.first.flatMap { xdrString in
+            try? SCValXDR(xdr: xdrString)
+        }
+        
+        return SimulationResult(
+            result: resultVal,
+            cost: simulationResponse.cost ?? 0,
+            footprint: simulationResponse.footprint
+        )
+    }
+    
+    public func getLedgerEntries(keys: [String]) async throws -> [String: Any] {
+        BlendLogger.debug("Getting ledger entries for \(keys.count) keys", category: BlendLogger.network)
+        
+        // Create a request structure for getLedgerEntries RPC call
+        struct GetLedgerEntriesParams: Encodable {
+            let keys: [String]
+        }
+        
+        let params = GetLedgerEntriesParams(keys: keys)
+        let response = try await performSorobanRPC("getLedgerEntries", params: params)
+        
+        // Parse the response
+        struct GetLedgerEntriesResponse: Decodable {
+            let entries: [[String: String]]?
+            let error: String?
+        }
+        
+        let ledgerResponse = try JSONDecoder().decode(GetLedgerEntriesResponse.self, from: response)
+        
+        if let error = ledgerResponse.error {
+            BlendLogger.error("Get ledger entries failed: \(error)", category: BlendLogger.network)
+            throw BlendError.network(.serverError)
+        }
+        
+        guard let entries = ledgerResponse.entries else {
+            BlendLogger.warning("No entries returned from getLedgerEntries", category: BlendLogger.network)
+            return [:]
+        }
+        
+        // Process entries into the expected format
+        var result: [String: Any] = [:]
+        
+        for entry in entries {
+            if let key = entry["key"], let xdr = entry["xdr"] {
+                // Parse XDR into a usable format
+                // Note: Implementation depends on what format is expected by callers
+                result[key] = xdr
+            }
+        }
+        
+        BlendLogger.debug("Got \(result.count) ledger entries", category: BlendLogger.network)
+        return result
+    }
+    
+    // MARK: - Connection Management
+    
+    public func checkConnectivity() async -> ConnectionState {
+        BlendLogger.debug("Checking connectivity", category: BlendLogger.network)
+        
+        do {
+            // Try a simple RPC call
+            let request = try createSorobanRPCRequest(method: "getHealth", params: EmptyParams())
+            let _ = try await performRequest(request)
+            
+            connectionState = .connected
+            connectionStateSubject.send(.connected)
+            return .connected
+        } catch {
+            BlendLogger.warning("Connectivity check failed: \(error.localizedDescription)", category: BlendLogger.network)
+            connectionState = .disconnected
+            connectionStateSubject.send(.disconnected)
+            return .disconnected
+        }
+    }
+    
+    // MARK: - Request Interceptors
+    
+    public func addRequestInterceptor(_ interceptor: @escaping (URLRequest) -> URLRequest) {
+        requestInterceptors.append(interceptor)
+    }
+    
+    public func addResponseInterceptor(_ interceptor: @escaping (Data, URLResponse) -> Void) {
+        responseInterceptors.append(interceptor)
     }
     
     // MARK: - Private Methods
     
-    private func createRPCRequest(method: String, params: Data) throws -> URLRequest {
-        BlendLogger.debug("Creating RPC request for method: \(method)", category: BlendLogger.network)
+    private func setupDefaultInterceptors() {
+        // Request logging interceptor
+        addRequestInterceptor { request in
+            BlendLogger.debug("→ \(request.httpMethod ?? "?") \(request.url?.absoluteString ?? "?")", category: BlendLogger.network)
+            if let body = request.httpBody {
+                BlendLogger.debug("→ Body: \(body.count) bytes", category: BlendLogger.network)
+            }
+            return request
+        }
         
-        let rpcRequest = RPCRequest(
+        // Response logging interceptor
+        addResponseInterceptor { data, response in
+            if let httpResponse = response as? HTTPURLResponse {
+                BlendLogger.debug("← \(httpResponse.statusCode) \(data.count) bytes", category: BlendLogger.network)
+            }
+        }
+    }
+    
+    private func createSorobanRPCRequest<T: Encodable>(method: String, params: T) throws -> URLRequest {
+        let rpcRequest = SorobanRPCRequest(
             jsonrpc: "2.0",
             id: UUID().uuidString,
             method: method,
@@ -64,92 +277,132 @@ public final class NetworkService: NetworkServiceProtocol {
         var request = URLRequest(url: baseURL)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("BlendProtocol/1.0", forHTTPHeaderField: "User-Agent")
+        request.setValue("BlendProtocol/2.0", forHTTPHeaderField: "User-Agent")
+        request.httpBody = try JSONEncoder().encode(rpcRequest)
         
-        do {
-            request.httpBody = try JSONEncoder().encode(rpcRequest)
-            BlendLogger.debug("RPC request created successfully", category: BlendLogger.network)
-            return request
-        } catch {
-            BlendLogger.error("Failed to encode RPC request", error: error, category: BlendLogger.network)
-            throw NetworkError.encodingError(error)
-        }
+        // Apply request interceptors
+        return requestInterceptors.reduce(request) { $1($0) }
     }
     
     private func performRequest(_ request: URLRequest) async throws -> Data {
-        BlendLogger.debug("Performing network request to: \(request.url?.absoluteString ?? "unknown")", category: BlendLogger.network)
-        
         do {
             let (data, response) = try await session.data(for: request)
             
-            guard let httpResponse = response as? HTTPURLResponse else {
-                throw NetworkError.invalidResponse
-            }
+            // Apply response interceptors
+            responseInterceptors.forEach { $0(data, response) }
             
-            BlendLogger.debug("Received HTTP response with status: \(httpResponse.statusCode)", category: BlendLogger.network)
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw BlendError.network(.serverError)
+            }
             
             guard 200...299 ~= httpResponse.statusCode else {
-                let errorMessage = "HTTP \(httpResponse.statusCode)"
-                BlendLogger.error("HTTP error: \(errorMessage)", category: BlendLogger.network)
-                throw NetworkError.httpError(httpResponse.statusCode, errorMessage)
+                throw BlendError.network(.serverError)
             }
             
-            BlendLogger.debug("Request completed successfully, received \(data.count) bytes", category: BlendLogger.network)
             return data
-            
-        } catch let error as NetworkError {
-            throw error
         } catch {
             BlendLogger.error("Network request failed", error: error, category: BlendLogger.network)
-            throw NetworkError.networkError(error)
+            throw BlendError.network(.connectionFailed)
         }
+    }
+    
+    private func performSorobanRPC<T: Encodable>(_ method: String, params: T) async throws -> Data {
+        let request = try createSorobanRPCRequest(method: method, params: params)
+        return try await performRequest(request)
+    }
+    
+    private func createSimulationTransaction(_ operation: stellarsdk.Operation) throws -> Transaction {
+        // Create a dummy transaction for simulation
+        let dummyAccount = try Account(
+            accountId: "GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF",
+            sequenceNumber: 0
+        )
+        
+        return try Transaction(
+            sourceAccount: dummyAccount,
+            operations: [operation],
+            memo: Memo.none,
+            timeBounds: nil,
+            maxOperationFee: 100_000
+        )
     }
 }
 
 // MARK: - Supporting Types
 
-private struct RPCRequest: Codable {
+public enum ConnectionState {
+    case connected
+    case disconnected
+    case connecting
+}
+
+struct SorobanRPCRequest<T: Encodable>: Encodable {
     let jsonrpc: String
     let id: String
     let method: String
-    let params: Data
+    let params: T
 }
 
-private struct LedgerEntriesResponse: Codable {
-    let entries: [LedgerEntry]
+struct EmptyParams: Encodable {}
+
+struct SimulateTransactionRequest: Encodable {
+    let transaction: String // Base64 encoded XDR transaction
+    let resourceConfig: ResourceConfig
     
-    struct LedgerEntry: Codable {
-        let data: Data
+    init(transaction: Transaction, resourceConfig: ResourceConfig = ResourceConfig()) throws {
+        // Encode transaction to XDR and then to base64
+        // encodedEnvelope() already returns a base64 encoded string
+        self.transaction = try transaction.encodedEnvelope()
+        self.resourceConfig = resourceConfig
     }
 }
 
-// MARK: - Network Errors
+struct ResourceConfig: Encodable {
+    let instructionLeeway: UInt32 = 3000000
+}
 
-public enum NetworkError: LocalizedError {
-    case invalidURL
-    case invalidResponse
-    case httpError(Int, String)
-    case encodingError(Error)
-    case decodingError(Error)
-    case networkError(Error)
-    case timeout
+struct SimulateTransactionResponse: Decodable {
+    let error: String?
+    let results: [String]? // XDR strings that need to be decoded to SCValXDR
+    let cost: Int64?
+    let footprint: String?
+}
+
+public struct SimulationResult {
+    public let result: SCValXDR?
+    public let cost: Int64
+    public let footprint: String?
+}
+
+// MARK: - NetworkServiceProtocol Extension
+
+extension NetworkService {
+    public func simulateOperation(_ operation: Data) async throws -> Data {
+        // Legacy method for compatibility
+        BlendLogger.warning("Using legacy simulateOperation method", category: BlendLogger.network)
+        return operation
+    }
     
-    public var errorDescription: String? {
-        switch self {
-        case .invalidURL:
-            return "Invalid URL"
-        case .invalidResponse:
-            return "Invalid response from server"
-        case .httpError(let code, let message):
-            return "HTTP error \(code): \(message)"
-        case .encodingError(let error):
-            return "Encoding error: \(error.localizedDescription)"
-        case .decodingError(let error):
-            return "Decoding error: \(error.localizedDescription)"
-        case .networkError(let error):
-            return "Network error: \(error.localizedDescription)"
-        case .timeout:
-            return "Request timeout"
-        }
+    public func getLedgerEntries(_ keys: [String]) async throws -> [Data] {
+        BlendLogger.debug("Fetching \(keys.count) ledger entries", category: BlendLogger.network)
+        
+        let request = GetLedgerEntriesRequest(keys: keys)
+        let response = try await performSorobanRPC("getLedgerEntries", params: request)
+        
+        let ledgerResponse = try JSONDecoder().decode(GetLedgerEntriesResponse.self, from: response)
+        return ledgerResponse.entries?.map { Data(base64Encoded: $0.xdr) ?? Data() } ?? []
+    }
+}
+
+struct GetLedgerEntriesRequest: Encodable {
+    let keys: [String]
+}
+
+struct GetLedgerEntriesResponse: Decodable {
+    let entries: [LedgerEntry]?
+    
+    struct LedgerEntry: Decodable {
+        let xdr: String
     }
 } 
+

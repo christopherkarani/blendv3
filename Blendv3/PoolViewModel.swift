@@ -144,7 +144,7 @@ public final class PoolViewModel: ObservableObject {
                     asset: asset,
                     price: priceData.price,
                     timestamp: priceData.timestamp,
-                    isStale: priceData.isStale()
+                    isStale: priceData.isStale(maxAge: 60 * 5) // 5 minutes max age
                 )
             }
         } catch {

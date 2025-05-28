@@ -1,0 +1,114 @@
+// MARK: - Configuration Models
+
+import Foundation
+
+
+// MARK: - Error Models
+
+/// Sanitized error type that never exposes internal implementation details
+public enum BlendError: LocalizedError, Equatable {
+    case network(NetworkErrorType)
+    case validation(ValidationErrorType)
+    case transaction(TransactionErrorType)
+    case initialization(String)
+    case unauthorized
+    case insufficientFunds
+    case serviceUnavailable
+    case unknown
+    
+    public var errorDescription: String? {
+        switch self {
+        case .network(let type):
+            return "Network error: \(type.userFriendlyMessage)"
+        case .validation(let type):
+            return "Validation error: \(type.userFriendlyMessage)"
+        case .transaction(let type):
+            return "Transaction error: \(type.userFriendlyMessage)"
+        case .initialization(let message):
+            return "Initialization failed: \(message)"
+        case .unauthorized:
+            return "Unauthorized access"
+        case .insufficientFunds:
+            return "Insufficient funds for this operation"
+        case .serviceUnavailable:
+            return "Service temporarily unavailable"
+        case .unknown:
+            return "An unexpected error occurred"
+        }
+    }
+}
+
+public enum NetworkErrorType: Equatable {
+    case connectionFailed
+    case timeout
+    case serverError
+    
+    var userFriendlyMessage: String {
+        switch self {
+        case .connectionFailed: return "Unable to connect to the network"
+        case .timeout: return "Request timed out"
+        case .serverError: return "Server error occurred"
+        }
+    }
+}
+
+public enum ValidationErrorType: Equatable {
+    case invalidInput
+    case invalidResponse
+    case integerOverflow
+    case outOfBounds
+    
+    var userFriendlyMessage: String {
+        switch self {
+        case .invalidInput: return "Invalid input provided"
+        case .invalidResponse: return "Invalid response from server"
+        case .integerOverflow: return "Number too large"
+        case .outOfBounds: return "Value out of acceptable range"
+        }
+    }
+}
+
+public enum TransactionErrorType: Equatable {
+    case failed
+    case rejected
+    case insufficientFee
+    
+    var userFriendlyMessage: String {
+        switch self {
+        case .failed: return "Transaction failed"
+        case .rejected: return "Transaction was rejected"
+        case .insufficientFee: return "Insufficient fee for transaction"
+        }
+    }
+}
+
+/// Context for error logging and debugging
+public struct ErrorContext {
+    let operation: String
+    let timestamp: Date
+    let metadata: [String: Any]
+    
+    public static var automatic: ErrorContext {
+        ErrorContext(
+            operation: "Unknown",
+            timestamp: Date(),
+            metadata: [:]
+        )
+    }
+}
+
+// MARK: - Validation Models
+
+/// Schema for validating contract responses
+public enum ValidationSchema {
+    case priceData
+    case reserveData
+    case poolConfig
+    case transactionResult
+    case i128Value
+}
+
+
+
+// MARK: - Data Models
+

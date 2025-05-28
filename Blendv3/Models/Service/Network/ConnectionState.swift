@@ -11,7 +11,7 @@ import Foundation
 // MARK: - Connection State
 
 /// Network connection state
-public enum ConnectionState {
+public enum BlendConnectionState {
     case unknown
     case connected
     case disconnected(String)

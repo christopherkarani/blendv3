@@ -10,7 +10,7 @@ import Foundation
 
 /// Represents comprehensive statistics for a Blend lending pool
 /// Distinguishes between pool-level data and asset-specific data
-public struct BlendPoolStats {
+public struct BlendPoolStats: Codable {
     
     /// Pool-level aggregated statistics
     public let poolData: PoolLevelData
@@ -41,7 +41,7 @@ public struct BlendPoolStats {
 // MARK: - Pool Level Data
 
 /// Pool-level aggregated statistics across all assets
-public struct PoolLevelData {
+public struct PoolLevelData: Codable {
     /// Total value locked in the pool (all assets)
     public let totalValueLocked: Decimal
     
@@ -70,7 +70,7 @@ public struct PoolLevelData {
 // MARK: - USDC Reserve Data
 
 /// USDC-specific reserve statistics within the pool
-public struct USDCReserveData {
+public struct USDCReserveData: Codable {
     /// Total USDC supplied to the reserve
     public let totalSupplied: Decimal
     
@@ -129,7 +129,7 @@ public struct USDCReserveData {
 // MARK: - Backstop Data
 
 /// Backstop insurance pool statistics
-public struct BackstopData {
+public struct BackstopData: Codable {
     /// Total backstop insurance fund
     public let totalBackstop: Decimal
     
@@ -320,7 +320,7 @@ public struct ComprehensivePoolStats {
 // MARK: - Asset Reserve Data
 
 /// Generic asset reserve data for any asset in the pool
-public struct AssetReserveData {
+public struct AssetReserveData: Codable {
     /// Asset symbol (e.g., "USDC", "XLM", "BLND")
     public let symbol: String
     
@@ -439,25 +439,8 @@ public struct PoolSummary {
 
 // MARK: - True Pool Statistics (Based on Actual Contract Functions)
 
-/// Pool configuration from get_config() function
-public struct PoolConfig {
-    public let backstopRate: UInt32      // bstop_rate
-    public let maxPositions: UInt32      // max_positions  
-    public let minCollateral: Decimal    // min_collateral
-    public let oracle: String            // oracle address
-    public let status: UInt32            // pool status
-    
-    public init(backstopRate: UInt32, maxPositions: UInt32, minCollateral: Decimal, oracle: String, status: UInt32) {
-        self.backstopRate = backstopRate
-        self.maxPositions = maxPositions
-        self.minCollateral = minCollateral
-        self.oracle = oracle
-        self.status = status
-    }
-}
-
 /// Individual reserve data for each asset in the pool
-public struct PoolReserveData {
+public struct PoolReserveData: Codable {
     public let asset: String             // Asset contract address
     public let symbol: String            // Human readable symbol (USDC, XLM, etc.)
     public let totalSupplied: Decimal    // From ReserveData

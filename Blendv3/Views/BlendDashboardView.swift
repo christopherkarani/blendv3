@@ -102,7 +102,7 @@ struct BlendDashboardView: View {
             DebugLogView()
         }
         .sheet(isPresented: $showTestView) {
-            TestView()
+            Text("Empty View")
         }
         .sheet(isPresented: $showDetailedStats) {
             DetailedPoolStatisticsView()
@@ -2655,9 +2655,14 @@ struct DebugToolsView: View {
                 Task {
                     debugLogger.info("🎯 MILLION DOLLAR EXPLORATION: Starting comprehensive pool data exploration...")
                     do {
-                        try await viewModel.vault.explorePoolDataSources()
-                        debugLogger.info("🎯 ✅ EXPLORATION COMPLETED - Check Debug Logs tab for detailed results!")
-                        debugLogger.info("🎯 Look for 🎯 POTENTIAL MATCH messages in the logs")
+                        // Access the vault as BlendUSDCVault to ensure the method is available
+                        if let blendVault = viewModel.vault as? BlendUSDCVault {
+                            try await blendVault.explorePoolDataSources()
+                            debugLogger.info("🎯 ✅ EXPLORATION COMPLETED - Check Debug Logs tab for detailed results!")
+                            debugLogger.info("🎯 Look for 🎯 POTENTIAL MATCH messages in the logs")
+                        } else {
+                            debugLogger.error("🎯 ❌ Exploration failed: vault is not of type BlendUSDCVault")
+                        }
                     } catch {
                         debugLogger.error("🎯 ❌ Exploration failed: \(error)")
                     }
@@ -2777,7 +2782,7 @@ struct DebugToolsView: View {
         .background(Color.yellow.opacity(0.1))
         .cornerRadius(12)
         .sheet(isPresented: $showTestView) {
-            TestView()
+            EmptyView()
         }
     }
 }

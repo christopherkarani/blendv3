@@ -911,7 +911,7 @@ class BlendAnalyticsViewModel: ObservableObject {
     let backstopCalculator: BackstopCalculatorService?
     let oracleService: BlendOracleServiceProtocol
     let cacheService: CacheServiceProtocol
-    let networkService: NetworkServiceProtocol
+    let networkService: BlendNetworkServiceProtocol
     
     // MARK: - Private Properties
     
@@ -1414,11 +1414,11 @@ struct LiquidationRiskMetrics {
     let averageHealthFactor: Double
 }
 
-struct PerformanceMetrics {
-    let averageCalculationTime: Double
-    let cacheHitRate: Double
-    let errorRate: Double
-    let throughput: Int
+public struct PerformanceMetrics {
+    public let averageCalculationTime: Double
+    public let cacheHitRate: Double
+    public let errorRate: Double
+    public let throughput: Int
 }
 
 struct LoggingMetrics {

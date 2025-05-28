@@ -39,8 +39,11 @@ public final class DependencyContainer {
         cacheService: cacheService
     )
     
+    /// Configuration service for environment settings
+    public lazy var configurationService: ConfigurationServiceProtocol = ConfigurationService(networkType: .testnet)
+    
     /// Network service for RPC calls
-    public lazy var networkService: NetworkServiceProtocol = NetworkService()
+    public lazy var networkService: NetworkService = NetworkService(configuration: configurationService)
     
     /// Cache service for data persistence
     public lazy var cacheService: CacheServiceProtocol = CacheService()
@@ -61,7 +64,7 @@ public final class DependencyContainer {
     private var _vaultService: BlendUSDCVault?
     private var _rateCalculator: BlendRateCalculatorProtocol?
     private var _oracleService: BlendOracleServiceProtocol?
-    private var _networkService: NetworkServiceProtocol?
+    private var _networkService: BlendNetworkServiceProtocol?
     private var _cacheService: CacheServiceProtocol?
     
     // MARK: - Initialization
@@ -69,16 +72,10 @@ public final class DependencyContainer {
     private init() {}
 }
 
-// MARK: - Protocol for testability
-
-public protocol NetworkServiceProtocol {
-    func simulateOperation(_ operation: Data) async throws -> Data
-    func getLedgerEntries(_ keys: [String]) async throws -> [Data]
-}
 
 public protocol CacheServiceProtocol {
-    func get<T: Codable>(_ key: String, type: T.Type) -> T?
-    func set<T: Codable>(_ value: T, key: String, ttl: TimeInterval)
-    func remove(_ key: String)
-    func clear()
+    func get<T: Codable>(_ key: String, type: T.Type) async -> T?
+    func set<T: Codable>(_ value: T, key: String, ttl: TimeInterval) async
+    func remove(_ key: String) async
+    func clear() async
 } 

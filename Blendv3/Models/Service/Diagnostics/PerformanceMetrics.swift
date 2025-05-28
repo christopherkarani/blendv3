@@ -11,7 +11,7 @@ import Foundation
 // MARK: - Performance Models
 
 /// Performance metrics for monitoring service health
-public struct PerformanceMetrics {
+public struct BlendPerformanceMetrics {
     public let averageResponseTime: TimeInterval
     public let successRate: Double
     public let errorRate: Double

@@ -1,0 +1,4 @@
+module BlendCore {
+    header "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendCore-Swift.h"
+    requires objc
+}

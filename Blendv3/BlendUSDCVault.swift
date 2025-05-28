@@ -34,57 +34,7 @@ extension Data {
 /// Main service class for interacting with the Blend USDC lending pool
 /// Handles deposits, withdrawals, and fetching pool statistics
 /// Network connection state
-public enum ConnectionState {
-    case unknown
-    case connected
-    case disconnected(String)
-    case unstable(String)
-    
-    var description: String {
-        switch self {
-        case .unknown: return "Unknown"
-        case .connected: return "Connected"
-        case .disconnected(let reason): return "Disconnected: \(reason)"
-        case .unstable(let details): return "Unstable: \(details)"
-        }
-    }
-    
-    var isConnected: Bool {
-        if case .connected = self { return true }
-        return false
-    }
-    
-    var color: String {
-        switch self {
-        case .unknown: return "gray"
-        case .connected: return "green"
-        case .disconnected: return "red"
-        case .unstable: return "orange"
-        }
-    }
-}
 
-/// Initialization state for the BlendUSDCVault
-public enum VaultInitState {
-    case notInitialized
-    case initializing
-    case ready
-    case failed(Error)
-    
-    var description: String {
-        switch self {
-        case .notInitialized: return "Not Initialized"
-        case .initializing: return "Initializing..."
-        case .ready: return "Ready"
-        case .failed(let error): return "Failed: \(error.localizedDescription)"
-        }
-    }
-    
-    var isReady: Bool {
-        if case .ready = self { return true }
-        return false
-    }
-}
 
 public class BlendUSDCVault: ObservableObject {
     
@@ -101,7 +51,7 @@ public class BlendUSDCVault: ObservableObject {
     @Published public private(set) var initState: VaultInitState = .notInitialized
     
     /// Network connection state
-    @Published public private(set) var connectionState: ConnectionState = .unknown
+    @Published public private(set) var connectionState: ConnectionState = .disconnected
     
     /// Current pool statistics
     @Published public private(set) var poolStats: BlendPoolStats?
@@ -130,6 +80,8 @@ public class BlendUSDCVault: ObservableObject {
     /// Number of consecutive successful connections
     @Published public private(set) var connectionSuccesses: Int = 0
     
+    var poolService: PoolServiceProtocol?
+    
     // MARK: - Private Properties
     
     /// The signer for transactions
@@ -152,10 +104,7 @@ public class BlendUSDCVault: ObservableObject {
     /// Rate calculator service for real APY/APR calculations
     private let rateCalculator: BlendRateCalculatorProtocol
     
-    /// Dedicated diagnostics service for testing and debugging
-    private lazy var diagnosticsService: BlendPoolDiagnosticsService = {
-        return BlendPoolDiagnosticsService(signer: signer, networkType: networkType)
-    }()
+    // Diagnostics service has been removed
     
     /// Cancellables for Combine subscriptions
     private var cancellables = Set<AnyCancellable>()
@@ -186,12 +135,12 @@ public class BlendUSDCVault: ObservableObject {
         self.signer = signer
         self.networkType = network
         self.rateCalculator = DependencyContainer.shared.rateCalculator
-        
+       
         // Initialize Soroban server with appropriate endpoint
         let rpcUrl = networkType == .testnet ? BlendUSDCConstants.RPC.testnet : BlendUSDCConstants.RPC.mainnet
         self.sorobanServer = SorobanServer(endpoint: rpcUrl)
         
-   
+       
         
         // Add completion handler if provided
         if let completion = completion {
@@ -646,11 +595,12 @@ public class BlendUSDCVault: ObservableObject {
             let report = try await runDiagnostics(level: .comprehensive)
             
             // Log relevant parts of the diagnostics report
-            if let backstopData = report.backstopData {
+            if let backstopDict = report["backstopData"] as? [String: Any],
+               let totalBackstop = backstopDict["totalBackstop"] as? Decimal {
                 logger.info("🛡️ BACKSTOP ANALYSIS:")
-                logger.info("  Found backstop amount: \(formatDecimal(backstopData.totalBackstop))")
+                logger.info("  Found backstop amount: \(formatDecimal(totalBackstop))")
                 debugLogger.info("🛡️ BACKSTOP ANALYSIS:")
-                debugLogger.info("  Found backstop amount: \(formatDecimal(backstopData.totalBackstop))")
+                debugLogger.info("  Found backstop amount: \(formatDecimal(totalBackstop))")
             }
             
             // Compare with real-world data for validation
@@ -664,10 +614,12 @@ public class BlendUSDCVault: ObservableObject {
             debugLogger.info("  Real ratio: ~6.37x (not 1%)")
             
             // Any errors encountered in diagnostics
-            if !report.errors.isEmpty {
+            if let diagnosticErrors = report["errors"] as? [[String: Any]], !diagnosticErrors.isEmpty {
                 logger.warning("⚠️ Diagnostic issues found:")
-                for error in report.errors {
-                    logger.warning("  - [\(error.component)] \(error.message)")
+                for errorDict in diagnosticErrors {
+                    let component = errorDict["component"] as? String ?? "unknown"
+                    let message = errorDict["message"] as? String ?? "No details available"
+                    logger.warning("  - [\(component)] \(message)")
                 }
             }
             
@@ -686,11 +638,17 @@ public class BlendUSDCVault: ObservableObject {
             logger.info("🏊 Trying pool contract methods...")
             debugLogger.info("🏊 Trying pool contract methods...")
             
+            // Get the soroban client
+            guard let client = sorobanClient else {
+                logger.error("SorobanClient not initialized")
+                throw BlendVaultError.notInitialized
+            }
+            
             // Try get_pool_data or similar method on the pool contract
             let poolDataResult = try await client.invokeMethod(
                 name: "get_pool_data",
                 args: [],
-                methodOptions: MethodOptions(
+                methodOptions: stellarsdk.MethodOptions(
                     fee: 100_000,
                     timeoutInSeconds: 30,
                     simulate: true,
@@ -754,7 +712,7 @@ public class BlendUSDCVault: ObservableObject {
                     let backstopResult = try await backstopClient.invokeMethod(
                         name: method,
                         args: [try SCValXDR.address(SCAddressXDR(contractId: BlendUSDCConstants.addresses(for: networkType).primaryPool))],
-                        methodOptions: MethodOptions(
+                        methodOptions: stellarsdk.MethodOptions(
                             fee: 100_000,
                             timeoutInSeconds: 30,
                             simulate: true,
@@ -789,7 +747,7 @@ public class BlendUSDCVault: ObservableObject {
             let statusResult = try await client.invokeMethod(
                 name: "get_status",
                 args: [],
-                methodOptions: MethodOptions(
+                methodOptions: stellarsdk.MethodOptions(
                     fee: 100_000,
                     timeoutInSeconds: 30,
                     simulate: true,
@@ -826,7 +784,7 @@ public class BlendUSDCVault: ObservableObject {
             let configResult = try await client.invokeMethod(
                 name: "get_pool_config",
                 args: [],
-                methodOptions: MethodOptions(
+                methodOptions: stellarsdk.MethodOptions(
                     fee: 100_000,
                     timeoutInSeconds: 30,
                     simulate: true,
@@ -862,7 +820,7 @@ public class BlendUSDCVault: ObservableObject {
             let positionsResult = try await client.invokeMethod(
                 name: "get_positions",
                 args: [try SCValXDR.address(SCAddressXDR(accountId: userAddress))],
-                methodOptions: MethodOptions(
+                methodOptions: stellarsdk.MethodOptions(
                     fee: 100_000,
                     timeoutInSeconds: 30,
                     simulate: true,
@@ -899,7 +857,7 @@ public class BlendUSDCVault: ObservableObject {
             let emissionsResult = try await client.invokeMethod(
                 name: "get_user_emissions",
                 args: [try SCValXDR.address(SCAddressXDR(accountId: userAddress))],
-                methodOptions: MethodOptions(
+                methodOptions: stellarsdk.MethodOptions(
                     fee: 100_000,
                     timeoutInSeconds: 30,
                     simulate: true,
@@ -935,7 +893,7 @@ public class BlendUSDCVault: ObservableObject {
             let emissionsResult = try await client.invokeMethod(
                 name: "get_emissions_data",
                 args: [],
-                methodOptions: MethodOptions(
+                methodOptions: stellarsdk.MethodOptions(
                     fee: 100_000,
                     timeoutInSeconds: 30,
                     simulate: true,
@@ -971,7 +929,7 @@ public class BlendUSDCVault: ObservableObject {
             let configResult = try await client.invokeMethod(
                 name: "get_emissions_config",
                 args: [],
-                methodOptions: MethodOptions(
+                methodOptions: stellarsdk.MethodOptions(
                     fee: 100_000,
                     timeoutInSeconds: 30,
                     simulate: true,
@@ -1006,7 +964,7 @@ public class BlendUSDCVault: ObservableObject {
             let auctionResult = try await client.invokeMethod(
                 name: "get_auction",
                 args: [SCValXDR.string(auctionId)],
-                methodOptions: MethodOptions(
+                methodOptions: stellarsdk.MethodOptions(
                     fee: 100_000,
                     timeoutInSeconds: 30,
                     simulate: true,
@@ -1047,7 +1005,7 @@ public class BlendUSDCVault: ObservableObject {
                     SCValXDR.u32(auctionType),
                     try SCValXDR.address(SCAddressXDR(accountId: userAddress))
                 ],
-                methodOptions: MethodOptions(
+                methodOptions: stellarsdk.MethodOptions(
                     fee: 100_000,
                     timeoutInSeconds: 30,
                     simulate: true,
@@ -1083,7 +1041,7 @@ public class BlendUSDCVault: ObservableObject {
             let badDebtResult = try await client.invokeMethod(
                 name: "bad_debt",
                 args: [try SCValXDR.address(SCAddressXDR(accountId: userAddress))],
-                methodOptions: MethodOptions(
+                methodOptions: stellarsdk.MethodOptions(
                     fee: 100_000,
                     timeoutInSeconds: 30,
                     simulate: true,
@@ -1141,7 +1099,7 @@ public class BlendUSDCVault: ObservableObject {
         let reserveDataResult = try await client.invokeMethod(
             name: "get_reserve",
             args: [try SCValXDR.address(SCAddressXDR(contractId: assetAddress))],
-            methodOptions: MethodOptions(
+            methodOptions: stellarsdk.MethodOptions(
                 fee: 100_000,
                 timeoutInSeconds: 30,
                 simulate: true,
@@ -1277,7 +1235,7 @@ public class BlendUSDCVault: ObservableObject {
         let configResult = try await client.invokeMethod(
             name: "get_config",
             args: [],
-            methodOptions: MethodOptions(
+            methodOptions: stellarsdk.MethodOptions(
                 fee: 100_000,
                 timeoutInSeconds: 30,
                 simulate: true,
@@ -1449,16 +1407,16 @@ public class BlendUSDCVault: ObservableObject {
                     connectionFailures = 0 // Reset failures on success
                     
                     // Update connection state
-                    if connectionSuccesses >= 3 {
-                        // After 3 consecutive successes, mark as stable connected
-                        connectionState = .connected
-                    } else if case .disconnected = connectionState {
-                        // If previously disconnected, mark as unstable until we get more successes
-                        connectionState = .unstable("Reconnected, monitoring stability")
-                    } else if case .unknown = connectionState {
-                        // First successful connection
-                        connectionState = .connected
-                    }
+//                    if connectionSuccesses >= 3 {
+//                        // After 3 consecutive successes, mark as stable connected
+//                        connectionState = .connected
+//                    } else if case .disconnected = connectionState {
+//                        // If previously disconnected, mark as unstable until we get more successes
+//                        connectionState = .unstable("Reconnected, monitoring stability")
+//                    } else if case .unknown = connectionState {
+//                        // First successful connection
+//                        connectionState = .connected
+//                    }
                 }
                 
                 return (true, nil)
@@ -1472,16 +1430,16 @@ public class BlendUSDCVault: ObservableObject {
                     connectionSuccesses = 0 // Reset successes on failure
                     
                     // Update connection state
-                    if connectionFailures >= 3 {
-                        // After 3 consecutive failures, mark as disconnected
-                        connectionState = .disconnected("Network connection lost: \(error.localizedDescription)")
-                    } else if case .connected = connectionState {
-                        // If previously connected, mark as unstable
-                        connectionState = .unstable("Connection issues detected")
-                    } else if case .unknown = connectionState {
-                        // First check and failed
-                        connectionState = .disconnected("Network unavailable: \(error.localizedDescription)")
-                    }
+//                    if connectionFailures >= 3 {
+//                        // After 3 consecutive failures, mark as disconnected
+//                        connectionState = .disconnected("Network connection lost: \(error.localizedDescription)")
+//                    } else if case .connected = connectionState {
+//                        // If previously connected, mark as unstable
+//                        connectionState = .unstable("Connection issues detected")
+//                    } else if case .unknown = connectionState {
+//                        // First check and failed
+//                        connectionState = .disconnected("Network unavailable: \(error.localizedDescription)")
+//                    }
                 }
                 
                 return (false, error)
@@ -1551,23 +1509,25 @@ public class BlendUSDCVault: ObservableObject {
             let keyPair = try signer.getKeyPair()
 
             print("🔧 DEBUG: Testing RPC connection to: \(networkType == .testnet ? BlendUSDCConstants.RPC.testnet : BlendUSDCConstants.RPC.mainnet)")
-            let testServer = SorobanServer(endpoint: networkType == .testnet ? BlendUSDCConstants.RPC.testnet : BlendUSDCConstants.RPC.mainnet)
-            testServer.enableLogging = true
             
+            let testServer = SorobanServer(endpoint:  BlendUSDCConstants.RPC.testnet)
+            testServer.enableLogging = true
             let healthEnum = await testServer.getHealth()
             
             // Create client options
             let clientOptions = ClientOptions(
                 sourceAccountKeyPair: keyPair,
-                contractId: BlendUSDCConstants.poolContractAddress,
+                contractId: BlendUSDCConstants.Testnet.xlmUsdcPool,
                 network: network,
-                rpcUrl: networkType == .testnet ? BlendUSDCConstants.RPC.testnet : BlendUSDCConstants.RPC.mainnet,
+                rpcUrl:  BlendUSDCConstants.RPC.testnet,
                 enableServerLogging: true
             )
             
             // This is where the error likely occurs
             self.sorobanClient = try await SorobanClient.forClientOptions(options: clientOptions)
             
+        
+            poolService = PoolService(sorobanClient: sorobanClient!)
             logger.info("Soroban client initialized successfully")
             
             return .success(())
@@ -1682,7 +1642,7 @@ public class BlendUSDCVault: ObservableObject {
         let tx = try await client.buildInvokeMethodTx(
             name: BlendUSDCConstants.Functions.submit,
             args: args,
-            methodOptions: MethodOptions(
+            methodOptions: stellarsdk.MethodOptions(
                 fee: 100_000, // 0.01 XLM
                 timeoutInSeconds: 300,
                 simulate: true,
@@ -1897,7 +1857,7 @@ public class BlendUSDCVault: ObservableObject {
             let result = try await client.invokeMethod(
                 name: functionName,
                 args: [try SCValXDR.address(SCAddressXDR(contractId: poolAddress))],
-                methodOptions: MethodOptions(
+                methodOptions: stellarsdk.MethodOptions(
                     fee: 100_000,
                     timeoutInSeconds: 30,
                     simulate: true,
@@ -1918,7 +1878,7 @@ public class BlendUSDCVault: ObservableObject {
                 let result = try await client.invokeMethod(
                     name: functionName,
                     args: [],
-                    methodOptions: MethodOptions(
+                    methodOptions: stellarsdk.MethodOptions(
                         fee: 100_000,
                         timeoutInSeconds: 30,
                         simulate: true,
@@ -1996,7 +1956,7 @@ public class BlendUSDCVault: ObservableObject {
         let reserveDataResult = try await client.invokeMethod(
             name: "get_reserve",
             args: [try SCValXDR.address(SCAddressXDR(contractId: assetAddress))],
-            methodOptions: MethodOptions(
+            methodOptions: stellarsdk.MethodOptions(
                 fee: 100_000,
                 timeoutInSeconds: 30,
                 simulate: true,
@@ -2179,7 +2139,7 @@ public class BlendUSDCVault: ObservableObject {
             let result = try await client.invokeMethod(
                 name: functionName,
                 args: args,
-                methodOptions: MethodOptions(
+                methodOptions: stellarsdk.MethodOptions(
                     fee: 100_000,
                     timeoutInSeconds: 30,
                     simulate: true,
@@ -2294,25 +2254,32 @@ public class BlendUSDCVault: ObservableObject {
     /// Run comprehensive diagnostics on the pool
     /// - Parameter level: The diagnostic level (basic, advanced, comprehensive)
     /// - Returns: A structured diagnostic report
-    public func runDiagnostics(level: DiagnosticsLevel = .comprehensive) async throws -> DiagnosticsReport {
+    public func runDiagnostics(level: DiagnosticsLevel = .comprehensive) async throws -> [String: Any] {
         logger.info("🔍 Running pool diagnostics at level: \(level)")
         debugLogger.info("🔍 Running pool diagnostics at level: \(level)")
         
         do {
-            let report = try await diagnosticsService.runDiagnostics(level: level)
+            // Create basic diagnostics information since BlendPoolDiagnosticsService has been removed
+            logger.info("Creating minimal diagnostics information")
+            debugLogger.info("Diagnostics service has been removed, returning minimal results")
             
-            logger.info("✅ Diagnostics completed with \(report.errors.count) errors")
-            debugLogger.info("✅ Diagnostics completed. Health status: \(report.isHealthy ? "Healthy" : "Unhealthy")")
+            // Check network connectivity as a basic test
+            let (isConnected, _) = await checkNetworkConnectivity()
             
-            if !report.errors.isEmpty {
-                logger.warning("⚠️ Diagnostics errors:")
-                for error in report.errors {
-                    logger.warning("  - [\(error.component)] \(error.message)")
-                    debugLogger.warning("  - [\(error.component)] \(error.message)")
-                }
-            }
+            // Return minimal diagnostics information
+            let results: [String: Any] = [
+                "timestamp": Date(),
+                "level": level,
+                "networkConnected": isConnected,
+                "clientInitialized": sorobanClient != nil,
+                "isHealthy": isConnected && sorobanClient != nil,
+                "message": "Limited diagnostics available - BlendPoolDiagnosticsService has been removed"
+            ]
             
-            return report
+            logger.info("✅ Basic diagnostics completed")
+            debugLogger.info("✅ Basic diagnostics completed")
+            
+            return results
         } catch {
             logger.error("❌ Failed to run diagnostics: \(error.localizedDescription)")
             debugLogger.error("❌ Failed to run diagnostics: \(error.localizedDescription)")
@@ -2528,7 +2495,7 @@ public class BlendUSDCVault: ObservableObject {
             let result = try await client.invokeMethod(
                 name: method,
                 args: args,
-                methodOptions: MethodOptions(
+                methodOptions: stellarsdk.MethodOptions(
                     fee: 100_000,
                     timeoutInSeconds: 30,
                     simulate: true,
@@ -2765,9 +2732,6 @@ public class BlendUSDCVault: ObservableObject {
     
     /// 🎯 Phase 1.1: Get all reserve asset addresses from the pool
     public func getReserveList() async throws -> [String] {
-        logger.info("🎯 PHASE 1.1: Getting all reserve assets from pool")
-        debugLogger.info("🎯 PHASE 1.1: Getting all reserve assets from pool")
-        
         guard let client = sorobanClient else {
             throw BlendVaultError.notInitialized
         }
@@ -2775,7 +2739,7 @@ public class BlendUSDCVault: ObservableObject {
         let result = try await client.invokeMethod(
             name: "get_reserve_list",
             args: [], // No arguments required
-            methodOptions: MethodOptions(
+            methodOptions: stellarsdk.MethodOptions(
                 fee: 100_000,
                 timeoutInSeconds: 30,
                 simulate: true,
@@ -2783,31 +2747,12 @@ public class BlendUSDCVault: ObservableObject {
             )
         )
         
-        logger.info("🎯 Raw get_reserve_list result: \(result)")
-        debugLogger.info("🎯 Raw get_reserve_list result: \(result)")
-        
         // Parse the vec<address> result
         guard case .vec(let optional) = result,
               case .some(let array) = optional else {
-            logger.error("🎯 ❌ Failed to parse reserve list as vec<address>")
-            debugLogger.error("🎯 ❌ Failed to parse reserve list as vec<address>")
+            debugLogger.info("no wallets from getReservelist")
             
-            // If get_reserve_list fails, try to use known assets as fallback
-            logger.info("🎯 ⚠️ Using fallback asset list")
-            debugLogger.info("🎯 ⚠️ Using fallback asset list")
-            
-            let fallbackAssets = [
-                BlendUSDCConstants.usdcAssetContractAddress,
-                BlendUSDCConstants.Testnet.xlm,
-                BlendUSDCConstants.Testnet.blnd,
-                BlendUSDCConstants.Testnet.weth,
-                BlendUSDCConstants.Testnet.wbtc
-            ]
-            
-            logger.info("🎯 ✅ Using \(fallbackAssets.count) fallback assets")
-            debugLogger.info("🎯 ✅ Using \(fallbackAssets.count) fallback assets")
-            
-            return fallbackAssets
+            return []
         }
         
         var assetAddresses: [String] = []
@@ -2876,118 +2821,12 @@ public class BlendUSDCVault: ObservableObject {
     
     /// 🎯 Phase 1.2: Get pool configuration using get_config() -> PoolConfig
     public func getPoolConfigNew() async throws -> PoolConfig {
-        logger.info("🎯 PHASE 1.2: Getting pool configuration using get_config()")
-        debugLogger.info("🎯 PHASE 1.2: Getting pool configuration using get_config()")
-        
-        guard let client = sorobanClient else {
-            throw BlendVaultError.notInitialized
+        guard let pool = poolService else {
+            throw BlendError.unknown
         }
-        
-        let result = try await client.invokeMethod(
-            name: "get_config",
-            args: [], // No arguments required
-            methodOptions: MethodOptions(
-                fee: 100_000,
-                timeoutInSeconds: 30,
-                simulate: true,
-                restore: false
-            )
-        )
-        
-        logger.info("🎯 Raw get_config result: \(result)")
-        debugLogger.info("🎯 Raw get_config result: \(result)")
-        
-        // Parse PoolConfig struct - it should be returned as a map
-        guard case .map(let configMapOptional) = result,
-              let configMap = configMapOptional else {
-            logger.error("🎯 ❌ Failed to parse pool config as map")
-            debugLogger.error("🎯 ❌ Failed to parse pool config as map")
-            throw BlendVaultError.invalidResponse
-        }
-        
-        logger.info("🎯 PoolConfig map has \(configMap.count) entries")
-        debugLogger.info("🎯 PoolConfig map has \(configMap.count) entries")
-        
-        // Parse the config fields
-        var backstopRate: UInt32 = 0
-        var maxPositions: UInt32 = 0
-        var minCollateral: Decimal = 0
-        var oracle = ""
-        var status: UInt32 = 0
-        
-        for entry in configMap {
-            if case .symbol(let key) = entry.key {
-                logger.info("🎯 Config key: \(key) = \(String(describing: entry.val))")
-                debugLogger.info("🎯 Config key: \(key) = \(String(describing: entry.val))")
-                
-                switch key {
-                case "bstop_rate":
-                    if case .u32(let value) = entry.val {
-                        backstopRate = value
-                        logger.info("🎯 ✅ Parsed bstop_rate: \(value)")
-                        debugLogger.info("🎯 ✅ Parsed bstop_rate: \(value)")
-                    }
-                case "max_positions":
-                    if case .u32(let value) = entry.val {
-                        maxPositions = value
-                        logger.info("🎯 ✅ Parsed max_positions: \(value)")
-                        debugLogger.info("🎯 ✅ Parsed max_positions: \(value)")
-                    }
-                case "min_collateral":
-                    if case .i128(let value) = entry.val {
-                        minCollateral = parseI128ToDecimal(value)
-                        logger.info("🎯 ✅ Parsed min_collateral: \(minCollateral)")
-                        debugLogger.info("🎯 ✅ Parsed min_collateral: \(minCollateral)")
-                    }
-                case "oracle":
-                    if case .address(let addressXDR) = entry.val {
-                        if let contractId = addressXDR.contractId {
-                            oracle = contractId
-                            logger.info("🎯 ✅ Parsed oracle: \(oracle)")
-                            debugLogger.info("🎯 ✅ Parsed oracle: \(oracle)")
-                        } else if let accountId = addressXDR.accountId {
-                            oracle = accountId
-                            logger.info("🎯 ✅ Parsed oracle (account): \(oracle)")
-                            debugLogger.info("🎯 ✅ Parsed oracle (account): \(oracle)")
-                        }
-                    }
-                case "status":
-                    if case .u32(let value) = entry.val {
-                        status = value
-                        logger.info("🎯 ✅ Parsed status: \(value)")
-                        debugLogger.info("🎯 ✅ Parsed status: \(value)")
-                    }
-                default:
-                    logger.info("🎯 ⚠️ Unknown config key: \(key)")
-                    debugLogger.info("🎯 ⚠️ Unknown config key: \(key)")
-                }
-            }
-        }
-        
-        let poolConfig = PoolConfig(
-            backstopRate: backstopRate,
-            maxPositions: maxPositions,
-            minCollateral: minCollateral,
-            oracle: oracle,
-            status: status
-        )
-        
-        logger.info("🎯 ✅ Pool config parsed successfully:")
-        logger.info("🎯   Backstop Rate: \(backstopRate) (\(Decimal(backstopRate) / 10000)%)")
-        logger.info("🎯   Max Positions: \(maxPositions)")
-        logger.info("🎯   Min Collateral: \(minCollateral)")
-        logger.info("🎯   Oracle: \(oracle)")
-        logger.info("🎯   Status: \(status)")
-        
-        debugLogger.info("🎯 ✅ Pool config parsed successfully:")
-        debugLogger.info("🎯   Backstop Rate: \(backstopRate) (\(Decimal(backstopRate) / 10000)%)")
-        debugLogger.info("🎯   Max Positions: \(maxPositions)")
-        debugLogger.info("🎯   Min Collateral: \(minCollateral)")
-        debugLogger.info("🎯   Oracle: \(oracle)")
-        debugLogger.info("🎯   Status: \(status)")
-        
-        return poolConfig
+        return try await pool.fetchPoolConfig()
     }
+    
     
     /// 🎯 Phase 1.3: Fetch reserve data for all assets
     public func fetchAllPoolReserves() async throws -> [PoolReserveData] {
@@ -3127,14 +2966,7 @@ public class BlendUSDCVault: ObservableObject {
         logger.info("🎯 ✅ Reserve data collection complete:")
         logger.info("🎯   Total assets processed: \(finalAssetAddresses.count)")
         logger.info("🎯   Successful: \(successCount)")
-        logger.info("🎯   Failed: \(failureCount)")
-        logger.info("🎯   Final reserve count: \(reserves.count)")
-        
-        debugLogger.info("🎯 ✅ Reserve data collection complete:")
-        debugLogger.info("🎯   Total assets processed: \(finalAssetAddresses.count)")
-        debugLogger.info("🎯   Successful: \(successCount)")
-        debugLogger.info("🎯   Failed: \(failureCount)")
-        debugLogger.info("🎯   Final reserve count: \(reserves.count)")
+
         
         // Log each reserve for debugging with special attention to wETH and wBTC
         for (index, reserve) in reserves.enumerated() {
@@ -3203,36 +3035,10 @@ public class BlendUSDCVault: ObservableObject {
             reserves: reserves,
             lastUpdated: Date()
         )
+
+        ("\(interpretPoolStatus(config.status)))")
         
-        logger.info("🎯 ✅ TRUE POOL STATISTICS:")
-        logger.info("🎯   Total Supplied: $\(totalSuppliedUSD)")
-        logger.info("🎯   Total Borrowed: $\(totalBorrowedUSD)")
-        logger.info("🎯   Backstop Balance: $\(backstopBalanceUSD)")
-        logger.info("🎯   Overall Utilization: \(overallUtilization * 100)%")
-        logger.info("🎯   Active Reserves: \(reserves.count)")
-        logger.info("🎯   Backstop Rate: \(trueStats.backstopRate * 100)%")
-        logger.info("🎯   Pool Status: \(config.status) (\(interpretPoolStatus(config.status)))")
-        
-        debugLogger.info("🎯 ✅ TRUE POOL STATISTICS:")
-        debugLogger.info("🎯   Total Supplied: $\(totalSuppliedUSD)")
-        debugLogger.info("🎯   Total Borrowed: $\(totalBorrowedUSD)")
-        debugLogger.info("🎯   Backstop Balance: $\(backstopBalanceUSD)")
-        debugLogger.info("🎯   Overall Utilization: \(overallUtilization * 100)%")
-        debugLogger.info("🎯   Active Reserves: \(reserves.count)")
-        debugLogger.info("🎯   Backstop Rate: \(trueStats.backstopRate * 100)%")
-        debugLogger.info("🎯   Pool Status: \(config.status) (\(interpretPoolStatus(config.status)))")
-        
-        // Compare with target values
-        logger.info("🎯 TARGET COMPARISON:")
-        logger.info("🎯   Supplied - Target: $111,280, Actual: $\(totalSuppliedUSD)")
-        logger.info("🎯   Borrowed - Target: $55,500, Actual: $\(totalBorrowedUSD)")
-        logger.info("🎯   Backstop - Target: $353,750, Actual: $\(backstopBalanceUSD)")
-        
-        debugLogger.info("🎯 TARGET COMPARISON:")
-        debugLogger.info("🎯   Supplied - Target: $111,280, Actual: $\(totalSuppliedUSD)")
-        debugLogger.info("🎯   Borrowed - Target: $55,500, Actual: $\(totalBorrowedUSD)")
-        debugLogger.info("🎯   Backstop - Target: $353,750, Actual: $\(backstopBalanceUSD)")
-        
+
         return trueStats
     }
     
@@ -3461,6 +3267,16 @@ public class BlendUSDCVault: ObservableObject {
     }
     
 
+    /// Format a decimal value to a human-readable string with proper formatting
+    /// - Parameter value: The decimal value to format
+    /// - Returns: A formatted string representation
+    private func formatDecimal(_ value: Decimal) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = 7
+        formatter.minimumFractionDigits = 2
+        return formatter.string(from: value as NSDecimalNumber) ?? "0.00"
+    }
     
     /// Helper: Parse Int128PartsXDR to Decimal
     private func parseI128ToDecimal(_ value: Int128PartsXDR) -> Decimal {
@@ -3606,6 +3422,62 @@ public class BlendUSDCVault: ObservableObject {
     }
     
     /// 🎯 Test function to specifically verify wETH and wBTC processing
+    /// Comprehensive exploration of all pool data sources to find the most accurate data
+    /// This method attempts to gather and compare data from multiple sources to identify
+    /// the most reliable sources of pool statistics
+    public func explorePoolDataSources() async throws {
+        logger.info("🎯 🔍 STARTING COMPREHENSIVE POOL DATA SOURCES EXPLORATION")
+        debugLogger.info("🎯 🔍 STARTING COMPREHENSIVE POOL DATA SOURCES EXPLORATION")
+        
+        do {
+            // Step 1: Explore reserve aggregation to understand asset data structure
+            logger.info("🎯 STEP 1: Exploring reserve aggregation patterns")
+            debugLogger.info("🎯 STEP 1: Exploring reserve aggregation patterns")
+            await exploreReserveAggregation()
+            
+            // Step 2: Explore oracle data to understand price data structure
+            logger.info("🎯 STEP 2: Exploring oracle/price data structure")
+            debugLogger.info("🎯 STEP 2: Exploring oracle/price data structure")
+            await exploreOracleData()
+            
+            // Step 3: Run diagnostics to analyze pool health
+            logger.info("🎯 STEP 3: Running comprehensive diagnostics")
+            debugLogger.info("🎯 STEP 3: Running comprehensive diagnostics")
+            try await diagnosePoolStats()
+            
+            // Step 4: Get actual pool stats using the true pool statistics methods
+            logger.info("🎯 STEP 4: Getting true pool statistics")
+            debugLogger.info("🎯 STEP 4: Getting true pool statistics")
+            let trueStats = try await getTruePoolStats()
+            
+            // Step 5: Get backstop data separately since it's from a different contract
+            logger.info("🎯 STEP 5: Getting backstop data")
+            debugLogger.info("🎯 STEP 5: Getting backstop data")
+            let backstopData = try await getActualBackstopData()
+            
+            // Log the combined results
+            logger.info("🎯 ✅ POOL DATA SOURCES EXPLORATION COMPLETE")
+            logger.info("🎯 MOST RELIABLE DATA SOURCES IDENTIFIED:")
+            logger.info("  Total Supply: \(formatDecimal(trueStats.totalSuppliedUSD)) USDC")
+            logger.info("  Total Borrow: \(formatDecimal(trueStats.totalBorrowedUSD)) USDC")
+            logger.info("  Utilization: \(formatDecimal(trueStats.overallUtilization * 100))%")
+            logger.info("  Backstop: \(formatDecimal(backstopData.totalBackstop)) USDC")
+            logger.info("  Reserve Factor: \(formatDecimal(trueStats.backstopRate * 100))%")
+            
+            debugLogger.info("🎯 ✅ POOL DATA SOURCES EXPLORATION COMPLETE")
+            debugLogger.info("🎯 MOST RELIABLE DATA SOURCES IDENTIFIED:")
+            debugLogger.info("  Total Supply: \(formatDecimal(trueStats.totalSuppliedUSD)) USDC")
+            debugLogger.info("  Total Borrow: \(formatDecimal(trueStats.totalBorrowedUSD)) USDC")
+            debugLogger.info("  Utilization: \(formatDecimal(trueStats.overallUtilization * 100))%")
+            debugLogger.info("  Backstop: \(formatDecimal(backstopData.totalBackstop)) USDC")
+            debugLogger.info("  Reserve Factor: \(formatDecimal(trueStats.backstopRate * 100))%")
+        } catch {
+            logger.error("🎯 ❌ POOL DATA EXPLORATION FAILED: \(error.localizedDescription)")
+            debugLogger.error("🎯 ❌ POOL DATA EXPLORATION FAILED: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
     public func testWETHandWBTCProcessing() async throws {
         logger.info("🎯 🧪 TESTING wETH AND wBTC PROCESSING")
         debugLogger.info("🎯 🧪 TESTING wETH AND wBTC PROCESSING")
@@ -3821,34 +3693,7 @@ public struct BadDebtResult {
     public let badDebtAmount: Decimal
 }
 
-/// Result from get_reserve(asset) function for multiple assets
-public struct ReserveDataResult {
-    public let assetAddress: String
-    public let totalSupplied: Decimal
-    public let totalBorrowed: Decimal
-    public let supplyAPY: Decimal
-    public let borrowAPY: Decimal
-    public let utilizationRate: Decimal
-    public let scalar: Decimal
-    
-    public init(
-        assetAddress: String,
-        totalSupplied: Decimal,
-        totalBorrowed: Decimal,
-        supplyAPY: Decimal,
-        borrowAPY: Decimal,
-        utilizationRate: Decimal,
-        scalar: Decimal = Decimal(10_000_000)
-    ) {
-        self.assetAddress = assetAddress
-        self.totalSupplied = totalSupplied
-        self.totalBorrowed = totalBorrowed
-        self.supplyAPY = supplyAPY
-        self.borrowAPY = borrowAPY
-        self.utilizationRate = utilizationRate
-        self.scalar = scalar
-    }
-}
+
 
 // MARK: - Detailed Reserve Data
 

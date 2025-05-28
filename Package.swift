@@ -20,14 +20,16 @@ let package = Package(
         )
     ],
     dependencies: [
-        // Add stellar SDK dependency when available
-        // .package(url: "https://github.com/Soneso/stellar-ios-mac-sdk", from: "2.5.0")
+        // Stellar SDK dependency
+        .package(url: "https://github.com/Soneso/stellar-ios-mac-sdk", from: "2.5.0")
     ],
     targets: [
         // Core functionality target
         .target(
             name: "BlendCore",
-            dependencies: [],
+            dependencies: [
+                .product(name: "stellarsdk", package: "stellar-ios-mac-sdk")
+            ],
             path: "Blendv3/Core"
         ),
         

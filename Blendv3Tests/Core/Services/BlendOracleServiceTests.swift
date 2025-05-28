@@ -518,7 +518,7 @@ final class BlendOracleServiceTests: XCTestCase {
 
 // MARK: - Mock Services
 
-private class MockNetworkService: NetworkServiceProtocol {
+private class MockNetworkService: BlendNetworkServiceProtocol {
     var shouldThrowError = false
     var errorToThrow: Error = OracleError.networkError(NSError(domain: "test", code: 1))
     var mockInvalidResponse = false

@@ -10,6 +10,8 @@ import Foundation
 import Combine
 import stellarsdk
 
+// No typealias needed - we'll use PoolConfig directly
+
 /// Diagnostic level for pool analysis
 public enum DiagnosticsLevel {
     case basic          // Basic connectivity and contract access
@@ -92,7 +94,7 @@ public class BlendPoolDiagnosticsService {
             errors: [],
             backstopData: nil,
             poolConfig: nil,
-            advancedMetrics: nil
+            advancedMetrics: nil as [String: Any]?
         )
         
         // Step 1: Check network connectivity
@@ -358,9 +360,9 @@ public class BlendPoolDiagnosticsService {
             case .success:
                 logger.info("✅ Network connectivity check passed")
                 return (true, nil)
-            case .error(let message):
-                logger.warning("⚠️ Health check failed: \(message)")
-                return (false, NSError(domain: "com.blendv3.diagnostics", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Health check failed: \(message)"]))
+            case .failure(let error):
+                logger.warning("⚠️ Health check failed: \(error)")
+                return (false, NSError(domain: "com.blendv3.diagnostics", code: 1001, userInfo: [NSLocalizedDescriptionKey: "Health check failed: \(error)"]))
             }
         } catch {
             logger.error("❌ Network connectivity check failed: \(error.localizedDescription)")
@@ -375,7 +377,7 @@ public class BlendPoolDiagnosticsService {
         }
         
         let result = try await client.invokeMethod(
-            method: "get_reserves",
+            name: "get_reserves",
             args: []
         )
         
@@ -387,7 +389,7 @@ public class BlendPoolDiagnosticsService {
         // Extract asset addresses from the vector
         let assetAddresses = items.compactMap { item -> String? in
             if case .address(let address) = item, let contractId = address.contractId {
-                return contractId.hexValue
+                return contractId
             }
             return nil
         }
@@ -403,7 +405,7 @@ public class BlendPoolDiagnosticsService {
         }
         
         let result = try await client.invokeMethod(
-            method: "get_config",
+            name: "get_config",
             args: []
         )
         
@@ -413,10 +415,7 @@ public class BlendPoolDiagnosticsService {
         }
         
         // Extract configuration values from the map
-        var backstopRate: Decimal = 0
-        var borrowFee: Decimal = 0
-        var liquidationBonus: Decimal = 0
-        var liquidationThreshold: Decimal = 0
+        var backstopRate: UInt32 = 0
         var maxPositions: UInt32 = 0
         var minCollateral: Decimal = 0
         var oracle: String = ""
@@ -426,20 +425,8 @@ public class BlendPoolDiagnosticsService {
             if case .symbol(let key) = entry.key {
                 switch key {
                 case "backstop_rate":
-                    if case .i128(let value) = entry.val {
-                        backstopRate = parseI128ToDecimal(value)
-                    }
-                case "borrow_fee":
-                    if case .i128(let value) = entry.val {
-                        borrowFee = parseI128ToDecimal(value)
-                    }
-                case "liquidation_bonus":
-                    if case .i128(let value) = entry.val {
-                        liquidationBonus = parseI128ToDecimal(value)
-                    }
-                case "liquidation_threshold":
-                    if case .i128(let value) = entry.val {
-                        liquidationThreshold = parseI128ToDecimal(value)
+                    if case .u32(let value) = entry.val {
+                        backstopRate = value
                     }
                 case "max_positions":
                     if case .u32(let value) = entry.val {
@@ -451,7 +438,7 @@ public class BlendPoolDiagnosticsService {
                     }
                 case "oracle":
                     if case .address(let value) = entry.val, let contractId = value.contractId {
-                        oracle = contractId.hexValue
+                        oracle = contractId
                     }
                 case "status":
                     if case .u32(let value) = entry.val {
@@ -465,9 +452,6 @@ public class BlendPoolDiagnosticsService {
         
         return PoolConfig(
             backstopRate: backstopRate,
-            borrowFee: borrowFee,
-            liquidationBonus: liquidationBonus,
-            liquidationThreshold: liquidationThreshold,
             maxPositions: maxPositions,
             minCollateral: minCollateral,
             oracle: oracle,
@@ -497,7 +481,7 @@ public class BlendPoolDiagnosticsService {
         
         // Call the get_total_backstop method
         let result = try await backstopClient.invokeMethod(
-            method: "get_total_backstop",
+            name: "get_total_backstop",
             args: []
         )
         
@@ -511,8 +495,11 @@ public class BlendPoolDiagnosticsService {
         // For now, we'll return a basic BackstopData object
         return BackstopData(
             totalBackstop: totalBackstop,
-            backstopAPY: Decimal(0), // This would need to be calculated or fetched
-            backstopRewards: Decimal(0) // This would need to be calculated or fetched
+            backstopApr: Decimal(0), // This would need to be calculated or fetched
+            q4wPercentage: Decimal(0), // This would need to be calculated or fetched
+            takeRate: Decimal(0.10), // Default 10% take rate
+            blndAmount: totalBackstop * Decimal(0.7), // Assume 70% BLND
+            usdcAmount: totalBackstop * Decimal(0.3) // Assume 30% USDC
         )
     }
     
@@ -561,9 +548,9 @@ public class BlendPoolDiagnosticsService {
                 }
                 
                 let result = try await client.invokeMethod(
-                    method: "get_reserve",
+                    name: "get_reserve",
                     args: [
-                        try SCValXDR.address(SCAddressXDR.fromContractId(contractId: assetAddress))
+                        try SCValXDR.address(SCAddressXDR(contractId: assetAddress))
                     ]
                 )
                 
@@ -593,8 +580,8 @@ public class BlendPoolDiagnosticsService {
             
             // Get factory address
             let factoryAddress = networkType == .testnet ? 
-                BlendUSDCConstants.Testnet.factory :
-                BlendUSDCConstants.Mainnet.factory
+                BlendUSDCConstants.Testnet.poolFactory :
+                BlendUSDCConstants.Mainnet.poolFactory
             
             // Create a new client for the factory contract
             let factoryOptions = ClientOptions(
@@ -609,13 +596,13 @@ public class BlendPoolDiagnosticsService {
             
             // Call get_pool to check if it works
             let result = try await factoryClient.invokeMethod(
-                method: "get_pool",
+                name: "get_pool",
                 args: []
             )
             
             // Just check if we got a valid response
             if case .address(let address) = result, let contractId = address.contractId {
-                results["get_pool"] = "Success: \(contractId.hexValue)"
+                results["get_pool"] = "Success: \(contractId)"
             } else {
                 results["get_pool"] = "Unexpected response format: \(result)"
             }
@@ -631,9 +618,9 @@ public class BlendPoolDiagnosticsService {
         switch address {
         case BlendUSDCConstants.Testnet.usdc, BlendUSDCConstants.Mainnet.usdc:
             return "USDC"
-        case BlendUSDCConstants.Testnet.wbtc, BlendUSDCConstants.Mainnet.wbtc:
+        case BlendUSDCConstants.Testnet.wbtc, BlendUSDCConstants.Testnet.wbtc:
             return "wBTC"
-        case BlendUSDCConstants.Testnet.weth, BlendUSDCConstants.Mainnet.weth:
+        case BlendUSDCConstants.Testnet.weth, BlendUSDCConstants.Testnet.weth:
             return "wETH"
         case BlendUSDCConstants.Testnet.xlm, BlendUSDCConstants.Mainnet.xlm:
             return "XLM"
