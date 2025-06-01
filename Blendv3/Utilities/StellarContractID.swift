@@ -349,3 +349,50 @@ private extension Character {
         return ("0"..."9").contains(self) || ("a"..."f").contains(self) || ("A"..."F").contains(self)
     }
 }
+
+
+// MARK: - Flexible Decode Convenience -------------------------------------
+
+public extension StellarContractID {
+    /// Decodes **either** a StrKey Soroban contract address (starts with "C")
+    /// **or** a raw 32‑byte hex string (with or without a leading `0x`).
+    ///
+    /// - Parameter input: User‑supplied identifier.
+    /// - Returns: Lower‑case 64‑character hex representation of the contract hash.
+    /// - Throws: `StellarContractIDError` when the input is malformed.
+    static func decodeFlexible(_ input: String) throws -> String {
+        let trimmed = input.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        // Branch 1 – StrKey address
+        if trimmed.first == "C" {
+            return try decode(strKey: trimmed)
+        }
+        
+        // Branch 2 – Raw hex (handle optional 0x prefix)
+        let hexString = trimmed.hasPrefix("0x")
+            ? String(trimmed.dropFirst(2))
+            : trimmed
+        
+        // Validate length (must represent 32 bytes)
+        guard hexString.count == expectedHexLength else {
+            throw StellarContractIDError.invalidHexLength(
+                expected: expectedHexLength,
+                actual: hexString.count
+            )
+        }
+        
+        // Validate characters by attempting hex → Data conversion
+        _ = try dataFromHex(hexString)   // will throw on bad characters
+        
+        // Already valid hex; normalise to lower‑case and return
+        return hexString.lowercased()
+    }
+}
+
+extension StellarContractID {
+    /// Returns the canonical StrKey contract address (`C…`) for **any** supported input.
+    static func toStrKey(_ input: String) throws -> String {
+        let hex = try decodeFlexible(input)   // step 1
+        return try encode(hex: hex)           // step 2
+    }
+}

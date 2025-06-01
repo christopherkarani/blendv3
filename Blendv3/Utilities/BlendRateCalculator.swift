@@ -191,4 +191,16 @@ public final class BlendRateCalculator: BlendRateCalculatorProtocol {
         BlendLogger.debug("Calculating borrow APY from APR: \(apr)", category: BlendLogger.rateCalculation)
         return convertAPRtoAPY(apr, compoundingPeriods: borrowCompoundingPeriods)
     }
-} 
+    
+    // MARK: - APY Calculation from BlendAssetData
+    
+    /// Calculates APY from BlendAssetData
+    /// - Parameter assetData: The blend asset data containing rates
+    /// - Returns: Tuple containing (supplyAPY, borrowAPY)
+    public func calculateAPY(from assetData: BlendAssetData) -> (supplyAPY: Decimal, borrowAPY: Decimal) {
+        let supplyAPY = convertAPRtoAPY(assetData.supplyRate / 100, compoundingPeriods: supplyCompoundingPeriods)
+        let borrowAPY = convertAPRtoAPY(assetData.borrowRate / 100, compoundingPeriods: borrowCompoundingPeriods)
+        
+        return (supplyAPY: supplyAPY * 100, borrowAPY: borrowAPY * 100)
+    }
+}

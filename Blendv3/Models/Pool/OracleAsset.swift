@@ -8,9 +8,6 @@
 import Foundation
 import stellarsdk
 
-// Import the Blendv3 module for StellarContractID utility
-import Blendv3
-
 // MARK: - Data Extension for Hex Conversion
 
 fileprivate extension Data {
@@ -209,7 +206,7 @@ public enum OracleAsset: Codable, Equatable, CustomStringConvertible {
     public var assetId: String {
         switch self {
         case .stellar(let address):
-            return "stellar:\(address)"
+            return "\(address)"
         case .other(let symbol):
             return "other:\(symbol)"
         }

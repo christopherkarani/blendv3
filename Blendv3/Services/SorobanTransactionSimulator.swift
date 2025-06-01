@@ -40,8 +40,6 @@ class SorobanTransactionBuilder {
      * - Throws: OracleError if transaction building fails
      */
     func buildSimulationTransaction(for contractCall: ContractCallParams) throws -> Transaction {
-        BlendLogger.debug("🔨 Building transaction for contract: \(contractCall.contractId)", category: logger)
-        
         do {
             // Create the contract invocation operation
             let operation = try createInvokeOperation(from: contractCall)
@@ -56,11 +54,9 @@ class SorobanTransactionBuilder {
                 memo: Memo.none
             )
             
-            BlendLogger.debug("🔨 Successfully built transaction", category: logger)
             return transaction
             
         } catch {
-            BlendLogger.error("🔨 Failed to build transaction", error: error, category: logger)
             throw OracleError.transactionBuildError(underlying: error)
         }
     }
@@ -192,7 +188,6 @@ class SorobanTransactionParser {
      */
     func parseXDRString(_ xdrString: String) throws -> SCValXDR {
         BlendLogger.debug("📋 Parsing XDR string", category: logger)
-        print("XXXXX: \(xdrString)")
         do {
             let scVal = try SCValXDR(xdr: xdrString)
             BlendLogger.debug("📋 Successfully parsed XDR", category: logger)
@@ -301,16 +296,6 @@ class SorobanTransactionParser {
             // Step 2: Execute the simulation
             let response = try await executeSimulationRequest(server: server, transaction: transaction)
             
-//            func decodeEvent(_ b64: String) {
-//                let data = Data(base64Encoded: b64)!
-//                print(Hex.encode(data))        // raw bytes
-//                if let ascii = String(data: data, encoding: .ascii) {
-//                    print(ascii.filter { $0.isASCII })
-//                }
-//            }
-//            for word in response.results {
-//                decodeEvent(word)
-//            }
             
             // Step 3: Parse and return the result
             let result = try parseSimulationResponse(response, contractCall: contractCall)
@@ -355,8 +340,6 @@ class SorobanTransactionParser {
         switch stellarResponse {
         case .success(let sdkResponse):
             BlendLogger.debug("🔮 Simulation request successful", category: logger)
-            print("XXXX: Reasponse: \(sdkResponse)")
-            dump(sdkResponse)
             return responseConverter.convertToBlendResponse(sdkResponse)
             
         case .failure(let error):

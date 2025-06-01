@@ -20,7 +20,9 @@ struct ContractCallParams {
 }
 
 /// Oracle service implementation with correct Blend oracle functions
-public final class BlendOracleService: BlendOracleServiceProtocol {
+public final class BlendOracleService {
+
+    
     public func getOracleDecimals() async throws -> Int {
         try await fetchOracleDecimals()
     }
@@ -100,12 +102,10 @@ internal func simulateContractCall(sorobanServer: SorobanServer, contractCall: C
         debugLogger.info("🔮 📝 createAssetParameter called with: \(contractAddress)")
         
         // Normalize the contract address to ensure it's in proper Soroban format
-        let normalizedAddress = normalizeContractAddress(contractAddress) ?? contractAddress
-        BlendLogger.debug("🔮 📝 Normalized address: \(normalizedAddress)", category: BlendLogger.oracle)
-        debugLogger.info("🔮 📝 Normalized address: \(normalizedAddress)")
+      //  let normalizedAddress = normalizeContractAddress(contractAddress) ?? contractAddress
         
         // Create Asset::Stellar(address) enum variant
-        let contractAddressXdr = try SCAddressXDR(contractId: normalizedAddress)
+        let contractAddressXdr = try SCAddressXDR(contractId: contractAddress)
         let addressVal = SCValXDR.address(contractAddressXdr)
         
         // Based on Blend Protocol documentation and Stellar SDK patterns,
@@ -115,9 +115,6 @@ internal func simulateContractCall(sorobanServer: SorobanServer, contractCall: C
             SCValXDR.symbol("Stellar"),
             addressVal
         ])
-        
-        BlendLogger.debug("🔮 ✅ Asset parameter created successfully", category: BlendLogger.oracle)
-        debugLogger.info("🔮 ✅ Asset parameter created for \(getAssetSymbol(for: contractAddress))")
         
         return assetVariant
     }
@@ -133,61 +130,40 @@ internal func simulateContractCall(sorobanServer: SorobanServer, contractCall: C
     }
     
     /// Parse Option<PriceData> from oracle response
-    internal func parseOptionalPriceData(from resultXdr: SCValXDR, assetId: String) throws -> PriceData? {
-        let symbol = getAssetSymbol(for: assetId)
-        
-        // Based on Blend Protocol documentation, Option<T> in Soroban can be:
-        // - None: represented as void/null
-        // - Some(T): represented as an instance with the value
+    internal func parseOptionalPriceData(from resultXdr: SCValXDR, asset: OracleAsset) throws -> PriceData? {
+        let symbol = getAssetSymbol(for: asset.assetId)
         
         switch resultXdr {
         case .void:
-            // None case - no price data available
-            BlendLogger.debug("🔮 ❌ No price data available (None) for asset: \(symbol)", category: BlendLogger.oracle)
-            debugLogger.info("🔮 ❌ Oracle returned None for \(symbol)")
             return nil
-            
         case .vec(let vecOptional):
             // Some(PriceData) case - might be wrapped in a vector
             guard let vec = vecOptional, !vec.isEmpty else {
                 BlendLogger.debug("🔮 ❌ Empty vector for \(symbol)", category: BlendLogger.oracle)
                 return nil
             }
-            
-            // Try to parse the first element as PriceData
-            BlendLogger.debug("🔮 ✅ Found vector with \(vec.count) elements for \(symbol), parsing first...", category: BlendLogger.oracle)
-            debugLogger.info("🔮 ✅ Vector found, parsing first element as PriceData")
-            return try parseWrappedPriceData(from: vec[0], assetId: assetId)
-            
+            return try parseWrappedPriceData(from: vec[0], assetId: asset.assetId)
         case .map(let mapOptional):
             // Direct PriceData struct (no Option wrapper)
             guard let map = mapOptional else {
-                BlendLogger.error("🔮 💥 Invalid map response for \(symbol)", category: BlendLogger.oracle)
-                debugLogger.error("🔮 💥 Map is nil for \(symbol)")
-                let details = "Map is nil in direct PriceData response"
-                throw OracleError.invalidResponse(details: details, rawData: String(describing: resultXdr))
+                throw OracleError.invalidResponse(
+                    details:  "Map is nil in direct PriceData response",
+                    rawData: String(describing: resultXdr)
+                )
             }
-            
-            BlendLogger.debug("🔮 ✅ Found direct PriceData map for \(symbol), parsing...", category: BlendLogger.oracle)
-            debugLogger.info("🔮 ✅ Parsing direct PriceData struct for \(symbol)")
-            return try parsePriceDataStruct(from: map, assetId: assetId)
+            return try parsePriceDataStruct(from: map, assetId: asset.assetId)
             
         case .i128(let priceValue):
-            // Simple price value (just the price as i128, no timestamp)
-            BlendLogger.debug("🔮 💰 Found simple price value for \(symbol)", category: BlendLogger.oracle)
             debugLogger.info("🔮 💰 Parsing simple i128 price for \(symbol)")
             let price = parseI128ToDecimal(priceValue)
             return PriceData(
                 price: price,
                 timestamp: Date(), // Use current time if no timestamp provided
-                assetId: assetId,
+                assetId: asset.assetId,
                 decimals: 7
             )
             
         default:
-            BlendLogger.warning("🔮 ⚠️ Unexpected oracle response format for asset: \(symbol)", category: BlendLogger.oracle)
-            debugLogger.warning("🔮 ⚠️ Unexpected response format for \(symbol): \(resultXdr)")
-            debugLogger.warning("🔮 ⚠️ XDR details: \(resultXdr)")
             let details = "Unexpected XDR type: \(String(describing: type(of: resultXdr)))"
             throw OracleError.invalidResponse(details: details, rawData: String(describing: resultXdr))
         }
@@ -217,12 +193,9 @@ internal func simulateContractCall(sorobanServer: SorobanServer, contractCall: C
                     priceDataArray.append(priceData)
                 }
             }
-            
-            BlendLogger.debug("Parsed \(priceDataArray.count) price records for asset: \(assetId)", category: BlendLogger.oracle)
             return priceDataArray
             
         default:
-            BlendLogger.warning("Unexpected oracle response format for price vector: \(assetId)", category: BlendLogger.oracle)
             let details = "Unexpected XDR type for price vector: \(String(describing: type(of: resultXdr)))"
             throw OracleError.invalidResponse(details: details, rawData: String(describing: resultXdr))
         }
@@ -317,13 +290,13 @@ internal func simulateContractCall(sorobanServer: SorobanServer, contractCall: C
         }
         
         let priceData = PriceData(
-            price: finalPrice,
+            price: FixedMath.toFloat(value: finalPrice, decimals: 7),
             timestamp: finalTimestamp,
             assetId: assetId,
             decimals: 7 // Default to 7 decimals for Blend
         )
         
-        BlendLogger.debug("🔮 ✅ Successfully parsed PriceData for \(symbol): price=\(finalPrice), timestamp=\(finalTimestamp)", category: BlendLogger.oracle)
+        BlendLogger.debug("🔮 ✅ Successfully parsed PriceData for \(symbol): price=\(FixedMath.toFloat(value: finalPrice, decimals: 7)), timestamp=\(finalTimestamp)", category: BlendLogger.oracle)
         debugLogger.info("🔮 ✅ PriceData created for \(symbol): $\(priceData.priceInUSD)")
         
         return priceData

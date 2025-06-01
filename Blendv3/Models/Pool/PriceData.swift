@@ -16,7 +16,7 @@ public struct PriceData: Codable {
     public let timestamp: Date
     
     /// Asset that this price is for
-    public let asset: OracleAsset
+    public let contractID: String
     
     /// Decimal precision for the price (from contract's decimals function)
     public let decimals: Int
@@ -24,25 +24,28 @@ public struct PriceData: Codable {
     /// Resolution factor for price calculations (from contract's resolution function)
     public let resolution: Int
     
+    public let baseAsset: String
+    
     // MARK: - Codable
     
     private enum CodingKeys: String, CodingKey {
         case price
         case timestamp
-        case asset
+        case contractID = "asset"
         case decimals
         case resolution
+        case baseAsset
     }
     
     /// Legacy assetId accessor for backward compatibility
-    public var assetId: String {
-        switch asset {
-        case .stellar(let address):
-            return address
-        case .other(let symbol):
-            return symbol
-        }
-    }
+//    public var assetId: String {
+//        switch contractID {
+//        case .stellar(let address):
+//            return address
+//        case .other(let symbol):
+//            return symbol
+//        }
+//    }
     
     /// The price in USD for display and calculations
     public var priceInUSD: Decimal {
@@ -56,12 +59,13 @@ public struct PriceData: Codable {
     ///   - asset: Asset that this price is for
     ///   - decimals: Decimal precision for the price
     ///   - resolution: Resolution factor for price calculations
-    public init(price: Decimal, timestamp: Date, asset: OracleAsset, decimals: Int, resolution: Int = 1) {
+    public init(price: Decimal, timestamp: Date, contractID: String, decimals: Int, resolution: Int = 1, baseAsset: String) {
         self.price = price
         self.timestamp = timestamp
-        self.asset = asset
+        self.contractID = contractID
         self.decimals = decimals
         self.resolution = resolution
+        self.baseAsset = baseAsset
     }
     
     /// Legacy initializer for backward compatibility
@@ -75,10 +79,12 @@ public struct PriceData: Codable {
         self.timestamp = timestamp
         
         // Assume stellar asset for existing code paths
-        self.asset = .stellar(address: assetId)
+        self.contractID = assetId
         
         self.decimals = decimals
         self.resolution = 1 // Default resolution for backward compatibility
+        
+        baseAsset = try! StellarContractID.toStrKey(contractID) 
     }
     
     /// Check if the price data is older than a specified age
@@ -109,7 +115,7 @@ public struct PriceData: Codable {
     public static func fromContractData(
         price: Int128PartsXDR,
         timestamp: UInt64,
-        asset: OracleAsset,
+        contractID: String,
         decimals: Int,
         resolution: Int
     ) -> PriceData {
@@ -121,12 +127,14 @@ public struct PriceData: Codable {
             resolution: resolution
         )
         
+        let asset = try? StellarContractID.toStrKey(contractID)
         return PriceData(
             price: oraclePrice.price,
             timestamp: oraclePrice.timestamp,
-            asset: asset,
+            contractID: contractID,
             decimals: decimals,
-            resolution: resolution
+            resolution: resolution,
+            baseAsset: asset ?? ""
         )
     }
     
@@ -138,6 +146,10 @@ public struct PriceData: Codable {
         let u64Timestamp = UInt64(timestamp.timeIntervalSince1970)
         
         return (i128Price, u64Timestamp)
+    }
+    
+    public var toNumber: Decimal {
+        FixedMath.toFloat(value: price, decimals: decimals)
     }
     
     /// Format the price for display

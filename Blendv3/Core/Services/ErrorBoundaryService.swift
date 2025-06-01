@@ -193,6 +193,8 @@ final class ErrorBoundaryService: ErrorBoundaryServiceProtocol {
             return false // These are not recoverable through retry
         case .transaction(.rejected), .transaction(.insufficientFee):
             return false // These require user action
+        case .assetRetrivalFailed:
+            return false 
         }
     }
     

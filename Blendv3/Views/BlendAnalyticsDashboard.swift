@@ -953,18 +953,14 @@ class BlendAnalyticsViewModel: ObservableObject {
         async let kpiTask = fetchKPIMetrics()
         async let rateTask = fetchRateData()
         async let backstopTask = fetchBackstopData()
-        async let emissionsTask = fetchEmissionsData()
         async let auctionTask = fetchAuctionData()
-        async let analyticsTask = fetchAnalyticsData()
         
         // Wait for all tasks
         poolStatus = await poolStatusTask
         kpiMetrics = await kpiTask
         await rateTask
         await backstopTask
-        await emissionsTask
         await auctionTask
-        await analyticsTask
         
         lastUpdate = Date()
         BlendLogger.info("Analytics data refresh completed", category: BlendLogger.ui)
@@ -1159,57 +1155,6 @@ class BlendAnalyticsViewModel: ObservableObject {
         backstopValue = String(format: "$%.0f", totalValue)
     }
     
-    private func fetchEmissionsData() async {
-        BlendLogger.info("🔄 Fetching real emissions data for analytics dashboard", category: BlendLogger.ui)
-        
-        do {
-            // Get real BLND price from oracle service
-            let prices = try await oracleService.getPrices(assets: ["BLND"])
-            if let blndPriceData = prices["BLND"] {
-                blndPrice = NSDecimalNumber(decimal: blndPriceData.price).doubleValue
-                BlendLogger.info("✅ Real BLND price loaded: $\(blndPrice)", category: BlendLogger.ui)
-            } else {
-                blndPrice = 0.05 // Fallback price
-                BlendLogger.warning("⚠️ Using fallback BLND price: $\(blndPrice)", category: BlendLogger.ui)
-            }
-            
-            // For now, create minimal emissions data (would need real emissions contract integration)
-            emissionsData = [
-                EmissionsData(
-                    poolId: "USDC_Pool",
-                    blndTokenAddress: "blnd_token",
-                    emissionsPerSecond: FixedMath.toFixed(value: 0.1, decimals: 7),
-                    totalAllocated: FixedMath.toFixed(value: 1000000, decimals: 7),
-                    endTime: Date().addingTimeInterval(86400 * 365)
-                )
-            ]
-            
-            // Create minimal user emissions states (would need real user data)
-            userEmissionsStates = []
-            
-            // Calculate total emissions distributed (would be from real contract data)
-            let totalDistributed = emissionsData.reduce(Decimal.zero) { total, emission in
-                // Estimate distributed based on time elapsed and rate
-                let timeElapsed = Date().timeIntervalSince(Date().addingTimeInterval(-86400 * 30)) // 30 days
-                let emissionsPerSecondDouble = NSDecimalNumber(decimal: FixedMath.toFloat(value: emission.emissionsPerSecond, decimals: 7)).doubleValue
-                let estimatedDistributed = emissionsPerSecondDouble * timeElapsed
-                return total + Decimal(estimatedDistributed)
-            }
-            
-            totalEmissionsDistributed = String(format: "%.0f BLND", NSDecimalNumber(decimal: totalDistributed).doubleValue)
-            
-            BlendLogger.info("✅ Emissions data processed: distributed=\(totalEmissionsDistributed)", category: BlendLogger.ui)
-            
-        } catch {
-            BlendLogger.error("❌ Failed to fetch emissions data: \(error)", category: BlendLogger.ui)
-            
-            // Fallback values
-            blndPrice = 0.05
-            emissionsData = []
-            userEmissionsStates = []
-            totalEmissionsDistributed = "0 BLND"
-        }
-    }
     
     private func fetchAuctionData() async {
         // Create sample auction data
@@ -1226,87 +1171,7 @@ class BlendAnalyticsViewModel: ObservableObject {
         ]
     }
     
-    private func fetchAnalyticsData() async {
-        BlendLogger.info("🔄 Fetching real analytics data for dashboard", category: BlendLogger.ui)
-        
-        // Create realistic cache metrics (would integrate with real cache service)
-        let realCacheMetrics = (hitRate: 0.85, totalRequests: 1000, averageResponseTime: 45.0)
-        
-        // Calculate real performance metrics
-        let startTime = Date()
-        
-        // Perform a sample calculation to measure performance
-        do {
-            _ = try await oracleService.getPrices(assets: BlendUSDCConstants.Testnet.assetContracts)
-            let calculationTime = Date().timeIntervalSince(startTime)
-            
-            performanceMetrics = PerformanceMetrics(
-                averageCalculationTime: calculationTime,
-                cacheHitRate: realCacheMetrics.hitRate,
-                errorRate: 0.001, // Would track real error rate
-                throughput: Int(1.0 / calculationTime) // Rough throughput estimate
-            )
-            
-            BlendLogger.info("✅ Real performance metrics calculated: calc_time=\(calculationTime)s", category: BlendLogger.ui)
-            
-        } catch {
-            BlendLogger.error("❌ Failed to measure performance: \(error)", category: BlendLogger.ui)
-            
-            // Fallback performance metrics
-            performanceMetrics = PerformanceMetrics(
-                averageCalculationTime: 1.0,
-                cacheHitRate: 0.8,
-                errorRate: 0.01,
-                throughput: 100
-            )
-        }
-        
-        // Get real logging metrics (would need real log tracking)
-        loggingMetrics = LoggingMetrics(
-            totalLogs: 10000, // Would track real log counts
-            errorLogs: 10,
-            warningLogs: 50,
-            infoLogs: 9940
-        )
-        
-        // Use real cache metrics
-        cacheMetrics = CacheMetrics(
-            hitRate: realCacheMetrics.hitRate,
-            missRate: 1.0 - realCacheMetrics.hitRate,
-            totalRequests: realCacheMetrics.totalRequests,
-            averageResponseTime: realCacheMetrics.averageResponseTime
-        )
-        
-        // Calculate real oracle metrics
-        let oracleStartTime = Date()
-        do {
-           
-            let prices = try await oracleService.getPrices(assets:  BlendUSDCConstants.Testnet.assetContracts)
-            let oracleLatency = Date().timeIntervalSince(oracleStartTime) * 1000 // Convert to ms
-            
-            oracleMetrics = OracleMetrics(
-                successRate: 0.99, // Would track real success rate
-                averageLatency: oracleLatency,
-                priceUpdates24h: prices.count * 24, // Rough estimate
-                stalePrices: 0 // Would check for stale prices
-            )
-            
-            BlendLogger.info("✅ Real oracle metrics calculated: latency=\(oracleLatency)ms", category: BlendLogger.ui)
-            
-        } catch {
-            BlendLogger.error("❌ Failed to measure oracle performance: \(error)", category: BlendLogger.ui)
-            
-            // Fallback oracle metrics
-            oracleMetrics = OracleMetrics(
-                successRate: 0.95,
-                averageLatency: 200.0,
-                priceUpdates24h: 1440,
-                stalePrices: 1
-            )
-        }
-        
-        BlendLogger.info("✅ Analytics data collection completed", category: BlendLogger.ui)
-    }
+   
     
     // MARK: - Data Access Methods
     

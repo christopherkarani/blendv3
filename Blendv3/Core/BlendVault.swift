@@ -92,10 +92,10 @@ public final class BlendVault: ObservableObject {
             try await self.networkService.initialize()
             
             // Fetch initial pool stats
-            let statsResult = await self.dataService.fetchPoolStats()
-            if case .success(let stats) = statsResult {
-                self.poolStats = stats
-            }
+            _ = try await self.dataService.fetchPoolStats()
+//            if case .success(let stats) = statsResult {
+//                self.poolStats = stats
+//            }
             
             await self.stateManagement.setInitState(.ready)
             self.startAutoRefresh()
@@ -204,20 +204,20 @@ public final class BlendVault: ObservableObject {
     public func refreshPoolData() async {
         logger.debug("Refreshing pool data")
         
-        let result = await dataService.fetchPoolStats()
-        if case .success(let stats) = result {
-            poolStats = stats
-        }
+//        let result = await dataService.fetchPoolStats()
+//        if case .success(let stats) = result {
+//            poolStats = stats
+//        }
     }
     
     /// Refresh user position data
     public func refreshUserData(userId: String) async {
         logger.debug("Refreshing user data for: \(userId)")
-        
-        let result = await dataService.fetchUserPosition(userId: userId)
-        if case .success(let position) = result {
-            userPosition = position
-        }
+//        
+//        let result = await dataService.fetchUserPosition(userId: userId)
+//        if case .success(let position) = result {
+//            userPosition = position
+//        }
     }
     
     /// Clear all cached data

@@ -8,13 +8,14 @@
 import Foundation
 import stellarsdk
 
-protocol PoolServiceProtocol {
-    func fetchPoolConfig() async throws -> PoolConfig
-}
+
 
 struct PoolService: PoolServiceProtocol {
+    let poolAssets: [String] = []
     let sorobanClient: SorobanClient
+    private let logger = DebugLogger(subsystem: "com.blendv3.debug", category: "Pool Service")
 
+    
     // Fetch PoolConfig from the blockchain
     func fetchPoolConfig() async throws -> PoolConfig {
         let result = try await sorobanClient.invokeMethod(
@@ -50,7 +51,7 @@ struct PoolService: PoolServiceProtocol {
             case ("max_positions", .u32(let v)):
                 maxPositions = v
             case ("min_collateral", .i128(let v)):
-                minCollateral = parseI128ToDecimal(v)
+                minCollateral = BlendParser.parseI128ToDecimal(v)
             case ("oracle", .address(let addr)):
                 oracle = addr.contractId ?? addr.accountId ?? ""
             case ("status", .u32(let v)):
@@ -68,29 +69,30 @@ struct PoolService: PoolServiceProtocol {
             status: status
         )
     }
+}
 
-    // Helper to convert Int128PartsXDR to Decimal
-    private func parseI128ToDecimal(_ value: Int128PartsXDR) -> Decimal {
-        // Convert i128 to a single 128-bit integer value
-        let fullValue: Decimal
-        if value.hi == 0 {
-            // Simple case: only low 64 bits are used
-            fullValue = Decimal(value.lo)
-        } else if value.hi == -1 && (value.lo & 0x8000000000000000) != 0 {
-            // Negative number in two's complement
-            let signedLo = Int64(bitPattern: value.lo)
-            fullValue = Decimal(signedLo)
-        } else {
-            // Large positive number: combine hi and lo parts
-            // hi represents the upper 64 bits, lo represents the lower 64 bits
-            let hiDecimal = Decimal(value.hi) * Decimal(sign: .plus, exponent: 64, significand: 1)
-            let loDecimal = Decimal(value.lo)
-            fullValue = hiDecimal + loDecimal
+extension PoolService {
+    public func getPoolStatus() async throws  {
+        do {
+            let statusResult = try await sorobanClient.invokeMethod(
+                name: "get_status",
+                args: [],
+                methodOptions: stellarsdk.MethodOptions(
+                    fee: 100_000,
+                    timeoutInSeconds: 30,
+                    simulate: true,
+                    restore: false
+                )
+            )
+            
+            logger.info("✅ Pool status retrieved: \(String(describing: statusResult))")
+            
+
+            
+        } catch {
+            logger.error("❌ Failed to get pool status: \(error)")
+            throw BlendVaultError.networkError(error.localizedDescription)
         }
-        // The value from the oracle is in fixed-point format with 7 decimals
-        // So we need to return the raw value as-is (it's already scaled)
-        return fullValue
     }
 }
 
-//

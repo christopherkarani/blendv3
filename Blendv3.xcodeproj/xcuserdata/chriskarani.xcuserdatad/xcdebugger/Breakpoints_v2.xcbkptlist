@@ -14,8 +14,8 @@
             filePath = "Blendv3/Views/BlendDashboardView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2226"
-            endingLineNumber = "2226"
+            startingLineNumber = "2223"
+            endingLineNumber = "2223"
             landmarkName = "utilizationColor(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -215,61 +215,45 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "68A440D9-A83F-4734-A1C2-2C7E9B791839"
+            uuid = "C85605B4-B01B-4F1A-A951-03E77762C466"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Blendv3/BlendUSDCVault.swift"
+            filePath = "Blendv3/Services/SorobanTransactionSimulator.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1104"
-            endingLineNumber = "1104"
-            landmarkName = "getReserveData(assetAddress:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "BC3CC398-AC02-4E52-84C1-36D292529BD6"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blendv3/BlendUSDCVault.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1715"
-            endingLineNumber = "1715"
-            landmarkName = "parsePoolFunctionResult(functionName:result:)"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
+            landmarkName = "executeSimulationRequest(server:transaction:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "BC3CC398-AC02-4E52-84C1-36D292529BD6 - 24e738ee6c558012"
+                  uuid = "C85605B4-B01B-4F1A-A951-03E77762C466 - 728604a621718304"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for Blendv3.BlendUSDCVault.parsePoolFunctionResult(functionName: Swift.String, result: stellarsdk.SCValXDR) async -&gt; ()"
+                  symbolName = "(3) suspend resume partial function for Blendv3.SorobanTransactionSimulator.executeSimulationRequest(server: stellarsdk.SorobanServer, transaction: stellarsdk.Transaction) async throws -&gt; Blendv3.SimulateTransactionResponse"
                   moduleName = "Blendv3.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/BlendUSDCVault.swift"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Services/SorobanTransactionSimulator.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1715"
-                  endingLineNumber = "1715">
+                  startingLineNumber = "347"
+                  endingLineNumber = "347">
                </Location>
                <Location
-                  uuid = "BC3CC398-AC02-4E52-84C1-36D292529BD6 - a213dce758a6f816"
+                  uuid = "C85605B4-B01B-4F1A-A951-03E77762C466 - 728604a621718304"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(5) suspend resume partial function for Blendv3.BlendUSDCVault.parsePoolFunctionResult(functionName: Swift.String, result: stellarsdk.SCValXDR) async -&gt; ()"
+                  symbolName = "(3) suspend resume partial function for Blendv3.SorobanTransactionSimulator.executeSimulationRequest(server: stellarsdk.SorobanServer, transaction: stellarsdk.Transaction) async throws -&gt; Blendv3.SimulateTransactionResponse"
                   moduleName = "Blendv3.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/BlendUSDCVault.swift"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Services/SorobanTransactionSimulator.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1715"
-                  endingLineNumber = "1715">
+                  startingLineNumber = "347"
+                  endingLineNumber = "347">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -277,109 +261,87 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "AB46A3D5-102F-4905-BBE3-C2713CDBF365"
+            uuid = "8F397EB8-19BA-42D5-871E-71B3796A67E3"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Blendv3/Services/SorobanTransactionSimulator.swift"
+            filePath = "Blendv3/Core/BlendVault.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
-            landmarkName = "decodeEvent(_:)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "5040BEE6-C151-4401-95EB-496652BA5051"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blendv3/Services/SorobanTransactionSimulator.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "315"
-            endingLineNumber = "315"
-            landmarkName = "simulate(server:contractCall:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "0F341933-1EA1-4054-8B76-476224286600"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blendv3/BlendUSDCVault.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2758"
-            endingLineNumber = "2758"
-            landmarkName = "getReserveList()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F64CB896-67A7-4D70-955C-C05565D558ED"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blendv3/BlendUSDCVault.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2765"
-            endingLineNumber = "2765"
-            landmarkName = "getReserveList()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "B24B411E-C814-420F-9943-92B05211B17D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blendv3/BlendUSDCVault.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2771"
-            endingLineNumber = "2771"
-            landmarkName = "getReserveList()"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "initialize()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "B24B411E-C814-420F-9943-92B05211B17D - fd6c6c1408f03dfe"
+                  uuid = "8F397EB8-19BA-42D5-871E-71B3796A67E3 - ae5f79c59f2c0e46"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Blendv3.BlendUSDCVault.getReserveList() async throws -&gt; Swift.Array&lt;Swift.String&gt;"
+                  symbolName = "(3) suspend resume partial function for Blendv3.BlendVault.initialize() async -&gt; ()"
                   moduleName = "Blendv3.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/BlendUSDCVault.swift"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/BlendVault.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2772"
-                  endingLineNumber = "2772">
+                  startingLineNumber = "90"
+                  endingLineNumber = "90">
                </Location>
                <Location
-                  uuid = "B24B411E-C814-420F-9943-92B05211B17D - fd6c6c1408f03dfe"
+                  uuid = "8F397EB8-19BA-42D5-871E-71B3796A67E3 - 101e4199e387eb75"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Blendv3.BlendUSDCVault.getReserveList() async throws -&gt; Swift.Array&lt;Swift.String&gt;"
+                  symbolName = "(4) await resume partial function for Blendv3.BlendVault.initialize() async -&gt; ()"
                   moduleName = "Blendv3.debug.dylib"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/BlendUSDCVault.swift"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/BlendVault.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "2772"
-                  endingLineNumber = "2772">
+                  startingLineNumber = "90"
+                  endingLineNumber = "90">
+               </Location>
+               <Location
+                  uuid = "8F397EB8-19BA-42D5-871E-71B3796A67E3 - c81cd2204f6844"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for Blendv3.BlendVault.initialize() async -&gt; ()"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/BlendVault.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "90"
+                  endingLineNumber = "90">
+               </Location>
+               <Location
+                  uuid = "8F397EB8-19BA-42D5-871E-71B3796A67E3 - a1e93840491db8fb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () async throws -&gt; () in Blendv3.BlendVault.initialize() async -&gt; ()"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/BlendVault.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "90"
+                  endingLineNumber = "90">
+               </Location>
+               <Location
+                  uuid = "8F397EB8-19BA-42D5-871E-71B3796A67E3 - 801ec519c6ee0664"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for closure #1 () async throws -&gt; () in Blendv3.BlendVault.initialize() async -&gt; ()"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/BlendVault.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "90"
+                  endingLineNumber = "90">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -387,49 +349,156 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6F9925E0-09F1-4C1A-B169-17992FA0B2BA"
+            uuid = "3B9181AA-5CDD-404B-9528-3F663E83C840"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Blendv3/BlendUSDCVault.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2776"
-            endingLineNumber = "2776"
-            landmarkName = "getReserveList()"
+            startingLineNumber = "677"
+            endingLineNumber = "677"
+            landmarkName = "initializeSorobanClient()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2247F8FD-EEEE-4778-AAED-AA9997C29825"
+            uuid = "156D3A43-AAF6-4943-BCCF-0BE056AC6757"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Blendv3/BlendUSDCVault.swift"
+            filePath = "Blendv3/Protocols/BlendOracleServiceProtocol.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2774"
-            endingLineNumber = "2774"
-            landmarkName = "getReserveList()"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "getPrice(asset:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7B3CF51B-9090-4F1E-AEF9-3BFF74C8F805"
+            uuid = "98BFE6C5-BF55-4F1E-9042-79F7478E2606"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Blendv3/BlendUSDCVault.swift"
+            filePath = "Blendv3/Core/Services/BlendPoolDiagnosticsService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3114"
-            endingLineNumber = "3114"
-            landmarkName = "getAssetSymbol(for:)"
+            startingLineNumber = "322"
+            endingLineNumber = "322"
+            landmarkName = "initializeSorobanClient()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D810A62A-B26E-4CE1-9CA9-984F1D6218AD"
+            shouldBeEnabled = "Yes"
+            condition = "response"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Blendv3/Protocols/BlendOracleServiceProtocol.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
+            landmarkName = "BlendOracleService"
+            landmarkType = "21">
+            <Locations>
+               <Location
+                  uuid = "D810A62A-B26E-4CE1-9CA9-984F1D6218AD - a121493a3be9652f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Blendv3.BlendOracleService.getLastPrice(asset: Blendv3.OracleAsset) async throws -&gt; Swift.Optional&lt;Blendv3.PriceData&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Protocols/BlendOracleServiceProtocol.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "199"
+                  endingLineNumber = "199">
+               </Location>
+               <Location
+                  uuid = "D810A62A-B26E-4CE1-9CA9-984F1D6218AD - 858d11ff3445ed9b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for Blendv3.BlendOracleService.getLastPrice(asset: Blendv3.OracleAsset) async throws -&gt; Swift.Optional&lt;Blendv3.PriceData&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Protocols/BlendOracleServiceProtocol.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "199"
+                  endingLineNumber = "199">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1972324F-54AE-4DDB-B1AA-7009B90662DA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Blendv3/Protocols/BlendOracleServiceProtocol.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
+            landmarkName = "getLastPrice(asset:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1972324F-54AE-4DDB-B1AA-7009B90662DA - 858d11ff3445ed27"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for Blendv3.BlendOracleService.getLastPrice(asset: Blendv3.OracleAsset) async throws -&gt; Swift.Optional&lt;Blendv3.PriceData&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Protocols/BlendOracleServiceProtocol.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "203"
+                  endingLineNumber = "203">
+               </Location>
+               <Location
+                  uuid = "1972324F-54AE-4DDB-B1AA-7009B90662DA - 10134542aa6c2925"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.BlendOracleService.getLastPrice(asset: Blendv3.OracleAsset) async throws -&gt; Swift.Optional&lt;Blendv3.PriceData&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Protocols/BlendOracleServiceProtocol.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "203"
+                  endingLineNumber = "203">
+               </Location>
+               <Location
+                  uuid = "1972324F-54AE-4DDB-B1AA-7009B90662DA - a65a53709f838724"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for Blendv3.BlendOracleService.getLastPrice(asset: Blendv3.OracleAsset) async throws -&gt; Swift.Optional&lt;Blendv3.PriceData&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Protocols/BlendOracleServiceProtocol.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "203"
+                  endingLineNumber = "203">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

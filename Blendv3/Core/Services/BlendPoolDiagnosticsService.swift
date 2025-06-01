@@ -120,20 +120,7 @@ public class BlendPoolDiagnosticsService {
         
         // Step 2: Initialize Soroban client
         do {
-            self.sorobanClient = try await initializeSorobanClient()
-            report = DiagnosticsReport(
-                timestamp: report.timestamp,
-                level: report.level,
-                networkConnected: report.networkConnected,
-                clientInitialized: true,
-                poolAccessible: report.poolAccessible,
-                reserveCount: report.reserveCount,
-                assetSymbols: report.assetSymbols,
-                errors: report.errors,
-                backstopData: report.backstopData,
-                poolConfig: report.poolConfig,
-                advancedMetrics: report.advancedMetrics
-            )
+            self.sorobanClient = try! await initializeSorobanClient()
         } catch {
             logger.error("❌ Soroban client initialization failed: \(error.localizedDescription)")
             let updatedErrors = report.errors + [DiagnosticsError(component: "Client", message: "Failed to initialize Soroban client", error: error)]

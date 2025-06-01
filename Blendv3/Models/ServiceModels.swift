@@ -14,6 +14,7 @@ public enum BlendError: LocalizedError, Equatable {
     case unauthorized
     case insufficientFunds
     case serviceUnavailable
+    case assetRetrivalFailed
     case unknown
     
     public var errorDescription: String? {
@@ -34,6 +35,8 @@ public enum BlendError: LocalizedError, Equatable {
             return "Service temporarily unavailable"
         case .unknown:
             return "An unexpected error occurred"
+        case .assetRetrivalFailed:
+            return "Asset RetrievalFailed"
         }
     }
 }

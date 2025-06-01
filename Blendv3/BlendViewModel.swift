@@ -52,6 +52,9 @@ class BlendViewModel: ObservableObject {
     init(signer: BlendSigner) {
         self.signer = signer
         self.vault = BlendUSDCVault(signer: signer, network: .testnet)
+   
+      
+    
         self.accountChecker = AccountChecker(network: .testnet)
         
         logger.info("Initializing BlendViewModel")
@@ -78,7 +81,9 @@ class BlendViewModel: ObservableObject {
     
     private func setupBindings() {
         logger.debug("Setting up bindings")
-        
+        Task {
+            let result = await self.vault.initializeSorobanClient()
+        }
         // Bind vault state to view model
         vault.$poolStats
             .receive(on: DispatchQueue.main)
@@ -162,76 +167,76 @@ class BlendViewModel: ObservableObject {
     }
     
     func deposit(amount: Decimal) async {
-        // Check if account is ready
-        guard accountStatus?.isReady == true else {
-            logger.warning("Account not ready for deposit")
-            errorMessage = accountStatus?.statusMessage ?? "Account not ready"
-            return
-        }
-        
-        logger.info("Deposit requested: \(amount) USDC")
-        clearMessages()
-        
-        do {
-            let txHash = try await vault.deposit(amount: amount)
-            logger.info("Deposit successful: \(txHash)")
-            successMessage = "Deposit successful!"
-            errorMessage = nil
-            
-            // Add to transaction history
-            let record = TransactionRecord(
-                type: .deposit,
-                amount: amount,
-                txHash: txHash,
-                timestamp: Date()
-            )
-            transactionHistory.insert(record, at: 0)
-            logger.debug("Added transaction to history")
-            
-            // Refresh stats after deposit
-            await refreshStats()
-        } catch {
-            logger.error("Deposit failed: \(error.localizedDescription)")
-            errorMessage = error.localizedDescription
-            successMessage = nil
-        }
+//        // Check if account is ready
+//        guard accountStatus?.isReady == true else {
+//            logger.warning("Account not ready for deposit")
+//            errorMessage = accountStatus?.statusMessage ?? "Account not ready"
+//            return
+//        }
+//        
+//        logger.info("Deposit requested: \(amount) USDC")
+//        clearMessages()
+//        
+//        do {
+//            let txHash = try await vault.deposit(amount: amount)
+//            logger.info("Deposit successful: \(txHash)")
+//            successMessage = "Deposit successful!"
+//            errorMessage = nil
+//            
+//            // Add to transaction history
+//            let record = TransactionRecord(
+//                type: .deposit,
+//                amount: amount,
+//                txHash: txHash,
+//                timestamp: Date()
+//            )
+//            transactionHistory.insert(record, at: 0)
+//            logger.debug("Added transaction to history")
+//            
+//            // Refresh stats after deposit
+//            await refreshStats()
+//        } catch {
+//            logger.error("Deposit failed: \(error.localizedDescription)")
+//            errorMessage = error.localizedDescription
+//            successMessage = nil
+//        }
     }
     
-    func withdraw(amount: Decimal) async {
-        // Check if account is ready
-        guard accountStatus?.isReady == true else {
-            logger.warning("Account not ready for withdrawal")
-            errorMessage = accountStatus?.statusMessage ?? "Account not ready"
-            return
-        }
-        
-        logger.info("Withdrawal requested: \(amount) USDC")
-        clearMessages()
-        
-        do {
-            let txHash = try await vault.withdraw(amount: amount)
-            logger.info("Withdrawal successful: \(txHash)")
-            successMessage = "Withdrawal successful!"
-            errorMessage = nil
-            
-            // Add to transaction history
-            let record = TransactionRecord(
-                type: .withdrawal,
-                amount: amount,
-                txHash: txHash,
-                timestamp: Date()
-            )
-            transactionHistory.insert(record, at: 0)
-            logger.debug("Added transaction to history")
-            
-            // Refresh stats after withdrawal
-            await refreshStats()
-        } catch {
-            logger.error("Withdrawal failed: \(error.localizedDescription)")
-            errorMessage = error.localizedDescription
-            successMessage = nil
-        }
-    }
+//    func withdraw(amount: Decimal) async {
+//        // Check if account is ready
+//        guard accountStatus?.isReady == true else {
+//            logger.warning("Account not ready for withdrawal")
+//            errorMessage = accountStatus?.statusMessage ?? "Account not ready"
+//            return
+//        }
+//        
+//        logger.info("Withdrawal requested: \(amount) USDC")
+//        clearMessages()
+//        
+//        do {
+//            let txHash = try await vault.withdraw(amount: amount)
+//            logger.info("Withdrawal successful: \(txHash)")
+//            successMessage = "Withdrawal successful!"
+//            errorMessage = nil
+//            
+//            // Add to transaction history
+//            let record = TransactionRecord(
+//                type: .withdrawal,
+//                amount: amount,
+//                txHash: txHash,
+//                timestamp: Date()
+//            )
+//            transactionHistory.insert(record, at: 0)
+//            logger.debug("Added transaction to history")
+//            
+//            // Refresh stats after withdrawal
+//            await refreshStats()
+//        } catch {
+//            logger.error("Withdrawal failed: \(error.localizedDescription)")
+//            errorMessage = error.localizedDescription
+//            successMessage = nil
+//        }
+//    }
     
     func refreshStats() async {
         // Check if account is ready
@@ -253,21 +258,7 @@ class BlendViewModel: ObservableObject {
         }
     }
     
-    /// Diagnostic method to analyze pool stats vs real market data
-    func diagnosePoolStats() async {
-        logger.info("🔬 Starting diagnostic analysis...")
-        debugLogger.info("🔬 Starting diagnostic analysis...")
-        
-        do {
-            try await vault.diagnosePoolStats()
-            logger.info("✅ Diagnostic analysis completed")
-            debugLogger.info("✅ Diagnostic analysis completed")
-        } catch {
-            logger.error("❌ Diagnostic analysis failed: \(error.localizedDescription)")
-            debugLogger.error("❌ Diagnostic analysis failed: \(error.localizedDescription)")
-            errorMessage = "Diagnostic failed: \(error.localizedDescription)"
-        }
-    }
+    
     
     func clearMessages() {
         logger.debug("Clearing messages")

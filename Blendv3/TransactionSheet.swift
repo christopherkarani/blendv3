@@ -199,7 +199,8 @@ struct TransactionSheet: View {
             case .deposit:
                 await viewModel.deposit(amount: amount)
             case .withdrawal:
-                await viewModel.withdraw(amount: amount)
+                break
+               // await viewModel.withdraw(amount: amount)
             }
             
             await MainActor.run {

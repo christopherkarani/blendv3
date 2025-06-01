@@ -11,6 +11,14 @@ import stellarsdk
 
 /// Service for fetching and managing pool data
 final class DataService: DataServiceProtocol {
+    func fetchPoolStats() async throws {
+        
+    }
+    
+    func fetchUserPosition(userId: String) async throws {
+        
+    }
+    
     
     // MARK: - Properties
     

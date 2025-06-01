@@ -133,20 +133,15 @@ public final class PoolViewModel: ObservableObject {
         BlendLogger.info("Loading pool data from chain for pool: \(poolId)", category: BlendLogger.ui)
         
         // Fetch oracle prices for assets in the pool
-        let assets = ["USDC", "XLM"] // Example assets
+      //  let assets = ["USDC", "XLM"] // Example assets
+        
+        let assets = try await oracleService.getSupportedAssets()
         
         do {
             let prices = try await oracleService.getPrices(assets: assets)
             BlendLogger.info("Fetched prices for \(prices.count) assets", category: BlendLogger.ui)
             
-            for (asset, priceData) in prices {
-                BlendLogger.oraclePrice(
-                    asset: asset,
-                    price: priceData.price,
-                    timestamp: priceData.timestamp,
-                    isStale: priceData.isStale(maxAge: 60 * 5) // 5 minutes max age
-                )
-            }
+  
         } catch {
             BlendLogger.warning("Failed to fetch oracle prices, using mock data", category: BlendLogger.ui)
         }

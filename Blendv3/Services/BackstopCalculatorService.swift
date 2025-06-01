@@ -88,33 +88,34 @@ public final class BackstopCalculatorService {
             
             // Get asset prices for USD conversion
             let assetIds = poolReserves.map { $0.assetId }
-            let prices = try await oracleService.getPrices(assets: assetIds)
+          //  let prices = try await oracleService.getPrices(assets: assetIds)
             
             // Calculate total interest captured by backstop
-            for reserve in poolReserves {
-                guard let priceData = prices[reserve.assetId] else {
-                    BlendLogger.warning("No price data for asset: \(reserve.assetId)", category: BlendLogger.rateCalculation)
-                    continue
-                }
-                
-                // Convert reserve liabilities to USD
-                let reserveLiabilitiesUSD = reserve.totalBorrowedUSD(priceData: priceData)
-                
-                // Calculate annual interest in USD
-                let annualInterest = reserveLiabilitiesUSD * NSDecimalNumber(decimal: reserve.borrowAPR).doubleValue
-                
-                // Apply backstop take rate
-                let backstopShare = annualInterest * NSDecimalNumber(decimal: backstopPool.takeRate).doubleValue / NSDecimalNumber(decimal: FixedMath.SCALAR_7).doubleValue
-                
-                totalInterestPerYear += backstopShare
-                
-                BlendLogger.debug(
-                    "Reserve \(reserve.assetId): liabilities=$\(reserveLiabilitiesUSD), backstop share=$\(backstopShare)",
-                    category: BlendLogger.rateCalculation
-                )
-            }
-            
-            return calculateBackstopAPR(backstopPool: backstopPool, totalInterestPerYear: totalInterestPerYear)
+//            for reserve in poolReserves {
+//                guard let priceData = prices[reserve.assetId] else {
+//                    BlendLogger.warning("No price data for asset: \(reserve.assetId)", category: BlendLogger.rateCalculation)
+//                    continue
+//                }
+//                
+//                // Convert reserve liabilities to USD
+//                let reserveLiabilitiesUSD = reserve.totalBorrowedUSD(priceData: priceData)
+//                
+//                // Calculate annual interest in USD
+//                let annualInterest = reserveLiabilitiesUSD * NSDecimalNumber(decimal: reserve.borrowAPR).doubleValue
+//                
+//                // Apply backstop take rate
+//                let backstopShare = annualInterest * NSDecimalNumber(decimal: backstopPool.takeRate).doubleValue / NSDecimalNumber(decimal: FixedMath.SCALAR_7).doubleValue
+//                
+//                totalInterestPerYear += backstopShare
+//                
+//                BlendLogger.debug(
+//                    "Reserve \(reserve.assetId): liabilities=$\(reserveLiabilitiesUSD), backstop share=$\(backstopShare)",
+//                    category: BlendLogger.rateCalculation
+//                )
+//            }
+//            
+//            return calculateBackstopAPR(backstopPool: backstopPool, totalInterestPerYear: totalInterestPerYear)
+            return 0
         }
     }
     

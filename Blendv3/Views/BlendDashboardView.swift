@@ -75,10 +75,7 @@ struct BlendDashboardView: View {
                 }
                 
                 // Debug section (temporary)
-                #if DEBUG
-                DebugToolsView()
-                    .environmentObject(viewModel)
-                #endif
+
             }
             .padding()
         }
@@ -279,7 +276,7 @@ struct BlendDashboardView: View {
                 Button(action: {
                     Task {
                         do {
-                            try await viewModel.vault.testWETHandWBTCProcessing()
+                            //try await viewModel.vault.testWETHandWBTCProcessing()
                         } catch {
                             print("🚨 wETH/wBTC test failed: \(error)")
                         }
@@ -2598,194 +2595,6 @@ struct LegacyStatsAdapter: PoolStatsProtocol {
 
 // MARK: - Debug Tools View
 
-struct DebugToolsView: View {
-    @EnvironmentObject private var viewModel: BlendViewModel
-    @State private var showTestView = false
-    
-    // Create a debug logger instance
-    private let debugLogger = DebugLogger(subsystem: "com.blendv3.debug", category: "DebugTools")
-    
-    var body: some View {
-        VStack(spacing: 12) {
-            Text("Debug Tools")
-                .font(.caption)
-                .foregroundColor(.secondary)
-            
-            Button(action: {
-                Task {
-                    debugLogger.info("🎯 DEBUG: Manual refresh triggered")
-                    await viewModel.checkAccountStatus()
-                }
-            }) {
-                Label("Check Account", systemImage: "person.crop.circle.badge.checkmark")
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .background(Color.blue.opacity(0.1))
-                    .cornerRadius(8)
-            }
-            
-            Button(action: {
-                Task {
-                    debugLogger.info("🎯 DEBUG: Manual stats refresh triggered")
-                    await viewModel.refreshStats()
-                }
-            }) {
-                Label("Refresh Stats", systemImage: "arrow.clockwise")
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .background(Color.green.opacity(0.1))
-                    .cornerRadius(8)
-            }
-            
-            Button(action: {
-                Task {
-                    debugLogger.info("🔬 DEBUG: Running comprehensive diagnostics...")
-                    await viewModel.diagnosePoolStats()
-                    debugLogger.info("✅ Diagnostics completed - check Debug Logs tab for detailed results")
-                }
-            }) {
-                Label("🔬 Diagnose Stats", systemImage: "stethoscope")
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .background(Color.red.opacity(0.1))
-                    .cornerRadius(8)
-            }
-            
-            Button(action: {
-                Task {
-                    debugLogger.info("🎯 MILLION DOLLAR EXPLORATION: Starting comprehensive pool data exploration...")
-                    do {
-                        // Access the vault as BlendUSDCVault to ensure the method is available
-                        if let blendVault = viewModel.vault as? BlendUSDCVault {
-                            try await blendVault.explorePoolDataSources()
-                            debugLogger.info("🎯 ✅ EXPLORATION COMPLETED - Check Debug Logs tab for detailed results!")
-                            debugLogger.info("🎯 Look for 🎯 POTENTIAL MATCH messages in the logs")
-                        } else {
-                            debugLogger.error("🎯 ❌ Exploration failed: vault is not of type BlendUSDCVault")
-                        }
-                    } catch {
-                        debugLogger.error("🎯 ❌ Exploration failed: \(error)")
-                    }
-                }
-            }) {
-                Label("🎯 Million $ Explorer", systemImage: "magnifyingglass.circle.fill")
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .background(Color.blue.opacity(0.1))
-                    .cornerRadius(8)
-            }
-            
-            Button(action: {
-                Task {
-                    debugLogger.info("🎯 TRUE POOL STATS: Starting true pool statistics refresh...")
-                    do {
-                        try await viewModel.vault.refreshTruePoolStats()
-                        debugLogger.info("🎯 ✅ TRUE POOL STATS COMPLETED!")
-                        
-                        if let stats = viewModel.vault.truePoolStats {
-                            debugLogger.info("🎯 📊 RESULTS:")
-                            debugLogger.info("🎯   Total Supplied: $\(stats.totalSuppliedUSD)")
-                            debugLogger.info("🎯   Total Borrowed: $\(stats.totalBorrowedUSD)")  
-                            debugLogger.info("🎯   Backstop: $\(stats.backstopBalanceUSD)")
-                            debugLogger.info("🎯   Utilization: \(stats.overallUtilization * 100)%")
-                            debugLogger.info("🎯   Active Reserves: \(stats.activeReserves)")
-                            debugLogger.info("🎯   Individual Assets:")
-                            for reserve in stats.reserves {
-                                debugLogger.info("🎯     \(reserve.symbol): $\(reserve.totalSuppliedUSD) supplied, $\(reserve.totalBorrowedUSD) borrowed")
-                            }
-                        }
-                    } catch {
-                        debugLogger.error("🎯 ❌ True pool stats failed: \(error)")
-                    }
-                }
-            }) {
-                Label("🎯 True Pool Stats", systemImage: "chart.bar.doc.horizontal.fill")
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .background(Color.green.opacity(0.1))
-                    .cornerRadius(8)
-            }
-            
-            Button(action: {
-                Task {
-                    debugLogger.info("🎯 TESTING SPECIFIC FUNCTIONS: Looking for exact pool totals...")
-                    do {
-                        try await viewModel.vault.testSpecificPoolFunctions()
-                        debugLogger.info("🎯 ✅ SPECIFIC FUNCTION TESTS COMPLETED!")
-                    } catch {
-                        debugLogger.error("🎯 ❌ Specific function tests failed: \(error)")
-                    }
-                }
-            }) {
-                Label("🎯 Test Specific Functions", systemImage: "function")
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .background(Color.purple.opacity(0.2))
-                    .cornerRadius(8)
-            }
-            
-            Button(action: {
-                Task {
-                    debugLogger.info("🎯 GETTING ACTUAL POOL STATS: Calculating real values...")
-                    do {
-                        let actualStats = try await viewModel.vault.getActualPoolStats()
-                        debugLogger.info("🎯 ✅ ACTUAL POOL STATS:")
-                        debugLogger.info("   Total Supplied: $\(actualStats.totalSuppliedUSD)")
-                        debugLogger.info("   Total Borrowed: $\(actualStats.totalBorrowedUSD)")
-                        debugLogger.info("   Backstop: $\(actualStats.backstopAmount)")
-                        debugLogger.info("   Utilization: \(actualStats.utilizationRate * 100)%")
-                        
-                        for (symbol, detail) in actualStats.assetDetails {
-                            debugLogger.info("   \(symbol): $\(detail.suppliedUSD) supplied, $\(detail.borrowedUSD) borrowed")
-                        }
-                    } catch {
-                        debugLogger.error("🎯 ❌ Failed to get actual stats: \(error)")
-                    }
-                }
-            }) {
-                Label("🎯 Get Actual Stats", systemImage: "chart.bar.doc.horizontal")
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .background(Color.green.opacity(0.2))
-                    .cornerRadius(8)
-            }
-            
-            Button(action: {
-                Task {
-                    debugLogger.info("🎯 GET_CONFIG TEST: Starting pool configuration test...")
-                    do {
-                        try await viewModel.vault.testGetConfig()
-                        debugLogger.info("🎯 ✅ GET_CONFIG TEST COMPLETED!")
-                    } catch {
-                        debugLogger.error("🎯 ❌ Get config test failed: \(error)")
-                    }
-                }
-            }) {
-                Label("🎯 Test get_config()", systemImage: "gearshape.fill")
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .background(Color.orange.opacity(0.2))
-                    .cornerRadius(8)
-            }
-            
-            Button(action: {
-                showTestView = true
-            }) {
-                Label("Run SDK Tests", systemImage: "hammer.circle")
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 8)
-                    .background(Color.purple.opacity(0.1))
-                    .cornerRadius(8)
-            }
-        }
-        .padding()
-        .background(Color.yellow.opacity(0.1))
-        .cornerRadius(12)
-        .sheet(isPresented: $showTestView) {
-            EmptyView()
-        }
-    }
-}
 
 // MARK: - Pool Configuration View
 

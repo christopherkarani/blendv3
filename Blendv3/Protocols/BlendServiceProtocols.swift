@@ -50,13 +50,6 @@ protocol PoolStatisticsServiceProtocol: AnyObject {
 
 // MARK: - Transaction Execution Service
 
-/// Protocol for transaction execution and user data retrieval
-protocol TransactionExecutionServiceProtocol: AnyObject {
-    func deposit(amount: Decimal) async throws -> String
-    func withdraw(amount: Decimal) async throws -> String
-    func getUserPositions(userAddress: String) async throws -> UserPositionsResult
-    func getUserEmissions(userAddress: String) async throws -> UserEmissionsResult
-}
 
 // MARK: - State Management Service
 
@@ -161,6 +154,216 @@ public protocol BlendNetworkServiceProtocol: AnyObject {
 
 /// Protocol for data fetching and management
 protocol DataServiceProtocol: AnyObject {
-    func fetchPoolStats() async -> Result<BlendPoolStats, BlendError>
-    func fetchUserPosition(userId: String) async -> Result<UserPositionData, BlendError>
+    func fetchPoolStats() async throws
+    func fetchUserPosition(userId: String) async throws 
 }
+
+class BlendDataService: DataServiceProtocol {
+    let client: SorobanClient
+    let poolService: PoolServiceProtocol
+    let oracleService: BlendOracleServiceProtocol
+    let assetService: BlendAssetServiceProtocol
+    
+    
+    init(client: SorobanClient,
+         poolService: PoolServiceProtocol,
+         oracleService: BlendOracleServiceProtocol,
+         assetService: BlendAssetServiceProtocol
+    ) {
+        self.client = client
+        self.poolService = poolService
+        self.oracleService = oracleService
+        self.assetService = assetService
+    }
+    
+    func fetchPoolStats() async throws  {
+        let config = try await poolService.fetchPoolConfig()
+        let assetsInPool = try await assetService.getAssets()
+        let priceData = try await oracleService.getPrices(assets: assetsInPool)
+        let assetDataData = try await assetService.getAll(assets: assetsInPool)
+        let configBackstop = BackstopContractService.testnetConfig()
+        let cache = CacheService()
+        let cetConfig = ConfigurationService(networkType: BlendUSDCConstants.NetworkType.testnet)
+        
+        
+        // Initialize infrastructure services
+        let n = NetworkService(configuration: cetConfig)
+        let network = NetworkService(configuration: cetConfig)
+        let backstop = BackstopContractService.init(networkService: network, cacheService: cache, config: configBackstop)
+        var pricedAssets: [BlendAssetData] = []
+        for asset in assetDataData {
+            for price in priceData {
+                if asset.assetId == price.contractID {
+                    var a = asset
+                    a.pricePerToken = price.price
+                    pricedAssets.append(a)
+                }
+            }
+        }
+        
+        var totalBorrowed: Decimal = 0
+        var totalSupplied: Decimal = 0
+        
+        
+        for asset in pricedAssets {
+            totalBorrowed += asset.totalBorrowedUSD
+            totalSupplied += asset.totalSuppliedUSD
+            let calculator = BlendRateCalculator()
+            let supplyBorrow = calculator.calculateAPY(from: asset)
+           // dump(asset)
+            if let assetContract = try? StellarContractID.toStrKey(asset.assetId) {
+                print("Asset: \(assetContract) \n Suuply \(supplyBorrow.supplyAPY) \n Borrow \(supplyBorrow.borrowAPY)")
+            }
+            
+        }
+        
+        let result = try await backstop.getPoolData(pool: BlendUSDCConstants.Testnet.xlmUsdcPool)
+        let token = try await backstop.getBackstopToken()
+//        let backstopTokenPrice = try await oracleService.getLastPrice(asset: .stellar(address: token))
+        
+       // let ass = try await oracleService.assets()
+        //print("assets: ", ass)
+       // print("TOKEN Price: ", backstopTokenPrice)
+        
+        dump(result)
+  
+        
+        print("Total Borrowed: $", totalBorrowed)
+        print("Total Supplied: $", totalSupplied)
+    }
+    
+
+    
+    func fetchUserPosition(userId: String) async throws  {
+        
+    }
+   
+    func printPoolStatsVariables(
+        config: Any,
+        assetsInPool: Any,
+        price: Any,
+        assetDataCollection: Any
+    ) {
+        print("=== POOL STATS SUMMARY ===")
+        
+        // Pool Configuration
+        print("\n📊 POOL CONFIG:")
+        print("  • Backstop Rate: 1,000,000")
+        print("  • Max Positions: 8")
+        print("  • Min Collateral: 0")
+        print("  • Status: Active (0)")
+        print("  • Oracle ID: 532bb45a...22399f8")
+        
+        // Assets Overview
+        print("\n🪙 ASSETS IN POOL (\(getAssetCount(from: assetsInPool)) assets):")
+        printAssetIds(assetsInPool)
+        
+        // Price Data
+        print("\n💰 CURRENT PRICES:")
+        printPriceData(price)
+        
+        // Asset Details
+        print("\n📈 ASSET DETAILS:")
+        printAssetDataSummary(assetDataCollection)
+        
+        print("\n" + String(repeating: "=", count: 50))
+    }
+
+    // Helper functions for better parsing
+    func getAssetCount(from assets: Any) -> Int {
+        if let assetArray = assets as? [Any] {
+            return assetArray.count
+        }
+        return 0
+    }
+
+    func printAssetIds(_ assets: Any) {
+        let assetString = String(describing: assets)
+        let pattern = "Stellar\\(([a-f0-9]{64})\\)"
+        
+        if let regex = try? NSRegularExpression(pattern: pattern) {
+            let matches = regex.matches(in: assetString, range: NSRange(assetString.startIndex..., in: assetString))
+            
+            for (index, match) in matches.enumerated() {
+                if let range = Range(match.range(at: 1), in: assetString) {
+                    let id = String(assetString[range])
+                    let shortId = String(id.prefix(8)) + "..." + String(id.suffix(8))
+                    print("  Asset \(index + 1): \(shortId)")
+                }
+            }
+        }
+    }
+
+    func printPriceData(_ priceData: Any) {
+        let priceString = String(describing: priceData)
+        
+        // Extract price information using string parsing
+        let lines = priceString.components(separatedBy: "PriceData(")
+        for (index, line) in lines.enumerated() {
+            if index == 0 { continue } // Skip first empty part
+            
+            if let priceRange = line.range(of: "price: "),
+               let commaRange = line.range(of: ", timestamp:") {
+                let priceSubstring = line[priceRange.upperBound..<commaRange.lowerBound]
+                let price = String(priceSubstring)
+                print("  Asset \(index): $\(price)")
+            }
+        }
+    }
+
+    func printAssetDataSummary(_ assetData: Any) {
+        let dataString = String(describing: assetData)
+        let assets = dataString.components(separatedBy: "BlendAssetData(")
+        
+        for (index, asset) in assets.enumerated() {
+            if index == 0 { continue } // Skip first empty part
+            
+            var supplied = "N/A"
+            var borrowed = "N/A"
+            var utilization = "N/A"
+            
+            // Extract totalSupplied
+            if let suppliedRange = asset.range(of: "totalSupplied: "),
+               let commaRange = asset.range(of: ", totalBorrowed:", range: suppliedRange.upperBound..<asset.endIndex) {
+                supplied = String(asset[suppliedRange.upperBound..<commaRange.lowerBound])
+            }
+            
+            // Extract totalBorrowed
+            if let borrowedRange = asset.range(of: "totalBorrowed: "),
+               let commaRange = asset.range(of: ", borrowRate:", range: borrowedRange.upperBound..<asset.endIndex) {
+                borrowed = String(asset[borrowedRange.upperBound..<commaRange.lowerBound])
+            }
+            
+            // Calculate utilization if we have both values
+            if let suppliedDouble = Double(supplied),
+               let borrowedDouble = Double(borrowed),
+               suppliedDouble > 0 {
+                let util: Double = (borrowedDouble / suppliedDouble) * 100
+                utilization = String(format: "%.1f%%", util)
+            }
+            
+            print("  Asset \(index):")
+            print("    └─ Supplied: \(supplied)")
+            print("    └─ Borrowed: \(borrowed)")
+            print("    └─ Utilization: \(utilization)")
+            print("")
+        }
+    }
+
+    
+}
+//func mergePrices(
+//    assets: [BlendAssetData],
+//    quotes: [PriceData]
+//) -> [BlendAssetData.Priced] {
+//
+//    // 1️⃣  Index the quotes by contractId  – O(m)
+//    let quoteById = Dictionary(uniqueKeysWithValues: quotes.map { ($0.contractId, $0.priceUSD) })
+//
+//    // 2️⃣  Walk the assets – O(n)
+//    return assets.map { asset in
+//        var out = asset.priced            // copy with `price = nil`
+//        out.price = quoteById[asset.assetId]   // nil if no match
+//        return out
+//    }
+//}

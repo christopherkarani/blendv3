@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E7C24272DEAAAB5007C181D /* BlendFinancialCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C24262DEAAAB5007C181D /* BlendFinancialCalculator.swift */; };
+		9E7C24372DEAAE0D007C181D /* BackstopContractService+Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C242B2DEAAE0D007C181D /* BackstopContractService+Functions.swift */; };
+		9E7C24382DEAAE0D007C181D /* BackstopContractServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C24312DEAAE0D007C181D /* BackstopContractServiceProtocol.swift */; };
+		9E7C24392DEAAE0D007C181D /* BackstopContractService+Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C242C2DEAAE0D007C181D /* BackstopContractService+Parsing.swift */; };
+		9E7C243A2DEAAE0D007C181D /* BackstopContractService+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C242D2DEAAE0D007C181D /* BackstopContractService+Utils.swift */; };
+		9E7C243B2DEAAE0D007C181D /* BackstopContractService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C24332DEAAE0D007C181D /* BackstopContractService.swift */; };
+		9E7C243C2DEAAE0D007C181D /* BackstopModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C242F2DEAAE0D007C181D /* BackstopModels.swift */; };
+		9E7C243D2DEAAE0D007C181D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9E7C24352DEAAE0D007C181D /* README.md */; };
 		9E97817E2DE68D98009333AD /* BatchingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E97817D2DE68D98009333AD /* BatchingService.swift */; };
 		9E9781802DE68DA8009333AD /* NetworkService2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E97817F2DE68DA8009333AD /* NetworkService2.swift */; };
 		9E9781822DE68DDC009333AD /* DiagnosticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781812DE68DDC009333AD /* DiagnosticsService.swift */; };
@@ -122,6 +130,10 @@
 		9EDE65132DE7196200B63E09 /* OracleImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65122DE7196200B63E09 /* OracleImplementation.swift */; };
 		9EDE65152DE729DD00B63E09 /* SorobanTransactionSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */; };
 		9EDE651F2DE773DB00B63E09 /* PoolService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE651E2DE773DB00B63E09 /* PoolService.swift */; };
+		9EDE65212DE9220B00B63E09 /* BlendAssetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65202DE9220B00B63E09 /* BlendAssetData.swift */; };
+		9EDE65232DE9225900B63E09 /* BlendParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65222DE9225400B63E09 /* BlendParser.swift */; };
+		9EDE65252DE9246700B63E09 /* BlendAssetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65242DE9246000B63E09 /* BlendAssetService.swift */; };
+		9EDE65272DE9338D00B63E09 /* PoolServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65262DE9338D00B63E09 /* PoolServiceProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,6 +154,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9E7C24262DEAAAB5007C181D /* BlendFinancialCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendFinancialCalculator.swift; sourceTree = "<group>"; };
+		9E7C242B2DEAAE0D007C181D /* BackstopContractService+Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackstopContractService+Functions.swift"; sourceTree = "<group>"; };
+		9E7C242C2DEAAE0D007C181D /* BackstopContractService+Parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackstopContractService+Parsing.swift"; sourceTree = "<group>"; };
+		9E7C242D2DEAAE0D007C181D /* BackstopContractService+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackstopContractService+Utils.swift"; sourceTree = "<group>"; };
+		9E7C242F2DEAAE0D007C181D /* BackstopModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopModels.swift; sourceTree = "<group>"; };
+		9E7C24312DEAAE0D007C181D /* BackstopContractServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopContractServiceProtocol.swift; sourceTree = "<group>"; };
+		9E7C24332DEAAE0D007C181D /* BackstopContractService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopContractService.swift; sourceTree = "<group>"; };
+		9E7C24352DEAAE0D007C181D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9E97817D2DE68D98009333AD /* BatchingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchingService.swift; sourceTree = "<group>"; };
 		9E97817F2DE68DA8009333AD /* NetworkService2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService2.swift; sourceTree = "<group>"; };
 		9E9781812DE68DDC009333AD /* DiagnosticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsService.swift; sourceTree = "<group>"; };
@@ -257,6 +277,10 @@
 		9EDE65122DE7196200B63E09 /* OracleImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OracleImplementation.swift; sourceTree = "<group>"; };
 		9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SorobanTransactionSimulator.swift; sourceTree = "<group>"; };
 		9EDE651E2DE773DB00B63E09 /* PoolService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoolService.swift; sourceTree = "<group>"; };
+		9EDE65202DE9220B00B63E09 /* BlendAssetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendAssetData.swift; sourceTree = "<group>"; };
+		9EDE65222DE9225400B63E09 /* BlendParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendParser.swift; sourceTree = "<group>"; };
+		9EDE65242DE9246000B63E09 /* BlendAssetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendAssetService.swift; sourceTree = "<group>"; };
+		9EDE65262DE9338D00B63E09 /* PoolServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoolServiceProtocol.swift; sourceTree = "<group>"; };
 		9EE4A0E92DDFB939004BD597 /* Blendv3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blendv3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE4A0F92DDFB93A004BD597 /* Blendv3Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Blendv3Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EE4A1032DDFB93A004BD597 /* Blendv3UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Blendv3UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -322,6 +346,52 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E7C242E2DEAAE0D007C181D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9E7C242B2DEAAE0D007C181D /* BackstopContractService+Functions.swift */,
+				9E7C242C2DEAAE0D007C181D /* BackstopContractService+Parsing.swift */,
+				9E7C242D2DEAAE0D007C181D /* BackstopContractService+Utils.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		9E7C24302DEAAE0D007C181D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9E7C242F2DEAAE0D007C181D /* BackstopModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9E7C24322DEAAE0D007C181D /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				9E7C24312DEAAE0D007C181D /* BackstopContractServiceProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		9E7C24342DEAAE0D007C181D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				9E7C24332DEAAE0D007C181D /* BackstopContractService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		9E7C24362DEAAE0D007C181D /* BackstopContract */ = {
+			isa = PBXGroup;
+			children = (
+				9E7C242E2DEAAE0D007C181D /* Extensions */,
+				9E7C24302DEAAE0D007C181D /* Models */,
+				9E7C24322DEAAE0D007C181D /* Protocols */,
+				9E7C24342DEAAE0D007C181D /* Services */,
+				9E7C24352DEAAE0D007C181D /* README.md */,
+			);
+			path = BackstopContract;
+			sourceTree = "<group>";
+		};
 		9E9781862DE68E6C009333AD /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
@@ -417,6 +487,7 @@
 		9ED8DA912DE5237F00CB0059 /* Blendv3 */ = {
 			isa = PBXGroup;
 			children = (
+				9E7C24362DEAAE0D007C181D /* BackstopContract */,
 				9E9781B12DE68F7F009333AD /* Core */,
 				9ED8DAC02DE5240300CB0059 /* DependencyInjection */,
 				9ED8DAD42DE5240300CB0059 /* Protocols */,
@@ -512,6 +583,7 @@
 		9ED8DAD42DE5240300CB0059 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				9EDE65262DE9338D00B63E09 /* PoolServiceProtocol.swift */,
 				9E9781832DE68DF2009333AD /* BlendServiceProtocols.swift */,
 				9ED8DAB42DE5240300CB0059 /* BlendRateCalculatorProtocol.swift */,
 				9ED8DAB02DE5240300CB0059 /* BlendOracleServiceProtocol.swift */,
@@ -551,6 +623,8 @@
 		9ED8DB592DE5434300CB0059 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				9E7C24262DEAAAB5007C181D /* BlendFinancialCalculator.swift */,
+				9EDE65222DE9225400B63E09 /* BlendParser.swift */,
 				9ED8DB662DE54FCA00CB0059 /* StellarContractID.swift */,
 				9ED8DAC52DE5240300CB0059 /* FixedMath.swift */,
 				9ED8DAB32DE5240300CB0059 /* BlendRateCalculator.swift */,
@@ -561,6 +635,7 @@
 		9ED8DB5D2DE543C000CB0059 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				9EDE65242DE9246000B63E09 /* BlendAssetService.swift */,
 				9EDE651E2DE773DB00B63E09 /* PoolService.swift */,
 				9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */,
 				9EDE65122DE7196200B63E09 /* OracleImplementation.swift */,
@@ -607,6 +682,7 @@
 		9ED8DB632DE544DF00CB0059 /* Pool */ = {
 			isa = PBXGroup;
 			children = (
+				9EDE65202DE9220B00B63E09 /* BlendAssetData.swift */,
 				9EDE650E2DE712A200B63E09 /* OracleAsset.swift */,
 				9EDE650F2DE712A200B63E09 /* OracleError.swift */,
 				9EDE65042DE703E200B63E09 /* ValidationRules.swift */,
@@ -776,6 +852,7 @@
 				9ED8DB2A2DE5240300CB0059 /* POOL_STATS_GUIDE.md in Resources */,
 				9ED8DB2B2DE5240300CB0059 /* SmartContractInspector-README.md in Resources */,
 				9ED8DB2D2DE5240300CB0059 /* IMPLEMENTATION_SUMMARY.md in Resources */,
+				9E7C243D2DEAAE0D007C181D /* README.md in Resources */,
 				9ED8DB2F2DE5240300CB0059 /* POOL_STATS_IMPLEMENTATION_PLAN.md in Resources */,
 				9ED8DB312DE5240300CB0059 /* SmartContractExplorer-README.md in Resources */,
 				9ED8DB322DE5240300CB0059 /* DataAvailabilityAnalysis.md in Resources */,
@@ -811,15 +888,18 @@
 				9EDE64F92DE7035400B63E09 /* PriceData.swift in Sources */,
 				9ED8DB582DE542FC00CB0059 /* AuctionStatus.swift in Sources */,
 				9ED8DAF52DE5240300CB0059 /* DetailedPoolStatisticsView.swift in Sources */,
+				9EDE65232DE9225900B63E09 /* BlendParser.swift in Sources */,
 				9ED8DB4C2DE5420900CB0059 /* WithdrawalStatus.swift in Sources */,
 				9ED8DAF62DE5240300CB0059 /* NetworkService.swift in Sources */,
 				9EDE65132DE7196200B63E09 /* OracleImplementation.swift in Sources */,
 				9EDE651F2DE773DB00B63E09 /* PoolService.swift in Sources */,
 				9ED8DAF72DE5240300CB0059 /* BlendDashboardView.swift in Sources */,
 				9ED8DAF82DE5240300CB0059 /* SmartContractDateFormatterFix.swift in Sources */,
+				9EDE65272DE9338D00B63E09 /* PoolServiceProtocol.swift in Sources */,
 				9ED8DAF92DE5240300CB0059 /* BlendOracleServiceProtocol.swift in Sources */,
 				9ED8DAFA2DE5240300CB0059 /* BlendApp.swift in Sources */,
 				9ED8DAFB2DE5240300CB0059 /* SmartContractDebugGuide.swift in Sources */,
+				9EDE65212DE9220B00B63E09 /* BlendAssetData.swift in Sources */,
 				9ED8DAFC2DE5240300CB0059 /* SmartContractDebugDemo.swift in Sources */,
 				9ED8DAFD2DE5240300CB0059 /* CacheService.swift in Sources */,
 				9ED8DAFE2DE5240300CB0059 /* DebugLogView.swift in Sources */,
@@ -846,6 +926,12 @@
 				9E9781B72DE68F7F009333AD /* ConfigurationService.swift in Sources */,
 				9E9781B82DE68F7F009333AD /* DataService.swift in Sources */,
 				9E9781B92DE68F7F009333AD /* BlendPoolDiagnosticsService.swift in Sources */,
+				9E7C24372DEAAE0D007C181D /* BackstopContractService+Functions.swift in Sources */,
+				9E7C24382DEAAE0D007C181D /* BackstopContractServiceProtocol.swift in Sources */,
+				9E7C24392DEAAE0D007C181D /* BackstopContractService+Parsing.swift in Sources */,
+				9E7C243A2DEAAE0D007C181D /* BackstopContractService+Utils.swift in Sources */,
+				9E7C243B2DEAAE0D007C181D /* BackstopContractService.swift in Sources */,
+				9E7C243C2DEAAE0D007C181D /* BackstopModels.swift in Sources */,
 				9E9781A22DE68E6C009333AD /* ConnectionState.swift in Sources */,
 				9E9781A32DE68E6C009333AD /* HealthIssue.swift in Sources */,
 				9E9781A42DE68E6C009333AD /* TimeoutConfiguration.swift in Sources */,
@@ -857,6 +943,7 @@
 				9ED8DB032DE5240300CB0059 /* KeyPairSigner.swift in Sources */,
 				9EDE64FD2DE7038C00B63E09 /* PoolConfig.swift in Sources */,
 				9E97817E2DE68D98009333AD /* BatchingService.swift in Sources */,
+				9E7C24272DEAAAB5007C181D /* BlendFinancialCalculator.swift in Sources */,
 				9ED8DB042DE5240300CB0059 /* SmartContractInspector.swift in Sources */,
 				9ED8DB052DE5240300CB0059 /* DependencyContainer.swift in Sources */,
 				9ED8DB502DE5426500CB0059 /* BackstopStatus.swift in Sources */,
@@ -887,6 +974,7 @@
 				9ED8DB102DE5240300CB0059 /* TestFullFunctionListing.swift in Sources */,
 				9ED8DB112DE5240300CB0059 /* SmartContractBatchInspector.swift in Sources */,
 				9ED8DB122DE5240300CB0059 /* SmartContractServerUrlFix.swift in Sources */,
+				9EDE65252DE9246700B63E09 /* BlendAssetService.swift in Sources */,
 				9ED8DB132DE5240300CB0059 /* SmartContractDebugTest.swift in Sources */,
 				9ED8DB142DE5240300CB0059 /* BlendSigner.swift in Sources */,
 				9ED8DB152DE5240300CB0059 /* EnhancedBlendRateCalculator.swift in Sources */,
