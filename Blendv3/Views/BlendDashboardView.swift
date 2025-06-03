@@ -83,18 +83,6 @@ struct BlendDashboardView: View {
         .refreshable {
             await performRefresh()
         }
-        .sheet(isPresented: $showDepositSheet) {
-            TransactionSheet(type: .deposit)
-                .environmentObject(viewModel)
-        }
-        .sheet(isPresented: $showWithdrawSheet) {
-            TransactionSheet(type: .withdrawal)
-                .environmentObject(viewModel)
-        }
-        .sheet(isPresented: $showTransactionHistory) {
-            TransactionHistoryView()
-                .environmentObject(viewModel)
-        }
         .sheet(isPresented: $showDebugLogs) {
             DebugLogView()
         }

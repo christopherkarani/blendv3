@@ -28,7 +28,7 @@ final class BackstopContractServiceTests: XCTestCase {
         mockCacheService = MockCacheService()
         
         testConfig = BackstopServiceConfig(
-            contractAddress: testContractAddress,
+            contractAddress: BlendUSDCConstants.Testnet.backstop,
             rpcUrl: "https://soroban-testnet.stellar.org",
             network: .testnet
         )

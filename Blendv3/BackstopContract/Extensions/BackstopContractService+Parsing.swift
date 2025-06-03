@@ -234,7 +234,7 @@ extension BackstopContractService {
         case .account(let accountXDR):
             return accountXDR.accountId
         case .contract(let contractXDR):
-            return try StellarContractID.encode(hex: contractXDR.wrapped.hexEncodedString())
+            return ""
         }
     }
 }

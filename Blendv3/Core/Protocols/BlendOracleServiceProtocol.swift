@@ -78,8 +78,10 @@ extension BlendOracleService: BlendOracleServiceProtocol {
         let currentTimestamp = UInt64(Date().timeIntervalSince1970)
         self.debugLogger.info("🔮 Using current timestamp: \(currentTimestamp) for asset: \(asset.description)")
         
+       
+     
         // Call the timestamp-specific function and handle the optional result
-        guard let priceData = try await getPrice(asset: asset, timestamp: currentTimestamp) else {
+        guard let priceData = try await getLastPrice(asset: asset) else {
             // For backward compatibility, throw an error if no price is available
             // This maintains the non-optional return type of the original function
             throw OracleError.priceNotAvailable(asset: asset.assetId, reason: "No price available at timestamp \(currentTimestamp)")

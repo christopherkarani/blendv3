@@ -673,7 +673,7 @@ public class BlendUSDCVault: ObservableObject {
                 )
             }
             
-            try await dataService.fetchPoolStats()
+            try! await dataService.fetchPoolStats()
 
             logger.info("Soroban client initialized successfully")
             

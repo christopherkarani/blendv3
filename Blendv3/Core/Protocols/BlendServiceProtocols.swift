@@ -83,7 +83,6 @@ public protocol DiagnosticsServiceProtocol: AnyObject {
     func logNetworkEvent(_ event: NetworkEvent)
     func logTransactionEvent(_ event: TransactionEvent)
     func performHealthCheck() async -> HealthCheckResult
-    func getPerformanceMetrics() -> PerformanceMetrics
     func trackOperationTiming(operation: String, duration: TimeInterval) async
 }
 
@@ -177,11 +176,11 @@ class BlendDataService: DataServiceProtocol {
     }
     
     func fetchPoolStats() async throws  {
-        let config = try await poolService.fetchPoolConfig()
-        let assetsInPool = try await assetService.getAssets()
-        let priceData = try await oracleService.getPrices(assets: assetsInPool)
-        let assetDataData = try await assetService.getAll(assets: assetsInPool)
-        let configBackstop = BackstopContractService.testnetConfig()
+        let config = try! await poolService.fetchPoolConfig()
+        let assetsInPool = try! await assetService.getAssets()
+        let priceData = try! await oracleService.getPrices(assets: assetsInPool)
+        let assetDataData = try! await assetService.getAll(assets: assetsInPool)
+      //  let configBackstop = BackstopContractService.testnetConfig()
         let cache = CacheService()
         let cetConfig = ConfigurationService(networkType: BlendUSDCConstants.NetworkType.testnet)
         
@@ -189,7 +188,7 @@ class BlendDataService: DataServiceProtocol {
         // Initialize infrastructure services
         let n = NetworkService(configuration: cetConfig)
         let network = NetworkService(configuration: cetConfig)
-        let backstop = BackstopContractService.init(networkService: network, cacheService: cache, config: configBackstop)
+       // let backstop = BackstopContractService.init(networkService: network, cacheService: cache, config: configBackstop)
         var pricedAssets: [BlendAssetData] = []
         for asset in assetDataData {
             for price in priceData {
@@ -213,16 +212,24 @@ class BlendDataService: DataServiceProtocol {
            // dump(asset)
             if let assetContract = try? StellarContractID.toStrKey(asset.assetId) {
                 print("Asset: \(assetContract) \n Suuply \(supplyBorrow.supplyAPY) \n Borrow \(supplyBorrow.borrowAPY)")
+            } else {
+                print("Errrrrorrrr: ")
             }
             
         }
         
-        let result = try await backstop.getPoolData(pool: BlendUSDCConstants.Testnet.xlmUsdcPool)
-        let token = try await backstop.getBackstopToken()
-//        let backstopTokenPrice = try await oracleService.getLastPrice(asset: .stellar(address: token))
+       let backstopconfig =  BackstopServiceConfig(
+            contractAddress: BlendUSDCConstants.Testnet.backstop,
+            rpcUrl: "https://soroban-testnet.stellar.org",
+            network: .testnet
+        )
+        let backstop = BackstopContractService.init(networkService: n, cacheService: cache, config: backstopconfig)
+        let result = try! await backstop.getPoolData(pool: BlendUSDCConstants.Testnet.xlmUsdcPool)
+        let token = try! await backstop.getBackstopToken()
+//        let backstopTokenPrice = try! await oracleService.getLastPrice(asset: .stellar(address: token))?.price ?? 0
         
-       // let ass = try await oracleService.assets()
-        //print("assets: ", ass)
+        let ass = try! await oracleService.assets()
+        print("assets: ", ass)
        // print("TOKEN Price: ", backstopTokenPrice)
         
         dump(result)
