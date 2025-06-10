@@ -15,7 +15,6 @@
 		9E7C243B2DEAAE0D007C181D /* BackstopContractService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C24332DEAAE0D007C181D /* BackstopContractService.swift */; };
 		9E7C243C2DEAAE0D007C181D /* BackstopModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C242F2DEAAE0D007C181D /* BackstopModels.swift */; };
 		9E7C243D2DEAAE0D007C181D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9E7C24352DEAAE0D007C181D /* README.md */; };
-		9E93884C2DF341820015BE14 /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93884B2DF341820015BE14 /* NetworkServiceProtocol.swift */; };
 		9E93884E2DF3519B0015BE14 /* CacheServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93884D2DF3519B0015BE14 /* CacheServiceProtocol.swift */; };
 		9E9388502DF353730015BE14 /* BlendVaultError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93884F2DF353730015BE14 /* BlendVaultError.swift */; };
 		9E9388532DF745190015BE14 /* stellarsdk in Frameworks */ = {isa = PBXBuildFile; productRef = 9E9388522DF745190015BE14 /* stellarsdk */; };
@@ -48,6 +47,10 @@
 		9EA449D12DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CD2DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift */; };
 		9EA449D22DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */; };
 		9EAD3EED2DF7BDF600029CE7 /* SorobanTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */; };
+		9EAD3EF22DF7D1F000029CE7 /* OracleContractFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD3EEE2DF7D1F000029CE7 /* OracleContractFunction.swift */; };
+		9EAD3EF32DF7D1F000029CE7 /* OracleResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD3EF02DF7D1F000029CE7 /* OracleResponseParser.swift */; };
+		9EAD3EF42DF7D1F000029CE7 /* OracleNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD3EEF2DF7D1F000029CE7 /* OracleNetworkService.swift */; };
+		9EAD3EF62DF7D31400029CE7 /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD3EF52DF7D31400029CE7 /* NetworkServiceProtocol.swift */; };
 		9ECC79BA2DDFF32A00530B03 /* stellarsdk in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECC79B92DDFF32A00530B03 /* stellarsdk */; };
 		9ED8DAF32DE5240300CB0059 /* BlendOracleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAAF2DE5240300CB0059 /* BlendOracleService.swift */; };
 		9ED8DAF62DE5240300CB0059 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC92DE5240300CB0059 /* NetworkService.swift */; };
@@ -138,7 +141,6 @@
 		9E7C24312DEAAE0D007C181D /* BackstopContractServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopContractServiceProtocol.swift; sourceTree = "<group>"; };
 		9E7C24332DEAAE0D007C181D /* BackstopContractService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopContractService.swift; sourceTree = "<group>"; };
 		9E7C24352DEAAE0D007C181D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		9E93884B2DF341820015BE14 /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
 		9E93884D2DF3519B0015BE14 /* CacheServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheServiceProtocol.swift; sourceTree = "<group>"; };
 		9E93884F2DF353730015BE14 /* BlendVaultError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendVaultError.swift; sourceTree = "<group>"; };
 		9E97817D2DE68D98009333AD /* BatchingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchingService.swift; sourceTree = "<group>"; };
@@ -170,6 +172,10 @@
 		9EA449CD2DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionServiceFactory.swift; sourceTree = "<group>"; };
 		9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionServiceProtocol.swift; sourceTree = "<group>"; };
 		9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SorobanTypes.swift; sourceTree = "<group>"; };
+		9EAD3EEE2DF7D1F000029CE7 /* OracleContractFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OracleContractFunction.swift; sourceTree = "<group>"; };
+		9EAD3EEF2DF7D1F000029CE7 /* OracleNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OracleNetworkService.swift; sourceTree = "<group>"; };
+		9EAD3EF02DF7D1F000029CE7 /* OracleResponseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OracleResponseParser.swift; sourceTree = "<group>"; };
+		9EAD3EF52DF7D31400029CE7 /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
 		9ED8DAA92DE5240300CB0059 /* blend_protocol_technical_analysis.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = blend_protocol_technical_analysis.md; sourceTree = "<group>"; };
 		9ED8DAAC2DE5240300CB0059 /* BlendApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendApp.swift; sourceTree = "<group>"; };
 		9ED8DAAE2DE5240300CB0059 /* BlendDefaultSigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendDefaultSigner.swift; sourceTree = "<group>"; };
@@ -402,6 +408,7 @@
 		9E9781AF2DE68F7F009333AD /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				9EAD3EF12DF7D1F000029CE7 /* Oracle */,
 				9EA449CF2DF0FF3C00F6CC6D /* UserPosition */,
 				9E9781A82DE68F7F009333AD /* BlendPoolDiagnosticsService.swift */,
 				9E9781A92DE68F7F009333AD /* ConfigurationService.swift */,
@@ -443,6 +450,17 @@
 				9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */,
 			);
 			path = UserPosition;
+			sourceTree = "<group>";
+		};
+		9EAD3EF12DF7D1F000029CE7 /* Oracle */ = {
+			isa = PBXGroup;
+			children = (
+				9EAD3EEE2DF7D1F000029CE7 /* OracleContractFunction.swift */,
+				9EAD3EEF2DF7D1F000029CE7 /* OracleNetworkService.swift */,
+				9EAD3EF02DF7D1F000029CE7 /* OracleResponseParser.swift */,
+				9EAD3EF52DF7D31400029CE7 /* NetworkServiceProtocol.swift */,
+			);
+			path = Oracle;
 			sourceTree = "<group>";
 		};
 		9ED8DA912DE5237F00CB0059 /* Blendv3 */ = {
@@ -505,7 +523,6 @@
 			isa = PBXGroup;
 			children = (
 				9E93884D2DF3519B0015BE14 /* CacheServiceProtocol.swift */,
-				9E93884B2DF341820015BE14 /* NetworkServiceProtocol.swift */,
 				9EDE65262DE9338D00B63E09 /* PoolServiceProtocol.swift */,
 				9E9781832DE68DF2009333AD /* BlendServiceProtocols.swift */,
 				9ED8DAB42DE5240300CB0059 /* BlendRateCalculatorProtocol.swift */,
@@ -805,12 +822,14 @@
 				9ED8DAFD2DE5240300CB0059 /* CacheService.swift in Sources */,
 				9ED8DAFE2DE5240300CB0059 /* DebugLogView.swift in Sources */,
 				9ED8DB522DE5427E00CB0059 /* UserEmissionsState.swift in Sources */,
+				9EAD3EF22DF7D1F000029CE7 /* OracleContractFunction.swift in Sources */,
+				9EAD3EF32DF7D1F000029CE7 /* OracleResponseParser.swift in Sources */,
+				9EAD3EF42DF7D1F000029CE7 /* OracleNetworkService.swift in Sources */,
 				9ED8DB672DE54FCA00CB0059 /* StellarContractID.swift in Sources */,
 				9E97819A2DE68E6C009333AD /* NetworkEvent.swift in Sources */,
 				9E97819B2DE68E6C009333AD /* MethodOptions.swift in Sources */,
 				9E97819C2DE68E6C009333AD /* ContractAddresses.swift in Sources */,
 				9E97819D2DE68E6C009333AD /* PerformanceMetrics.swift in Sources */,
-				9E93884C2DF341820015BE14 /* NetworkServiceProtocol.swift in Sources */,
 				9E97819E2DE68E6C009333AD /* RetryConfiguration.swift in Sources */,
 				9EAD3EED2DF7BDF600029CE7 /* SorobanTypes.swift in Sources */,
 				9E97819F2DE68E6C009333AD /* TransactionEvent.swift in Sources */,
@@ -856,6 +875,7 @@
 				9EDE64FB2DE7037F00B63E09 /* ReserveDataResult.swift in Sources */,
 				9ED8DB492DE541E200CB0059 /* QueuedWithdrawal.swift in Sources */,
 				9ED8DB072DE5240300CB0059 /* ReactiveRateModifier.swift in Sources */,
+				9EAD3EF62DF7D31400029CE7 /* NetworkServiceProtocol.swift in Sources */,
 				9ED8DB472DE5418A00CB0059 /* BackstopPool.swift in Sources */,
 				9ED8DB0A2DE5240300CB0059 /* BlendUSDCVault.swift in Sources */,
 				9E9781BB2DE6900E009333AD /* ServiceModels.swift in Sources */,

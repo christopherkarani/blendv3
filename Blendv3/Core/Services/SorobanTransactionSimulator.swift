@@ -5,7 +5,7 @@
 //  Created by Chris Karani on 28/05/2025.
 //
 
-import Blendv3
+
 import stellarsdk
 import Foundation
 import CryptoKit

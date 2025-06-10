@@ -2,8 +2,6 @@ import Foundation
 import stellarsdk
 import os
 
-// MARK: - Data Extensions (using existing extension from BlendUSDCVault)
-
 // MARK: - Soroban Contract Operations
 
 /// Contract call parameters for real Soroban operations
@@ -19,16 +17,14 @@ public struct ContractCallParams {
     }
 }
 
-/// Oracle service implementation with correct Blend oracle functions
+/// Oracle service implementation with NetworkService integration
 public final class BlendOracleService {
-
     
-    public func getOracleDecimals() async throws -> Int {
-        try await fetchOracleDecimals()
-    }
-
     // MARK: - Properties
+    
     internal let cacheService: CacheServiceProtocol
+    private let networkService: NetworkServiceProtocol
+    private let oracleNetworkService: OracleNetworkService
     
     // Debug logging
     internal let debugLogger = DebugLogger(subsystem: "com.blendv3.oracle", category: "OracleService")
@@ -46,35 +42,45 @@ public final class BlendOracleService {
     internal let rpcUrl = BlendUSDCConstants.RPC.testnet
     internal let network = Network.testnet
     
+    // Parsers
+    private let optionalPriceDataParser = OptionalPriceDataParser()
+    private let priceDataVectorParser = PriceDataVectorParser()
+    private let assetVectorParser = AssetVectorParser()
+    private let u32Parser = U32Parser()
+    private let assetParser = AssetParser()
+    
     // MARK: - Initialization
     
-    public init(cacheService: CacheServiceProtocol) {
+    @MainActor
+    public init(cacheService: CacheServiceProtocol, networkService: NetworkServiceProtocol) {
         self.cacheService = cacheService
-        debugLogger.info("🔮 Oracle service initialized with address: \(oracleAddress)")
+        self.networkService = networkService
+        self.oracleNetworkService = OracleNetworkService(
+            networkService: networkService,
+            contractId: BlendUSDCConstants.Testnet.oracle
+        )
+        
+        debugLogger.info("🔮 Oracle service initialized with NetworkService integration")
+        debugLogger.info("🔮 Oracle address: \(oracleAddress)")
         debugLogger.info("🔮 Using RPC: \(rpcUrl)")
     }
     
-  
+    public func getOracleDecimals() async throws -> Int {
+        try await fetchOracleDecimals()
+    }
     
-     func fetchOracleDecimals() async throws -> Int {
+    private func fetchOracleDecimals() async throws -> Int {
         BlendLogger.debug("Fetching oracle decimals from contract", category: BlendLogger.oracle)
         
         return try await withRetry(maxAttempts: self.maxRetries, delay: self.retryDelay) {
-            let sorobanServer = SorobanServer(endpoint: self.rpcUrl)
-            
-            // Create contract call for decimals() function (if it exists)
-            let contractCall = ContractCallParams(
-                contractId: self.oracleAddress,
-                functionName: "decimals",
-                functionArguments: []
-            )
-            
-            let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            
-            // Parse decimals from response
-            if case .u32(let decimals) = response {
+            do {
+                let decimals = try await self.oracleNetworkService.simulateAndParse(
+                    .decimals,
+                    using: self.u32Parser,
+                    context: OracleParsingContext(functionName: "decimals")
+                )
                 return Int(decimals)
-            } else {
+            } catch {
                 // Default to 7 decimals if decimals() function doesn't exist
                 BlendLogger.warning("Oracle decimals() function not available, using default 7", category: BlendLogger.oracle)
                 return 7
@@ -82,24 +88,26 @@ public final class BlendOracleService {
         }
     }
     
-    /// Simulate contract call and return result using real Soroban RPC
- 
-
-internal func simulateContractCall(sorobanServer: SorobanServer, contractCall: ContractCallParams) async throws -> SCValXDR {
-    let simulator = SorobanTransactionSimulator(debugLogger: debugLogger)
-    return try await simulator.simulate(server: sorobanServer, contractCall: contractCall)
-}
-    
-
+    /// Simulate a contract call using an OracleContractCallBuilder instance.
+    /// This function requires an OracleContractCallBuilder and uses its build() method
+    /// before simulating the contract call.
+    ///
+    /// Use an OracleContractCallBuilder to construct the contract call before invoking this method.
+    internal func simulateContractCall(contractCallBuilder: OracleContractCallBuilder) async throws -> SCValXDR {
+        // Note: This function expects an OracleContractCallBuilder, NOT ContractCallParams.
+        // Calls passing ContractCallParams must be migrated to use OracleContractCallBuilder instead.
+        let contractCall = try contractCallBuilder.build()
+        let response = try await self.oracleNetworkService.simulate(using: contractCall)
+        return response
+    }
     
     /// Create Asset::Stellar(contract_address) parameter for oracle calls
     /// Based on Blend Protocol documentation, Asset::Stellar is represented as an enum variant
-    private func createAssetParameter(contractAddress: String) throws -> SCValXDR {
-        BlendLogger.debug("🔮 📝 Creating asset parameter for: \(contractAddress)", category: BlendLogger.oracle)
+    internal func createAssetParameter(contractAddress: String) throws -> SCValXDR {
         debugLogger.info("🔮 📝 createAssetParameter called with: \(contractAddress)")
         
         // Normalize the contract address to ensure it's in proper Soroban format
-      //  let normalizedAddress = normalizeContractAddress(contractAddress) ?? contractAddress
+        //  let normalizedAddress = normalizeContractAddress(contractAddress) ?? contractAddress
         
         // Create Asset::Stellar(address) enum variant
         let contractAddressXdr = try SCAddressXDR(contractId: contractAddress)
@@ -126,244 +134,36 @@ internal func simulateContractCall(sorobanServer: SorobanServer, contractCall: C
         return try? StellarContractID.decode(strKey: address)
     }
     
-    /// Parse Option<PriceData> from oracle response
-    internal func parseOptionalPriceData(from resultXdr: SCValXDR, asset: OracleAsset) throws -> PriceData? {
-        let symbol = getAssetSymbol(for: asset.assetId)
-        
-        switch resultXdr {
-        case .void:
-            return nil
-        case .vec(let vecOptional):
-            // Some(PriceData) case - might be wrapped in a vector
-            guard let vec = vecOptional, !vec.isEmpty else {
-                BlendLogger.debug("🔮 ❌ Empty vector for \(symbol)", category: BlendLogger.oracle)
-                return nil
-            }
-            return try parseWrappedPriceData(from: vec[0], assetId: asset.assetId)
-        case .map(let mapOptional):
-            // Direct PriceData struct (no Option wrapper)
-            guard let map = mapOptional else {
-                throw OracleError.invalidResponse(
-                    details:  "Map is nil in direct PriceData response",
-                    rawData: String(describing: resultXdr)
-                )
-            }
-            return try parsePriceDataStruct(from: map, assetId: asset.assetId)
-            
-        case .i128(let priceValue):
-            debugLogger.info("🔮 💰 Parsing simple i128 price for \(symbol)")
-            let price = parseI128ToDecimal(priceValue)
-            return PriceData(
-                price: price,
-                timestamp: Date(), // Use current time if no timestamp provided
-                assetId: asset.assetId,
-                decimals: 7
-            )
-            
-        default:
-            let details = "Unexpected XDR type: \(String(describing: type(of: resultXdr)))"
-            throw OracleError.invalidResponse(details: details, rawData: String(describing: resultXdr))
-        }
-    }
-    
-    /// Parse Option<Vec<PriceData>> from oracle response
-    internal func parseOptionalPriceDataVector(from resultXdr: SCValXDR, assetId: String) throws -> [PriceData] {
-        BlendLogger.debug("Parsing Option<Vec<PriceData>> for asset: \(assetId)", category: BlendLogger.oracle)
-        
-        switch resultXdr {
-        case .void:
-            // None case - no price data available
-            BlendLogger.debug("No price data available (None) for asset: \(assetId)", category: BlendLogger.oracle)
-            return []
-            
-        case .vec(let vecOptional):
-            // Some(Vec<PriceData>) case
-            guard let vec = vecOptional else {
-                let details = "Vector is nil in Option<Vec<PriceData>> response"
-                throw OracleError.invalidResponse(details: details, rawData: String(describing: resultXdr))
-            }
-            
-            var priceDataArray: [PriceData] = []
-            for item in vec {
-                if case .map(let mapOptional) = item, let map = mapOptional {
-                    let priceData = try parsePriceDataStruct(from: map, assetId: assetId)
-                    priceDataArray.append(priceData)
-                }
-            }
-            return priceDataArray
-            
-        default:
-            let details = "Unexpected XDR type for price vector: \(String(describing: type(of: resultXdr)))"
-            throw OracleError.invalidResponse(details: details, rawData: String(describing: resultXdr))
-        }
-    }
-    
-    /// Parse wrapped PriceData from Option<PriceData> instance
-    private func parseWrappedPriceData(from value: SCValXDR, assetId: String) throws -> PriceData? {
-        let symbol = getAssetSymbol(for: assetId)
-        BlendLogger.debug("🔮 🔍 Parsing wrapped PriceData for \(symbol)", category: BlendLogger.oracle)
-        debugLogger.info("🔮 🔍 parseWrappedPriceData called for \(symbol)")
-        
-        switch value {
-        case .map(let mapOptional):
-            guard let map = mapOptional else {
-                BlendLogger.error("🔮 💥 Invalid wrapped map for \(symbol)", category: BlendLogger.oracle)
-                let details = "Map is nil in wrapped PriceData"
-                throw OracleError.invalidResponse(details: details, rawData: String(describing: value))
-            }
-            return try parsePriceDataStruct(from: map, assetId: assetId)
-            
-        case .i128(let priceValue):
-            // Simple price value
-            let price = parseI128ToDecimal(priceValue)
-            return PriceData(
-                price: price,
-                timestamp: Date(),
-                assetId: assetId,
-                decimals: 7
-            )
-            
-        default:
-            BlendLogger.warning("🔮 ⚠️ Unexpected wrapped value type for \(symbol): \(value)", category: BlendLogger.oracle)
-            let details = "Unexpected wrapped value type: \(String(describing: type(of: value)))"
-            throw OracleError.invalidResponse(details: details, rawData: String(describing: value))
-        }
-    }
-    
-    /// Parse PriceData struct from map
-    private func parsePriceDataStruct(from map: [SCMapEntryXDR], assetId: String) throws -> PriceData {
-        let symbol = getAssetSymbol(for: assetId)
-        BlendLogger.debug("🔮 🔍 Parsing PriceData struct for \(symbol) with \(map.count) fields", category: BlendLogger.oracle)
-        debugLogger.info("🔮 🔍 parsePriceDataStruct called for \(symbol)")
-        
-        var price: Decimal?
-        var timestamp: Date?
-        
-        for entry in map {
-            if case .symbol(let key) = entry.key {
-                debugLogger.info("🔮 🔑 Processing field: \(key)")
-                
-                switch key {
-                case "price":
-                    if case .i128(let priceValue) = entry.val {
-                        // Convert i128 to Decimal
-                        price = parseI128ToDecimal(priceValue)
-                        BlendLogger.debug("🔮 💰 Parsed price for \(symbol): \(price!)", category: BlendLogger.oracle)
-                        debugLogger.info("🔮 💰 Price field parsed: \(price!)")
-                    } else {
-                        BlendLogger.warning("🔮 ⚠️ Invalid price field type for \(symbol)", category: BlendLogger.oracle)
-                        debugLogger.warning("🔮 ⚠️ Price field is not i128: \(entry.val)")
-                    }
-                case "timestamp":
-                    if case .u64(let timestampValue) = entry.val {
-                        timestamp = Date(timeIntervalSince1970: TimeInterval(timestampValue))
-                        BlendLogger.debug("🔮 ⏰ Parsed timestamp for \(symbol): \(timestamp!)", category: BlendLogger.oracle)
-                        debugLogger.info("🔮 ⏰ Timestamp field parsed: \(timestamp!)")
-                    } else {
-                        BlendLogger.warning("🔮 ⚠️ Invalid timestamp field type for \(symbol)", category: BlendLogger.oracle)
-                        debugLogger.warning("🔮 ⚠️ Timestamp field is not u64: \(entry.val)")
-                    }
-                default:
-                    BlendLogger.debug("🔮 ❓ Unknown PriceData field: \(key) for \(symbol)", category: BlendLogger.oracle)
-                    debugLogger.info("🔮 ❓ Ignoring unknown field: \(key)")
-                }
-            } else {
-                BlendLogger.warning("🔮 ⚠️ Non-symbol key in PriceData for \(symbol)", category: BlendLogger.oracle)
-                debugLogger.warning("🔮 ⚠️ Non-symbol key: \(entry.key)")
-            }
-        }
-        
-        guard let finalPrice = price, let finalTimestamp = timestamp else {
-            BlendLogger.error("🔮 💥 Missing required PriceData fields for asset: \(symbol)", category: BlendLogger.oracle)
-            debugLogger.error("🔮 💥 Missing fields - price: \(price != nil), timestamp: \(timestamp != nil)")
-            
-            let missingFields = [
-                price == nil ? "price" : nil,
-                timestamp == nil ? "timestamp" : nil
-            ].compactMap { $0 }
-            
-            let details = "Missing required fields: \(missingFields.joined(separator: ", "))"
-            throw OracleError.contractError(code: 1, message: "error")
-        }
-        
-        let priceData = PriceData(
-            price: FixedMath.toFloat(value: finalPrice, decimals: 7),
-            timestamp: finalTimestamp,
-            assetId: assetId,
-            decimals: 7 // Default to 7 decimals for Blend
-        )
-        
-        BlendLogger.debug("🔮 ✅ Successfully parsed PriceData for \(symbol): price=\(FixedMath.toFloat(value: finalPrice, decimals: 7)), timestamp=\(finalTimestamp)", category: BlendLogger.oracle)
-        debugLogger.info("🔮 ✅ PriceData created for \(symbol): $\(priceData.priceInUSD)")
-        
-        return priceData
-    }
-    
-    /// Parse i128 to Decimal with proper fixed-point arithmetic
-    /// Blend Protocol uses 7 decimal places for prices (10^7 = 10,000,000)
-    private func parseI128ToDecimal(_ value: Int128PartsXDR) -> Decimal {
-        BlendLogger.debug("🔮 🔢 Parsing i128 value: hi=\(value.hi), lo=\(value.lo)", category: BlendLogger.oracle)
-        debugLogger.info("🔮 🔢 parseI128ToDecimal - hi: \(value.hi), lo: \(value.lo)")
-        
-        // Convert i128 to a single 128-bit integer value
-        let fullValue: Decimal
-        
-        if value.hi == 0 {
-            // Simple case: only low 64 bits are used
-            fullValue = Decimal(value.lo)
-            debugLogger.info("🔮 🔢 Simple case - using lo value: \(value.lo)")
-        } else if value.hi == -1 && (value.lo & 0x8000000000000000) != 0 {
-            // Negative number in two's complement
-            let signedLo = Int64(bitPattern: value.lo)
-            fullValue = Decimal(signedLo)
-            debugLogger.info("🔮 🔢 Negative case - signed lo: \(signedLo)")
+    /// Get asset symbol for logging purposes
+    private func getAssetSymbol(for assetId: String) -> String {
+        // Extract symbol from asset ID for better logging
+        if assetId.contains("USDC") {
+            return "USDC"
+        } else if assetId.contains("XLM") {
+            return "XLM"
         } else {
-            // Large positive number: combine hi and lo parts
-            // hi represents the upper 64 bits, lo represents the lower 64 bits
-            let hiDecimal = Decimal(value.hi) * Decimal(sign: .plus, exponent: 64, significand: 1)
-            let loDecimal = Decimal(value.lo)
-            fullValue = hiDecimal + loDecimal
-            debugLogger.info("🔮 🔢 Large number case - combined value: \(fullValue)")
+            return String(assetId.prefix(8)) + "..."
         }
-        
-        // The value from the oracle is in fixed-point format with 7 decimals
-        // So we need to return the raw value as-is (it's already scaled)
-        // The PriceData.priceInUSD property will handle the conversion to float
-        
-        BlendLogger.debug("🔮 💰 Parsed fixed-point price: \(fullValue)", category: BlendLogger.oracle)
-        debugLogger.info("🔮 💰 Final parsed price (fixed-point): \(fullValue)")
-        
-        return fullValue
     }
     
-    /// Helper method to get asset symbol from address
-    private func getAssetSymbol(for address: String) -> String {
-        print("asset address: \(address)")
+    /// Parse i128 to Decimal for price values
+    private func parseI128ToDecimal(_ i128: Int128XDR) -> Decimal {
+        // Convert i128 to Decimal
+        // i128 is a 128-bit signed integer, we need to handle both high and low parts
+        let high = i128.hi
+        let low = i128.lo
         
-        let assetMapping = [
-            BlendUSDCConstants.Testnet.usdc: "USDC",
-            BlendUSDCConstants.Testnet.xlm: "XLM",
-            BlendUSDCConstants.Testnet.blnd: "BLND",
-            BlendUSDCConstants.Testnet.weth: "wETH",
-            BlendUSDCConstants.Testnet.wbtc: "wBTC"
-        ]
-        if !StellarContractID.isStrKeyContract(address) {
-            let asset = decode(address: address) ?? ""
-            return assetMapping[asset]!
-        }
-    
-        return assetMapping[address] ?? address
-    }
-    
-    private func decode(address: String) -> String? {
-        try? StellarContractID.encode(hex: address)
+        // Combine high and low parts to form the full 128-bit value
+        let fullValue = (Int64(high) << 64) | Int64(low)
+        
+        return Decimal(fullValue)
     }
     
     internal func withRetry<T>(
         maxAttempts: Int,
         delay: TimeInterval,
         operation: @escaping () async throws -> T
-    ) async throws -> T {
+    ) async rethrows -> T {
         var lastError: Error?
         
         BlendLogger.debug("🔮 🔄 Starting retry mechanism (max: \(maxAttempts), delay: \(delay)s)", category: BlendLogger.oracle)
@@ -406,8 +206,21 @@ internal func simulateContractCall(sorobanServer: SorobanServer, contractCall: C
         debugLogger.error("🔮 💥 Final error: \(lastError?.localizedDescription ?? "Unknown")")
         throw OracleError.maxRetriesExceeded(attempts: maxAttempts, lastError: lastError)
     }
+    
+    // Example of a method that calls simulateContractCall.
+    // Migrated from ContractCallParams to OracleContractCallBuilder.
+    internal func exampleSimulateCall(contractCallParams: ContractCallParams) async throws -> SCValXDR {
+        // Migrated from ContractCallParams to OracleContractCallBuilder
+        let builder = OracleContractCallBuilder(
+            contractId: contractCallParams.contractId,
+            functionName: contractCallParams.functionName
+        )
+        for arg in contractCallParams.functionArguments {
+            builder.addArgument(arg)
+        }
+        return try await simulateContractCall(contractCallBuilder: builder)
+    }
 }
-
 
 /// Error severity levels for better error categorization
 public enum ErrorSeverity: String, CaseIterable {
@@ -423,6 +236,7 @@ public enum ErrorSeverity: String, CaseIterable {
         }
     }
 }
+
 // MARK: - Performance Measurement Extension
 
 extension BlendOracleService {
@@ -469,4 +283,5 @@ extension BlendOracleService {
             }
         }
     }
-} 
+}
+

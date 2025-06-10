@@ -78,8 +78,6 @@ extension BlendOracleService: BlendOracleServiceProtocol {
         let currentTimestamp = UInt64(Date().timeIntervalSince1970)
         self.debugLogger.info("🔮 Using current timestamp: \(currentTimestamp) for asset: \(asset.description)")
         
-       
-     
         // Call the timestamp-specific function and handle the optional result
         guard let priceData = try await getLastPrice(asset: asset) else {
             // For backward compatibility, throw an error if no price is available
@@ -91,26 +89,9 @@ extension BlendOracleService: BlendOracleServiceProtocol {
     }
     
     public func assets() async throws -> [String] {
-        let sorobanServer = SorobanServer(endpoint: self.rpcUrl)
-      let contractCall = ContractCallParams(
-          contractId: self.oracleAddress,
-          functionName: "assets",
-          functionArguments: []
-      )
-        
-        let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-        print("The Assets are: ",response)
-        return []
+        let supportedAssets = try await getSupportedAssets()
+        return supportedAssets.map { $0.assetId }
     }
-    
-
-
-    
-//    public func getSupportedAssets() async throws -> [String] {
-//        <#code#>
-//    }
-    
-
     
     // MARK: - Contract-Aligned Methods
     
@@ -129,44 +110,27 @@ extension BlendOracleService: BlendOracleServiceProtocol {
     /// Get price for an asset at a specific timestamp
     /// Maps to contract's price(asset: Asset, timestamp: u64) function
     public func getPrice(asset: OracleAsset, timestamp: UInt64) async throws -> PriceData? {
-        let sorobanServer = SorobanServer(endpoint: self.rpcUrl)
+        debugLogger.info("🔮 Getting price for asset: \(asset.description) at timestamp: \(timestamp)")
         
-        // Create Asset parameter
-      //  let assetParam = asset.toSCVal()
-        let timestampParam = SCValXDR.u64(timestamp)
-        let assetParam = try SCValXDR.address(SCAddressXDR(contractId: asset.assetId))
-        
-        let functionArguments = SCValXDR.vec([
-            SCValXDR.symbol("Stellar"),
-            assetParam
-        ])
-        
-        // Create contract call for price() function
-        let contractCall = ContractCallParams(
-            contractId: self.oracleAddress,
-            functionName: "price",
-            functionArguments: [functionArguments, timestampParam]
-        )
-        
-        let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-        
-        // Parse Option<PriceData> response
-        guard let priceData = try self.parseOptionalPriceData(from: response, asset: asset) else {
-            return nil
+        return try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
+            let assetParam = try OracleContractFunction.createAssetParameter(asset)
+            let timestampParam = OracleContractFunction.createTimestampParameter(timestamp)
+            
+            let context = OracleParsingContext(
+                assetId: asset.assetId,
+                functionName: "price",
+                additionalInfo: ["timestamp": timestamp]
+            )
+            
+            return try await self.oracleNetworkService.simulateAndParse(
+                .price,
+                arguments: [assetParam, timestampParam],
+                using: self.optionalPriceDataParser,
+                context: context
+            )
         }
-        
-        let asset = try? StellarContractID.toStrKey(priceData.contractID)
-     
-        return PriceData(
-            price: priceData.price,
-            timestamp: priceData.timestamp,
-            contractID: priceData.contractID,
-            decimals: priceData.decimals,
-            resolution: priceData.resolution,
-            baseAsset: asset ?? ""
-        )
-      
     }
+    
     /// Get historical prices for an asset
     /// Maps to contract's prices(asset: Asset, records: u32) function
     public func getPriceHistory(asset: OracleAsset, records: UInt32) async throws -> [PriceData]? {
@@ -174,63 +138,44 @@ extension BlendOracleService: BlendOracleServiceProtocol {
         BlendLogger.info("🔮 Fetching price history for asset: \(assetDescription) with \(records) records", category: BlendLogger.oracle)
         
         return try await withRetry(maxAttempts: self.maxRetries, delay: self.retryDelay) {
-            let sorobanServer = SorobanServer(endpoint: self.rpcUrl)
+            let assetParam = try OracleContractFunction.createAssetParameter(asset)
+            let recordsParam = OracleContractFunction.createRecordsParameter(records)
             
-            // Create Asset parameter
-            let assetParam = asset.toSCVal()
-            let recordsParam = SCValXDR.u32(records)
-            
-            // Create contract call for prices() function
-            let contractCall = ContractCallParams(
-                contractId: self.oracleAddress,
+            let context = OracleParsingContext(
+                assetId: asset.assetId,
                 functionName: "prices",
-                functionArguments: [assetParam, recordsParam]
+                additionalInfo: ["records": records]
             )
             
-            self.debugLogger.info("🔮 Executing prices() call with arguments: \(String(describing: assetParam)), records: \(records)")
-            let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            self.debugLogger.info("🔮 Prices response received: \(String(describing: response))")
-            
-            // Parse Option<Vec<PriceData>> response
-            return try self.parseOptionalPriceDataVector(from: response, assetId: asset.assetId)
+            return try await self.oracleNetworkService.simulateAndParse(
+                .prices,
+                arguments: [assetParam, recordsParam],
+                using: self.priceDataVectorParser,
+                context: context
+            )
         }
     }
     
     /// Get the last recorded price for an asset
     /// Maps to contract's lastprice(asset: Asset) function
     public func getLastPrice(asset: OracleAsset) async throws -> PriceData? {
-        let sorobanServer = SorobanServer(endpoint: self.rpcUrl)
-        let assetParam = try SCValXDR.address(SCAddressXDR(contractId: asset.assetId))
+        debugLogger.info("🔮 Getting last price for asset: \(asset.description)")
         
-        let functionArguments = SCValXDR.vec([
-            SCValXDR.symbol("Stellar"),
-            assetParam
-        ])
-        
-          
-        let contractCall = ContractCallParams(
-            contractId: self.oracleAddress,
-            functionName: "lastprice",
-            functionArguments: [functionArguments]
-        )
-        
-        let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-        
-        // Parse Option<PriceData> response
-        guard let priceData = try self.parseOptionalPriceData(from: response, asset: asset) else {
-            return nil
+        return try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
+            let assetParam = try OracleContractFunction.createAssetParameter(asset)
+            
+            let context = OracleParsingContext(
+                assetId: asset.assetId,
+                functionName: "lastprice"
+            )
+            
+            return try await self.oracleNetworkService.simulateAndParse(
+                .lastPrice,
+                arguments: [assetParam],
+                using: self.optionalPriceDataParser,
+                context: context
+            )
         }
-        
-        let baseAsset = try? StellarContractID.toStrKey(asset.assetId)
-
-        return PriceData(
-            price: priceData.price,
-            timestamp: priceData.timestamp,
-            contractID: asset.assetId,
-            decimals: priceData.decimals,
-            resolution: priceData.resolution,
-            baseAsset: baseAsset ?? ""
-        )
     }
     
     /// Get the base asset used by the oracle
@@ -245,19 +190,13 @@ extension BlendOracleService: BlendOracleServiceProtocol {
         }
         
         return try await measurePerformance(operation: "getBaseAsset", category: BlendLogger.oracle) {
-            let sorobanServer = SorobanServer(endpoint: self.rpcUrl)
+            let context = OracleParsingContext(functionName: "base")
             
-            // Create contract call for base() function
-            let contractCall = ContractCallParams(
-                contractId: self.oracleAddress,
-                functionName: "base",
-                functionArguments: []
+            let asset = try await self.oracleNetworkService.simulateAndParse(
+                .base,
+                using: self.assetParser,
+                context: context
             )
-            
-            let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            
-            // Parse Asset response
-            let asset = try OracleAsset.fromSCVal(response)
             
             // Cache the result
             await cacheService.set(asset, key: cacheKey, ttl: 3600)
@@ -279,26 +218,14 @@ extension BlendOracleService: BlendOracleServiceProtocol {
         }
         
         return try await measurePerformance(operation: "getSupportedAssets", category: BlendLogger.oracle) {
-            let sorobanServer = SorobanServer(endpoint: self.rpcUrl)
+            let context = OracleParsingContext(functionName: "assets")
             
-            // Create contract call for assets() function
-            let contractCall = ContractCallParams(
-                contractId: self.oracleAddress,
-                functionName: "assets",
-                functionArguments: []
+            let oracleAssets = try await self.oracleNetworkService.simulateAndParse(
+                .assets,
+                using: self.assetVectorParser,
+                context: context
             )
             
-            let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            
-            // Parse Vec<Asset> response
-            guard case .vec(let assets) = response, let oracleAsset = assets else {
-                throw OracleError.invalidResponseFormat("Expected vec of assets")
-            }
-            
-            
-            
-            // Convert each SCVal to OracleAsset
-            let oracleAssets: [OracleAsset] = try oracleAsset.compactMap { try OracleAsset.fromSCVal($0) }
             // Cache the result
             await cacheService.set(oracleAssets, key: cacheKey, ttl: 3600)
             
@@ -312,21 +239,13 @@ extension BlendOracleService: BlendOracleServiceProtocol {
     /// Fetch oracle resolution from the contract
     private func fetchOracleResolution() async throws -> Int {
         return try await withRetry(maxAttempts: self.maxRetries, delay: self.retryDelay) {
-            let sorobanServer = SorobanServer(endpoint: self.rpcUrl)
+            let context = OracleParsingContext(functionName: "resolution")
             
-            // Create contract call for resolution() function
-            let contractCall = ContractCallParams(
-                contractId: self.oracleAddress,
-                functionName: "resolution",
-                functionArguments: []
+            let resolution = try await self.oracleNetworkService.simulateAndParse(
+                .resolution,
+                using: self.u32Parser,
+                context: context
             )
-            
-            let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            
-            // Parse u32 response
-            guard case .u32(let resolution) = response else {
-                throw OracleError.invalidResponseFormat("Expected u32 for resolution")
-            }
             
             return Int(resolution)
         }

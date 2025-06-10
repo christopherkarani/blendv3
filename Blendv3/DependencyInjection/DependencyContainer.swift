@@ -16,7 +16,7 @@ public struct Injected<T> {
 }
 
 /// Central dependency container for the application
-public final class DependencyContainer {
+@MainActor public final class DependencyContainer {
     
     // MARK: - Singleton
     
@@ -31,17 +31,22 @@ public final class DependencyContainer {
     
     /// Oracle service for price retrieval
     public lazy var oracleService: BlendOracleServiceProtocol = BlendOracleService(
-        cacheService: cacheService
+        cacheService: cacheService,
+        networkService: networkService
     )
-    
-    /// Configuration service for environment settings
-    public lazy var configurationService: ConfigurationServiceProtocol = ConfigurationService(networkType: .testnet)
-    
-    /// Network service for RPC calls
-  //  public lazy var networkService: NetworkService = NetworkService(configuration: configurationService)
     
     /// Cache service for data persistence
     public lazy var cacheService: CacheServiceProtocol = CacheService()
+    
+    /// Configuration service for environment settings
+    public lazy var configurationService: ConfigurationServiceProtocol = ConfigurationService(
+        networkType: .testnet
+    )
+    
+    /// Network service for RPC calls
+    @MainActor public lazy var networkService: NetworkServiceProtocol = NetworkService(
+        configuration: configurationService
+    )
     
     // MARK: - Test Support
     
@@ -50,6 +55,8 @@ public final class DependencyContainer {
         _rateCalculator = nil
         _oracleService = nil
         _cacheService = nil
+        _networkService = nil
+        _configurationService = nil
     }
     
     // MARK: - Private Storage
@@ -57,11 +64,11 @@ public final class DependencyContainer {
     private var _rateCalculator: BlendRateCalculatorProtocol?
     private var _oracleService: BlendOracleServiceProtocol?
     private var _cacheService: CacheServiceProtocol?
+    private var _networkService: NetworkServiceProtocol?
+    private var _configurationService: ConfigurationServiceProtocol?
     
     // MARK: - Initialization
     
     private init() {}
 }
-
-
 

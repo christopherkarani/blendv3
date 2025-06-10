@@ -27,7 +27,7 @@ public enum NetworkSimulationError: Error, Sendable {
 /// Provides methods for account retrieval, contract invocation, simulation, ledger queries,
 /// and network connection management.
 @MainActor
-public final class NetworkService {
+public final class NetworkService: NetworkServiceProtocol {
     
     // MARK: - Initialization & Configuration
     
@@ -36,6 +36,8 @@ public final class NetworkService {
     private let baseURL: URL
     
     private let sorobanClientCache = SorobanClientCacheActor()
+    private let sorobanServer: SorobanServer
+    private let transactionSimulator: SorobanTransactionSimulator
     
     private var connectionState: ConnectionState = .disconnected
     private let connectionStateSubject = CurrentValueSubject<ConnectionState, Never>(.disconnected)
@@ -56,6 +58,11 @@ public final class NetworkService {
         
         self.session = URLSession(configuration: config)
         self.baseURL = URL(string: configuration.rpcEndpoint)!
+        
+        // Initialize Soroban server and transaction simulator
+        self.sorobanServer = SorobanServer(endpoint: configuration.rpcEndpoint)
+        let debugLogger = DebugLogger(subsystem: "com.blendv3.network", category: "TransactionSimulator")
+        self.transactionSimulator = SorobanTransactionSimulator(debugLogger: debugLogger)
         
         setupDefaultInterceptors()
         BlendLogger.info("NetworkService initialized with endpoint: \(configuration.rpcEndpoint)", category: BlendLogger.network)
@@ -220,33 +227,34 @@ public final class NetworkService {
         BlendLogger.debug("Simulating contract function: \(functionName) on \(contractId) with args count: \(args.count)", category: BlendLogger.network)
         
         do {
-            let client = try await getSorobanClient(contractId: contractId, sourceKeyPair: sourceKeyPair)
-            let tx = try await client.buildInvokeMethodTx(name: functionName, args: args)
-            let simulationData = try tx.getSimulationData()
+            // Create contract call parameters for the simulator
+            let contractCall = ContractCallParams(
+                contractId: contractId,
+                functionName: functionName,
+                functionArguments: args
+            )
             
-            // Cost extraction not available in SimulateHostFunctionResult
-            BlendLogger.debug("Simulation cost property not available in SimulateHostFunctionResult", category: BlendLogger.network)
+            // Use SorobanTransactionSimulator for simulation
+            let result = try await transactionSimulator.simulate(
+                server: sorobanServer,
+                contractCall: contractCall
+            )
             
-            // Footprint is no longer available in SimulateHostFunctionResult
-            // Removed extraction of footprint from simulation data
-            
-            BlendLogger.debug("Simulation result for function \(functionName): \(String(describing: simulationData.returnedValue))", category: BlendLogger.network)
+            BlendLogger.debug("Simulation result for function \(functionName): \(String(describing: result))", category: BlendLogger.network)
             
             return SimulationResult(
-                result: simulationData.returnedValue,
+                result: result,
                 cost: nil,
                 footprint: nil
             )
             
-        } catch let error as SorobanClientError {
-            BlendLogger.error("Contract simulation failed with SorobanClientError: \(error.localizedDescription) | Function: \(functionName), Contract: \(contractId), Args count: \(args.count)", category: BlendLogger.network)
+        } catch let error as OracleError {
+            BlendLogger.error("Contract simulation failed with OracleError: \(error.localizedDescription) | Function: \(functionName), Contract: \(contractId), Args count: \(args.count)", category: BlendLogger.network)
+            // Convert OracleError to BlendError for interface consistency
             throw BlendError.transaction(.failed)
         } catch let error as BlendError {
             BlendLogger.error("Contract simulation failed with BlendError: \(error) | Function: \(functionName), Contract: \(contractId), Args count: \(args.count)", category: BlendLogger.network)
             throw error
-        } catch let error as DecodingError {
-            BlendLogger.error("Contract simulation failed with DecodingError: \(error.localizedDescription) | Function: \(functionName), Contract: \(contractId), Args count: \(args.count)", category: BlendLogger.network)
-            throw BlendError.validation(.invalidResponse)
         } catch {
             BlendLogger.error("Contract simulation failed with unexpected error: \(error.localizedDescription) | Function: \(functionName), Contract: \(contractId), Args count: \(args.count)", category: BlendLogger.network)
             throw BlendError.validation(.invalidResponse)
@@ -545,4 +553,3 @@ fileprivate struct GetLedgerEntriesResponse: Decodable {
         let xdr: String
     }
 }
-

@@ -142,8 +142,8 @@
             filePath = "Blendv3/Core/Services/BlendOracleService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
             landmarkName = "createAssetParameter(contractAddress:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -174,10 +174,10 @@
             filePath = "Blendv3/Core/Services/BlendOracleService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
-            landmarkName = "createAssetParameter(contractAddress:)"
-            landmarkType = "7">
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "BlendOracleService"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -563,78 +563,6 @@
             endingLineNumber = "134"
             landmarkName = "invokeContractFunction(contractId:functionName:args:sourceKeyPair:force:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "B1870604-C1FA-41E9-8B6E-6EBCEF37990F - 7e687723ae373ccd"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for Blendv3.NetworkService.invokeContractFunction(contractId: Swift.String, functionName: Swift.String, args: Swift.Array&lt;stellarsdk.SCValXDR&gt;) async throws -&gt; stellarsdk.SCValXDR"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/NetworkService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "119"
-                  endingLineNumber = "119">
-               </Location>
-               <Location
-                  uuid = "B1870604-C1FA-41E9-8B6E-6EBCEF37990F - 2f5cad44081ee73c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(2) await resume partial function for Blendv3.NetworkService.invokeContractFunction(contractId: Swift.String, functionName: Swift.String, args: Swift.Array&lt;stellarsdk.SCValXDR&gt;) async throws -&gt; stellarsdk.SCValXDR"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/NetworkService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "119"
-                  endingLineNumber = "119">
-               </Location>
-               <Location
-                  uuid = "B1870604-C1FA-41E9-8B6E-6EBCEF37990F - 387664a0f1cef8cf"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Blendv3.NetworkService.invokeContractFunction(contractId: Swift.String, functionName: Swift.String, args: Swift.Array&lt;stellarsdk.SCValXDR&gt;) async throws -&gt; stellarsdk.SCValXDR"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/NetworkService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "119"
-                  endingLineNumber = "119">
-               </Location>
-               <Location
-                  uuid = "B1870604-C1FA-41E9-8B6E-6EBCEF37990F - 277b5c61a77d5ac8"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for Blendv3.NetworkService.invokeContractFunction(contractId: Swift.String, functionName: Swift.String, args: Swift.Array&lt;stellarsdk.SCValXDR&gt;) async throws -&gt; stellarsdk.SCValXDR"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/NetworkService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "119"
-                  endingLineNumber = "119">
-               </Location>
-               <Location
-                  uuid = "B1870604-C1FA-41E9-8B6E-6EBCEF37990F - 13556edbf3832b0a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for Blendv3.NetworkService.invokeContractFunction(contractId: Swift.String, functionName: Swift.String, args: Swift.Array&lt;stellarsdk.SCValXDR&gt;, sourceKeyPair: stellarsdk.KeyPair, force: Swift.Bool) async throws -&gt; stellarsdk.SCValXDR"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/NetworkService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "134"
-                  endingLineNumber = "134">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
