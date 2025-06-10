@@ -212,7 +212,7 @@ final class BatchingServiceTests: XCTestCase {
 
 // MARK: - Mock Services
 
-private class MockNetworkService: BlendNetworkServiceProtocol {
+private class MockNetworkService: NetworkServiceProtocol {
     var mockLedgerEntries: [Data] = []
     var mockAccount: Account?
     var shouldThrowError = false

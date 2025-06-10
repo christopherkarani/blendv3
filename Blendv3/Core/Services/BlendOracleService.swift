@@ -7,12 +7,12 @@ import os
 // MARK: - Soroban Contract Operations
 
 /// Contract call parameters for real Soroban operations
-struct ContractCallParams {
+public struct ContractCallParams {
     let contractId: String
     let functionName: String
     let functionArguments: [SCValXDR]
     
-    init(contractId: String, functionName: String, functionArguments: [SCValXDR]) {
+    public init(contractId: String, functionName: String, functionArguments: [SCValXDR]) {
         self.contractId = contractId
         self.functionName = functionName
         self.functionArguments = functionArguments
@@ -28,8 +28,6 @@ public final class BlendOracleService {
     }
 
     // MARK: - Properties
-    
-    internal let networkService: NetworkService
     internal let cacheService: CacheServiceProtocol
     
     // Debug logging
@@ -50,8 +48,7 @@ public final class BlendOracleService {
     
     // MARK: - Initialization
     
-    public init(networkService: NetworkService, cacheService: CacheServiceProtocol) {
-        self.networkService = networkService
+    public init(cacheService: CacheServiceProtocol) {
         self.cacheService = cacheService
         debugLogger.info("🔮 Oracle service initialized with address: \(oracleAddress)")
         debugLogger.info("🔮 Using RPC: \(rpcUrl)")
@@ -411,143 +408,6 @@ internal func simulateContractCall(sorobanServer: SorobanServer, contractCall: C
     }
 }
 
-// MARK: - Oracle Errors
-
-//public enum OracleError: LocalizedError, CustomDebugStringConvertible {
-//    case priceNotFound(asset: String, reason: String? = nil)
-//    case priceNotAvailable(asset: String, reason: String? = nil)
-//    case noDataAvailable(context: String? = nil)
-//    case maxRetriesExceeded(attempts: Int, lastError: Error? = nil)
-//    case invalidResponse(details: String? = nil, rawData: String? = nil)
-//    case networkError(Error, context: String? = nil)
-//    case contractError(code: String, message: String)
-//    case assetParameterError(asset: String, reason: String)
-//    case parsingError(field: String, expectedType: String, actualType: String)
-//    case simulationError(transactionHash: String?, error: String)
-//    case rpcError(endpoint: String, statusCode: Int?, message: String)
-//    
-//    public var errorDescription: String? {
-//        switch self {
-//        case .priceNotFound(let asset, let reason):
-//            let baseMessage = "Price not found for asset: \(asset)"
-//            return reason != nil ? "\(baseMessage). Reason: \(reason!)" : baseMessage
-//            
-//        case .priceNotAvailable(let asset, let reason):
-//            let baseMessage = "Price data not available for asset: \(asset)"
-//            return reason != nil ? "\(baseMessage). Reason: \(reason!)" : baseMessage
-//            
-//        case .noDataAvailable(let context):
-//            let baseMessage = "No oracle data available"
-//            return context != nil ? "\(baseMessage). Context: \(context!)" : baseMessage
-//            
-//        case .maxRetriesExceeded(let attempts, let lastError):
-//            let baseMessage = "Maximum retry attempts exceeded (\(attempts) attempts)"
-//            return lastError != nil ? "\(baseMessage). Last error: \(lastError!.localizedDescription)" : baseMessage
-//            
-//        case .invalidResponse(let details, _):
-//            let baseMessage = "Invalid response from oracle"
-//            return details != nil ? "\(baseMessage). Details: \(details!)" : baseMessage
-//            
-//        case .networkError(let error, let context):
-//            let baseMessage = "Network error: \(error.localizedDescription)"
-//            return context != nil ? "\(baseMessage). Context: \(context!)" : baseMessage
-//            
-//        case .contractError(let code, let message):
-//            return "Contract error [\(code)]: \(message)"
-//            
-//        case .assetParameterError(let asset, let reason):
-//            return "Failed to create asset parameter for \(asset): \(reason)"
-//            
-//        case .parsingError(let field, let expectedType, let actualType):
-//            return "Parsing error for field '\(field)': expected \(expectedType), got \(actualType)"
-//            
-//        case .simulationError(let transactionHash, let error):
-//            let baseMessage = "Transaction simulation failed: \(error)"
-//            return transactionHash != nil ? "\(baseMessage) (tx: \(transactionHash!))" : baseMessage
-//            
-//        case .rpcError(let endpoint, let statusCode, let message):
-//            let baseMessage = "RPC error from \(endpoint): \(message)"
-//            return statusCode != nil ? "\(baseMessage) (status: \(statusCode!))" : baseMessage
-//        }
-//    }
-//    
-//    public var debugDescription: String {
-//        switch self {
-//        case .priceNotFound(let asset, let reason):
-//            return "OracleError.priceNotFound(asset: \(asset), reason: \(reason ?? "nil"))"
-//            
-//        case .priceNotAvailable(let asset, let reason):
-//            return "OracleError.priceNotAvailable(asset: \(asset), reason: \(reason ?? "nil"))"
-//            
-//        case .noDataAvailable(let context):
-//            return "OracleError.noDataAvailable(context: \(context ?? "nil"))"
-//            
-//        case .maxRetriesExceeded(let attempts, let lastError):
-//            return "OracleError.maxRetriesExceeded(attempts: \(attempts), lastError: \(lastError?.localizedDescription ?? "nil"))"
-//            
-//        case .invalidResponse(let details, let rawData):
-//            return "OracleError.invalidResponse(details: \(details ?? "nil"), rawData: \(rawData ?? "nil"))"
-//            
-//        case .networkError(let error, let context):
-//            return "OracleError.networkError(\(error), context: \(context ?? "nil"))"
-//            
-//        case .contractError(let code, let message):
-//            return "OracleError.contractError(code: \(code), message: \(message))"
-//            
-//        case .assetParameterError(let asset, let reason):
-//            return "OracleError.assetParameterError(asset: \(asset), reason: \(reason))"
-//            
-//        case .parsingError(let field, let expectedType, let actualType):
-//            return "OracleError.parsingError(field: \(field), expectedType: \(expectedType), actualType: \(actualType))"
-//            
-//        case .simulationError(let transactionHash, let error):
-//            return "OracleError.simulationError(transactionHash: \(transactionHash ?? "nil"), error: \(error))"
-//            
-//        case .rpcError(let endpoint, let statusCode, let message):
-//            return "OracleError.rpcError(endpoint: \(endpoint), statusCode: \(statusCode?.description ?? "nil"), message: \(message))"
-//        }
-//    }
-//    
-//    /// Get the underlying error if this is a wrapper error
-//    public var underlyingError: Error? {
-//        switch self {
-//        case .networkError(let error, _):
-//            return error
-//        case .maxRetriesExceeded(_, let lastError):
-//            return lastError
-//        default:
-//            return nil
-//        }
-//    }
-//    
-//    /// Check if this error is recoverable (can be retried)
-//    public var isRecoverable: Bool {
-//        switch self {
-//        case .networkError, .rpcError, .simulationError:
-//            return true
-//        case .maxRetriesExceeded, .contractError, .assetParameterError, .parsingError:
-//            return false
-//        case .invalidResponse, .priceNotFound, .priceNotAvailable, .noDataAvailable:
-//            return false
-//        }
-//    }
-//    
-//    /// Get error severity level
-//    public var severity: ErrorSeverity {
-//        switch self {
-//        case .priceNotFound, .priceNotAvailable:
-//            return .warning
-//        case .noDataAvailable:
-//            return .warning
-//        case .networkError, .rpcError:
-//            return .error
-//        case .maxRetriesExceeded, .contractError, .simulationError:
-//            return .critical
-//        case .invalidResponse, .assetParameterError, .parsingError:
-//            return .error
-//        }
-//    }
-//}
 
 /// Error severity levels for better error categorization
 public enum ErrorSeverity: String, CaseIterable {
@@ -579,39 +439,6 @@ extension BlendOracleService {
         BlendLogger.debug("⏱️ \(operation) completed in \(String(format: "%.3f", timeElapsed))s", category: category)
         return result
     }
-    
-    /// Enhanced error logging with severity and context
-//    private func logError(_ error: Error, context: String, asset: String? = nil) {
-//        let symbol = asset != nil ? getAssetSymbol(for: asset!) : nil
-//        let assetInfo = symbol != nil ? " [\(symbol!)]" : ""
-//        
-//        if let oracleError = error as? OracleError {
-//            let severity = oracleError.severity
-//            let emoji = severity.emoji
-//            
-//            BlendLogger.error("\(emoji) Oracle Error\(assetInfo): \(oracleError.localizedDescription)", 
-//                            category: BlendLogger.oracle)
-//            debugLogger.error("\(emoji) \(severity.rawValue): \(oracleError.debugDescription)")
-//            debugLogger.error("🔍 Context: \(context)")
-//            
-//            // Log underlying error if present
-//            if let underlyingError = oracleError.underlyingError {
-//                debugLogger.error("🔗 Underlying error: \(underlyingError.localizedDescription)")
-//            }
-//            
-//            // Log recovery suggestion
-//            if oracleError.isRecoverable {
-//                debugLogger.info("🔄 Error is recoverable - retry may succeed")
-//            } else {
-//                debugLogger.warning("⚠️ Error is not recoverable - manual intervention may be required")
-//            }
-//        } else {
-//            BlendLogger.error("❌ Unexpected Error\(assetInfo): \(error.localizedDescription)", 
-//                            category: BlendLogger.oracle)
-//            debugLogger.error("❌ Unexpected error type: \(type(of: error))")
-//            debugLogger.error("🔍 Context: \(context)")
-//        }
-//    }
     
     /// Log successful operations with metrics
     private func logSuccess(operation: String, asset: String? = nil, duration: TimeInterval? = nil, additionalInfo: [String: Any] = [:]) {

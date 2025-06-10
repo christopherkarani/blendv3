@@ -5,10 +5,9 @@
 //  Created by Chris Karani on 28/05/2025.
 //
 
+import Blendv3
 import stellarsdk
-
 import Foundation
-import stellarsdk
 import CryptoKit
 
 // MARK: - Transaction Builder
@@ -96,25 +95,33 @@ class SimulationResponseConverter {
     /**
      * Converts a Stellar SDK simulation response to a Blend simulation response.
      * - Parameter sdkResponse: The response from Stellar SDK
-     * - Returns: A Blendv3.SimulateTransactionResponse
+     * - Returns: A SimulateTransactionResponse
      */
-    func convertToBlendResponse(_ sdkResponse: stellarsdk.SimulateTransactionResponse) -> Blendv3.SimulateTransactionResponse {
+    func convertToBlendResponse(_ sdkResponse: stellarsdk.SimulateTransactionResponse) -> SimulateTransactionResponse {
         BlendLogger.debug("🔄 Converting SDK response to Blend format", category: logger)
         
         // Extract XDR strings from results
-        let xdrStrings = extractXDRStrings(from: sdkResponse)
+        let xdrStrings = extractXDRStrings(from: sdkResponse) ?? []
         
         // Extract cost information
-        let cost = extractCostInformation(from: sdkResponse)
+        let cost = extractCostInformation(from: sdkResponse) ?? 
+            TransactionCost(cpuInstructions: 0, memoryBytes: 0, resourceFee: 0)
         
         // Extract footprint data
-        let footprint = extractFootprintData(from: sdkResponse)
+        let footprint = extractFootprintData(from: sdkResponse) ?? 
+            TransactionFootprint(readOnly: [], readWrite: [])
         
-        return Blendv3.SimulateTransactionResponse(
-            error: nil, // No error in success case
-            results: xdrStrings,
+        // Convert SDK results to our SimulateTransactionResult type
+        let results = sdkResponse.results?.compactMap { result in
+            return SimulateTransactionResult(xdr: result.xdr)
+        }
+        
+        return SimulateTransactionResponse(
+            xdrStrings: xdrStrings,
             cost: cost,
-            footprint: footprint
+            footprint: footprint,
+            results: results,
+            error: sdkResponse.error
         )
     }
     
@@ -132,17 +139,34 @@ class SimulationResponseConverter {
     /**
      * Extracts cost information from the SDK response.
      */
-    private func extractCostInformation(from response: stellarsdk.SimulateTransactionResponse) -> Int64? {
+    private func extractCostInformation(from response: stellarsdk.SimulateTransactionResponse) -> TransactionCost? {
         guard let minResourceFee = response.minResourceFee else { return nil }
-        return Int64(minResourceFee)
+        
+        // Extract CPU instructions and read/write bytes if available
+        let cpuInstructions: UInt64 = UInt64(response.transactionData?.resources.instructions ?? 0)
+        let memoryBytes: UInt64 = UInt64(response.transactionData?.resources.readBytes ?? 0) + UInt64(response.transactionData?.resources.writeBytes ?? 0)
+        
+        return TransactionCost(
+            cpuInstructions: cpuInstructions, 
+            memoryBytes: memoryBytes, 
+            resourceFee: UInt32(minResourceFee)
+        )
     }
     
     /**
      * Extracts footprint data from the SDK response.
      */
-    private func extractFootprintData(from response: stellarsdk.SimulateTransactionResponse) -> String? {
-        guard let footprint = response.footprint else { return nil }
-        return String(describing: footprint)
+    private func extractFootprintData(from response: stellarsdk.SimulateTransactionResponse) -> TransactionFootprint? {
+        guard let footprint = response.footprint else { 
+            BlendLogger.debug("🔄 No footprint available in response", category: logger)
+            return nil 
+        }
+        
+        // For now, return empty footprint arrays since the SDK structure is unclear
+        // TODO: Investigate the actual structure of stellarsdk.SimulateTransactionResponse.footprint
+        BlendLogger.debug("🔄 Footprint extraction temporarily disabled - SDK structure investigation needed", category: logger)
+        
+        return TransactionFootprint(readOnly: [], readWrite: [])
     }
 }
 
@@ -165,7 +189,7 @@ class SorobanTransactionParser {
      * - Throws: OracleError if parsing fails
      */
     func parseSimulationResult(
-        from response: Blendv3.SimulateTransactionResponse,
+        from response: SimulateTransactionResponse,
         contractCall: ContractCallParams
     ) throws -> SCValXDR {
         BlendLogger.debug("📋 Parsing simulation result for \(contractCall.functionName)", category: logger)
@@ -206,7 +230,7 @@ class SorobanTransactionParser {
     /**
      * Validates the simulation response for any errors.
      */
-    private func validateResponseForErrors(_ response: Blendv3.SimulateTransactionResponse) throws {
+    private func validateResponseForErrors(_ response: SimulateTransactionResponse) throws {
         if let error = response.error, !error.isEmpty {
             BlendLogger.error("📋 Simulation response contains error: \(error)", category: logger)
             throw OracleError.contractError(code: 1, message: error)
@@ -216,7 +240,7 @@ class SorobanTransactionParser {
     /**
      * Extracts and validates results from the simulation response.
      */
-    private func extractAndValidateResults(from response: Blendv3.SimulateTransactionResponse) throws -> [String] {
+    private func extractAndValidateResults(from response: SimulateTransactionResponse) throws -> [String] {
         guard let results = response.results, !results.isEmpty else {
             BlendLogger.error("📋 No results found in simulation response", category: logger)
             throw OracleError.invalidResponse(
@@ -224,7 +248,16 @@ class SorobanTransactionParser {
                 rawData: String(describing: response)
             )
         }
-        return results
+        // Map each SimulateTransactionResult to its `xdr` string, ignoring nils
+        let xdrResults = results.compactMap { $0.xdr }
+        if xdrResults.isEmpty {
+            BlendLogger.error("📋 No valid XDR results found in simulation response", category: logger)
+            throw OracleError.invalidResponse(
+                details: "No valid XDR results in simulation response",
+                rawData: String(describing: results)
+            )
+        }
+        return xdrResults
     }
     
     /**
@@ -331,7 +364,7 @@ class SorobanTransactionParser {
     private func executeSimulationRequest(
         server: SorobanServer,
         transaction: Transaction
-    ) async throws -> Blendv3.SimulateTransactionResponse {
+    ) async throws -> SimulateTransactionResponse {
         BlendLogger.debug("🔮 Executing simulation request", category: logger)
         
         let simulateRequest = stellarsdk.SimulateTransactionRequest(transaction: transaction)
@@ -352,7 +385,7 @@ class SorobanTransactionParser {
      * Parses the simulation response using the injected parser.
      */
     private func parseSimulationResponse(
-        _ response: Blendv3.SimulateTransactionResponse,
+        _ response: SimulateTransactionResponse,
         contractCall: ContractCallParams
     ) throws -> SCValXDR {
         BlendLogger.debug("🔮 Parsing simulation response", category: logger)
@@ -370,3 +403,4 @@ extension OracleError {
         return .networkError(underlying, context: "Failed to build simulation transaction")
     }
 }
+

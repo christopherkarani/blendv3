@@ -24,18 +24,13 @@ public final class DependencyContainer {
     
     // MARK: - Services
     
-    /// USDC Vault service for blockchain interactions
-    public lazy var vaultService: BlendUSDCVault = {
-        let signer = BlendDefaultSigner()
-        return BlendUSDCVault(signer: signer, network: .testnet)
-    }()
+
     
     /// Rate calculator for APR/APY calculations
     public lazy var rateCalculator: BlendRateCalculatorProtocol = BlendRateCalculator()
     
     /// Oracle service for price retrieval
     public lazy var oracleService: BlendOracleServiceProtocol = BlendOracleService(
-        networkService: networkService,
         cacheService: cacheService
     )
     
@@ -43,7 +38,7 @@ public final class DependencyContainer {
     public lazy var configurationService: ConfigurationServiceProtocol = ConfigurationService(networkType: .testnet)
     
     /// Network service for RPC calls
-    public lazy var networkService: NetworkService = NetworkService(configuration: configurationService)
+  //  public lazy var networkService: NetworkService = NetworkService(configuration: configurationService)
     
     /// Cache service for data persistence
     public lazy var cacheService: CacheServiceProtocol = CacheService()
@@ -52,19 +47,15 @@ public final class DependencyContainer {
     
     /// Reset container for testing
     public func reset() {
-        _vaultService = nil
         _rateCalculator = nil
         _oracleService = nil
-        _networkService = nil
         _cacheService = nil
     }
     
     // MARK: - Private Storage
     
-    private var _vaultService: BlendUSDCVault?
     private var _rateCalculator: BlendRateCalculatorProtocol?
     private var _oracleService: BlendOracleServiceProtocol?
-    private var _networkService: BlendNetworkServiceProtocol?
     private var _cacheService: CacheServiceProtocol?
     
     // MARK: - Initialization
@@ -73,9 +64,4 @@ public final class DependencyContainer {
 }
 
 
-public protocol CacheServiceProtocol {
-    func get<T: Codable>(_ key: String, type: T.Type) async -> T?
-    func set<T: Codable>(_ value: T, key: String, ttl: TimeInterval) async
-    func remove(_ key: String) async
-    func clear() async
-} 
+

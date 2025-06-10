@@ -11,10 +11,13 @@ public enum BlendError: LocalizedError, Equatable {
     case validation(ValidationErrorType)
     case transaction(TransactionErrorType)
     case initialization(String)
+    case serviceError(String)
     case unauthorized
     case insufficientFunds
     case serviceUnavailable
     case assetRetrivalFailed
+    case borrowError(String)
+    case withdraw(String)
     case unknown
     
     public var errorDescription: String? {
@@ -37,6 +40,13 @@ public enum BlendError: LocalizedError, Equatable {
             return "An unexpected error occurred"
         case .assetRetrivalFailed:
             return "Asset RetrievalFailed"
+        case .serviceError(let message):
+            return "Service error: \(message)"
+        case .borrowError(let message):
+            return "Borrow Error: \(message)"
+            
+        case .withdraw(let message):
+            return "Withdraw Error: \(message)"
         }
     }
 }
@@ -114,4 +124,3 @@ public enum ValidationSchema {
 
 
 // MARK: - Data Models
-

@@ -11,8 +11,8 @@ import SwiftUI
 struct Blendv3App: App {
     var body: some Scene {
         WindowGroup {
-            BlendDashboardView()
-                .environmentObject(BlendViewModel.init(signer: try! KeyPairSigner(secretSeed: "SATOWQKPSRAP7D77C6EMT65OIF543WQUOV6DJBPW4SGUNTP2XSIEVUKP")))
+            //BlendDashboardView()
+              //  .environmentObject(BlendViewModel.init(signer: try! KeyPairSigner(secretSeed: "SATOWQKPSRAP7D77C6EMT65OIF543WQUOV6DJBPW4SGUNTP2XSIEVUKP")))
         }
     }
 }

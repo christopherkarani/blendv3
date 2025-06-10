@@ -12,7 +12,7 @@ import SwiftUI
 struct BlendApp: App {
     var body: some Scene {
         WindowGroup {
-            BlendDashboardView()
+            //BlendDashboardView()
         }
     }
 } 

@@ -99,7 +99,7 @@ extension BlendOracleService: BlendOracleServiceProtocol {
       )
         
         let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-        dump(response)
+        print("The Assets are: ",response)
         return []
     }
     

@@ -21,4 +21,15 @@ public struct ValidationRules {
             customValidators: []
         )
     }
+    
+    public static var withdrawAmount: ValidationRules {
+        ValidationRules(
+            minValue: Decimal(0.01), // Minimum 0.01 USDC
+            maxValue: Decimal(1_000_000), // Maximum 1M USDC
+            required: true,
+            customValidators: []
+        )
+    }
+    
+    
 }

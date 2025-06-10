@@ -15,6 +15,10 @@
 		9E7C243B2DEAAE0D007C181D /* BackstopContractService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C24332DEAAE0D007C181D /* BackstopContractService.swift */; };
 		9E7C243C2DEAAE0D007C181D /* BackstopModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C242F2DEAAE0D007C181D /* BackstopModels.swift */; };
 		9E7C243D2DEAAE0D007C181D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9E7C24352DEAAE0D007C181D /* README.md */; };
+		9E93884C2DF341820015BE14 /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93884B2DF341820015BE14 /* NetworkServiceProtocol.swift */; };
+		9E93884E2DF3519B0015BE14 /* CacheServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93884D2DF3519B0015BE14 /* CacheServiceProtocol.swift */; };
+		9E9388502DF353730015BE14 /* BlendVaultError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93884F2DF353730015BE14 /* BlendVaultError.swift */; };
+		9E9388532DF745190015BE14 /* stellarsdk in Frameworks */ = {isa = PBXBuildFile; productRef = 9E9388522DF745190015BE14 /* stellarsdk */; };
 		9E97817E2DE68D98009333AD /* BatchingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E97817D2DE68D98009333AD /* BatchingService.swift */; };
 		9E9781842DE68DF2009333AD /* BlendServiceProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781832DE68DF2009333AD /* BlendServiceProtocols.swift */; };
 		9E97819A2DE68E6C009333AD /* NetworkEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781922DE68E6C009333AD /* NetworkEvent.swift */; };
@@ -40,11 +44,13 @@
 		9E9781B82DE68F7F009333AD /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781AA2DE68F7F009333AD /* DataService.swift */; };
 		9E9781B92DE68F7F009333AD /* BlendPoolDiagnosticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781A82DE68F7F009333AD /* BlendPoolDiagnosticsService.swift */; };
 		9E9781BB2DE6900E009333AD /* ServiceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781BA2DE6900E009333AD /* ServiceModels.swift */; };
+		9EA449D02DF0FF3C00F6CC6D /* UserPositionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CC2DF0FF3C00F6CC6D /* UserPositionService.swift */; };
+		9EA449D12DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CD2DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift */; };
+		9EA449D22DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */; };
+		9EAD3EED2DF7BDF600029CE7 /* SorobanTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */; };
 		9ECC79BA2DDFF32A00530B03 /* stellarsdk in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECC79B92DDFF32A00530B03 /* stellarsdk */; };
 		9ED8DAF32DE5240300CB0059 /* BlendOracleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAAF2DE5240300CB0059 /* BlendOracleService.swift */; };
-		9ED8DAF52DE5240300CB0059 /* DetailedPoolStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC12DE5240300CB0059 /* DetailedPoolStatisticsView.swift */; };
 		9ED8DAF62DE5240300CB0059 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC92DE5240300CB0059 /* NetworkService.swift */; };
-		9ED8DAF72DE5240300CB0059 /* BlendDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAAD2DE5240300CB0059 /* BlendDashboardView.swift */; };
 		9ED8DAF92DE5240300CB0059 /* BlendOracleServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB02DE5240300CB0059 /* BlendOracleServiceProtocol.swift */; };
 		9ED8DAFA2DE5240300CB0059 /* BlendApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAAC2DE5240300CB0059 /* BlendApp.swift */; };
 		9ED8DAFD2DE5240300CB0059 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DABB2DE5240300CB0059 /* CacheService.swift */; };
@@ -61,8 +67,6 @@
 		9ED8DB162DE5240300CB0059 /* Blendv3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB92DE5240300CB0059 /* Blendv3App.swift */; };
 		9ED8DB172DE5240300CB0059 /* BlendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DABA2DE5240300CB0059 /* BlendViewModel.swift */; };
 		9ED8DB182DE5240300CB0059 /* BlendUSDCConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB72DE5240300CB0059 /* BlendUSDCConstants.swift */; };
-		9ED8DB192DE5240300CB0059 /* PoolStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DACD2DE5240300CB0059 /* PoolStatisticsView.swift */; };
-		9ED8DB1B2DE5240300CB0059 /* BlendAnalyticsDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAAA2DE5240300CB0059 /* BlendAnalyticsDashboard.swift */; };
 		9ED8DB1D2DE5240300CB0059 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC82DE5240300CB0059 /* Logger.swift */; };
 		9ED8DB202DE5240300CB0059 /* BlendDefaultSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAAE2DE5240300CB0059 /* BlendDefaultSigner.swift */; };
 		9ED8DB222DE5240300CB0059 /* BlendPoolStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB12DE5240300CB0059 /* BlendPoolStats.swift */; };
@@ -100,7 +104,6 @@
 		9EDE65052DE703E200B63E09 /* ValidationRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65042DE703E200B63E09 /* ValidationRules.swift */; };
 		9EDE65102DE712A200B63E09 /* OracleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE650F2DE712A200B63E09 /* OracleError.swift */; };
 		9EDE65112DE712A200B63E09 /* OracleAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE650E2DE712A200B63E09 /* OracleAsset.swift */; };
-		9EDE65132DE7196200B63E09 /* OracleImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65122DE7196200B63E09 /* OracleImplementation.swift */; };
 		9EDE65152DE729DD00B63E09 /* SorobanTransactionSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */; };
 		9EDE651F2DE773DB00B63E09 /* PoolService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE651E2DE773DB00B63E09 /* PoolService.swift */; };
 		9EDE65212DE9220B00B63E09 /* BlendAssetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65202DE9220B00B63E09 /* BlendAssetData.swift */; };
@@ -135,6 +138,9 @@
 		9E7C24312DEAAE0D007C181D /* BackstopContractServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopContractServiceProtocol.swift; sourceTree = "<group>"; };
 		9E7C24332DEAAE0D007C181D /* BackstopContractService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopContractService.swift; sourceTree = "<group>"; };
 		9E7C24352DEAAE0D007C181D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9E93884B2DF341820015BE14 /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
+		9E93884D2DF3519B0015BE14 /* CacheServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheServiceProtocol.swift; sourceTree = "<group>"; };
+		9E93884F2DF353730015BE14 /* BlendVaultError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendVaultError.swift; sourceTree = "<group>"; };
 		9E97817D2DE68D98009333AD /* BatchingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchingService.swift; sourceTree = "<group>"; };
 		9E9781832DE68DF2009333AD /* BlendServiceProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendServiceProtocols.swift; sourceTree = "<group>"; };
 		9E9781852DE68E6C009333AD /* ContractAddresses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractAddresses.swift; sourceTree = "<group>"; };
@@ -160,10 +166,12 @@
 		9E9781AE2DE68F7F009333AD /* ValidationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationService.swift; sourceTree = "<group>"; };
 		9E9781B02DE68F7F009333AD /* BlendVault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendVault.swift; sourceTree = "<group>"; };
 		9E9781BA2DE6900E009333AD /* ServiceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModels.swift; sourceTree = "<group>"; };
+		9EA449CC2DF0FF3C00F6CC6D /* UserPositionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionService.swift; sourceTree = "<group>"; };
+		9EA449CD2DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionServiceFactory.swift; sourceTree = "<group>"; };
+		9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionServiceProtocol.swift; sourceTree = "<group>"; };
+		9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SorobanTypes.swift; sourceTree = "<group>"; };
 		9ED8DAA92DE5240300CB0059 /* blend_protocol_technical_analysis.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = blend_protocol_technical_analysis.md; sourceTree = "<group>"; };
-		9ED8DAAA2DE5240300CB0059 /* BlendAnalyticsDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendAnalyticsDashboard.swift; sourceTree = "<group>"; };
 		9ED8DAAC2DE5240300CB0059 /* BlendApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendApp.swift; sourceTree = "<group>"; };
-		9ED8DAAD2DE5240300CB0059 /* BlendDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendDashboardView.swift; sourceTree = "<group>"; };
 		9ED8DAAE2DE5240300CB0059 /* BlendDefaultSigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendDefaultSigner.swift; sourceTree = "<group>"; };
 		9ED8DAAF2DE5240300CB0059 /* BlendOracleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendOracleService.swift; sourceTree = "<group>"; };
 		9ED8DAB02DE5240300CB0059 /* BlendOracleServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendOracleServiceProtocol.swift; sourceTree = "<group>"; };
@@ -179,7 +187,6 @@
 		9ED8DABD2DE5240300CB0059 /* DataAvailabilityAnalysis.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DataAvailabilityAnalysis.md; sourceTree = "<group>"; };
 		9ED8DABE2DE5240300CB0059 /* DebugLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogView.swift; sourceTree = "<group>"; };
 		9ED8DABF2DE5240300CB0059 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
-		9ED8DAC12DE5240300CB0059 /* DetailedPoolStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedPoolStatisticsView.swift; sourceTree = "<group>"; };
 		9ED8DAC22DE5240300CB0059 /* DEVELOPER_QUICK_START.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEVELOPER_QUICK_START.md; sourceTree = "<group>"; };
 		9ED8DAC42DE5240300CB0059 /* EnhancedBlendRateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnhancedBlendRateCalculator.swift; sourceTree = "<group>"; };
 		9ED8DAC52DE5240300CB0059 /* FixedMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedMath.swift; sourceTree = "<group>"; };
@@ -189,14 +196,12 @@
 		9ED8DAC92DE5240300CB0059 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		9ED8DACB2DE5240300CB0059 /* POOL_STATS_GUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = POOL_STATS_GUIDE.md; sourceTree = "<group>"; };
 		9ED8DACC2DE5240300CB0059 /* POOL_STATS_IMPLEMENTATION_PLAN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = POOL_STATS_IMPLEMENTATION_PLAN.md; sourceTree = "<group>"; };
-		9ED8DACD2DE5240300CB0059 /* PoolStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoolStatisticsView.swift; sourceTree = "<group>"; };
 		9ED8DACE2DE5240300CB0059 /* PoolViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoolViewModel.swift; sourceTree = "<group>"; };
 		9ED8DACF2DE5240300CB0059 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9ED8DAD52DE5240300CB0059 /* ReactiveRateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveRateModifier.swift; sourceTree = "<group>"; };
 		9ED8DADD2DE5240300CB0059 /* SmartContractDebugSystem-README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "SmartContractDebugSystem-README.md"; sourceTree = "<group>"; };
 		9ED8DAE32DE5240300CB0059 /* SmartContractExplorer-README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "SmartContractExplorer-README.md"; sourceTree = "<group>"; };
 		9ED8DAE72DE5240300CB0059 /* SmartContractInspector-README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "SmartContractInspector-README.md"; sourceTree = "<group>"; };
-		9ED8DAEC2DE5240300CB0059 /* stellar-ios-mac-sdk-master-3 */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "stellar-ios-mac-sdk-master-3"; sourceTree = "<group>"; };
 		9ED8DB352DE5278800CB0059 /* AccountChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountChecker.swift; sourceTree = "<group>"; };
 		9ED8DB372DE5278D00CB0059 /* BackstopCalculatorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopCalculatorService.swift; sourceTree = "<group>"; };
 		9ED8DB462DE5418A00CB0059 /* BackstopPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopPool.swift; sourceTree = "<group>"; };
@@ -220,7 +225,6 @@
 		9EDE65042DE703E200B63E09 /* ValidationRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationRules.swift; sourceTree = "<group>"; };
 		9EDE650E2DE712A200B63E09 /* OracleAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OracleAsset.swift; sourceTree = "<group>"; };
 		9EDE650F2DE712A200B63E09 /* OracleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OracleError.swift; sourceTree = "<group>"; };
-		9EDE65122DE7196200B63E09 /* OracleImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OracleImplementation.swift; sourceTree = "<group>"; };
 		9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SorobanTransactionSimulator.swift; sourceTree = "<group>"; };
 		9EDE651E2DE773DB00B63E09 /* PoolService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoolService.swift; sourceTree = "<group>"; };
 		9EDE65202DE9220B00B63E09 /* BlendAssetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendAssetData.swift; sourceTree = "<group>"; };
@@ -272,6 +276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ECC79BA2DDFF32A00530B03 /* stellarsdk in Frameworks */,
+				9E9388532DF745190015BE14 /* stellarsdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,6 +402,7 @@
 		9E9781AF2DE68F7F009333AD /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				9EA449CF2DF0FF3C00F6CC6D /* UserPosition */,
 				9E9781A82DE68F7F009333AD /* BlendPoolDiagnosticsService.swift */,
 				9E9781A92DE68F7F009333AD /* ConfigurationService.swift */,
 				9E9781AA2DE68F7F009333AD /* DataService.swift */,
@@ -407,12 +413,12 @@
 				9EDE65242DE9246000B63E09 /* BlendAssetService.swift */,
 				9EDE651E2DE773DB00B63E09 /* PoolService.swift */,
 				9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */,
-				9EDE65122DE7196200B63E09 /* OracleImplementation.swift */,
 				9E97817D2DE68D98009333AD /* BatchingService.swift */,
 				9ED8DAC82DE5240300CB0059 /* Logger.swift */,
 				9ED8DABB2DE5240300CB0059 /* CacheService.swift */,
 				9ED8DB372DE5278D00CB0059 /* BackstopCalculatorService.swift */,
 				9ED8DAAF2DE5240300CB0059 /* BlendOracleService.swift */,
+				9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -427,6 +433,16 @@
 				9E9781B02DE68F7F009333AD /* BlendVault.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		9EA449CF2DF0FF3C00F6CC6D /* UserPosition */ = {
+			isa = PBXGroup;
+			children = (
+				9EA449CC2DF0FF3C00F6CC6D /* UserPositionService.swift */,
+				9EA449CD2DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift */,
+				9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */,
+			);
+			path = UserPosition;
 			sourceTree = "<group>";
 		};
 		9ED8DA912DE5237F00CB0059 /* Blendv3 */ = {
@@ -445,14 +461,12 @@
 				9ED8DABA2DE5240300CB0059 /* BlendViewModel.swift */,
 				9ED8DABC2DE5240300CB0059 /* Constants */,
 				9ED8DABE2DE5240300CB0059 /* DebugLogView.swift */,
-				9ED8DAC12DE5240300CB0059 /* DetailedPoolStatisticsView.swift */,
 				9ED8DAC32DE5240300CB0059 /* Documentation */,
 				9ED8DAC42DE5240300CB0059 /* EnhancedBlendRateCalculator.swift */,
 				9ED8DACE2DE5240300CB0059 /* PoolViewModel.swift */,
 				9ED8DACF2DE5240300CB0059 /* Preview Assets.xcassets */,
 				9ED8DAD02DE5240300CB0059 /* Preview Content */,
 				9ED8DAD52DE5240300CB0059 /* ReactiveRateModifier.swift */,
-				9ED8DAEC2DE5240300CB0059 /* stellar-ios-mac-sdk-master-3 */,
 			);
 			path = Blendv3;
 			sourceTree = "<group>";
@@ -490,6 +504,8 @@
 		9ED8DAD42DE5240300CB0059 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				9E93884D2DF3519B0015BE14 /* CacheServiceProtocol.swift */,
+				9E93884B2DF341820015BE14 /* NetworkServiceProtocol.swift */,
 				9EDE65262DE9338D00B63E09 /* PoolServiceProtocol.swift */,
 				9E9781832DE68DF2009333AD /* BlendServiceProtocols.swift */,
 				9ED8DAB42DE5240300CB0059 /* BlendRateCalculatorProtocol.swift */,
@@ -534,6 +550,7 @@
 		9ED8DB592DE5434300CB0059 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				9E93884F2DF353730015BE14 /* BlendVaultError.swift */,
 				9E7C24262DEAAAB5007C181D /* BlendFinancialCalculator.swift */,
 				9EDE65222DE9225400B63E09 /* BlendParser.swift */,
 				9ED8DB662DE54FCA00CB0059 /* StellarContractID.swift */,
@@ -574,9 +591,6 @@
 		9ED8DB612DE5443000CB0059 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				9ED8DACD2DE5240300CB0059 /* PoolStatisticsView.swift */,
-				9ED8DAAD2DE5240300CB0059 /* BlendDashboardView.swift */,
-				9ED8DAAA2DE5240300CB0059 /* BlendAnalyticsDashboard.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -637,6 +651,7 @@
 			name = Blendv3;
 			packageProductDependencies = (
 				9ECC79B92DDFF32A00530B03 /* stellarsdk */,
+				9E9388522DF745190015BE14 /* stellarsdk */,
 			);
 			productName = Blendv3;
 			productReference = 9EE4A0E92DDFB939004BD597 /* Blendv3.app */;
@@ -722,7 +737,7 @@
 			mainGroup = 9EE4A0E02DDFB939004BD597;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				9ECC79B82DDFF32A00530B03 /* XCLocalSwiftPackageReference "Blendv3/stellar-ios-mac-sdk-master-3" */,
+				9E9388512DF745190015BE14 /* XCRemoteSwiftPackageReference "stellar-ios-mac-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9EE4A0EA2DDFB939004BD597 /* Products */;
@@ -779,13 +794,10 @@
 				9ED8DAF32DE5240300CB0059 /* BlendOracleService.swift in Sources */,
 				9EDE64F92DE7035400B63E09 /* PriceData.swift in Sources */,
 				9ED8DB582DE542FC00CB0059 /* AuctionStatus.swift in Sources */,
-				9ED8DAF52DE5240300CB0059 /* DetailedPoolStatisticsView.swift in Sources */,
 				9EDE65232DE9225900B63E09 /* BlendParser.swift in Sources */,
 				9ED8DB4C2DE5420900CB0059 /* WithdrawalStatus.swift in Sources */,
 				9ED8DAF62DE5240300CB0059 /* NetworkService.swift in Sources */,
-				9EDE65132DE7196200B63E09 /* OracleImplementation.swift in Sources */,
 				9EDE651F2DE773DB00B63E09 /* PoolService.swift in Sources */,
-				9ED8DAF72DE5240300CB0059 /* BlendDashboardView.swift in Sources */,
 				9EDE65272DE9338D00B63E09 /* PoolServiceProtocol.swift in Sources */,
 				9ED8DAF92DE5240300CB0059 /* BlendOracleServiceProtocol.swift in Sources */,
 				9ED8DAFA2DE5240300CB0059 /* BlendApp.swift in Sources */,
@@ -798,7 +810,9 @@
 				9E97819B2DE68E6C009333AD /* MethodOptions.swift in Sources */,
 				9E97819C2DE68E6C009333AD /* ContractAddresses.swift in Sources */,
 				9E97819D2DE68E6C009333AD /* PerformanceMetrics.swift in Sources */,
+				9E93884C2DF341820015BE14 /* NetworkServiceProtocol.swift in Sources */,
 				9E97819E2DE68E6C009333AD /* RetryConfiguration.swift in Sources */,
+				9EAD3EED2DF7BDF600029CE7 /* SorobanTypes.swift in Sources */,
 				9E97819F2DE68E6C009333AD /* TransactionEvent.swift in Sources */,
 				9E9781A02DE68E6C009333AD /* ReserveData.swift in Sources */,
 				9E9781A12DE68E6C009333AD /* MigrationValidationResult.swift in Sources */,
@@ -810,6 +824,9 @@
 				9E9781B62DE68F7F009333AD /* ValidationService.swift in Sources */,
 				9E9781B72DE68F7F009333AD /* ConfigurationService.swift in Sources */,
 				9E9781B82DE68F7F009333AD /* DataService.swift in Sources */,
+				9EA449D02DF0FF3C00F6CC6D /* UserPositionService.swift in Sources */,
+				9EA449D12DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift in Sources */,
+				9EA449D22DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift in Sources */,
 				9E9781B92DE68F7F009333AD /* BlendPoolDiagnosticsService.swift in Sources */,
 				9E7C24372DEAAE0D007C181D /* BackstopContractService+Functions.swift in Sources */,
 				9E7C24382DEAAE0D007C181D /* BackstopContractServiceProtocol.swift in Sources */,
@@ -817,6 +834,7 @@
 				9E7C243A2DEAAE0D007C181D /* BackstopContractService+Utils.swift in Sources */,
 				9E7C243B2DEAAE0D007C181D /* BackstopContractService.swift in Sources */,
 				9E7C243C2DEAAE0D007C181D /* BackstopModels.swift in Sources */,
+				9E9388502DF353730015BE14 /* BlendVaultError.swift in Sources */,
 				9E9781A22DE68E6C009333AD /* ConnectionState.swift in Sources */,
 				9E9781A32DE68E6C009333AD /* HealthIssue.swift in Sources */,
 				9E9781A42DE68E6C009333AD /* TimeoutConfiguration.swift in Sources */,
@@ -850,12 +868,11 @@
 				9ED8DB5C2DE543A100CB0059 /* BackstopPoolReserveData.swift in Sources */,
 				9EDE65252DE9246700B63E09 /* BlendAssetService.swift in Sources */,
 				9ED8DB142DE5240300CB0059 /* BlendSigner.swift in Sources */,
+				9E93884E2DF3519B0015BE14 /* CacheServiceProtocol.swift in Sources */,
 				9ED8DB152DE5240300CB0059 /* EnhancedBlendRateCalculator.swift in Sources */,
 				9ED8DB162DE5240300CB0059 /* Blendv3App.swift in Sources */,
 				9ED8DB172DE5240300CB0059 /* BlendViewModel.swift in Sources */,
 				9ED8DB182DE5240300CB0059 /* BlendUSDCConstants.swift in Sources */,
-				9ED8DB192DE5240300CB0059 /* PoolStatisticsView.swift in Sources */,
-				9ED8DB1B2DE5240300CB0059 /* BlendAnalyticsDashboard.swift in Sources */,
 				9ED8DB362DE5278800CB0059 /* AccountChecker.swift in Sources */,
 				9ED8DB1D2DE5240300CB0059 /* Logger.swift in Sources */,
 				9ED8DB542DE5429500CB0059 /* AuctionData.swift in Sources */,
@@ -1190,14 +1207,23 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		9ECC79B82DDFF32A00530B03 /* XCLocalSwiftPackageReference "Blendv3/stellar-ios-mac-sdk-master-3" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "Blendv3/stellar-ios-mac-sdk-master-3";
+/* Begin XCRemoteSwiftPackageReference section */
+		9E9388512DF745190015BE14 /* XCRemoteSwiftPackageReference "stellar-ios-mac-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Soneso/stellar-ios-mac-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.0;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9E9388522DF745190015BE14 /* stellarsdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9E9388512DF745190015BE14 /* XCRemoteSwiftPackageReference "stellar-ios-mac-sdk" */;
+			productName = stellarsdk;
+		};
 		9ECC79B92DDFF32A00530B03 /* stellarsdk */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = stellarsdk;
