@@ -1,6 +1,7 @@
 import Foundation
 
 /// Property wrapper for dependency injection
+@MainActor
 @propertyWrapper
 public struct Injected<T> {
     private let keyPath: WritableKeyPath<DependencyContainer, T>

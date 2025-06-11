@@ -348,6 +348,26 @@ class SorobanTransactionParser {
         }
     }
     
+    /**
+     * Simulates a contract call using OracleContractCallBuilder and returns the result.
+     * - Parameters:
+     *   - server: The Soroban server to use for simulation
+     *   - contractCallBuilder: The contract call builder
+     * - Returns: The parsed result as SCValXDR
+     * - Throws: OracleError for various failure scenarios
+     */
+    func simulate(server: SorobanServer, contractCallBuilder: OracleContractCallBuilder) async throws -> SCValXDR {
+        do {
+            // Convert builder to ContractCallParams
+            let contractCall = try contractCallBuilder.build()
+            
+            // Use the existing simulate method with ContractCallParams
+            return try await simulate(server: server, contractCall: contractCall)
+        } catch {
+            throw OracleError.networkError(error, context: "Failed to build contract call from builder")
+        }
+    }
+    
     // MARK: - Private Orchestration Methods
     
     /**

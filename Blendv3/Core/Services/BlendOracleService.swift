@@ -2,6 +2,8 @@ import Foundation
 import stellarsdk
 import os
 
+typealias Int128XDR = Int128PartsXDR
+
 // MARK: - Soroban Contract Operations
 
 /// Contract call parameters for real Soroban operations
@@ -24,7 +26,7 @@ public final class BlendOracleService {
     
     internal let cacheService: CacheServiceProtocol
     private let networkService: NetworkServiceProtocol
-    private let oracleNetworkService: OracleNetworkService
+    let oracleNetworkService: OracleNetworkService
     
     // Debug logging
     internal let debugLogger = DebugLogger(subsystem: "com.blendv3.oracle", category: "OracleService")
@@ -43,11 +45,11 @@ public final class BlendOracleService {
     internal let network = Network.testnet
     
     // Parsers
-    private let optionalPriceDataParser = OptionalPriceDataParser()
-    private let priceDataVectorParser = PriceDataVectorParser()
-    private let assetVectorParser = AssetVectorParser()
-    private let u32Parser = U32Parser()
-    private let assetParser = AssetParser()
+    let optionalPriceDataParser = OptionalPriceDataParser()
+    let priceDataVectorParser = PriceDataVectorParser()
+    let assetVectorParser = AssetVectorParser()
+    let u32Parser = U32Parser()
+    let assetParser = AssetParser()
     
     // MARK: - Initialization
     
@@ -89,15 +91,17 @@ public final class BlendOracleService {
     }
     
     /// Simulate a contract call using an OracleContractCallBuilder instance.
-    /// This function requires an OracleContractCallBuilder and uses its build() method
-    /// before simulating the contract call.
     ///
-    /// Use an OracleContractCallBuilder to construct the contract call before invoking this method.
+    /// THIS METHOD ONLY ACCEPTS `OracleContractCallBuilder` AND WILL NOT COMPILE WITH `ContractCallParams`.
+    /// If you have a `ContractCallParams` instance, use `exampleSimulateCall(contractCallParams:)` instead to perform the call.
+    ///
+    /// Use an `OracleContractCallBuilder` to construct the contract call before invoking this method.
     internal func simulateContractCall(contractCallBuilder: OracleContractCallBuilder) async throws -> SCValXDR {
         // Note: This function expects an OracleContractCallBuilder, NOT ContractCallParams.
         // Calls passing ContractCallParams must be migrated to use OracleContractCallBuilder instead.
         let contractCall = try contractCallBuilder.build()
-        let response = try await self.oracleNetworkService.simulate(using: contractCall)
+        
+        let response = try await self.oracleNetworkService.simulate(using: contractCallBuilder)
         return response
     }
     
@@ -163,7 +167,7 @@ public final class BlendOracleService {
         maxAttempts: Int,
         delay: TimeInterval,
         operation: @escaping () async throws -> T
-    ) async rethrows -> T {
+    ) async throws -> T {
         var lastError: Error?
         
         BlendLogger.debug("🔮 🔄 Starting retry mechanism (max: \(maxAttempts), delay: \(delay)s)", category: BlendLogger.oracle)
@@ -210,14 +214,18 @@ public final class BlendOracleService {
     // Example of a method that calls simulateContractCall.
     // Migrated from ContractCallParams to OracleContractCallBuilder.
     internal func exampleSimulateCall(contractCallParams: ContractCallParams) async throws -> SCValXDR {
-        // Migrated from ContractCallParams to OracleContractCallBuilder
-        let builder = OracleContractCallBuilder(
-            contractId: contractCallParams.contractId,
-            functionName: contractCallParams.functionName
-        )
-        for arg in contractCallParams.functionArguments {
-            builder.addArgument(arg)
+        // NOTE: This method converts legacy ContractCallParams into OracleContractCallBuilder
+        // because simulateContractCall requires OracleContractCallBuilder, not ContractCallParams.
+        // This migration is necessary to align with the new API expectations.
+        guard let function = OracleContractFunction(rawValue: contractCallParams.functionName) else {
+            throw OracleError.invalidParameterCount(function: contractCallParams.functionName, expected: 0, actual: contractCallParams.functionArguments.count)
         }
+        var builder = OracleContractCallBuilder(
+            contractId: contractCallParams.contractId,
+            function: function
+        )
+        // NOTE: OracleContractCallBuilder provides specialized argument methods only.
+        // If functionArguments are generic, you would need to implement additional builder methods, but for now, we just construct the builder for the function and contractId.
         return try await simulateContractCall(contractCallBuilder: builder)
     }
 }

@@ -72,7 +72,8 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
                 contractId: contractId,
                 functionName: function.rawValue,
                 args: arguments,
-                sourceKeyPair: sourceKeyPair
+                sourceKeyPair: sourceKeyPair,
+                force: false
             )
             
             debugLogger.info("🔮 ✅ Contract function \(function.rawValue) invoked successfully")

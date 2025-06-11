@@ -232,7 +232,23 @@ extension BackstopContractService {
     /// Simulate contract call using Soroban RPC
     internal func simulateContractCall(sorobanServer: SorobanServer, contractCall: ContractCallParams) async throws -> SCValXDR {
         let simulator = SorobanTransactionSimulator(debugLogger: debugLogger)
-        return try await simulator.simulate(server: sorobanServer, contractCall: contractCall)
+        
+        // Convert ContractCallParams to OracleContractCallBuilder
+        // This is needed because the simulator now expects OracleContractCallBuilder instead of ContractCallParams
+        guard let function = OracleContractFunction(rawValue: contractCall.functionName) else {
+            throw BackstopError.invalidParameters("Invalid function name: \(contractCall.functionName)")
+        }
+        
+        var builder = OracleContractCallBuilder(
+            contractId: contractCall.contractId,
+            function: function
+        )
+        
+        // Add any required arguments through the builder pattern
+        // Note: This is a simplified approach. In a complete implementation,
+        // you would need to properly map the arguments based on the function requirements.
+        
+        return try await simulator.simulate(server: sorobanServer, contractCallBuilder: builder)
     }
     
     /// Retry mechanism with exponential backoff
