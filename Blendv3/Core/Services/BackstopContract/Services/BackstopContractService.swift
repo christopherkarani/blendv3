@@ -11,6 +11,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
     internal let networkService: NetworkService
     internal let cacheService: CacheServiceProtocol
     internal let config: BackstopServiceConfig
+    internal let blendParser: BlendParser
     
     // Debug logging
     internal let debugLogger = DebugLogger(subsystem: "com.blendv3.backstop", category: "BackstopService")
@@ -24,11 +25,13 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
     public init(
         networkService: NetworkService,
         cacheService: CacheServiceProtocol,
-        config: BackstopServiceConfig
+        config: BackstopServiceConfig,
+        blendParser: BlendParser = BlendParser()
     ) {
         self.networkService = networkService
         self.cacheService = cacheService
         self.config = config
+        self.blendParser = blendParser
         self.maxRetries = config.maxRetries
         self.retryDelay = config.retryDelay
         
@@ -58,7 +61,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
             )
             
             let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            let sharesReceived = try self.parseI128Response(response)
+            let sharesReceived = try self.blendParser.parseI128Response(response)
             
             return DepositResult(sharesReceived: sharesReceived)
         }
@@ -83,7 +86,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
             )
             
             let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            return try self.parseQ4WResponse(response)
+            return try self.blendParser.parseQ4WResponse(response)
         }
     }
     
@@ -128,7 +131,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
             )
             
             let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            let amountWithdrawn = try self.parseI128Response(response)
+            let amountWithdrawn = try self.blendParser.parseI128Response(response)
             
             return WithdrawalResult(amountWithdrawn: amountWithdrawn)
         }
@@ -159,7 +162,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
             )
             
             let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            return try self.parseUserBalanceResponse(response)
+            return try self.blendParser.parseUserBalanceResponse(response)
         }
         
         await cacheService.set(balance, key: cacheKey, ttl: config.cacheConfig.userBalanceTTL)
@@ -188,7 +191,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
             
             let response = try! await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
             dump(response)
-            return try self.parsePoolBackstopDataResponse(response)
+            return try self.blendParser.parsePoolBackstopDataResponse(response)
         }
         
         await cacheService.set(poolData, key: cacheKey, ttl: config.cacheConfig.poolDataTTL)
@@ -212,7 +215,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
             )
             
             let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            return try self.parseAddressResponse(response)
+            return try self.blendParser.parseAddressResponse(response)
         }
         
         await cacheService.set(tokenAddress, key: cacheKey, ttl: config.cacheConfig.tokenAddressTTL)

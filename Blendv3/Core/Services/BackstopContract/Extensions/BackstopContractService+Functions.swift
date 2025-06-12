@@ -68,7 +68,7 @@ extension BackstopContractService {
                 )
                 
                 let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-                return try self.parseI128Response(response)
+                return try self.blendParser.parseI128Response(response)
             }
         }
     }
@@ -102,7 +102,7 @@ extension BackstopContractService {
                 )
                 
                 let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-                let totalClaimed = try self.parseI128Response(response)
+                let totalClaimed = try self.blendParser.parseI128Response(response)
                 
                 return ClaimResult(totalClaimed: totalClaimed)
             }
@@ -190,7 +190,7 @@ extension BackstopContractService {
                 )
                 
                 let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-                let (blndValue, usdcValue) = try self.parseTokenValueTupleResponse(response)
+                let (blndValue, usdcValue) = try self.blendParser.parseTokenValueTupleResponse(response)
                 
                 return TokenValueUpdateResult(blndValue: blndValue, usdcValue: usdcValue)
             }
@@ -261,27 +261,7 @@ extension BackstopContractService {
 }
 
 // MARK: - Additional Parsing Functions
-
-extension BackstopContractService {
-    
-    /// Parse tuple response for token values (BLND, USDC)
-    internal func parseTokenValueTupleResponse(_ response: SCValXDR) throws -> (Int128, Int128) {
-        guard case .vec(let vecOptional) = response,
-              let vec = vecOptional,
-              vec.count == 2 else {
-            throw BackstopError.parsingError(
-                "parseTokenValueTupleResponse",
-                expectedType: "tuple<i128,i128>",
-                actualType: String(describing: type(of: response))
-            )
-        }
-        
-        let blndValue = try parseI128Response(vec[0])
-        let usdcValue = try parseI128Response(vec[1])
-        
-        return (blndValue, usdcValue)
-    }
-}
+// Note: Parsing functions have been moved to BlendParser for centralized parsing logic
 
 // MARK: - Configuration Factory
 
@@ -308,24 +288,28 @@ extension BackstopContractService {
     /// Create service instance with default testnet configuration
     public static func createTestnetService(
         networkService: NetworkService,
-        cacheService: CacheServiceProtocol
+        cacheService: CacheServiceProtocol,
+        blendParser: BlendParser = BlendParser()
     ) -> BackstopContractService {
         return BackstopContractService(
             networkService: networkService,
             cacheService: cacheService,
-            config: testnetConfig()
+            config: testnetConfig(),
+            blendParser: blendParser
         )
     }
     
     /// Create service instance with default mainnet configuration
     public static func createMainnetService(
         networkService: NetworkService,
-        cacheService: CacheServiceProtocol
+        cacheService: CacheServiceProtocol,
+        blendParser: BlendParser = BlendParser()
     ) -> BackstopContractService {
         return BackstopContractService(
             networkService: networkService,
             cacheService: cacheService,
-            config: mainnetConfig()
+            config: mainnetConfig(),
+            blendParser: blendParser
         )
     }
 }
