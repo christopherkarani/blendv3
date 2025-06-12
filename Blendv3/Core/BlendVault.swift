@@ -41,7 +41,7 @@ struct Start {
         let networkService: NetworkService = .init()
         let cacheService = CacheService()
         let poolService = PoolService(networkService: networkService, sourceKeyPair: account)
-        let oracleService = BlendOracleService(cacheService: cacheService, networkService: networkService)
+        let oracleService = BlendOracleService(cacheService: cacheService, networkService: networkService, sourceKeyPair: account)
         var rpcEndpoint: String = BlendConstants.RPC.testnet
         
         

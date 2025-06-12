@@ -217,10 +217,12 @@ extension BlendOracleService: BlendOracleServiceProtocol {
             return cachedAssets
         }
         
-        return try await measurePerformance(operation: "getSupportedAssets", category: BlendLogger.oracle) {
+        
+        
+        return await measurePerformance(operation: "getSupportedAssets", category: BlendLogger.oracle) {
             let context = OracleParsingContext(functionName: "assets")
             
-            let oracleAssets = try await self.oracleNetworkService.simulateAndParse(
+            let oracleAssets = try! await self.oracleNetworkService.simulateAndParse(
                 .assets,
                 using: self.assetVectorParser,
                 context: context
@@ -228,8 +230,7 @@ extension BlendOracleService: BlendOracleServiceProtocol {
             
             // Cache the result
             await cacheService.set(oracleAssets, key: cacheKey, ttl: 3600)
-            
-            BlendLogger.info("Fetched and cached \(oracleAssets.count) supported assets", category: BlendLogger.oracle)
+ 
             return oracleAssets
         }
     }

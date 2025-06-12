@@ -46,11 +46,16 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
     private let contractId: String
     private let debugLogger = DebugLogger(subsystem: "com.blendv3.oracle", category: "OracleNetworkService")
     
+    let sourceKeyPair: KeyPair
+    
     // MARK: - Initialization
     
-    public init(networkService: NetworkServiceProtocol, contractId: String) {
+    public init(networkService: NetworkServiceProtocol,
+                contractId: String,
+                sourceKeyPair: KeyPair) {
         self.networkService = networkService
         self.contractId = contractId
+        self.sourceKeyPair = sourceKeyPair
         debugLogger.info("🔮 🌐 Oracle network service initialized with contract: \(contractId)")
     }
     
@@ -99,14 +104,14 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
             try function.validateParameterCount(arguments.count)
             
             // Create a temporary key pair for simulation (read-only operations don't need real keys)
-            let tempKeyPair = try KeyPair.generateRandomKeyPair()
+           
             
             // Use NetworkService to simulate the contract function
             let simulationResult = await networkService.simulateContractFunction(
                 contractId: contractId,
                 functionName: function.rawValue,
                 args: arguments,
-                sourceKeyPair: tempKeyPair
+                sourceKeyPair: sourceKeyPair
             )
             
             switch simulationResult {
@@ -118,7 +123,6 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
                 debugLogger.error("🔮 💥 Simulation failed for \(function.rawValue): \(error.localizedDescription)")
                 throw OracleError.simulationFailed(error.localizedDescription)
             }
-            
         } catch let error as OracleError {
             debugLogger.error("🔮 💥 Oracle error simulating \(function.rawValue): \(error.localizedDescription)")
             throw error
@@ -184,7 +188,7 @@ extension OracleNetworkService {
         using parser: Parser,
         context: OracleParsingContext? = nil
     ) async throws -> Parser.ParsedType {
-        let response = try await simulateContractFunction(function, arguments: arguments)
+        let response = try! await simulateContractFunction(function, arguments: arguments)
         let parsingContext = context ?? OracleParsingContext(functionName: function.rawValue)
         return try parser.parse(response, context: parsingContext)
     }

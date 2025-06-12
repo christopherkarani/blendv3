@@ -208,20 +208,23 @@ public final class NetworkService: NetworkServiceProtocol {
     ) async -> SimulationStatus<Result> {
         BlendLogger.debug("Simulating contract function: \(functionName) on \(contractId)", category: BlendLogger.network)
         do {
-            let client = try await getSorobanClient(contractId: contractId, sourceKeyPair: sourceKeyPair)
-            let tx = try await client.buildInvokeMethodTx(name: functionName, args: args as? [SCValXDR] ?? [])
-            guard let simulationData = try? tx.getSimulationData() else {
-                return .failure(.invalidResponse("No simulation data returned"))
-            }
-            // SCValXDR may be Data, or needs to be converted to Data for decoding
-            let returnedValue = simulationData.returnedValue
+            let parsedArgs = args as? [SCValXDR] ?? []
+            let contractCallParams: ContractCallParams = ContractCallParams(
+                contractId: contractId,
+                functionName: functionName,
+                functionArguments: parsedArgs
+            )
+            let result = try await transactionSimulator.simulate(server: sorobanServer, contractCall: contractCallParams)
+            let p = BlendParser()
+            
+
             // If SCValXDR is Data, use directly
-            if let data = returnedValue as? Data {
+            if let data = result as? Data {
                 let decodedResult: Result = try JSONDecoder().decode(Result.self, from: data)
                 return .success(SimulationResult(result: decodedResult))
             }
             // If SCValXDR has a method or computed property to get Data, use it here
-            if let dataConvertible = returnedValue as? CustomStringConvertible, let data = (dataConvertible.description).data(using: .utf8) {
+            if let dataConvertible = result as? CustomStringConvertible, let data = (dataConvertible.description).data(using: .utf8) {
                 let decodedResult: Result = try JSONDecoder().decode(Result.self, from: data)
                 return .success(SimulationResult(result: decodedResult))
             }

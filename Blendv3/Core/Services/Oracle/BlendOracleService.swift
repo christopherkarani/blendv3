@@ -51,15 +51,19 @@ public final class BlendOracleService {
     let u32Parser = U32Parser()
     let assetParser = AssetParser()
     
+    let sourceKeyPair: KeyPair
+    
     // MARK: - Initialization
     
     @MainActor
-    public init(cacheService: CacheServiceProtocol, networkService: NetworkServiceProtocol) {
+    public init(cacheService: CacheServiceProtocol, networkService: NetworkServiceProtocol, sourceKeyPair: KeyPair) {
         self.cacheService = cacheService
         self.networkService = networkService
+        self.sourceKeyPair = sourceKeyPair
         self.oracleNetworkService = OracleNetworkService(
             networkService: networkService,
-            contractId: BlendConstants.Testnet.oracle
+            contractId: BlendConstants.Testnet.oracle,
+            sourceKeyPair: sourceKeyPair
         )
         
         debugLogger.info("🔮 Oracle service initialized with NetworkService integration")
