@@ -19,7 +19,11 @@ struct PoolService: PoolServiceProtocol {
     // Fetch PoolConfig from the blockchain
     func fetchPoolConfig(contractId: String) async throws -> PoolConfig {
         let result = try await networkService
-            .invokeContractFunction(contractId: contractId, functionName: "get_config", args: [], sourceKeyPair: sourceKeyPair)
+            .invokeContractFunction(
+                contractId: contractId,
+                functionName: "get_config",
+                args: []
+            )
         
         guard case .map(let configMapOptional) = result else {
             throw BlendVaultError.invalidResponse
@@ -70,8 +74,7 @@ extension PoolService {
                 .invokeContractFunction(
                     contractId: contractId,
                     functionName: "get_status",
-                    args: [],
-                    sourceKeyPair: sourceKeyPair
+                    args: []
                 )
             logger.info("✅ Pool status retrieved: \(String(describing: statusResult))")
         } catch {

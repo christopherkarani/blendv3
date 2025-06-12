@@ -67,10 +67,13 @@ public final class NetworkService: NetworkServiceProtocol {
     private var requestInterceptors: [(URLRequest) -> URLRequest] = []
     private var responseInterceptors: [(Data, URLResponse) -> Void] = []
     
+    private let keyPair: KeyPair
+    
     /// Initializes the NetworkService with configuration.
     /// Configures URLSession with connection pooling and sets up interceptors.
-    public init(config: NetworkServiceConfig = NetworkServiceConfig()) {
+    public init(config: NetworkServiceConfig = NetworkServiceConfig(), keyPair: KeyPair) {
         self.config = config
+        self.keyPair = keyPair
         
         let sessionConfig = URLSessionConfiguration.default
         sessionConfig.timeoutIntervalForRequest = config.timeoutConfiguration.networkTimeout
@@ -142,7 +145,6 @@ public final class NetworkService: NetworkServiceProtocol {
     ///   - contractId: Contract ID to invoke.
     ///   - functionName: Function name to call.
     ///   - args: Function arguments as SCValXDR array.
-    ///   - sourceKeyPair: Source account keypair for signing.
     ///   - force: Whether to force execution for read-only calls.
     /// - Returns: Result of the contract invocation as SCValXDR.
     /// - Throws: `BlendError.transaction(.failed)` or `BlendError.validation(.invalidResponse)` on failure.
@@ -150,11 +152,10 @@ public final class NetworkService: NetworkServiceProtocol {
         contractId: String,
         functionName: String,
         args: [SCValXDR],
-        sourceKeyPair: KeyPair,
         force: Bool = false
     ) async throws -> SCValXDR {
         do {
-            let client = try await getSorobanClient(contractId: contractId, sourceKeyPair: sourceKeyPair)
+            let client = try await getSorobanClient(contractId: contractId, sourceKeyPair: self.keyPair)
             let result = try await client.invokeMethod(name: functionName, args: args, force: force)
             return result
             
@@ -167,38 +168,35 @@ public final class NetworkService: NetworkServiceProtocol {
         }
     }
     
-    /// Legacy method for compatibility - redirects to new SorobanClient implementation.
-    /// - Warning: Deprecated. Provide `sourceKeyPair` explicitly using the other overload.
-    @available(*, deprecated, message: "Use invokeContractFunction with explicit sourceKeyPair instead")
-    public func invokeContractFunction(
-        contractId: String,
-        functionName: String,
-        args: [SCValXDR]
-    ) async throws -> SCValXDR {
-        let tempKeyPair = try KeyPair.generateRandomKeyPair()
-        BlendLogger.warning("Using temporary keypair for contract invocation - this should be provided by caller", category: BlendLogger.network)
-        
-        return try await invokeContractFunction(
-            contractId: contractId,
-            functionName: functionName,
-            args: args,
-            sourceKeyPair: tempKeyPair,
-            force: false
-        )
-    }
+//    /// Legacy method for compatibility - redirects to new SorobanClient implementation.
+//    /// - Warning: Deprecated. Provide `sourceKeyPair` explicitly using the other overload.
+//    @available(*, deprecated, message: "Use invokeContractFunction with explicit sourceKeyPair instead")
+//    public func invokeContractFunction(
+//        contractId: String,
+//        functionName: String,
+//        args: [SCValXDR]
+//    ) async throws -> SCValXDR {
+//        let tempKeyPair = try KeyPair.generateRandomKeyPair()
+//        BlendLogger.warning("Using temporary keypair for contract invocation - this should be provided by caller", category: BlendLogger.network)
+//        
+//        return try await invokeContractFunction(
+//            contractId: contractId,
+//            functionName: functionName,
+//            args: args,
+//            force: false
+//        )
+//    }
     
     /// Simulates a contract function call using SorobanClient - generic, type-safe, and extensible.
     /// - Parameters:
     ///   - contractId: Contract ID to simulate.
     ///   - functionName: Function name to simulate.
     ///   - args: Function arguments with generic type.
-    ///   - sourceKeyPair: Source account keypair.
     /// - Returns: SimulationStatus containing SimulationResult or error.
     public func simulateContractFunction<Args: Sendable, Result: Decodable>(
         contractId: String,
         functionName: String,
-        args: Args,
-        sourceKeyPair: KeyPair
+        args: Args
     ) async -> SimulationStatus<Result> {
         do {
             let parsedArgs = args as? [SCValXDR] ?? []
@@ -214,6 +212,34 @@ public final class NetworkService: NetworkServiceProtocol {
             let decodedResult: Result = try parser.parseSimulationResult(result, as: Result.self)
             return .success(SimulationResult(result: decodedResult))
             
+        } catch let error as BlendParsingError {
+            BlendLogger.error("Simulation failed with BlendParsingError: \(error)", category: BlendLogger.network)
+            return .failure(.invalidResponse(error.localizedDescription))
+        } catch let error as SorobanClientError {
+            BlendLogger.error("Simulation failed with SorobanClientError: \(error)", category: BlendLogger.network)
+            return .failure(.transactionFailed(error.localizedDescription))
+        } catch let error as DecodingError {
+            BlendLogger.error("Simulation failed with DecodingError: \(error)", category: BlendLogger.network)
+            return .failure(.invalidResponse(error.localizedDescription))
+        } catch {
+            BlendLogger.error("Simulation failed with unexpected error: \(error)", category: BlendLogger.network)
+            return .failure(.unknown(error.localizedDescription))
+        }
+    }
+    
+    /// Simulates a contract function call using SorobanClient with explicit ContractCallParams.
+    /// - Parameters:
+    ///   - contractCall: The contract call parameters.
+    /// - Returns: SimulationStatus containing SimulationResult or error.
+    public func simulateContractFunction<Result: Decodable>(
+        contractCall: ContractCallParams
+    ) async -> SimulationStatus<Result> {
+        do {
+            let result = try await transactionSimulator.simulate(server: sorobanServer, contractCall: contractCall)
+            let parser = BlendParser()
+            // Use BlendParser to convert SCValXDR to target type
+            let decodedResult: Result = try parser.parseSimulationResult(result, as: Result.self)
+            return .success(SimulationResult(result: decodedResult))
         } catch let error as BlendParsingError {
             BlendLogger.error("Simulation failed with BlendParsingError: \(error)", category: BlendLogger.network)
             return .failure(.invalidResponse(error.localizedDescription))
@@ -544,3 +570,4 @@ fileprivate struct GetLedgerEntriesResponse: Decodable {
         let xdr: String
     }
 }
+

@@ -413,10 +413,54 @@
             filePath = "Blendv3/Core/Services/Networking/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "228"
-            endingLineNumber = "228"
-            landmarkName = "simulateContractFunction(contractId:functionName:args:sourceKeyPair:)"
+            startingLineNumber = "226"
+            endingLineNumber = "226"
+            landmarkName = "simulateContractFunction(contractId:functionName:args:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "B797A9E5-BE16-45C7-AF57-F2DF83E223C8 - 56b69478441b821b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.NetworkService.simulateContractFunction&lt;&#x3c4;_0_0, &#x3c4;_0_1 where &#x3c4;_0_0: Swift.Sendable, &#x3c4;_0_1: Swift.Decodable&gt;(contractId: Swift.String, functionName: Swift.String, args: &#x3c4;_0_0, sourceKeyPair: stellarsdk.KeyPair) async -&gt; Blendv3.SimulationStatus&lt;&#x3c4;_0_1&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/NetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "226"
+                  endingLineNumber = "226">
+               </Location>
+               <Location
+                  uuid = "B797A9E5-BE16-45C7-AF57-F2DF83E223C8 - 56b69478441b821b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.NetworkService.simulateContractFunction&lt;&#x3c4;_0_0, &#x3c4;_0_1 where &#x3c4;_0_0: Swift.Sendable, &#x3c4;_0_1: Swift.Decodable&gt;(contractId: Swift.String, functionName: Swift.String, args: &#x3c4;_0_0, sourceKeyPair: stellarsdk.KeyPair) async -&gt; Blendv3.SimulationStatus&lt;&#x3c4;_0_1&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/NetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "226"
+                  endingLineNumber = "226">
+               </Location>
+               <Location
+                  uuid = "B797A9E5-BE16-45C7-AF57-F2DF83E223C8 - ded8a9a909465cc8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.NetworkService.simulateContractFunction&lt;&#x3c4;_0_0, &#x3c4;_0_1 where &#x3c4;_0_0: Swift.Sendable, &#x3c4;_0_1: Swift.Decodable&gt;(contractId: Swift.String, functionName: Swift.String, args: &#x3c4;_0_0) async -&gt; Blendv3.SimulationStatus&lt;&#x3c4;_0_1&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/NetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "226"
+                  endingLineNumber = "226">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -429,8 +473,8 @@
             filePath = "Blendv3/Core/Services/Networking/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "233"
-            endingLineNumber = "233"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
             landmarkName = "NetworkService"
             landmarkType = "3">
          </BreakpointContent>
@@ -445,10 +489,40 @@
             filePath = "Blendv3/Core/Services/Oracle/OracleNetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
             landmarkName = "simulateContractFunction(_:arguments:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "6E31C06E-7DA7-40E2-9F41-D9CCB9515601 - f031eac665c16ed4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.OracleNetworkService.simulateContractFunction(_: Blendv3.OracleContractFunction, arguments: Swift.Array&lt;stellarsdk.SCValXDR&gt;) async throws -&gt; stellarsdk.SCValXDR"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Oracle/OracleNetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "125"
+                  endingLineNumber = "125">
+               </Location>
+               <Location
+                  uuid = "6E31C06E-7DA7-40E2-9F41-D9CCB9515601 - f031eac665c16e16"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.OracleNetworkService.simulateContractFunction(_: Blendv3.OracleContractFunction, arguments: Swift.Array&lt;stellarsdk.SCValXDR&gt;) async throws -&gt; stellarsdk.SCValXDR"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Oracle/OracleNetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "123"
+                  endingLineNumber = "123">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -461,10 +535,40 @@
             filePath = "Blendv3/Core/Services/Oracle/OracleNetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
             landmarkName = "simulateContractFunction(_:arguments:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1BAAA6FC-004A-45F0-9224-68FAB01D060E - f031eac665c16ebb"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.OracleNetworkService.simulateContractFunction(_: Blendv3.OracleContractFunction, arguments: Swift.Array&lt;stellarsdk.SCValXDR&gt;) async throws -&gt; stellarsdk.SCValXDR"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Oracle/OracleNetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "128"
+                  endingLineNumber = "128">
+               </Location>
+               <Location
+                  uuid = "1BAAA6FC-004A-45F0-9224-68FAB01D060E - f031eac665c16ef5"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.OracleNetworkService.simulateContractFunction(_: Blendv3.OracleContractFunction, arguments: Swift.Array&lt;stellarsdk.SCValXDR&gt;) async throws -&gt; stellarsdk.SCValXDR"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Oracle/OracleNetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "126"
+                  endingLineNumber = "126">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -477,10 +581,40 @@
             filePath = "Blendv3/Core/Services/Networking/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
-            landmarkName = "simulateContractFunction(contractId:functionName:args:sourceKeyPair:)"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
+            landmarkName = "simulateContractFunction(contractId:functionName:args:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "003EECD1-8C8F-4C62-BA22-05132E9D99C8 - 56b69478441b8344"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.NetworkService.simulateContractFunction&lt;&#x3c4;_0_0, &#x3c4;_0_1 where &#x3c4;_0_0: Swift.Sendable, &#x3c4;_0_1: Swift.Decodable&gt;(contractId: Swift.String, functionName: Swift.String, args: &#x3c4;_0_0, sourceKeyPair: stellarsdk.KeyPair) async -&gt; Blendv3.SimulationStatus&lt;&#x3c4;_0_1&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/NetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "217"
+                  endingLineNumber = "217">
+               </Location>
+               <Location
+                  uuid = "003EECD1-8C8F-4C62-BA22-05132E9D99C8 - ded8a9a909465db6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.NetworkService.simulateContractFunction&lt;&#x3c4;_0_0, &#x3c4;_0_1 where &#x3c4;_0_0: Swift.Sendable, &#x3c4;_0_1: Swift.Decodable&gt;(contractId: Swift.String, functionName: Swift.String, args: &#x3c4;_0_0) async -&gt; Blendv3.SimulationStatus&lt;&#x3c4;_0_1&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/NetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "216"
+                  endingLineNumber = "216">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -493,10 +627,40 @@
             filePath = "Blendv3/Core/Services/Networking/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
-            landmarkName = "simulateContractFunction(contractId:functionName:args:sourceKeyPair:)"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
+            landmarkName = "simulateContractFunction(contractId:functionName:args:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7E1CFFCA-3E18-4759-96F8-09EA691C5713 - 56b69478441b8302"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.NetworkService.simulateContractFunction&lt;&#x3c4;_0_0, &#x3c4;_0_1 where &#x3c4;_0_0: Swift.Sendable, &#x3c4;_0_1: Swift.Decodable&gt;(contractId: Swift.String, functionName: Swift.String, args: &#x3c4;_0_0, sourceKeyPair: stellarsdk.KeyPair) async -&gt; Blendv3.SimulationStatus&lt;&#x3c4;_0_1&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/NetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "219"
+                  endingLineNumber = "219">
+               </Location>
+               <Location
+                  uuid = "7E1CFFCA-3E18-4759-96F8-09EA691C5713 - ded8a9a909465dd1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.NetworkService.simulateContractFunction&lt;&#x3c4;_0_0, &#x3c4;_0_1 where &#x3c4;_0_0: Swift.Sendable, &#x3c4;_0_1: Swift.Decodable&gt;(contractId: Swift.String, functionName: Swift.String, args: &#x3c4;_0_0) async -&gt; Blendv3.SimulationStatus&lt;&#x3c4;_0_1&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/NetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "219"
+                  endingLineNumber = "219">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -509,10 +673,40 @@
             filePath = "Blendv3/Core/Services/Networking/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
-            landmarkName = "simulateContractFunction(contractId:functionName:args:sourceKeyPair:)"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
+            landmarkName = "simulateContractFunction(contractId:functionName:args:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "58F31D90-9358-4F25-A760-E9D7D965B7F2 - 56b69478441b829f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.NetworkService.simulateContractFunction&lt;&#x3c4;_0_0, &#x3c4;_0_1 where &#x3c4;_0_0: Swift.Sendable, &#x3c4;_0_1: Swift.Decodable&gt;(contractId: Swift.String, functionName: Swift.String, args: &#x3c4;_0_0, sourceKeyPair: stellarsdk.KeyPair) async -&gt; Blendv3.SimulationStatus&lt;&#x3c4;_0_1&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/NetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "222"
+                  endingLineNumber = "222">
+               </Location>
+               <Location
+                  uuid = "58F31D90-9358-4F25-A760-E9D7D965B7F2 - ded8a9a909465c4c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.NetworkService.simulateContractFunction&lt;&#x3c4;_0_0, &#x3c4;_0_1 where &#x3c4;_0_0: Swift.Sendable, &#x3c4;_0_1: Swift.Decodable&gt;(contractId: Swift.String, functionName: Swift.String, args: &#x3c4;_0_0) async -&gt; Blendv3.SimulationStatus&lt;&#x3c4;_0_1&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/NetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "222"
+                  endingLineNumber = "222">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -545,36 +739,6 @@
             endingLineNumber = "177"
             landmarkName = "getPoolData(pool:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "13B1B080-660B-4C91-86A6-D2E78D78475A - a0153ea48631b9b1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Blendv3.BackstopContractService.getPoolData(pool: Swift.String) async throws -&gt; Blendv3.PoolBackstopData"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/BackstopContract/Services/BackstopContractService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "178"
-                  endingLineNumber = "178">
-               </Location>
-               <Location
-                  uuid = "13B1B080-660B-4C91-86A6-D2E78D78475A - 12701d57e5ab63d2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () async throws -&gt; Blendv3.PoolBackstopData in Blendv3.BackstopContractService.getPoolData(pool: Swift.String) async throws -&gt; Blendv3.PoolBackstopData"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/BackstopContract/Services/BackstopContractService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "178"
-                  endingLineNumber = "178">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -591,6 +755,36 @@
             endingLineNumber = "180"
             landmarkName = "getPoolData(pool:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "967D40EF-C531-499B-84CC-5E8F722E4DC7 - a0153ea48631b9cc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.BackstopContractService.getPoolData(pool: Swift.String) async throws -&gt; Blendv3.PoolBackstopData"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/BackstopContract/Services/BackstopContractService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "181"
+                  endingLineNumber = "181">
+               </Location>
+               <Location
+                  uuid = "967D40EF-C531-499B-84CC-5E8F722E4DC7 - 12701d57e5ab63af"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () async throws -&gt; Blendv3.PoolBackstopData in Blendv3.BackstopContractService.getPoolData(pool: Swift.String) async throws -&gt; Blendv3.PoolBackstopData"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/BackstopContract/Services/BackstopContractService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "181"
+                  endingLineNumber = "181">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

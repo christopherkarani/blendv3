@@ -39,8 +39,7 @@ public protocol NetworkServiceProtocol: Sendable {
     func simulateContractFunction(
         contractId: String,
         functionName: String,
-        args: [SCValXDR],
-        sourceKeyPair: KeyPair
+        args: [SCValXDR]
     ) async -> SimulationStatus<SCValXDR>
     
     /// Invokes a contract function
@@ -56,7 +55,6 @@ public protocol NetworkServiceProtocol: Sendable {
         contractId: String,
         functionName: String,
         args: [SCValXDR],
-        sourceKeyPair: KeyPair,
         force: Bool
     ) async throws -> SCValXDR
 }

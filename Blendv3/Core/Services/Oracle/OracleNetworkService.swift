@@ -77,7 +77,6 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
                 contractId: contractId,
                 functionName: function.rawValue,
                 args: arguments,
-                sourceKeyPair: sourceKeyPair,
                 force: false
             )
             
@@ -108,8 +107,7 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
             let simulationResult = await networkService.simulateContractFunction(
                 contractId: contractId,
                 functionName: function.rawValue,
-                args: arguments,
-                sourceKeyPair: sourceKeyPair
+                args: arguments
             )
             
             switch simulationResult {
