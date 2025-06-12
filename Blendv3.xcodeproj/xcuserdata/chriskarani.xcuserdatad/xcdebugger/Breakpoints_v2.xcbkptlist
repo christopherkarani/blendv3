@@ -413,9 +413,9 @@
             filePath = "Blendv3/Core/Services/Networking/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
-            landmarkName = "simulateContractFunction(contractId:functionName:args:)"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
+            landmarkName = "simulateContractFunction(contractCall:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -429,10 +429,10 @@
             filePath = "Blendv3/Core/Services/Networking/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "259"
-            endingLineNumber = "259"
-            landmarkName = "NetworkService"
-            landmarkType = "3">
+            startingLineNumber = "282"
+            endingLineNumber = "282"
+            landmarkName = "simulateContractFunction(contractId:functionName:args:sourceKeyPair:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -477,9 +477,9 @@
             filePath = "Blendv3/Core/Services/Networking/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
-            landmarkName = "simulateContractFunction(contractId:functionName:args:)"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
+            landmarkName = "simulateContractFunction(contractCall:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -493,9 +493,9 @@
             filePath = "Blendv3/Core/Services/Networking/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "219"
-            endingLineNumber = "219"
-            landmarkName = "simulateContractFunction(contractId:functionName:args:)"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "simulateContractFunction(contractCall:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -509,9 +509,9 @@
             filePath = "Blendv3/Core/Services/Networking/NetworkService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
-            landmarkName = "simulateContractFunction(contractId:functionName:args:)"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
+            landmarkName = "simulateContractFunction(contractCall:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -527,7 +527,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "190"
             endingLineNumber = "190"
-            landmarkName = "getUserBalance(pool:user:)"
+            landmarkName = "withdraw(from:poolAddress:amount:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -543,7 +543,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "177"
             endingLineNumber = "177"
-            landmarkName = "getUserBalance(pool:user:)"
+            landmarkName = "withdraw(from:poolAddress:amount:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -559,7 +559,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "180"
             endingLineNumber = "180"
-            landmarkName = "getUserBalance(pool:user:)"
+            landmarkName = "withdraw(from:poolAddress:amount:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

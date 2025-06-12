@@ -53,7 +53,7 @@ struct Start {
         let account = try! KeyPair(secretSeed: "SATOWQKPSRAP7D77C6EMT65OIF543WQUOV6DJBPW4SGUNTP2XSIEVUKP")
         let networkService: NetworkService = .init(keyPair: account)
         let cacheService = CacheService()
-        let poolService = PoolService(networkService: networkService, sourceKeyPair: account)
+        let poolService = PoolService(networkService: networkService)
         let oracleService = BlendOracleService(cacheService: cacheService, networkService: networkService, sourceKeyPair: account)
         var rpcEndpoint: String = BlendConstants.RPC.testnet
         

@@ -12,7 +12,7 @@ import stellarsdk
 
 struct PoolService: PoolServiceProtocol {
     let networkService: NetworkService
-    let sourceKeyPair: KeyPair
+
     private let logger = DebugLogger(subsystem: "com.blendv3.debug", category: "Pool Service")
 
     

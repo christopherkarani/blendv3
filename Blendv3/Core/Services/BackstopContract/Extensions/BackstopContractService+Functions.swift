@@ -14,12 +14,20 @@ extension BackstopContractService {
                     functionArguments: []
                 )
                 
+                // 1. Simulate the contract call first
                 let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
                 
                 switch simulationResult {
                 case .success(_):
-                    // Gulp emissions doesn't return a value
-                    return
+                    // 2. If simulation succeeds, invoke the actual contract
+                    do {
+                        _ = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                        // Gulp emissions doesn't return a value
+                        return
+                    } catch {
+                        self.debugLogger.error("🛡️ ❌ Gulp emissions invocation failed: \(error.localizedDescription)")
+                        throw self.convertInvocationError(error, operation: "gulpEmissions")
+                    }
                     
                 case .failure(let error):
                     self.debugLogger.error("🛡️ ❌ Gulp emissions simulation failed: \(error.localizedDescription)")
@@ -53,12 +61,20 @@ extension BackstopContractService {
                     ]
                 )
                 
+                // 1. Simulate the contract call first
                 let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
                 
                 switch simulationResult {
                 case .success(_):
-                    // Add reward doesn't return a value
-                    return
+                    // 2. If simulation succeeds, invoke the actual contract
+                    do {
+                        _ = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                        // Add reward doesn't return a value
+                        return
+                    } catch {
+                        self.debugLogger.error("🛡️ ❌ Add reward invocation failed: \(error.localizedDescription)")
+                        throw self.convertInvocationError(error, operation: "addReward")
+                    }
                     
                 case .failure(let error):
                     self.debugLogger.error("🛡️ ❌ Add reward simulation failed: \(error.localizedDescription)")
@@ -81,11 +97,19 @@ extension BackstopContractService {
                     ]
                 )
                 
+                // 1. Simulate the contract call first
                 let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
                 
                 switch simulationResult {
-                case .success(let result):
-                    return try self.blendParser.parseI128Response(result.result)
+                case .success(_):
+                    // 2. If simulation succeeds, invoke the actual contract
+                    do {
+                        let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                        return try self.blendParser.parseI128Response(invocationResult)
+                    } catch {
+                        self.debugLogger.error("🛡️ ❌ Gulp pool emissions invocation failed: \(error.localizedDescription)")
+                        throw self.convertInvocationError(error, operation: "gulpPoolEmissions")
+                    }
                     
                 case .failure(let error):
                     self.debugLogger.error("🛡️ ❌ Gulp pool emissions simulation failed: \(error.localizedDescription)")
@@ -121,12 +145,20 @@ extension BackstopContractService {
                     ]
                 )
                 
+                // 1. Simulate the contract call first
                 let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
                 
                 switch simulationResult {
-                case .success(let result):
-                    let totalClaimed = try self.blendParser.parseI128Response(result.result)
-                    return ClaimResult(totalClaimed: totalClaimed)
+                case .success(_):
+                    // 2. If simulation succeeds, invoke the actual contract
+                    do {
+                        let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                        let totalClaimed = try self.blendParser.parseI128Response(invocationResult)
+                        return ClaimResult(totalClaimed: totalClaimed)
+                    } catch {
+                        self.debugLogger.error("🛡️ ❌ Claim invocation failed: \(error.localizedDescription)")
+                        throw self.convertInvocationError(error, operation: "claim")
+                    }
                     
                 case .failure(let error):
                     self.debugLogger.error("🛡️ ❌ Claim simulation failed: \(error.localizedDescription)")
@@ -150,12 +182,20 @@ extension BackstopContractService {
                     functionArguments: []
                 )
                 
+                // 1. Simulate the contract call first
                 let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
                 
                 switch simulationResult {
                 case .success(_):
-                    // Drop doesn't return a value
-                    return
+                    // 2. If simulation succeeds, invoke the actual contract
+                    do {
+                        _ = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                        // Drop doesn't return a value
+                        return
+                    } catch {
+                        self.debugLogger.error("🛡️ ❌ Drop invocation failed: \(error.localizedDescription)")
+                        throw self.convertInvocationError(error, operation: "drop")
+                    }
                     
                 case .failure(let error):
                     self.debugLogger.error("🛡️ ❌ Drop simulation failed: \(error.localizedDescription)")
@@ -182,12 +222,20 @@ extension BackstopContractService {
                     ]
                 )
                 
+                // 1. Simulate the contract call first
                 let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
                 
                 switch simulationResult {
                 case .success(_):
-                    // Draw doesn't return a value
-                    return
+                    // 2. If simulation succeeds, invoke the actual contract
+                    do {
+                        _ = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                        // Draw doesn't return a value
+                        return
+                    } catch {
+                        self.debugLogger.error("🛡️ ❌ Draw invocation failed: \(error.localizedDescription)")
+                        throw self.convertInvocationError(error, operation: "draw")
+                    }
                     
                 case .failure(let error):
                     self.debugLogger.error("🛡️ ❌ Draw simulation failed: \(error.localizedDescription)")
@@ -214,12 +262,20 @@ extension BackstopContractService {
                     ]
                 )
                 
+                // 1. Simulate the contract call first
                 let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
                 
                 switch simulationResult {
                 case .success(_):
-                    // Donate doesn't return a value
-                    return
+                    // 2. If simulation succeeds, invoke the actual contract
+                    do {
+                        _ = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                        // Donate doesn't return a value
+                        return
+                    } catch {
+                        self.debugLogger.error("🛡️ ❌ Donate invocation failed: \(error.localizedDescription)")
+                        throw self.convertInvocationError(error, operation: "donate")
+                    }
                     
                 case .failure(let error):
                     self.debugLogger.error("🛡️ ❌ Donate simulation failed: \(error.localizedDescription)")
@@ -238,12 +294,20 @@ extension BackstopContractService {
                     functionArguments: []
                 )
                 
+                // 1. Simulate the contract call first
                 let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
                 
                 switch simulationResult {
-                case .success(let result):
-                    let (blndValue, usdcValue) = try self.blendParser.parseTokenValueTupleResponse(result.result)
-                    return TokenValueUpdateResult(blndValue: blndValue, usdcValue: usdcValue)
+                case .success(_):
+                    // 2. If simulation succeeds, invoke the actual contract
+                    do {
+                        let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                        let (blndValue, usdcValue) = try self.blendParser.parseTokenValueTupleResponse(invocationResult)
+                        return TokenValueUpdateResult(blndValue: blndValue, usdcValue: usdcValue)
+                    } catch {
+                        self.debugLogger.error("🛡️ ❌ Update token values invocation failed: \(error.localizedDescription)")
+                        throw self.convertInvocationError(error, operation: "updateTokenValues")
+                    }
                     
                 case .failure(let error):
                     self.debugLogger.error("🛡️ ❌ Update token values simulation failed: \(error.localizedDescription)")

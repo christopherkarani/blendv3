@@ -52,9 +52,6 @@ struct BlendAssetService: BlendAssetServiceProtocol {
         return assetData
     }
     
-//    func getAssets() async throws -> [OracleAsset] {
-//        
-//    }
     
     /// Retrieve All Reserve data
      public func getAssets() async throws -> [OracleAsset] {

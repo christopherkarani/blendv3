@@ -168,6 +168,29 @@ public final class NetworkService: NetworkServiceProtocol {
         }
     }
     
+    /// Invokes a contract function using a ContractCallParams object.
+    /// - Parameters:
+    ///   - contractCall: The contract call parameters.
+    ///   - force: Whether to force execution for read-only calls.
+    /// - Returns: Result of the contract invocation as SCValXDR.
+    /// - Throws: `BlendError.transaction(.failed)` or `BlendError.validation(.invalidResponse)` on failure.
+    public func invokeContractFunction(
+        contractCall: ContractCallParams,
+        force: Bool = false
+    ) async throws -> SCValXDR {
+        do {
+            let client = try await getSorobanClient(contractId: contractCall.contractId, sourceKeyPair: self.keyPair)
+            let result = try await client.invokeMethod(name: contractCall.functionName, args: contractCall.functionArguments, force: force)
+            return result
+        } catch let error as SorobanClientError {
+            BlendLogger.error("Contract function invocation failed: \(contractCall.functionName)", error: error, category: BlendLogger.network)
+            throw BlendError.transaction(.failed)
+        } catch {
+            BlendLogger.error("Contract function invocation failed with unexpected error: \(contractCall.functionName)", error: error, category: BlendLogger.network)
+            throw BlendError.validation(.invalidResponse)
+        }
+    }
+    
 //    /// Legacy method for compatibility - redirects to new SorobanClient implementation.
 //    /// - Warning: Deprecated. Provide `sourceKeyPair` explicitly using the other overload.
 //    @available(*, deprecated, message: "Use invokeContractFunction with explicit sourceKeyPair instead")
