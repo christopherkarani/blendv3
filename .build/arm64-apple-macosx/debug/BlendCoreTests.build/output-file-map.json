@@ -1,0 +1,83 @@
+{
+  "": {
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/master.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3Tests/Core/Models/BackstopModelsTests.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BackstopModelsTests.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BackstopModelsTests.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BackstopModelsTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BackstopModelsTests.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3Tests/Core/Models/OracleAssetTests.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/OracleAssetTests.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/OracleAssetTests.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/OracleAssetTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/OracleAssetTests.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3Tests/Core/Models/OraclePriceTests.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/OraclePriceTests.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/OraclePriceTests.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/OraclePriceTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/OraclePriceTests.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3Tests/Core/Models/PriceDataTests.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/PriceDataTests.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/PriceDataTests.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/PriceDataTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/PriceDataTests.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3Tests/Core/Models/ReactiveRateModifierTests.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/ReactiveRateModifierTests.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/ReactiveRateModifierTests.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/ReactiveRateModifierTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/ReactiveRateModifierTests.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3Tests/Core/Services/BackstopCalculatorServiceTests.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BackstopCalculatorServiceTests.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BackstopCalculatorServiceTests.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BackstopCalculatorServiceTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BackstopCalculatorServiceTests.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3Tests/Core/Services/BlendOracleServiceIntegrationTests.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendOracleServiceIntegrationTests.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendOracleServiceIntegrationTests.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendOracleServiceIntegrationTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendOracleServiceIntegrationTests.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3Tests/Core/Services/BlendOracleServiceTests.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendOracleServiceTests.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendOracleServiceTests.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendOracleServiceTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendOracleServiceTests.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3Tests/Core/Services/BlendPoolDiagnosticsServiceTests.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendPoolDiagnosticsServiceTests.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendPoolDiagnosticsServiceTests.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendPoolDiagnosticsServiceTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendPoolDiagnosticsServiceTests.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3Tests/Core/Services/BlendRateCalculatorTests.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendRateCalculatorTests.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendRateCalculatorTests.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendRateCalculatorTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendRateCalculatorTests.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3Tests/Core/Services/BlendUSDCVaultIntegrationTests.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendUSDCVaultIntegrationTests.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendUSDCVaultIntegrationTests.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendUSDCVaultIntegrationTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendUSDCVaultIntegrationTests.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3Tests/Core/Services/BlendUSDCVaultTests.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendUSDCVaultTests.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendUSDCVaultTests.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendUSDCVaultTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendUSDCVaultTests.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3Tests/Core/Services/EnhancedBlendRateCalculatorTests.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/EnhancedBlendRateCalculatorTests.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/EnhancedBlendRateCalculatorTests.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/EnhancedBlendRateCalculatorTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/EnhancedBlendRateCalculatorTests.swiftdeps"
+  }
+}

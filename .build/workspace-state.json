@@ -1,0 +1,27 @@
+{
+  "object" : {
+    "artifacts" : [
+
+    ],
+    "dependencies" : [
+      {
+        "basedOn" : null,
+        "packageRef" : {
+          "identity" : "stellar-ios-mac-sdk",
+          "kind" : "remoteSourceControl",
+          "location" : "https://github.com/Soneso/stellar-ios-mac-sdk",
+          "name" : "stellarsdk"
+        },
+        "state" : {
+          "checkoutState" : {
+            "revision" : "cd41bfa9e4dee0a506dfcd3ed5d0bb5548a092c3",
+            "version" : "2.6.6"
+          },
+          "name" : "sourceControlCheckout"
+        },
+        "subpath" : "stellar-ios-mac-sdk"
+      }
+    ]
+  },
+  "version" : 6
+}
