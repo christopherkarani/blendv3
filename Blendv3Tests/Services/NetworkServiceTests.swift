@@ -13,19 +13,33 @@ import stellarsdk
 final class NetworkServiceTests: XCTestCase {
     
     var sut: NetworkService!
-    var mockConfiguration: MockConfigurationService!
+    var testConfig: NetworkServiceConfig!
     var cancellables: Set<AnyCancellable>!
     
     override func setUp() {
         super.setUp()
-        mockConfiguration = MockConfigurationService()
-        sut = NetworkService(configuration: mockConfiguration)
+        testConfig = NetworkServiceConfig(
+            networkType: .testnet,
+            timeoutConfiguration: TimeoutConfiguration(
+                networkTimeout: 30.0,
+                transactionTimeout: 60.0,
+                initializationTimeout: 30.0
+            ),
+            retryConfiguration: RetryConfiguration(
+                maxRetries: 3,
+                baseDelay: 1.0,
+                maxDelay: 10.0,
+                exponentialBase: 2.0,
+                jitterRange: 0.0...0.3
+            )
+        )
+        sut = NetworkService(config: testConfig)
         cancellables = []
     }
     
     override func tearDown() {
         sut = nil
-        mockConfiguration = nil
+        testConfig = nil
         cancellables = nil
         super.tearDown()
     }
@@ -35,6 +49,44 @@ final class NetworkServiceTests: XCTestCase {
     func testInitialization_ConfiguresCorrectly() {
         // Then
         XCTAssertNotNil(sut)
+    }
+    
+    func testInitialization_WithDefaultConfig_Works() {
+        // Given & When
+        let defaultNetworkService = NetworkService()
+        
+        // Then
+        XCTAssertNotNil(defaultNetworkService)
+    }
+    
+    func testInitialization_WithCustomConfig_UsesCorrectEndpoint() {
+        // Given
+        let mainnetConfig = NetworkServiceConfig(networkType: .mainnet)
+        
+        // When
+        let mainnetService = NetworkService(config: mainnetConfig)
+        
+        // Then
+        XCTAssertNotNil(mainnetService)
+        XCTAssertEqual(mainnetConfig.rpcEndpoint, BlendUSDCConstants.RPC.mainnet)
+    }
+    
+    // MARK: - Configuration Tests
+    
+    func testNetworkServiceConfig_TestnetEndpoint_IsCorrect() {
+        // Given
+        let config = NetworkServiceConfig(networkType: .testnet)
+        
+        // Then
+        XCTAssertEqual(config.rpcEndpoint, BlendUSDCConstants.RPC.testnet)
+    }
+    
+    func testNetworkServiceConfig_MainnetEndpoint_IsCorrect() {
+        // Given
+        let config = NetworkServiceConfig(networkType: .mainnet)
+        
+        // Then
+        XCTAssertEqual(config.rpcEndpoint, BlendUSDCConstants.RPC.mainnet)
     }
     
     // MARK: - Connectivity Tests
@@ -99,43 +151,13 @@ final class NetworkServiceTests: XCTestCase {
         // Then
         XCTAssertEqual(result, testData)
     }
+    
+    // MARK: - Legacy Initialization Tests
+    
+
 }
 
-// MARK: - Mock Configuration Service
 
-private class MockConfigurationService: ConfigurationServiceProtocol {
-    var networkType: BlendUSDCConstants.NetworkType = .testnet
-    
-    var contractAddresses: ContractAddresses {
-        return ContractAddresses(
-            poolContract: "test_pool",
-            backstopContract: "test_backstop",
-            blendLockupContract: "test_lockup",
-            usdcContract: "test_usdc"
-        )
-    }
-    
-    var rpcEndpoint: String {
-        return "https://soroban-testnet.stellar.org"
-    }
-    
-    func getRetryConfiguration() -> RetryConfiguration {
-        return RetryConfiguration(
-            maxRetries: 3,
-            initialDelay: 1.0,
-            maxDelay: 10.0,
-            multiplier: 2.0
-        )
-    }
-    
-    func getTimeoutConfiguration() -> TimeoutConfiguration {
-        return TimeoutConfiguration(
-            networkTimeout: 30.0,
-            transactionTimeout: 60.0,
-            simulationTimeout: 20.0
-        )
-    }
-}
 
 // MARK: - Integration Tests (Commented out for CI)
 

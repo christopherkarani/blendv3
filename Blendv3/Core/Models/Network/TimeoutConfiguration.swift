@@ -11,7 +11,7 @@ import Foundation
 // MARK: - Timeout Configuration
 
 /// Configuration for operation timeouts
-public struct TimeoutConfiguration {
+public struct TimeoutConfiguration: Sendable {
     public let networkTimeout: TimeInterval
     public let transactionTimeout: TimeInterval
     public let initializationTimeout: TimeInterval

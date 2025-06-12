@@ -23,6 +23,28 @@ public enum NetworkSimulationError: Error, Sendable {
     case unknown(String)
 }
 
+/// Configuration for NetworkService operations
+public struct NetworkServiceConfig: Sendable {
+    public let networkType: BlendUSDCConstants.NetworkType
+    public let timeoutConfiguration: TimeoutConfiguration
+    public let retryConfiguration: RetryConfiguration
+    
+    public init(
+        networkType: BlendUSDCConstants.NetworkType = .testnet,
+        timeoutConfiguration: TimeoutConfiguration = TimeoutConfiguration(),
+        retryConfiguration: RetryConfiguration = RetryConfiguration()
+    ) {
+        self.networkType = networkType
+        self.timeoutConfiguration = timeoutConfiguration
+        self.retryConfiguration = retryConfiguration
+    }
+    
+    /// Get the appropriate RPC endpoint for the network type
+    public var rpcEndpoint: String {
+        return BlendUSDCConstants.RPC.url(for: networkType)
+    }
+}
+
 /// Enhanced network service for Stellar/Soroban contract interactions using SorobanClient.
 /// Provides methods for account retrieval, contract invocation, simulation, ledger queries,
 /// and network connection management.
@@ -31,7 +53,7 @@ public final class NetworkService: NetworkServiceProtocol {
     
     // MARK: - Initialization & Configuration
     
-    private let configuration: ConfigurationServiceProtocol
+    private let config: NetworkServiceConfig
     private let session: URLSession
     private let baseURL: URL
     
@@ -47,26 +69,28 @@ public final class NetworkService: NetworkServiceProtocol {
     
     /// Initializes the NetworkService with configuration.
     /// Configures URLSession with connection pooling and sets up interceptors.
-    public init(configuration: ConfigurationServiceProtocol) {
-        self.configuration = configuration
+    public init(config: NetworkServiceConfig = NetworkServiceConfig()) {
+        self.config = config
         
-        let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = configuration.getTimeoutConfiguration().networkTimeout
-        config.timeoutIntervalForResource = configuration.getTimeoutConfiguration().networkTimeout * 2
-        config.httpMaximumConnectionsPerHost = 6
-        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        let sessionConfig = URLSessionConfiguration.default
+        sessionConfig.timeoutIntervalForRequest = config.timeoutConfiguration.networkTimeout
+        sessionConfig.timeoutIntervalForResource = config.timeoutConfiguration.networkTimeout * 2
+        sessionConfig.httpMaximumConnectionsPerHost = 6
+        sessionConfig.requestCachePolicy = .reloadIgnoringLocalCacheData
         
-        self.session = URLSession(configuration: config)
-        self.baseURL = URL(string: configuration.rpcEndpoint)!
+        self.session = URLSession(configuration: sessionConfig)
+        self.baseURL = URL(string: config.rpcEndpoint)!
         
         // Initialize Soroban server and transaction simulator
-        self.sorobanServer = SorobanServer(endpoint: configuration.rpcEndpoint)
+        self.sorobanServer = SorobanServer(endpoint: config.rpcEndpoint)
         let debugLogger = DebugLogger(subsystem: "com.blendv3.network", category: "TransactionSimulator")
         self.transactionSimulator = SorobanTransactionSimulator(debugLogger: debugLogger)
         
         setupDefaultInterceptors()
-        BlendLogger.info("NetworkService initialized with endpoint: \(configuration.rpcEndpoint)", category: BlendLogger.network)
+        BlendLogger.info("NetworkService initialized with endpoint: \(config.rpcEndpoint)", category: BlendLogger.network)
     }
+    
+
     
     // MARK: - NetworkServiceProtocol Conformance
     
@@ -93,7 +117,7 @@ public final class NetworkService: NetworkServiceProtocol {
     public func getAccount(accountId: String) async throws -> Account {
         BlendLogger.debug("Fetching account: \(accountId)", category: BlendLogger.network)
         
-        let sdk = StellarSDK(withHorizonUrl: configuration.rpcEndpoint)
+        let sdk = StellarSDK(withHorizonUrl: config.rpcEndpoint)
         
         return try await withCheckedThrowingContinuation { continuation in
             sdk.accounts.getAccountDetails(accountId: accountId) { response in
@@ -387,8 +411,8 @@ public final class NetworkService: NetworkServiceProtocol {
         let clientOptions = ClientOptions(
             sourceAccountKeyPair: sourceKeyPair,
             contractId: contractId,
-            network: determineNetwork(),
-            rpcUrl: configuration.rpcEndpoint,
+            network: config.networkType.stellarNetwork,
+            rpcUrl: config.rpcEndpoint,
             enableServerLogging: false
         )
         
@@ -396,18 +420,6 @@ public final class NetworkService: NetworkServiceProtocol {
         await sorobanClientCache.store(client: client, for: cacheKey)
         
         return client
-    }
-    
-    /// Determines the Stellar network based on the RPC endpoint URL.
-    /// - Returns: Corresponding `Network` enum value.
-    private func determineNetwork() -> Network {
-        if configuration.rpcEndpoint.contains("testnet") {
-            return Network.testnet
-        } else if configuration.rpcEndpoint.contains("futurenet") {
-            return Network.futurenet
-        } else {
-            return Network.public
-        }
     }
     
     /// Creates a direct RPC URLRequest with JSON-RPC 2.0 format.

@@ -11,7 +11,7 @@ import Foundation
 // MARK: - Retry Configuration
 
 /// Configuration for retry logic with exponential backoff
-public struct RetryConfiguration {
+public struct RetryConfiguration: Sendable {
     public let maxRetries: Int
     public let baseDelay: TimeInterval
     public let maxDelay: TimeInterval
