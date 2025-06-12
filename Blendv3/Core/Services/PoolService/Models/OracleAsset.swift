@@ -107,7 +107,7 @@ public enum OracleAsset: Codable, Equatable, CustomStringConvertible {
             
             // Convert string address to SCAddressXDR
             let scAddress: SCAddressXDR
-            if StellarContractID.isStrKeyContract(address), let hexString = try? StellarContractID.decode(strKey: address), let contractData = try? Data(hexString: hexString) {
+            if StellarContractID.isStrKeyContract(address), let hexString = try? StellarContractID.decode(strKey: address), let contractData = Data(hexString: hexString) {
                 // Wrap the Data in WrappedData32 before passing to contract()
                 scAddress = SCAddressXDR.contract(WrappedData32(contractData))
             } else {

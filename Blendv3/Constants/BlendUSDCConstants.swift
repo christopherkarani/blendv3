@@ -26,7 +26,7 @@ public struct BlendUSDCConstants {
     // MARK: - Network Configuration
     
     /// Network type for determining which contract addresses to use
-    public enum NetworkType {
+    public enum NetworkType: Sendable {
         case testnet
         case mainnet
         

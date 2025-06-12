@@ -1,11 +1,13 @@
-// MARK: - Configuration Models
+//
+//  BlendError.swift
+//  Blendv3
+//
+//  Created by Chris Karani on 12/06/2025.
+//
 
 import Foundation
 
-
-// MARK: - Error Models
-
-/// Sanitized error type that never exposes internal implementation details
+///// Sanitized error type that never exposes internal implementation details
 public enum BlendError: LocalizedError, Equatable {
     case network(NetworkErrorType)
     case validation(ValidationErrorType)
@@ -64,7 +66,7 @@ public enum NetworkErrorType: Equatable {
         }
     }
 }
-
+//
 public enum ValidationErrorType: Equatable {
     case invalidInput
     case invalidResponse
@@ -80,7 +82,7 @@ public enum ValidationErrorType: Equatable {
         }
     }
 }
-
+//
 public enum TransactionErrorType: Equatable {
     case failed
     case rejected
@@ -94,33 +96,3 @@ public enum TransactionErrorType: Equatable {
         }
     }
 }
-
-/// Context for error logging and debugging
-public struct ErrorContext {
-    let operation: String
-    let timestamp: Date
-    let metadata: [String: Any]
-    
-    public static var automatic: ErrorContext {
-        ErrorContext(
-            operation: "Unknown",
-            timestamp: Date(),
-            metadata: [:]
-        )
-    }
-}
-
-// MARK: - Validation Models
-
-/// Schema for validating contract responses
-public enum ValidationSchema {
-    case priceData
-    case reserveData
-    case poolConfig
-    case transactionResult
-    case i128Value
-}
-
-
-
-// MARK: - Data Models
