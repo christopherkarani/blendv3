@@ -408,23 +408,23 @@
 		9E9781AF2DE68F7F009333AD /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				9E9DA9BF2DFA966F009133E4 /* PoolService */,
+				9E9DA9BE2DFA965E009133E4 /* DataService */,
+				9E9DA9BD2DFA963A009133E4 /* Networking */,
+				9E7C24362DEAAE0D007C181D /* BackstopContract */,
 				9EAD3EF12DF7D1F000029CE7 /* Oracle */,
 				9EA449CF2DF0FF3C00F6CC6D /* UserPosition */,
 				9E9781A82DE68F7F009333AD /* BlendPoolDiagnosticsService.swift */,
 				9E9781A92DE68F7F009333AD /* ConfigurationService.swift */,
-				9E9781AA2DE68F7F009333AD /* DataService.swift */,
 				9E9781AB2DE68F7F009333AD /* ErrorBoundaryService.swift */,
 				9E9781AC2DE68F7F009333AD /* StateManagementService.swift */,
 				9E9781AD2DE68F7F009333AD /* TransactionService.swift */,
 				9E9781AE2DE68F7F009333AD /* ValidationService.swift */,
 				9EDE65242DE9246000B63E09 /* BlendAssetService.swift */,
-				9EDE651E2DE773DB00B63E09 /* PoolService.swift */,
-				9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */,
 				9E97817D2DE68D98009333AD /* BatchingService.swift */,
 				9ED8DAC82DE5240300CB0059 /* Logger.swift */,
 				9ED8DABB2DE5240300CB0059 /* CacheService.swift */,
 				9ED8DB372DE5278D00CB0059 /* BackstopCalculatorService.swift */,
-				9ED8DAAF2DE5240300CB0059 /* BlendOracleService.swift */,
 				9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */,
 			);
 			path = Services;
@@ -442,12 +442,47 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		9E9DA9BD2DFA963A009133E4 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */,
+				9EAD3EF52DF7D31400029CE7 /* NetworkServiceProtocol.swift */,
+				9ED8DAC92DE5240300CB0059 /* NetworkService.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		9E9DA9BE2DFA965E009133E4 /* DataService */ = {
+			isa = PBXGroup;
+			children = (
+				9E9781AA2DE68F7F009333AD /* DataService.swift */,
+			);
+			path = DataService;
+			sourceTree = "<group>";
+		};
+		9E9DA9BF2DFA966F009133E4 /* PoolService */ = {
+			isa = PBXGroup;
+			children = (
+				9E9DA9C02DFA9712009133E4 /* Models */,
+				9EDE65262DE9338D00B63E09 /* PoolServiceProtocol.swift */,
+				9EDE651E2DE773DB00B63E09 /* PoolService.swift */,
+			);
+			path = PoolService;
+			sourceTree = "<group>";
+		};
+		9E9DA9C02DFA9712009133E4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		9EA449CF2DF0FF3C00F6CC6D /* UserPosition */ = {
 			isa = PBXGroup;
 			children = (
+				9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */,
 				9EA449CC2DF0FF3C00F6CC6D /* UserPositionService.swift */,
 				9EA449CD2DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift */,
-				9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */,
 			);
 			path = UserPosition;
 			sourceTree = "<group>";
@@ -455,10 +490,11 @@
 		9EAD3EF12DF7D1F000029CE7 /* Oracle */ = {
 			isa = PBXGroup;
 			children = (
+				9ED8DAB02DE5240300CB0059 /* BlendOracleServiceProtocol.swift */,
+				9ED8DAAF2DE5240300CB0059 /* BlendOracleService.swift */,
 				9EAD3EEE2DF7D1F000029CE7 /* OracleContractFunction.swift */,
 				9EAD3EEF2DF7D1F000029CE7 /* OracleNetworkService.swift */,
 				9EAD3EF02DF7D1F000029CE7 /* OracleResponseParser.swift */,
-				9EAD3EF52DF7D31400029CE7 /* NetworkServiceProtocol.swift */,
 			);
 			path = Oracle;
 			sourceTree = "<group>";
@@ -467,7 +503,6 @@
 			isa = PBXGroup;
 			children = (
 				9ED8DAC02DE5240300CB0059 /* DependencyInjection */,
-				9E7C24362DEAAE0D007C181D /* BackstopContract */,
 				9E9781B12DE68F7F009333AD /* Core */,
 				9ED8DB612DE5443000CB0059 /* Views */,
 				9ED8DB602DE543FB00CB0059 /* Docs */,
@@ -523,10 +558,8 @@
 			isa = PBXGroup;
 			children = (
 				9E93884D2DF3519B0015BE14 /* CacheServiceProtocol.swift */,
-				9EDE65262DE9338D00B63E09 /* PoolServiceProtocol.swift */,
 				9E9781832DE68DF2009333AD /* BlendServiceProtocols.swift */,
 				9ED8DAB42DE5240300CB0059 /* BlendRateCalculatorProtocol.swift */,
-				9ED8DAB02DE5240300CB0059 /* BlendOracleServiceProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -573,7 +606,6 @@
 				9ED8DB662DE54FCA00CB0059 /* StellarContractID.swift */,
 				9ED8DAC52DE5240300CB0059 /* FixedMath.swift */,
 				9ED8DAB32DE5240300CB0059 /* BlendRateCalculator.swift */,
-				9ED8DAC92DE5240300CB0059 /* NetworkService.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
