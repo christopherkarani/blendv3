@@ -40,7 +40,7 @@ class BlendVault {
         
         let poolData = try! await poolService.fetchPoolConfig(contractId: BlendConstants.Testnet.xlmUsdcPool)
         let backstop = try! await backstopService.getPoolData(pool: BlendConstants.Testnet.xlmUsdcPool)
-        print("backstop Data: ", poolData)
+        
     }
 }
 
