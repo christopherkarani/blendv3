@@ -115,8 +115,6 @@ public final class NetworkService: NetworkServiceProtocol {
     /// - Returns: An `Account` object representing the account.
     /// - Throws: `BlendError.network(.serverError)` on failure.
     public func getAccount(accountId: String) async throws -> Account {
-        BlendLogger.debug("Fetching account: \(accountId)", category: BlendLogger.network)
-        
         let sdk = StellarSDK(withHorizonUrl: config.rpcEndpoint)
         
         return try await withCheckedThrowingContinuation { continuation in
@@ -155,13 +153,9 @@ public final class NetworkService: NetworkServiceProtocol {
         sourceKeyPair: KeyPair,
         force: Bool = false
     ) async throws -> SCValXDR {
-        BlendLogger.debug("Invoking contract function: \(functionName) on \(contractId)", category: BlendLogger.network)
-        
         do {
             let client = try await getSorobanClient(contractId: contractId, sourceKeyPair: sourceKeyPair)
             let result = try await client.invokeMethod(name: functionName, args: args, force: force)
-            
-            BlendLogger.debug("Contract function invocation successful: \(functionName)", category: BlendLogger.network)
             return result
             
         } catch let error as SorobanClientError {
@@ -206,7 +200,6 @@ public final class NetworkService: NetworkServiceProtocol {
         args: Args,
         sourceKeyPair: KeyPair
     ) async -> SimulationStatus<Result> {
-        BlendLogger.debug("Simulating contract function: \(functionName) on \(contractId)", category: BlendLogger.network)
         do {
             let parsedArgs = args as? [SCValXDR] ?? []
             let contractCallParams: ContractCallParams = ContractCallParams(
@@ -215,21 +208,15 @@ public final class NetworkService: NetworkServiceProtocol {
                 functionArguments: parsedArgs
             )
             let result = try await transactionSimulator.simulate(server: sorobanServer, contractCall: contractCallParams)
-            let p = BlendParser()
+            let parser = BlendParser()
             
-
-            // If SCValXDR is Data, use directly
-            if let data = result as? Data {
-                let decodedResult: Result = try JSONDecoder().decode(Result.self, from: data)
-                return .success(SimulationResult(result: decodedResult))
-            }
-            // If SCValXDR has a method or computed property to get Data, use it here
-            if let dataConvertible = result as? CustomStringConvertible, let data = (dataConvertible.description).data(using: .utf8) {
-                let decodedResult: Result = try JSONDecoder().decode(Result.self, from: data)
-                return .success(SimulationResult(result: decodedResult))
-            }
-            // Otherwise, fail with error
-            return .failure(.invalidResponse("Could not convert SCValXDR to Data for decoding"))
+            // Use BlendParser to convert SCValXDR to target type
+            let decodedResult: Result = try parser.parseSimulationResult(result, as: Result.self)
+            return .success(SimulationResult(result: decodedResult))
+            
+        } catch let error as BlendParsingError {
+            BlendLogger.error("Simulation failed with BlendParsingError: \(error)", category: BlendLogger.network)
+            return .failure(.invalidResponse(error.localizedDescription))
         } catch let error as SorobanClientError {
             BlendLogger.error("Simulation failed with SorobanClientError: \(error)", category: BlendLogger.network)
             return .failure(.transactionFailed(error.localizedDescription))
@@ -251,8 +238,6 @@ public final class NetworkService: NetworkServiceProtocol {
         args: [SCValXDR],
         sourceKeyPair: KeyPair
     ) async throws -> SimulationResult<SCValXDR> {
-        BlendLogger.debug("Simulating contract function: \(functionName) on \(contractId) with args count: \(args.count)", category: BlendLogger.network)
-        
         do {
             // Create contract call parameters for the simulator
             let contractCall = ContractCallParams(
@@ -266,8 +251,6 @@ public final class NetworkService: NetworkServiceProtocol {
                 server: sorobanServer,
                 contractCall: contractCall
             )
-            
-            BlendLogger.debug("Simulation result for function \(functionName): \(String(describing: result))", category: BlendLogger.network)
             
             return SimulationResult(
                 result: result,
@@ -306,8 +289,6 @@ public final class NetworkService: NetworkServiceProtocol {
     /// - Returns: Dictionary mapping keys to corresponding XDR strings.
     /// - Throws: `BlendError.network(.serverError)` on RPC failure.
     public func getLedgerEntries(keys: [String]) async throws -> [String: Any] {
-        BlendLogger.debug("Getting ledger entries for \(keys.count) keys", category: BlendLogger.network)
-        
         struct GetLedgerEntriesParams: Encodable {
             let keys: [String]
         }
@@ -339,7 +320,6 @@ public final class NetworkService: NetworkServiceProtocol {
             }
         }
         
-        BlendLogger.debug("Got \(result.count) ledger entries", category: BlendLogger.network)
         return result
     }
     
@@ -348,8 +328,6 @@ public final class NetworkService: NetworkServiceProtocol {
     /// Checks network connectivity by performing a health check RPC call.
     /// - Returns: Current `ConnectionState`.
     public func checkConnectivity() async -> ConnectionState {
-        BlendLogger.debug("Checking connectivity", category: BlendLogger.network)
-        
         do {
             let request = try createDirectRPCRequest(method: "getHealth", params: EmptyParams())
             _ = try await performRequest(request)
@@ -384,16 +362,16 @@ public final class NetworkService: NetworkServiceProtocol {
     /// Sets up default logging interceptors for requests and responses.
     private func setupDefaultInterceptors() {
         addRequestInterceptor { request in
-            BlendLogger.debug("→ \(request.httpMethod ?? "?") \(request.url?.absoluteString ?? "?")", category: BlendLogger.network)
-            if let body = request.httpBody {
-                BlendLogger.debug("→ Body: \(body.count) bytes", category: BlendLogger.network)
+            // Minimal logging for critical requests only
+            if let url = request.url?.absoluteString, url.contains("health") {
+                BlendLogger.debug("→ Health check: \(request.httpMethod ?? "?")", category: BlendLogger.network)
             }
             return request
         }
         
         addResponseInterceptor { data, response in
-            if let httpResponse = response as? HTTPURLResponse {
-                BlendLogger.debug("← \(httpResponse.statusCode) \(data.count) bytes", category: BlendLogger.network)
+            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode >= 400 {
+                BlendLogger.error("← HTTP Error \(httpResponse.statusCode)", category: BlendLogger.network)
             }
         }
     }
@@ -545,8 +523,6 @@ extension NetworkService {
     /// - Warning: Deprecated. Prefer `getLedgerEntries(keys:) -> [String: Any]`.
     @available(*, deprecated, message: "Use getLedgerEntries(keys:) returning [String: Any]")
     public func getLedgerEntries(_ keys: [String]) async throws -> [Data] {
-        BlendLogger.debug("Fetching \(keys.count) legacy ledger entries", category: BlendLogger.network)
-        
         let request = GetLedgerEntriesRequest(keys: keys)
         let response = try await performDirectRPC("getLedgerEntries", params: request)
         
