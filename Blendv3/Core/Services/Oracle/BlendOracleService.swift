@@ -6,18 +6,7 @@ typealias Int128XDR = Int128PartsXDR
 
 // MARK: - Soroban Contract Operations
 
-/// Contract call parameters for real Soroban operations
-public struct ContractCallParams {
-    let contractId: String
-    let functionName: String
-    let functionArguments: [SCValXDR]
-    
-    public init(contractId: String, functionName: String, functionArguments: [SCValXDR]) {
-        self.contractId = contractId
-        self.functionName = functionName
-        self.functionArguments = functionArguments
-    }
-}
+
 
 /// Oracle service implementation with NetworkService integration
 public final class BlendOracleService {
@@ -44,12 +33,8 @@ public final class BlendOracleService {
     internal let rpcUrl = BlendConstants.RPC.testnet
     internal let network = Network.testnet
     
-    // Parsers
-    let optionalPriceDataParser = OptionalPriceDataParser()
-    let priceDataVectorParser = PriceDataVectorParser()
-    let assetVectorParser = AssetVectorParser()
-    let u32Parser = U32Parser()
-    let assetParser = AssetParser()
+    // Centralized parser
+    private let parser = BlendParser()
     
     let sourceKeyPair: KeyPair
     
@@ -80,9 +65,8 @@ public final class BlendOracleService {
         
         return try await withRetry(maxAttempts: self.maxRetries, delay: self.retryDelay) {
             do {
-                let decimals = try await self.oracleNetworkService.simulateAndParse(
+                let decimals = try await self.oracleNetworkService.simulateAndParseU32(
                     .decimals,
-                    using: self.u32Parser,
                     context: OracleParsingContext(functionName: "decimals")
                 )
                 return Int(decimals)

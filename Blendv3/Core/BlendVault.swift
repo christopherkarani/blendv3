@@ -25,9 +25,22 @@ class BlendVault {
     }
     
     func start() async {
-        let decimaps = try! await oracleService.getOracleDecimals()
+        let decimals = try! await oracleService.getOracleDecimals()
         let supportedAssets = try! await oracleService.getSupportedAssets()
-        print("Supported Assets count: ", supportedAssets)
+        let assetString: [String: String] = supportedAssets.reduce(into: [:]) { dict, asset in
+            if case .stellar(let contractAddress) = asset {
+                let value = BlendParser.getAssetSymbol(for: contractAddress)
+                dict[contractAddress] = value
+            }
+        }
+        
+      
+        
+        let prices = try! await oracleService.getPrices(assets: supportedAssets)
+        
+        let poolData = try! await poolService.fetchPoolConfig(contractId: BlendConstants.Testnet.xlmUsdcPool)
+        let backstop = try! await backstopService.getPoolData(pool: BlendConstants.Testnet.xlmUsdcPool)
+        print("backstop Data: ", poolData)
     }
 }
 
@@ -64,3 +77,4 @@ struct Start {
         
     }
 }
+

@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		9E1C104E2DFB08100081E56D /* BlendError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C104D2DFB08100081E56D /* BlendError.swift */; };
 		9E1C10542DFB0C800081E56D /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C10532DFB0C800081E56D /* Logger.swift */; };
+		9E1C12362DFB2F950081E56D /* ContractCallParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C12352DFB2F950081E56D /* ContractCallParams.swift */; };
+		9E1C123D2DFB33980081E56D /* BlendParsingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C12392DFB33980081E56D /* BlendParsingError.swift */; };
+		9E1C123E2DFB33980081E56D /* SCValXDRExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C123A2DFB33980081E56D /* SCValXDRExtensions.swift */; };
+		9E1C123F2DFB33980081E56D /* SCValXDRParsingDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C123B2DFB33980081E56D /* SCValXDRParsingDemo.swift */; };
+		9E1C12402DFB33980081E56D /* BlendParsingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C12382DFB33980081E56D /* BlendParsingContext.swift */; };
+		9E1C12412DFB33980081E56D /* BlendParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C12372DFB33980081E56D /* BlendParser.swift */; };
+		9E1C12452DFB33A70081E56D /* SimulateTransactionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C12442DFB33A70081E56D /* SimulateTransactionResult.swift */; };
+		9E1C12462DFB33A70081E56D /* SimulateHostFunctionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C12422DFB33A70081E56D /* SimulateHostFunctionResult.swift */; };
+		9E1C12472DFB33A70081E56D /* SimulateTransactionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C12432DFB33A70081E56D /* SimulateTransactionResponse.swift */; };
 		9E7C24272DEAAAB5007C181D /* BlendFinancialCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C24262DEAAAB5007C181D /* BlendFinancialCalculator.swift */; };
 		9E7C24372DEAAE0D007C181D /* BackstopContractService+Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C242B2DEAAE0D007C181D /* BackstopContractService+Functions.swift */; };
 		9E7C24382DEAAE0D007C181D /* BackstopContractServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C24312DEAAE0D007C181D /* BackstopContractServiceProtocol.swift */; };
@@ -28,7 +37,6 @@
 		9EA449D22DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */; };
 		9EAD3EED2DF7BDF600029CE7 /* SorobanTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */; };
 		9EAD3EF22DF7D1F000029CE7 /* OracleContractFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD3EEE2DF7D1F000029CE7 /* OracleContractFunction.swift */; };
-		9EAD3EF32DF7D1F000029CE7 /* OracleResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD3EF02DF7D1F000029CE7 /* OracleResponseParser.swift */; };
 		9EAD3EF42DF7D1F000029CE7 /* OracleNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD3EEF2DF7D1F000029CE7 /* OracleNetworkService.swift */; };
 		9EAD3EF62DF7D31400029CE7 /* NetworkServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD3EF52DF7D31400029CE7 /* NetworkServiceProtocol.swift */; };
 		9ECC79BA2DDFF32A00530B03 /* stellarsdk in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECC79B92DDFF32A00530B03 /* stellarsdk */; };
@@ -66,7 +74,7 @@
 		9EDE65152DE729DD00B63E09 /* SorobanTransactionSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */; };
 		9EDE651F2DE773DB00B63E09 /* PoolService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE651E2DE773DB00B63E09 /* PoolService.swift */; };
 		9EDE65212DE9220B00B63E09 /* BlendAssetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65202DE9220B00B63E09 /* BlendAssetData.swift */; };
-		9EDE65232DE9225900B63E09 /* BlendParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65222DE9225400B63E09 /* BlendParser.swift */; };
+		9EDE65232DE9225900B63E09 /* BlendParser1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65222DE9225400B63E09 /* BlendParser1.swift */; };
 		9EDE65252DE9246700B63E09 /* BlendAssetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65242DE9246000B63E09 /* BlendAssetService.swift */; };
 		9EDE65272DE9338D00B63E09 /* PoolServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65262DE9338D00B63E09 /* PoolServiceProtocol.swift */; };
 /* End PBXBuildFile section */
@@ -91,6 +99,15 @@
 /* Begin PBXFileReference section */
 		9E1C104D2DFB08100081E56D /* BlendError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendError.swift; sourceTree = "<group>"; };
 		9E1C10532DFB0C800081E56D /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		9E1C12352DFB2F950081E56D /* ContractCallParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractCallParams.swift; sourceTree = "<group>"; };
+		9E1C12372DFB33980081E56D /* BlendParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendParser.swift; sourceTree = "<group>"; };
+		9E1C12382DFB33980081E56D /* BlendParsingContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendParsingContext.swift; sourceTree = "<group>"; };
+		9E1C12392DFB33980081E56D /* BlendParsingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendParsingError.swift; sourceTree = "<group>"; };
+		9E1C123A2DFB33980081E56D /* SCValXDRExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCValXDRExtensions.swift; sourceTree = "<group>"; };
+		9E1C123B2DFB33980081E56D /* SCValXDRParsingDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCValXDRParsingDemo.swift; sourceTree = "<group>"; };
+		9E1C12422DFB33A70081E56D /* SimulateHostFunctionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulateHostFunctionResult.swift; sourceTree = "<group>"; };
+		9E1C12432DFB33A70081E56D /* SimulateTransactionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulateTransactionResponse.swift; sourceTree = "<group>"; };
+		9E1C12442DFB33A70081E56D /* SimulateTransactionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulateTransactionResult.swift; sourceTree = "<group>"; };
 		9E7C24262DEAAAB5007C181D /* BlendFinancialCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendFinancialCalculator.swift; sourceTree = "<group>"; };
 		9E7C242B2DEAAE0D007C181D /* BackstopContractService+Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackstopContractService+Functions.swift"; sourceTree = "<group>"; };
 		9E7C242C2DEAAE0D007C181D /* BackstopContractService+Parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackstopContractService+Parsing.swift"; sourceTree = "<group>"; };
@@ -110,7 +127,6 @@
 		9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SorobanTypes.swift; sourceTree = "<group>"; };
 		9EAD3EEE2DF7D1F000029CE7 /* OracleContractFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OracleContractFunction.swift; sourceTree = "<group>"; };
 		9EAD3EEF2DF7D1F000029CE7 /* OracleNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OracleNetworkService.swift; sourceTree = "<group>"; };
-		9EAD3EF02DF7D1F000029CE7 /* OracleResponseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OracleResponseParser.swift; sourceTree = "<group>"; };
 		9EAD3EF52DF7D31400029CE7 /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
 		9ED8DAA92DE5240300CB0059 /* blend_protocol_technical_analysis.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = blend_protocol_technical_analysis.md; sourceTree = "<group>"; };
 		9ED8DAAC2DE5240300CB0059 /* BlendApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendApp.swift; sourceTree = "<group>"; };
@@ -146,7 +162,7 @@
 		9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SorobanTransactionSimulator.swift; sourceTree = "<group>"; };
 		9EDE651E2DE773DB00B63E09 /* PoolService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoolService.swift; sourceTree = "<group>"; };
 		9EDE65202DE9220B00B63E09 /* BlendAssetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendAssetData.swift; sourceTree = "<group>"; };
-		9EDE65222DE9225400B63E09 /* BlendParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendParser.swift; sourceTree = "<group>"; };
+		9EDE65222DE9225400B63E09 /* BlendParser1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendParser1.swift; sourceTree = "<group>"; };
 		9EDE65242DE9246000B63E09 /* BlendAssetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendAssetService.swift; sourceTree = "<group>"; };
 		9EDE65262DE9338D00B63E09 /* PoolServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoolServiceProtocol.swift; sourceTree = "<group>"; };
 		9EE4A0E92DDFB939004BD597 /* Blendv3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blendv3.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -260,6 +276,37 @@
 			path = Cache;
 			sourceTree = "<group>";
 		};
+		9E1C12342DFB2F900081E56D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9E1C12352DFB2F950081E56D /* ContractCallParams.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9E1C123C2DFB33980081E56D /* Parsing */ = {
+			isa = PBXGroup;
+			children = (
+				9E1C12482DFB33AB0081E56D /* Models */,
+				9E1C12422DFB33A70081E56D /* SimulateHostFunctionResult.swift */,
+				9E1C12432DFB33A70081E56D /* SimulateTransactionResponse.swift */,
+				9E1C12442DFB33A70081E56D /* SimulateTransactionResult.swift */,
+				9E1C12372DFB33980081E56D /* BlendParser.swift */,
+				9E1C12382DFB33980081E56D /* BlendParsingContext.swift */,
+				9E1C12392DFB33980081E56D /* BlendParsingError.swift */,
+				9E1C123A2DFB33980081E56D /* SCValXDRExtensions.swift */,
+				9E1C123B2DFB33980081E56D /* SCValXDRParsingDemo.swift */,
+			);
+			path = Parsing;
+			sourceTree = "<group>";
+		};
+		9E1C12482DFB33AB0081E56D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		9E7C242E2DEAAE0D007C181D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -326,6 +373,7 @@
 		9E9781B12DE68F7F009333AD /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				9E1C123C2DFB33980081E56D /* Parsing */,
 				9ED8DB592DE5434300CB0059 /* Utilities */,
 				9E9781AF2DE68F7F009333AD /* Services */,
 				9E9781B02DE68F7F009333AD /* BlendVault.swift */,
@@ -379,11 +427,11 @@
 		9EAD3EF12DF7D1F000029CE7 /* Oracle */ = {
 			isa = PBXGroup;
 			children = (
+				9E1C12342DFB2F900081E56D /* Models */,
 				9ED8DAB02DE5240300CB0059 /* BlendOracleServiceProtocol.swift */,
 				9ED8DAAF2DE5240300CB0059 /* BlendOracleService.swift */,
 				9EAD3EEE2DF7D1F000029CE7 /* OracleContractFunction.swift */,
 				9EAD3EEF2DF7D1F000029CE7 /* OracleNetworkService.swift */,
-				9EAD3EF02DF7D1F000029CE7 /* OracleResponseParser.swift */,
 			);
 			path = Oracle;
 			sourceTree = "<group>";
@@ -426,7 +474,7 @@
 				9E1C104D2DFB08100081E56D /* BlendError.swift */,
 				9E93884F2DF353730015BE14 /* BlendVaultError.swift */,
 				9E7C24262DEAAAB5007C181D /* BlendFinancialCalculator.swift */,
-				9EDE65222DE9225400B63E09 /* BlendParser.swift */,
+				9EDE65222DE9225400B63E09 /* BlendParser1.swift */,
 				9ED8DB662DE54FCA00CB0059 /* StellarContractID.swift */,
 				9ED8DAC52DE5240300CB0059 /* FixedMath.swift */,
 				9ED8DAB32DE5240300CB0059 /* BlendRateCalculator.swift */,
@@ -630,7 +678,7 @@
 			files = (
 				9ED8DAF32DE5240300CB0059 /* BlendOracleService.swift in Sources */,
 				9EDE64F92DE7035400B63E09 /* PriceData.swift in Sources */,
-				9EDE65232DE9225900B63E09 /* BlendParser.swift in Sources */,
+				9EDE65232DE9225900B63E09 /* BlendParser1.swift in Sources */,
 				9ED8DAF62DE5240300CB0059 /* NetworkService.swift in Sources */,
 				9EDE651F2DE773DB00B63E09 /* PoolService.swift in Sources */,
 				9EDE65272DE9338D00B63E09 /* PoolServiceProtocol.swift in Sources */,
@@ -640,7 +688,6 @@
 				9ED8DAFD2DE5240300CB0059 /* CacheService.swift in Sources */,
 				9ED8DAFE2DE5240300CB0059 /* DebugLogView.swift in Sources */,
 				9EAD3EF22DF7D1F000029CE7 /* OracleContractFunction.swift in Sources */,
-				9EAD3EF32DF7D1F000029CE7 /* OracleResponseParser.swift in Sources */,
 				9EAD3EF42DF7D1F000029CE7 /* OracleNetworkService.swift in Sources */,
 				9ED8DB672DE54FCA00CB0059 /* StellarContractID.swift in Sources */,
 				9E97819E2DE68E6C009333AD /* RetryConfiguration.swift in Sources */,
@@ -648,15 +695,24 @@
 				9E9781B22DE68F7F009333AD /* BlendVault.swift in Sources */,
 				9EDE64FF2DE703A100B63E09 /* AssetPosition.swift in Sources */,
 				9EA449D02DF0FF3C00F6CC6D /* UserPositionService.swift in Sources */,
+				9E1C12362DFB2F950081E56D /* ContractCallParams.swift in Sources */,
 				9EA449D12DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift in Sources */,
 				9EA449D22DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift in Sources */,
 				9E7C24372DEAAE0D007C181D /* BackstopContractService+Functions.swift in Sources */,
 				9E7C24382DEAAE0D007C181D /* BackstopContractServiceProtocol.swift in Sources */,
+				9E1C12452DFB33A70081E56D /* SimulateTransactionResult.swift in Sources */,
+				9E1C12462DFB33A70081E56D /* SimulateHostFunctionResult.swift in Sources */,
+				9E1C12472DFB33A70081E56D /* SimulateTransactionResponse.swift in Sources */,
 				9E7C24392DEAAE0D007C181D /* BackstopContractService+Parsing.swift in Sources */,
 				9E7C243A2DEAAE0D007C181D /* BackstopContractService+Utils.swift in Sources */,
 				9E7C243B2DEAAE0D007C181D /* BackstopContractService.swift in Sources */,
 				9E7C243C2DEAAE0D007C181D /* BackstopModels.swift in Sources */,
 				9E9388502DF353730015BE14 /* BlendVaultError.swift in Sources */,
+				9E1C123D2DFB33980081E56D /* BlendParsingError.swift in Sources */,
+				9E1C123E2DFB33980081E56D /* SCValXDRExtensions.swift in Sources */,
+				9E1C123F2DFB33980081E56D /* SCValXDRParsingDemo.swift in Sources */,
+				9E1C12402DFB33980081E56D /* BlendParsingContext.swift in Sources */,
+				9E1C12412DFB33980081E56D /* BlendParser.swift in Sources */,
 				9E9781A42DE68E6C009333AD /* TimeoutConfiguration.swift in Sources */,
 				9ED8DB652DE5458200CB0059 /* InterestRateConfig.swift in Sources */,
 				9EDE64FD2DE7038C00B63E09 /* PoolConfig.swift in Sources */,

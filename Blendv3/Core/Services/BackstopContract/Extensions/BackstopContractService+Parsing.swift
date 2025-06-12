@@ -142,7 +142,7 @@ extension BackstopContractService {
         var tokens: Int128?
         var usdc: Int128?
         
-        debugLogger.debug("🛡️ 🔍 Parsing PoolBackstopData from \(map.count) map entries")
+        // Parsing PoolBackstopData - reduced logging
         
         for pair in map {
             guard case .symbol(let key) = pair.key else { continue }
@@ -153,45 +153,40 @@ extension BackstopContractService {
                     throw BackstopError.parsingError("PoolBackstopData.blnd", expectedType: "i128", actualType: String(describing: type(of: pair.val)))
                 }
                 blnd = convertI128PartsToInt128(blndValue)
-                debugLogger.debug("🛡️ 📊 Parsed blnd: \(blnd!)")
+                // Successfully parsed blnd value
                 
             case "q4w_pct":
                 guard case .i128(let q4wValue) = pair.val else {
                     throw BackstopError.parsingError("PoolBackstopData.q4w_pct", expectedType: "i128", actualType: String(describing: type(of: pair.val)))
                 }
                 q4wPct = convertI128PartsToInt128(q4wValue)
-                debugLogger.debug("🛡️ 📊 Parsed q4w_pct: \(q4wPct!)")
                 
             case "shares":
                 guard case .i128(let sharesValue) = pair.val else {
                     throw BackstopError.parsingError("PoolBackstopData.shares", expectedType: "i128", actualType: String(describing: type(of: pair.val)))
                 }
                 shares = convertI128PartsToInt128(sharesValue)
-                debugLogger.debug("🛡️ 📊 Parsed shares: \(shares!)")
                 
             case "token_spot_price":
                 guard case .i128(let spotPriceValue) = pair.val else {
                     throw BackstopError.parsingError("PoolBackstopData.token_spot_price", expectedType: "i128", actualType: String(describing: type(of: pair.val)))
                 }
                 tokenSpotPrice = convertI128PartsToInt128(spotPriceValue)
-                debugLogger.debug("🛡️ 📊 Parsed token_spot_price: \(tokenSpotPrice!)")
                 
             case "tokens":
                 guard case .i128(let tokensValue) = pair.val else {
                     throw BackstopError.parsingError("PoolBackstopData.tokens", expectedType: "i128", actualType: String(describing: type(of: pair.val)))
                 }
                 tokens = convertI128PartsToInt128(tokensValue)
-                debugLogger.debug("🛡️ 📊 Parsed tokens: \(tokens!)")
                 
             case "usdc":
                 guard case .i128(let usdcValue) = pair.val else {
                     throw BackstopError.parsingError("PoolBackstopData.usdc", expectedType: "i128", actualType: String(describing: type(of: pair.val)))
                 }
                 usdc = convertI128PartsToInt128(usdcValue)
-                debugLogger.debug("🛡️ 📊 Parsed usdc: \(usdc!)")
                 
             default:
-                debugLogger.debug("🛡️ ⚠️ Unknown field in PoolBackstopData: \(key)")
+                // Skip unknown fields (reduced logging)
                 continue
             }
         }
@@ -205,8 +200,6 @@ extension BackstopContractService {
             tokens: tokens ?? 0,
             usdc: usdc ?? 0
         )
-        
-        debugLogger.debug("🛡️ ✅ Final PoolBackstopData: blnd=\(result.blnd), q4w=\(result.q4wPercent), tokens=\(result.tokens), usdc=\(result.usdc)")
         
         return result
     }

@@ -122,10 +122,9 @@ extension BlendOracleService: BlendOracleServiceProtocol {
                 additionalInfo: ["timestamp": timestamp]
             )
             
-            return try await self.oracleNetworkService.simulateAndParse(
+            return try await self.oracleNetworkService.simulateAndParseOptionalPriceData(
                 .price,
                 arguments: [assetParam, timestampParam],
-                using: self.optionalPriceDataParser,
                 context: context
             )
         }
@@ -147,10 +146,9 @@ extension BlendOracleService: BlendOracleServiceProtocol {
                 additionalInfo: ["records": records]
             )
             
-            return try await self.oracleNetworkService.simulateAndParse(
+            return try await self.oracleNetworkService.simulateAndParsePriceDataVector(
                 .prices,
                 arguments: [assetParam, recordsParam],
-                using: self.priceDataVectorParser,
                 context: context
             )
         }
@@ -169,10 +167,9 @@ extension BlendOracleService: BlendOracleServiceProtocol {
                 functionName: "lastprice"
             )
             
-            return try await self.oracleNetworkService.simulateAndParse(
+            return try await self.oracleNetworkService.simulateAndParseOptionalPriceData(
                 .lastPrice,
                 arguments: [assetParam],
-                using: self.optionalPriceDataParser,
                 context: context
             )
         }
@@ -192,10 +189,8 @@ extension BlendOracleService: BlendOracleServiceProtocol {
         return try await measurePerformance(operation: "getBaseAsset", category: BlendLogger.oracle) {
             let context = OracleParsingContext(functionName: "base")
             
-            let asset = try await self.oracleNetworkService.simulateAndParse(
-                .base,
-                using: self.assetParser,
-                context: context
+            let asset = try await self.oracleNetworkService.simulateAndParseAsset(
+                .base
             )
             
             // Cache the result
@@ -222,10 +217,8 @@ extension BlendOracleService: BlendOracleServiceProtocol {
         return await measurePerformance(operation: "getSupportedAssets", category: BlendLogger.oracle) {
             let context = OracleParsingContext(functionName: "assets")
             
-            let oracleAssets = try! await self.oracleNetworkService.simulateAndParse(
-                .assets,
-                using: self.assetVectorParser,
-                context: context
+            let oracleAssets = try! await self.oracleNetworkService.simulateAndParseAssetVector(
+                .assets
             )
             
             // Cache the result
@@ -242,9 +235,8 @@ extension BlendOracleService: BlendOracleServiceProtocol {
         return try await withRetry(maxAttempts: self.maxRetries, delay: self.retryDelay) {
             let context = OracleParsingContext(functionName: "resolution")
             
-            let resolution = try await self.oracleNetworkService.simulateAndParse(
+            let resolution = try await self.oracleNetworkService.simulateAndParseU32(
                 .resolution,
-                using: self.u32Parser,
                 context: context
             )
             

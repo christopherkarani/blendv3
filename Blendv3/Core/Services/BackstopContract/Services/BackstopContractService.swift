@@ -182,11 +182,11 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
                 contractId: self.config.contractAddress,
                 functionName: "pool_data",
                 functionArguments: [
-                    try self.createAddressParameter(pool)
+                    try! self.createAddressParameter(pool)
                 ]
             )
             
-            let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
+            let response = try! await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
             dump(response)
             return try self.parsePoolBackstopDataResponse(response)
         }
