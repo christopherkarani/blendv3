@@ -49,6 +49,11 @@ class BlendVault {
         let poolData = try! await poolService.fetchPoolConfig(contractId: BlendConstants.Testnet.xlmUsdcPool)
         let backstop = try! await backstopService.getPoolData(pool: )
         let assetService = BlendAssetService(poolID: BlendConstants.Testnet.xlmUsdcPool, networkService: networkService)
+        
+        let assets = try! await assetService.getAssets()
+        let assetData = try! await assetService.getAll(assets: assets)
+        
+        print("Asset Data: ", assetData)
     }
 }
 

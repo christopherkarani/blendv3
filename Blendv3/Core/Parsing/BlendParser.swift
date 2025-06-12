@@ -90,10 +90,20 @@ public final class BlendParser: @unchecked Sendable {
         let high = i128.hi
         let low = i128.lo
 
-        // Combine high and low parts to form the full 128-bit value
-        let fullValue = (Int64(high) << 64) | Int64(low)
-
-        return Decimal(fullValue)
+        // Handle different cases to avoid overflow
+        if high == 0 {
+            // Simple case: only low 64 bits are used
+            return Decimal(low)
+        } else if high == -1 && (low & 0x8000000000000000) != 0 {
+            // Negative number in two's complement
+            let signedLow = Int64(bitPattern: low)
+            return Decimal(signedLow)
+        } else {
+            // Large number: combine hi and lo parts using Decimal arithmetic
+            let highDecimal = Decimal(high) * Decimal(sign: .plus, exponent: 64, significand: 1)
+            let lowDecimal = Decimal(low)
+            return highDecimal + lowDecimal
+        }
     }
 
     /// Parse SCValXDR to Decimal
