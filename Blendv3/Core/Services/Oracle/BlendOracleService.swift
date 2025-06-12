@@ -40,8 +40,8 @@ public final class BlendOracleService {
     internal let retryDelay: TimeInterval = 1.0
     
     // Oracle contract configuration
-    internal let oracleAddress = BlendUSDCConstants.Testnet.oracle
-    internal let rpcUrl = BlendUSDCConstants.RPC.testnet
+    internal let oracleAddress = BlendConstants.Testnet.oracle
+    internal let rpcUrl = BlendConstants.RPC.testnet
     internal let network = Network.testnet
     
     // Parsers
@@ -59,7 +59,7 @@ public final class BlendOracleService {
         self.networkService = networkService
         self.oracleNetworkService = OracleNetworkService(
             networkService: networkService,
-            contractId: BlendUSDCConstants.Testnet.oracle
+            contractId: BlendConstants.Testnet.oracle
         )
         
         debugLogger.info("🔮 Oracle service initialized with NetworkService integration")

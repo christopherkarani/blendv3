@@ -290,8 +290,8 @@ extension BackstopContractService {
     /// Create service configuration for testnet
     public static func testnetConfig() -> BackstopServiceConfig {
         return BackstopServiceConfig(
-            contractAddress: BlendUSDCConstants.Testnet.backstop,
-            rpcUrl: BlendUSDCConstants.RPC.testnet,
+            contractAddress: BlendConstants.Testnet.backstop,
+            rpcUrl: BlendConstants.RPC.testnet,
             network: .testnet
         )
     }
@@ -299,8 +299,8 @@ extension BackstopContractService {
     /// Create service configuration for mainnet
     public static func mainnetConfig() -> BackstopServiceConfig {
         return BackstopServiceConfig(
-            contractAddress: BlendUSDCConstants.Mainnet.backstop,
-            rpcUrl: BlendUSDCConstants.RPC.mainnet,
+            contractAddress: BlendConstants.Mainnet.backstop,
+            rpcUrl: BlendConstants.RPC.mainnet,
             network: .public
         )
     }

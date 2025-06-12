@@ -224,52 +224,6 @@
             endingLineNumber = "347"
             landmarkName = "executeSimulationRequest(server:transaction:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "C85605B4-B01B-4F1A-A951-03E77762C466 - 728604a621718304"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Blendv3.SorobanTransactionSimulator.executeSimulationRequest(server: stellarsdk.SorobanServer, transaction: stellarsdk.Transaction) async throws -&gt; Blendv3.SimulateTransactionResponse"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Services/SorobanTransactionSimulator.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "347"
-                  endingLineNumber = "347">
-               </Location>
-               <Location
-                  uuid = "C85605B4-B01B-4F1A-A951-03E77762C466 - 728604a621718304"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Blendv3.SorobanTransactionSimulator.executeSimulationRequest(server: stellarsdk.SorobanServer, transaction: stellarsdk.Transaction) async throws -&gt; Blendv3.SimulateTransactionResponse"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Services/SorobanTransactionSimulator.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "347"
-                  endingLineNumber = "347">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8F397EB8-19BA-42D5-871E-71B3796A67E3"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blendv3/Core/BlendVault.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "unknown"
-            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -300,8 +254,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "322"
             endingLineNumber = "322"
-            landmarkName = "initializeSorobanClient()"
-            landmarkType = "7">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -319,36 +273,6 @@
             endingLineNumber = "199"
             landmarkName = "getLastPrice(asset:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "D810A62A-B26E-4CE1-9CA9-984F1D6218AD - a121493a3be9652f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Blendv3.BlendOracleService.getLastPrice(asset: Blendv3.OracleAsset) async throws -&gt; Swift.Optional&lt;Blendv3.PriceData&gt;"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Protocols/BlendOracleServiceProtocol.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "199"
-                  endingLineNumber = "199">
-               </Location>
-               <Location
-                  uuid = "D810A62A-B26E-4CE1-9CA9-984F1D6218AD - 858d11ff3445ed9b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for Blendv3.BlendOracleService.getLastPrice(asset: Blendv3.OracleAsset) async throws -&gt; Swift.Optional&lt;Blendv3.PriceData&gt;"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Protocols/BlendOracleServiceProtocol.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "199"
-                  endingLineNumber = "199">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -365,50 +289,6 @@
             endingLineNumber = "202"
             landmarkName = "getLastPrice(asset:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "1972324F-54AE-4DDB-B1AA-7009B90662DA - 858d11ff3445ed27"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for Blendv3.BlendOracleService.getLastPrice(asset: Blendv3.OracleAsset) async throws -&gt; Swift.Optional&lt;Blendv3.PriceData&gt;"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Protocols/BlendOracleServiceProtocol.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "203"
-                  endingLineNumber = "203">
-               </Location>
-               <Location
-                  uuid = "1972324F-54AE-4DDB-B1AA-7009B90662DA - 10134542aa6c2925"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Blendv3.BlendOracleService.getLastPrice(asset: Blendv3.OracleAsset) async throws -&gt; Swift.Optional&lt;Blendv3.PriceData&gt;"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Protocols/BlendOracleServiceProtocol.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "203"
-                  endingLineNumber = "203">
-               </Location>
-               <Location
-                  uuid = "1972324F-54AE-4DDB-B1AA-7009B90662DA - a65a53709f838724"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for Blendv3.BlendOracleService.getLastPrice(asset: Blendv3.OracleAsset) async throws -&gt; Swift.Optional&lt;Blendv3.PriceData&gt;"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Protocols/BlendOracleServiceProtocol.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "203"
-                  endingLineNumber = "203">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -441,36 +321,6 @@
             endingLineNumber = "268"
             landmarkName = "unknown"
             landmarkType = "0">
-            <Locations>
-               <Location
-                  uuid = "D454DFC9-0487-4E63-8992-CE93EB3D4A26 - 647d22ce1d67141a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Blendv3.UserPositionService.fetchUserPositionsFromContract(userId: Swift.String) async throws -&gt; Swift.Array&lt;Blendv3.AssetPosition&gt;"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/UserPosition/UserPositionService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "270"
-                  endingLineNumber = "270">
-               </Location>
-               <Location
-                  uuid = "D454DFC9-0487-4E63-8992-CE93EB3D4A26 - 647d22ce1d67141a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Blendv3.UserPositionService.fetchUserPositionsFromContract(userId: Swift.String) async throws -&gt; Swift.Array&lt;Blendv3.AssetPosition&gt;"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/UserPosition/UserPositionService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "270"
-                  endingLineNumber = "270">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -487,50 +337,6 @@
             endingLineNumber = "138"
             landmarkName = "unknown"
             landmarkType = "0">
-            <Locations>
-               <Location
-                  uuid = "CC228B46-8353-4F18-8CE2-7550A0EE1900 - e0f01f5958966ae2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for Blendv3.UserPositionService.fetchUserAssetPositions(userId: Swift.String) async -&gt; Swift.Result&lt;Swift.Array&lt;Blendv3.AssetPosition&gt;, Blendv3.BlendError&gt;"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/UserPosition/UserPositionService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "142"
-                  endingLineNumber = "142">
-               </Location>
-               <Location
-                  uuid = "CC228B46-8353-4F18-8CE2-7550A0EE1900 - 69141add7186d83"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(2) await resume partial function for Blendv3.UserPositionService.fetchUserAssetPositions(userId: Swift.String) async -&gt; Swift.Result&lt;Swift.Array&lt;Blendv3.AssetPosition&gt;, Blendv3.BlendError&gt;"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/UserPosition/UserPositionService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "142"
-                  endingLineNumber = "142">
-               </Location>
-               <Location
-                  uuid = "CC228B46-8353-4F18-8CE2-7550A0EE1900 - 3554c2bee27d26fc"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Blendv3.UserPositionService.fetchUserAssetPositions(userId: Swift.String) async -&gt; Swift.Result&lt;Swift.Array&lt;Blendv3.AssetPosition&gt;, Blendv3.BlendError&gt;"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/UserPosition/UserPositionService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "142"
-                  endingLineNumber = "142">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

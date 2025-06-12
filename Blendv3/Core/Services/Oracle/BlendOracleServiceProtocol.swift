@@ -258,11 +258,11 @@ extension BlendOracleService {
     
     private func getAssetSymbol(for address: String) -> String {
         let assetMapping = [
-            BlendUSDCConstants.Testnet.usdc: "USDC",
-            BlendUSDCConstants.Testnet.xlm: "XLM",
-            BlendUSDCConstants.Testnet.blnd: "BLND",
-            BlendUSDCConstants.Testnet.weth: "wETH",
-            BlendUSDCConstants.Testnet.wbtc: "wBTC"
+            BlendConstants.Testnet.usdc: "USDC",
+            BlendConstants.Testnet.xlm: "XLM",
+            BlendConstants.Testnet.blnd: "BLND",
+            BlendConstants.Testnet.weth: "wETH",
+            BlendConstants.Testnet.wbtc: "wBTC"
         ]
         return assetMapping[address] ?? address
     }
