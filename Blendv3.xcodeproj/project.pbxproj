@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E1C104E2DFB08100081E56D /* BlendError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C104D2DFB08100081E56D /* BlendError.swift */; };
+		9E1C10542DFB0C800081E56D /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C10532DFB0C800081E56D /* Logger.swift */; };
 		9E7C24272DEAAAB5007C181D /* BlendFinancialCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C24262DEAAAB5007C181D /* BlendFinancialCalculator.swift */; };
 		9E7C24372DEAAE0D007C181D /* BackstopContractService+Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C242B2DEAAE0D007C181D /* BackstopContractService+Functions.swift */; };
 		9E7C24382DEAAE0D007C181D /* BackstopContractServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C24312DEAAE0D007C181D /* BackstopContractServiceProtocol.swift */; };
@@ -18,31 +20,9 @@
 		9E93884E2DF3519B0015BE14 /* CacheServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93884D2DF3519B0015BE14 /* CacheServiceProtocol.swift */; };
 		9E9388502DF353730015BE14 /* BlendVaultError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E93884F2DF353730015BE14 /* BlendVaultError.swift */; };
 		9E9388532DF745190015BE14 /* stellarsdk in Frameworks */ = {isa = PBXBuildFile; productRef = 9E9388522DF745190015BE14 /* stellarsdk */; };
-		9E97817E2DE68D98009333AD /* BatchingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E97817D2DE68D98009333AD /* BatchingService.swift */; };
-		9E9781842DE68DF2009333AD /* BlendServiceProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781832DE68DF2009333AD /* BlendServiceProtocols.swift */; };
-		9E97819A2DE68E6C009333AD /* NetworkEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781922DE68E6C009333AD /* NetworkEvent.swift */; };
-		9E97819B2DE68E6C009333AD /* MethodOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781962DE68E6C009333AD /* MethodOptions.swift */; };
-		9E97819C2DE68E6C009333AD /* ContractAddresses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781852DE68E6C009333AD /* ContractAddresses.swift */; };
-		9E97819D2DE68E6C009333AD /* PerformanceMetrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E97818C2DE68E6C009333AD /* PerformanceMetrics.swift */; };
 		9E97819E2DE68E6C009333AD /* RetryConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781932DE68E6C009333AD /* RetryConfiguration.swift */; };
-		9E97819F2DE68E6C009333AD /* TransactionEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781972DE68E6C009333AD /* TransactionEvent.swift */; };
-		9E9781A02DE68E6C009333AD /* ReserveData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781872DE68E6C009333AD /* ReserveData.swift */; };
-		9E9781A12DE68E6C009333AD /* MigrationValidationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E97818F2DE68E6C009333AD /* MigrationValidationResult.swift */; };
-		9E9781A22DE68E6C009333AD /* ConnectionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781912DE68E6C009333AD /* ConnectionState.swift */; };
-		9E9781A32DE68E6C009333AD /* HealthIssue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E97818B2DE68E6C009333AD /* HealthIssue.swift */; };
 		9E9781A42DE68E6C009333AD /* TimeoutConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781942DE68E6C009333AD /* TimeoutConfiguration.swift */; };
-		9E9781A52DE68E6C009333AD /* MigrationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E97818E2DE68E6C009333AD /* MigrationEvent.swift */; };
-		9E9781A62DE68E6C009333AD /* VaultInitState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781882DE68E6C009333AD /* VaultInitState.swift */; };
-		9E9781A72DE68E6C009333AD /* HealthCheckResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E97818A2DE68E6C009333AD /* HealthCheckResult.swift */; };
 		9E9781B22DE68F7F009333AD /* BlendVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781B02DE68F7F009333AD /* BlendVault.swift */; };
-		9E9781B32DE68F7F009333AD /* TransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781AD2DE68F7F009333AD /* TransactionService.swift */; };
-		9E9781B42DE68F7F009333AD /* StateManagementService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781AC2DE68F7F009333AD /* StateManagementService.swift */; };
-		9E9781B52DE68F7F009333AD /* ErrorBoundaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781AB2DE68F7F009333AD /* ErrorBoundaryService.swift */; };
-		9E9781B62DE68F7F009333AD /* ValidationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781AE2DE68F7F009333AD /* ValidationService.swift */; };
-		9E9781B72DE68F7F009333AD /* ConfigurationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781A92DE68F7F009333AD /* ConfigurationService.swift */; };
-		9E9781B82DE68F7F009333AD /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781AA2DE68F7F009333AD /* DataService.swift */; };
-		9E9781B92DE68F7F009333AD /* BlendPoolDiagnosticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781A82DE68F7F009333AD /* BlendPoolDiagnosticsService.swift */; };
-		9E9781BB2DE6900E009333AD /* ServiceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781BA2DE6900E009333AD /* ServiceModels.swift */; };
 		9EA449D02DF0FF3C00F6CC6D /* UserPositionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CC2DF0FF3C00F6CC6D /* UserPositionService.swift */; };
 		9EA449D12DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CD2DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift */; };
 		9EA449D22DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */; };
@@ -58,21 +38,10 @@
 		9ED8DAFA2DE5240300CB0059 /* BlendApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAAC2DE5240300CB0059 /* BlendApp.swift */; };
 		9ED8DAFD2DE5240300CB0059 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DABB2DE5240300CB0059 /* CacheService.swift */; };
 		9ED8DAFE2DE5240300CB0059 /* DebugLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DABE2DE5240300CB0059 /* DebugLogView.swift */; };
-		9ED8DB032DE5240300CB0059 /* KeyPairSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC72DE5240300CB0059 /* KeyPairSigner.swift */; };
-		9ED8DB052DE5240300CB0059 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DABF2DE5240300CB0059 /* DependencyContainer.swift */; };
-		9ED8DB072DE5240300CB0059 /* ReactiveRateModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAD52DE5240300CB0059 /* ReactiveRateModifier.swift */; };
-		9ED8DB0A2DE5240300CB0059 /* BlendUSDCVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB82DE5240300CB0059 /* BlendUSDCVault.swift */; };
 		9ED8DB0D2DE5240300CB0059 /* BlendRateCalculatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB42DE5240300CB0059 /* BlendRateCalculatorProtocol.swift */; };
 		9ED8DB0E2DE5240300CB0059 /* FixedMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC52DE5240300CB0059 /* FixedMath.swift */; };
-		9ED8DB0F2DE5240300CB0059 /* PoolViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DACE2DE5240300CB0059 /* PoolViewModel.swift */; };
-		9ED8DB142DE5240300CB0059 /* BlendSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB52DE5240300CB0059 /* BlendSigner.swift */; };
-		9ED8DB152DE5240300CB0059 /* EnhancedBlendRateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC42DE5240300CB0059 /* EnhancedBlendRateCalculator.swift */; };
 		9ED8DB162DE5240300CB0059 /* Blendv3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB92DE5240300CB0059 /* Blendv3App.swift */; };
-		9ED8DB172DE5240300CB0059 /* BlendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DABA2DE5240300CB0059 /* BlendViewModel.swift */; };
-		9ED8DB182DE5240300CB0059 /* BlendUSDCConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB72DE5240300CB0059 /* BlendUSDCConstants.swift */; };
-		9ED8DB1D2DE5240300CB0059 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC82DE5240300CB0059 /* Logger.swift */; };
-		9ED8DB202DE5240300CB0059 /* BlendDefaultSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAAE2DE5240300CB0059 /* BlendDefaultSigner.swift */; };
-		9ED8DB222DE5240300CB0059 /* BlendPoolStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB12DE5240300CB0059 /* BlendPoolStats.swift */; };
+		9ED8DB182DE5240300CB0059 /* BlendConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB72DE5240300CB0059 /* BlendConstants.swift */; };
 		9ED8DB232DE5240300CB0059 /* BlendRateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB32DE5240300CB0059 /* BlendRateCalculator.swift */; };
 		9ED8DB252DE5240300CB0059 /* SmartContractDebugSystem-README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DADD2DE5240300CB0059 /* SmartContractDebugSystem-README.md */; };
 		9ED8DB262DE5240300CB0059 /* DEVELOPER_QUICK_START.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC22DE5240300CB0059 /* DEVELOPER_QUICK_START.md */; };
@@ -84,27 +53,14 @@
 		9ED8DB312DE5240300CB0059 /* SmartContractExplorer-README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DAE32DE5240300CB0059 /* SmartContractExplorer-README.md */; };
 		9ED8DB322DE5240300CB0059 /* DataAvailabilityAnalysis.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DABD2DE5240300CB0059 /* DataAvailabilityAnalysis.md */; };
 		9ED8DB342DE5240300CB0059 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DACF2DE5240300CB0059 /* Preview Assets.xcassets */; };
-		9ED8DB362DE5278800CB0059 /* AccountChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB352DE5278800CB0059 /* AccountChecker.swift */; };
-		9ED8DB382DE5278D00CB0059 /* BackstopCalculatorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB372DE5278D00CB0059 /* BackstopCalculatorService.swift */; };
-		9ED8DB472DE5418A00CB0059 /* BackstopPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB462DE5418A00CB0059 /* BackstopPool.swift */; };
-		9ED8DB492DE541E200CB0059 /* QueuedWithdrawal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB482DE541E200CB0059 /* QueuedWithdrawal.swift */; };
-		9ED8DB4C2DE5420900CB0059 /* WithdrawalStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB4B2DE5420900CB0059 /* WithdrawalStatus.swift */; };
-		9ED8DB4E2DE5425100CB0059 /* EmissionsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB4D2DE5425100CB0059 /* EmissionsData.swift */; };
 		9ED8DB502DE5426500CB0059 /* BackstopStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB4F2DE5426500CB0059 /* BackstopStatus.swift */; };
-		9ED8DB522DE5427E00CB0059 /* UserEmissionsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB512DE5427E00CB0059 /* UserEmissionsState.swift */; };
-		9ED8DB542DE5429500CB0059 /* AuctionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB532DE5429500CB0059 /* AuctionData.swift */; };
-		9ED8DB562DE542B500CB0059 /* AuctionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB552DE542B500CB0059 /* AuctionType.swift */; };
-		9ED8DB582DE542FC00CB0059 /* AuctionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB572DE542FC00CB0059 /* AuctionStatus.swift */; };
-		9ED8DB5C2DE543A100CB0059 /* BackstopPoolReserveData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB5B2DE543A100CB0059 /* BackstopPoolReserveData.swift */; };
 		9ED8DB652DE5458200CB0059 /* InterestRateConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB642DE5458200CB0059 /* InterestRateConfig.swift */; };
 		9ED8DB672DE54FCA00CB0059 /* StellarContractID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DB662DE54FCA00CB0059 /* StellarContractID.swift */; };
 		9EDE64F92DE7035400B63E09 /* PriceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE64F82DE7035400B63E09 /* PriceData.swift */; };
-		9EDE64FB2DE7037F00B63E09 /* ReserveDataResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE64FA2DE7037F00B63E09 /* ReserveDataResult.swift */; };
 		9EDE64FD2DE7038C00B63E09 /* PoolConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE64FC2DE7038C00B63E09 /* PoolConfig.swift */; };
 		9EDE64FF2DE703A100B63E09 /* AssetPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE64FE2DE703A100B63E09 /* AssetPosition.swift */; };
 		9EDE65012DE703B600B63E09 /* OraclePrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65002DE703B600B63E09 /* OraclePrice.swift */; };
 		9EDE65032DE703CF00B63E09 /* UserPositionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65022DE703CF00B63E09 /* UserPositionData.swift */; };
-		9EDE65052DE703E200B63E09 /* ValidationRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65042DE703E200B63E09 /* ValidationRules.swift */; };
 		9EDE65102DE712A200B63E09 /* OracleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE650F2DE712A200B63E09 /* OracleError.swift */; };
 		9EDE65112DE712A200B63E09 /* OracleAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE650E2DE712A200B63E09 /* OracleAsset.swift */; };
 		9EDE65152DE729DD00B63E09 /* SorobanTransactionSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */; };
@@ -133,6 +89,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9E1C104D2DFB08100081E56D /* BlendError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendError.swift; sourceTree = "<group>"; };
+		9E1C10532DFB0C800081E56D /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		9E7C24262DEAAAB5007C181D /* BlendFinancialCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendFinancialCalculator.swift; sourceTree = "<group>"; };
 		9E7C242B2DEAAE0D007C181D /* BackstopContractService+Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackstopContractService+Functions.swift"; sourceTree = "<group>"; };
 		9E7C242C2DEAAE0D007C181D /* BackstopContractService+Parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackstopContractService+Parsing.swift"; sourceTree = "<group>"; };
@@ -143,31 +101,9 @@
 		9E7C24352DEAAE0D007C181D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9E93884D2DF3519B0015BE14 /* CacheServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheServiceProtocol.swift; sourceTree = "<group>"; };
 		9E93884F2DF353730015BE14 /* BlendVaultError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendVaultError.swift; sourceTree = "<group>"; };
-		9E97817D2DE68D98009333AD /* BatchingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatchingService.swift; sourceTree = "<group>"; };
-		9E9781832DE68DF2009333AD /* BlendServiceProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendServiceProtocols.swift; sourceTree = "<group>"; };
-		9E9781852DE68E6C009333AD /* ContractAddresses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractAddresses.swift; sourceTree = "<group>"; };
-		9E9781872DE68E6C009333AD /* ReserveData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReserveData.swift; sourceTree = "<group>"; };
-		9E9781882DE68E6C009333AD /* VaultInitState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VaultInitState.swift; sourceTree = "<group>"; };
-		9E97818A2DE68E6C009333AD /* HealthCheckResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthCheckResult.swift; sourceTree = "<group>"; };
-		9E97818B2DE68E6C009333AD /* HealthIssue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthIssue.swift; sourceTree = "<group>"; };
-		9E97818C2DE68E6C009333AD /* PerformanceMetrics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceMetrics.swift; sourceTree = "<group>"; };
-		9E97818E2DE68E6C009333AD /* MigrationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationEvent.swift; sourceTree = "<group>"; };
-		9E97818F2DE68E6C009333AD /* MigrationValidationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationValidationResult.swift; sourceTree = "<group>"; };
-		9E9781912DE68E6C009333AD /* ConnectionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionState.swift; sourceTree = "<group>"; };
-		9E9781922DE68E6C009333AD /* NetworkEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkEvent.swift; sourceTree = "<group>"; };
 		9E9781932DE68E6C009333AD /* RetryConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryConfiguration.swift; sourceTree = "<group>"; };
 		9E9781942DE68E6C009333AD /* TimeoutConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutConfiguration.swift; sourceTree = "<group>"; };
-		9E9781962DE68E6C009333AD /* MethodOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MethodOptions.swift; sourceTree = "<group>"; };
-		9E9781972DE68E6C009333AD /* TransactionEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionEvent.swift; sourceTree = "<group>"; };
-		9E9781A82DE68F7F009333AD /* BlendPoolDiagnosticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendPoolDiagnosticsService.swift; sourceTree = "<group>"; };
-		9E9781A92DE68F7F009333AD /* ConfigurationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationService.swift; sourceTree = "<group>"; };
-		9E9781AA2DE68F7F009333AD /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
-		9E9781AB2DE68F7F009333AD /* ErrorBoundaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorBoundaryService.swift; sourceTree = "<group>"; };
-		9E9781AC2DE68F7F009333AD /* StateManagementService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateManagementService.swift; sourceTree = "<group>"; };
-		9E9781AD2DE68F7F009333AD /* TransactionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionService.swift; sourceTree = "<group>"; };
-		9E9781AE2DE68F7F009333AD /* ValidationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationService.swift; sourceTree = "<group>"; };
 		9E9781B02DE68F7F009333AD /* BlendVault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendVault.swift; sourceTree = "<group>"; };
-		9E9781BA2DE6900E009333AD /* ServiceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModels.swift; sourceTree = "<group>"; };
 		9EA449CC2DF0FF3C00F6CC6D /* UserPositionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionService.swift; sourceTree = "<group>"; };
 		9EA449CD2DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionServiceFactory.swift; sourceTree = "<group>"; };
 		9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionServiceProtocol.swift; sourceTree = "<group>"; };
@@ -178,57 +114,33 @@
 		9EAD3EF52DF7D31400029CE7 /* NetworkServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceProtocol.swift; sourceTree = "<group>"; };
 		9ED8DAA92DE5240300CB0059 /* blend_protocol_technical_analysis.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = blend_protocol_technical_analysis.md; sourceTree = "<group>"; };
 		9ED8DAAC2DE5240300CB0059 /* BlendApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendApp.swift; sourceTree = "<group>"; };
-		9ED8DAAE2DE5240300CB0059 /* BlendDefaultSigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendDefaultSigner.swift; sourceTree = "<group>"; };
 		9ED8DAAF2DE5240300CB0059 /* BlendOracleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendOracleService.swift; sourceTree = "<group>"; };
 		9ED8DAB02DE5240300CB0059 /* BlendOracleServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendOracleServiceProtocol.swift; sourceTree = "<group>"; };
-		9ED8DAB12DE5240300CB0059 /* BlendPoolStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendPoolStats.swift; sourceTree = "<group>"; };
 		9ED8DAB32DE5240300CB0059 /* BlendRateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendRateCalculator.swift; sourceTree = "<group>"; };
 		9ED8DAB42DE5240300CB0059 /* BlendRateCalculatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendRateCalculatorProtocol.swift; sourceTree = "<group>"; };
-		9ED8DAB52DE5240300CB0059 /* BlendSigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendSigner.swift; sourceTree = "<group>"; };
-		9ED8DAB72DE5240300CB0059 /* BlendUSDCConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendUSDCConstants.swift; sourceTree = "<group>"; };
-		9ED8DAB82DE5240300CB0059 /* BlendUSDCVault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendUSDCVault.swift; sourceTree = "<group>"; };
+		9ED8DAB72DE5240300CB0059 /* BlendConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendConstants.swift; sourceTree = "<group>"; };
 		9ED8DAB92DE5240300CB0059 /* Blendv3App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blendv3App.swift; sourceTree = "<group>"; };
-		9ED8DABA2DE5240300CB0059 /* BlendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendViewModel.swift; sourceTree = "<group>"; };
 		9ED8DABB2DE5240300CB0059 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		9ED8DABD2DE5240300CB0059 /* DataAvailabilityAnalysis.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DataAvailabilityAnalysis.md; sourceTree = "<group>"; };
 		9ED8DABE2DE5240300CB0059 /* DebugLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogView.swift; sourceTree = "<group>"; };
-		9ED8DABF2DE5240300CB0059 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		9ED8DAC22DE5240300CB0059 /* DEVELOPER_QUICK_START.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEVELOPER_QUICK_START.md; sourceTree = "<group>"; };
-		9ED8DAC42DE5240300CB0059 /* EnhancedBlendRateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnhancedBlendRateCalculator.swift; sourceTree = "<group>"; };
 		9ED8DAC52DE5240300CB0059 /* FixedMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedMath.swift; sourceTree = "<group>"; };
 		9ED8DAC62DE5240300CB0059 /* IMPLEMENTATION_SUMMARY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = IMPLEMENTATION_SUMMARY.md; sourceTree = "<group>"; };
-		9ED8DAC72DE5240300CB0059 /* KeyPairSigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPairSigner.swift; sourceTree = "<group>"; };
-		9ED8DAC82DE5240300CB0059 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		9ED8DAC92DE5240300CB0059 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		9ED8DACB2DE5240300CB0059 /* POOL_STATS_GUIDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = POOL_STATS_GUIDE.md; sourceTree = "<group>"; };
 		9ED8DACC2DE5240300CB0059 /* POOL_STATS_IMPLEMENTATION_PLAN.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = POOL_STATS_IMPLEMENTATION_PLAN.md; sourceTree = "<group>"; };
-		9ED8DACE2DE5240300CB0059 /* PoolViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoolViewModel.swift; sourceTree = "<group>"; };
 		9ED8DACF2DE5240300CB0059 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		9ED8DAD52DE5240300CB0059 /* ReactiveRateModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveRateModifier.swift; sourceTree = "<group>"; };
 		9ED8DADD2DE5240300CB0059 /* SmartContractDebugSystem-README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "SmartContractDebugSystem-README.md"; sourceTree = "<group>"; };
 		9ED8DAE32DE5240300CB0059 /* SmartContractExplorer-README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "SmartContractExplorer-README.md"; sourceTree = "<group>"; };
 		9ED8DAE72DE5240300CB0059 /* SmartContractInspector-README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "SmartContractInspector-README.md"; sourceTree = "<group>"; };
-		9ED8DB352DE5278800CB0059 /* AccountChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountChecker.swift; sourceTree = "<group>"; };
-		9ED8DB372DE5278D00CB0059 /* BackstopCalculatorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopCalculatorService.swift; sourceTree = "<group>"; };
-		9ED8DB462DE5418A00CB0059 /* BackstopPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopPool.swift; sourceTree = "<group>"; };
-		9ED8DB482DE541E200CB0059 /* QueuedWithdrawal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueuedWithdrawal.swift; sourceTree = "<group>"; };
-		9ED8DB4B2DE5420900CB0059 /* WithdrawalStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawalStatus.swift; sourceTree = "<group>"; };
-		9ED8DB4D2DE5425100CB0059 /* EmissionsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmissionsData.swift; sourceTree = "<group>"; };
 		9ED8DB4F2DE5426500CB0059 /* BackstopStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopStatus.swift; sourceTree = "<group>"; };
-		9ED8DB512DE5427E00CB0059 /* UserEmissionsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEmissionsState.swift; sourceTree = "<group>"; };
-		9ED8DB532DE5429500CB0059 /* AuctionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionData.swift; sourceTree = "<group>"; };
-		9ED8DB552DE542B500CB0059 /* AuctionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionType.swift; sourceTree = "<group>"; };
-		9ED8DB572DE542FC00CB0059 /* AuctionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuctionStatus.swift; sourceTree = "<group>"; };
-		9ED8DB5B2DE543A100CB0059 /* BackstopPoolReserveData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackstopPoolReserveData.swift; sourceTree = "<group>"; };
 		9ED8DB642DE5458200CB0059 /* InterestRateConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestRateConfig.swift; sourceTree = "<group>"; };
 		9ED8DB662DE54FCA00CB0059 /* StellarContractID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarContractID.swift; sourceTree = "<group>"; };
 		9EDE64F82DE7035400B63E09 /* PriceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceData.swift; sourceTree = "<group>"; };
-		9EDE64FA2DE7037F00B63E09 /* ReserveDataResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReserveDataResult.swift; sourceTree = "<group>"; };
 		9EDE64FC2DE7038C00B63E09 /* PoolConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoolConfig.swift; sourceTree = "<group>"; };
 		9EDE64FE2DE703A100B63E09 /* AssetPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetPosition.swift; sourceTree = "<group>"; };
 		9EDE65002DE703B600B63E09 /* OraclePrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OraclePrice.swift; sourceTree = "<group>"; };
 		9EDE65022DE703CF00B63E09 /* UserPositionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionData.swift; sourceTree = "<group>"; };
-		9EDE65042DE703E200B63E09 /* ValidationRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationRules.swift; sourceTree = "<group>"; };
 		9EDE650E2DE712A200B63E09 /* OracleAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OracleAsset.swift; sourceTree = "<group>"; };
 		9EDE650F2DE712A200B63E09 /* OracleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OracleError.swift; sourceTree = "<group>"; };
 		9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SorobanTransactionSimulator.swift; sourceTree = "<group>"; };
@@ -303,6 +215,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E1C104C2DFB077C0081E56D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */,
+				9E9781932DE68E6C009333AD /* RetryConfiguration.swift */,
+				9E9781942DE68E6C009333AD /* TimeoutConfiguration.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9E1C104F2DFB09360081E56D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9EDE64FE2DE703A100B63E09 /* AssetPosition.swift */,
+				9EDE65022DE703CF00B63E09 /* UserPositionData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9E1C10502DFB09F80081E56D /* Calculator */ = {
+			isa = PBXGroup;
+			children = (
+				9E1C10512DFB0A030081E56D /* Models */,
+				9ED8DAB42DE5240300CB0059 /* BlendRateCalculatorProtocol.swift */,
+			);
+			path = Calculator;
+			sourceTree = "<group>";
+		};
+		9E1C10512DFB0A030081E56D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9ED8DB642DE5458200CB0059 /* InterestRateConfig.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9E1C10522DFB0A890081E56D /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				9E93884D2DF3519B0015BE14 /* CacheServiceProtocol.swift */,
+				9ED8DABB2DE5240300CB0059 /* CacheService.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
 		9E7C242E2DEAAE0D007C181D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,7 +273,10 @@
 		9E7C24302DEAAE0D007C181D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9ED8DB4F2DE5426500CB0059 /* BackstopStatus.swift */,
+				9EDE64F82DE7035400B63E09 /* PriceData.swift */,
 				9E7C242F2DEAAE0D007C181D /* BackstopModels.swift */,
+				9EDE65002DE703B600B63E09 /* OraclePrice.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -349,83 +309,16 @@
 			path = BackstopContract;
 			sourceTree = "<group>";
 		};
-		9E9781862DE68E6C009333AD /* Configuration */ = {
-			isa = PBXGroup;
-			children = (
-				9E9781852DE68E6C009333AD /* ContractAddresses.swift */,
-			);
-			path = Configuration;
-			sourceTree = "<group>";
-		};
-		9E9781892DE68E6C009333AD /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				9E9781872DE68E6C009333AD /* ReserveData.swift */,
-				9E9781882DE68E6C009333AD /* VaultInitState.swift */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		9E97818D2DE68E6C009333AD /* Diagnostics */ = {
-			isa = PBXGroup;
-			children = (
-				9E97818A2DE68E6C009333AD /* HealthCheckResult.swift */,
-				9E97818B2DE68E6C009333AD /* HealthIssue.swift */,
-				9E97818C2DE68E6C009333AD /* PerformanceMetrics.swift */,
-			);
-			path = Diagnostics;
-			sourceTree = "<group>";
-		};
-		9E9781902DE68E6C009333AD /* Migration */ = {
-			isa = PBXGroup;
-			children = (
-				9E97818E2DE68E6C009333AD /* MigrationEvent.swift */,
-				9E97818F2DE68E6C009333AD /* MigrationValidationResult.swift */,
-			);
-			path = Migration;
-			sourceTree = "<group>";
-		};
-		9E9781952DE68E6C009333AD /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				9E9781912DE68E6C009333AD /* ConnectionState.swift */,
-				9E9781922DE68E6C009333AD /* NetworkEvent.swift */,
-				9E9781932DE68E6C009333AD /* RetryConfiguration.swift */,
-				9E9781942DE68E6C009333AD /* TimeoutConfiguration.swift */,
-			);
-			path = Network;
-			sourceTree = "<group>";
-		};
-		9E9781982DE68E6C009333AD /* Transaction */ = {
-			isa = PBXGroup;
-			children = (
-				9E9781962DE68E6C009333AD /* MethodOptions.swift */,
-				9E9781972DE68E6C009333AD /* TransactionEvent.swift */,
-			);
-			path = Transaction;
-			sourceTree = "<group>";
-		};
 		9E9781AF2DE68F7F009333AD /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				9E1C10522DFB0A890081E56D /* Cache */,
+				9E1C10502DFB09F80081E56D /* Calculator */,
 				9E9DA9BF2DFA966F009133E4 /* PoolService */,
-				9E9DA9BE2DFA965E009133E4 /* DataService */,
 				9E9DA9BD2DFA963A009133E4 /* Networking */,
 				9E7C24362DEAAE0D007C181D /* BackstopContract */,
 				9EAD3EF12DF7D1F000029CE7 /* Oracle */,
 				9EA449CF2DF0FF3C00F6CC6D /* UserPosition */,
-				9E9781A82DE68F7F009333AD /* BlendPoolDiagnosticsService.swift */,
-				9E9781A92DE68F7F009333AD /* ConfigurationService.swift */,
-				9E9781AB2DE68F7F009333AD /* ErrorBoundaryService.swift */,
-				9E9781AC2DE68F7F009333AD /* StateManagementService.swift */,
-				9E9781AD2DE68F7F009333AD /* TransactionService.swift */,
-				9E9781AE2DE68F7F009333AD /* ValidationService.swift */,
-				9EDE65242DE9246000B63E09 /* BlendAssetService.swift */,
-				9E97817D2DE68D98009333AD /* BatchingService.swift */,
-				9ED8DAC82DE5240300CB0059 /* Logger.swift */,
-				9ED8DABB2DE5240300CB0059 /* CacheService.swift */,
-				9ED8DB372DE5278D00CB0059 /* BackstopCalculatorService.swift */,
-				9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -433,8 +326,6 @@
 		9E9781B12DE68F7F009333AD /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				9ED8DB452DE5417300CB0059 /* Models */,
-				9ED8DAD42DE5240300CB0059 /* Protocols */,
 				9ED8DB592DE5434300CB0059 /* Utilities */,
 				9E9781AF2DE68F7F009333AD /* Services */,
 				9E9781B02DE68F7F009333AD /* BlendVault.swift */,
@@ -445,6 +336,7 @@
 		9E9DA9BD2DFA963A009133E4 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				9E1C104C2DFB077C0081E56D /* Models */,
 				9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */,
 				9EAD3EF52DF7D31400029CE7 /* NetworkServiceProtocol.swift */,
 				9ED8DAC92DE5240300CB0059 /* NetworkService.swift */,
@@ -452,19 +344,12 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		9E9DA9BE2DFA965E009133E4 /* DataService */ = {
-			isa = PBXGroup;
-			children = (
-				9E9781AA2DE68F7F009333AD /* DataService.swift */,
-			);
-			path = DataService;
-			sourceTree = "<group>";
-		};
 		9E9DA9BF2DFA966F009133E4 /* PoolService */ = {
 			isa = PBXGroup;
 			children = (
 				9E9DA9C02DFA9712009133E4 /* Models */,
 				9EDE65262DE9338D00B63E09 /* PoolServiceProtocol.swift */,
+				9EDE65242DE9246000B63E09 /* BlendAssetService.swift */,
 				9EDE651E2DE773DB00B63E09 /* PoolService.swift */,
 			);
 			path = PoolService;
@@ -473,6 +358,9 @@
 		9E9DA9C02DFA9712009133E4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9EDE64FC2DE7038C00B63E09 /* PoolConfig.swift */,
+				9EDE650E2DE712A200B63E09 /* OracleAsset.swift */,
+				9EDE65202DE9220B00B63E09 /* BlendAssetData.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -480,6 +368,7 @@
 		9EA449CF2DF0FF3C00F6CC6D /* UserPosition */ = {
 			isa = PBXGroup;
 			children = (
+				9E1C104F2DFB09360081E56D /* Models */,
 				9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */,
 				9EA449CC2DF0FF3C00F6CC6D /* UserPositionService.swift */,
 				9EA449CD2DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift */,
@@ -502,24 +391,14 @@
 		9ED8DA912DE5237F00CB0059 /* Blendv3 */ = {
 			isa = PBXGroup;
 			children = (
-				9ED8DAC02DE5240300CB0059 /* DependencyInjection */,
 				9E9781B12DE68F7F009333AD /* Core */,
-				9ED8DB612DE5443000CB0059 /* Views */,
 				9ED8DB602DE543FB00CB0059 /* Docs */,
-				9ED8DB5F2DE543E800CB0059 /* Un */,
 				9ED8DAAC2DE5240300CB0059 /* BlendApp.swift */,
-				9ED8DAB12DE5240300CB0059 /* BlendPoolStats.swift */,
-				9ED8DAB82DE5240300CB0059 /* BlendUSDCVault.swift */,
 				9ED8DAB92DE5240300CB0059 /* Blendv3App.swift */,
-				9ED8DABA2DE5240300CB0059 /* BlendViewModel.swift */,
 				9ED8DABC2DE5240300CB0059 /* Constants */,
 				9ED8DABE2DE5240300CB0059 /* DebugLogView.swift */,
-				9ED8DAC32DE5240300CB0059 /* Documentation */,
-				9ED8DAC42DE5240300CB0059 /* EnhancedBlendRateCalculator.swift */,
-				9ED8DACE2DE5240300CB0059 /* PoolViewModel.swift */,
 				9ED8DACF2DE5240300CB0059 /* Preview Assets.xcassets */,
 				9ED8DAD02DE5240300CB0059 /* Preview Content */,
-				9ED8DAD52DE5240300CB0059 /* ReactiveRateModifier.swift */,
 			);
 			path = Blendv3;
 			sourceTree = "<group>";
@@ -527,24 +406,9 @@
 		9ED8DABC2DE5240300CB0059 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				9ED8DAB72DE5240300CB0059 /* BlendUSDCConstants.swift */,
+				9ED8DAB72DE5240300CB0059 /* BlendConstants.swift */,
 			);
 			path = Constants;
-			sourceTree = "<group>";
-		};
-		9ED8DAC02DE5240300CB0059 /* DependencyInjection */ = {
-			isa = PBXGroup;
-			children = (
-				9ED8DABF2DE5240300CB0059 /* DependencyContainer.swift */,
-			);
-			path = DependencyInjection;
-			sourceTree = "<group>";
-		};
-		9ED8DAC32DE5240300CB0059 /* Documentation */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Documentation;
 			sourceTree = "<group>";
 		};
 		9ED8DAD02DE5240300CB0059 /* Preview Content */ = {
@@ -554,52 +418,12 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		9ED8DAD42DE5240300CB0059 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				9E93884D2DF3519B0015BE14 /* CacheServiceProtocol.swift */,
-				9E9781832DE68DF2009333AD /* BlendServiceProtocols.swift */,
-				9ED8DAB42DE5240300CB0059 /* BlendRateCalculatorProtocol.swift */,
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
-		9ED8DB452DE5417300CB0059 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				9E9781862DE68E6C009333AD /* Configuration */,
-				9E9781892DE68E6C009333AD /* Data */,
-				9E97818D2DE68E6C009333AD /* Diagnostics */,
-				9E9781902DE68E6C009333AD /* Migration */,
-				9E9781952DE68E6C009333AD /* Network */,
-				9E9781982DE68E6C009333AD /* Transaction */,
-				9E9781BA2DE6900E009333AD /* ServiceModels.swift */,
-				9ED8DB632DE544DF00CB0059 /* Pool */,
-				9ED8DB4A2DE541F600CB0059 /* Backstop */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		9ED8DB4A2DE541F600CB0059 /* Backstop */ = {
-			isa = PBXGroup;
-			children = (
-				9ED8DB5B2DE543A100CB0059 /* BackstopPoolReserveData.swift */,
-				9ED8DB572DE542FC00CB0059 /* AuctionStatus.swift */,
-				9ED8DB552DE542B500CB0059 /* AuctionType.swift */,
-				9ED8DB532DE5429500CB0059 /* AuctionData.swift */,
-				9ED8DB512DE5427E00CB0059 /* UserEmissionsState.swift */,
-				9ED8DB4F2DE5426500CB0059 /* BackstopStatus.swift */,
-				9ED8DB4D2DE5425100CB0059 /* EmissionsData.swift */,
-				9ED8DB4B2DE5420900CB0059 /* WithdrawalStatus.swift */,
-				9ED8DB462DE5418A00CB0059 /* BackstopPool.swift */,
-				9ED8DB482DE541E200CB0059 /* QueuedWithdrawal.swift */,
-			);
-			path = Backstop;
-			sourceTree = "<group>";
-		};
 		9ED8DB592DE5434300CB0059 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				9E1C10532DFB0C800081E56D /* Logger.swift */,
+				9EDE650F2DE712A200B63E09 /* OracleError.swift */,
+				9E1C104D2DFB08100081E56D /* BlendError.swift */,
 				9E93884F2DF353730015BE14 /* BlendVaultError.swift */,
 				9E7C24262DEAAAB5007C181D /* BlendFinancialCalculator.swift */,
 				9EDE65222DE9225400B63E09 /* BlendParser.swift */,
@@ -608,17 +432,6 @@
 				9ED8DAB32DE5240300CB0059 /* BlendRateCalculator.swift */,
 			);
 			path = Utilities;
-			sourceTree = "<group>";
-		};
-		9ED8DB5F2DE543E800CB0059 /* Un */ = {
-			isa = PBXGroup;
-			children = (
-				9ED8DAC72DE5240300CB0059 /* KeyPairSigner.swift */,
-				9ED8DAAE2DE5240300CB0059 /* BlendDefaultSigner.swift */,
-				9ED8DB352DE5278800CB0059 /* AccountChecker.swift */,
-				9ED8DAB52DE5240300CB0059 /* BlendSigner.swift */,
-			);
-			path = Un;
 			sourceTree = "<group>";
 		};
 		9ED8DB602DE543FB00CB0059 /* Docs */ = {
@@ -635,31 +448,6 @@
 				9ED8DACC2DE5240300CB0059 /* POOL_STATS_IMPLEMENTATION_PLAN.md */,
 			);
 			path = Docs;
-			sourceTree = "<group>";
-		};
-		9ED8DB612DE5443000CB0059 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		9ED8DB632DE544DF00CB0059 /* Pool */ = {
-			isa = PBXGroup;
-			children = (
-				9EDE65202DE9220B00B63E09 /* BlendAssetData.swift */,
-				9EDE650E2DE712A200B63E09 /* OracleAsset.swift */,
-				9EDE650F2DE712A200B63E09 /* OracleError.swift */,
-				9EDE65042DE703E200B63E09 /* ValidationRules.swift */,
-				9EDE65022DE703CF00B63E09 /* UserPositionData.swift */,
-				9EDE65002DE703B600B63E09 /* OraclePrice.swift */,
-				9EDE64FE2DE703A100B63E09 /* AssetPosition.swift */,
-				9EDE64FC2DE7038C00B63E09 /* PoolConfig.swift */,
-				9EDE64FA2DE7037F00B63E09 /* ReserveDataResult.swift */,
-				9EDE64F82DE7035400B63E09 /* PriceData.swift */,
-				9ED8DB642DE5458200CB0059 /* InterestRateConfig.swift */,
-			);
-			path = Pool;
 			sourceTree = "<group>";
 		};
 		9EE4A0E02DDFB939004BD597 = {
@@ -842,9 +630,7 @@
 			files = (
 				9ED8DAF32DE5240300CB0059 /* BlendOracleService.swift in Sources */,
 				9EDE64F92DE7035400B63E09 /* PriceData.swift in Sources */,
-				9ED8DB582DE542FC00CB0059 /* AuctionStatus.swift in Sources */,
 				9EDE65232DE9225900B63E09 /* BlendParser.swift in Sources */,
-				9ED8DB4C2DE5420900CB0059 /* WithdrawalStatus.swift in Sources */,
 				9ED8DAF62DE5240300CB0059 /* NetworkService.swift in Sources */,
 				9EDE651F2DE773DB00B63E09 /* PoolService.swift in Sources */,
 				9EDE65272DE9338D00B63E09 /* PoolServiceProtocol.swift in Sources */,
@@ -853,32 +639,17 @@
 				9EDE65212DE9220B00B63E09 /* BlendAssetData.swift in Sources */,
 				9ED8DAFD2DE5240300CB0059 /* CacheService.swift in Sources */,
 				9ED8DAFE2DE5240300CB0059 /* DebugLogView.swift in Sources */,
-				9ED8DB522DE5427E00CB0059 /* UserEmissionsState.swift in Sources */,
 				9EAD3EF22DF7D1F000029CE7 /* OracleContractFunction.swift in Sources */,
 				9EAD3EF32DF7D1F000029CE7 /* OracleResponseParser.swift in Sources */,
 				9EAD3EF42DF7D1F000029CE7 /* OracleNetworkService.swift in Sources */,
 				9ED8DB672DE54FCA00CB0059 /* StellarContractID.swift in Sources */,
-				9E97819A2DE68E6C009333AD /* NetworkEvent.swift in Sources */,
-				9E97819B2DE68E6C009333AD /* MethodOptions.swift in Sources */,
-				9E97819C2DE68E6C009333AD /* ContractAddresses.swift in Sources */,
-				9E97819D2DE68E6C009333AD /* PerformanceMetrics.swift in Sources */,
 				9E97819E2DE68E6C009333AD /* RetryConfiguration.swift in Sources */,
 				9EAD3EED2DF7BDF600029CE7 /* SorobanTypes.swift in Sources */,
-				9E97819F2DE68E6C009333AD /* TransactionEvent.swift in Sources */,
-				9E9781A02DE68E6C009333AD /* ReserveData.swift in Sources */,
-				9E9781A12DE68E6C009333AD /* MigrationValidationResult.swift in Sources */,
 				9E9781B22DE68F7F009333AD /* BlendVault.swift in Sources */,
 				9EDE64FF2DE703A100B63E09 /* AssetPosition.swift in Sources */,
-				9E9781B32DE68F7F009333AD /* TransactionService.swift in Sources */,
-				9E9781B42DE68F7F009333AD /* StateManagementService.swift in Sources */,
-				9E9781B52DE68F7F009333AD /* ErrorBoundaryService.swift in Sources */,
-				9E9781B62DE68F7F009333AD /* ValidationService.swift in Sources */,
-				9E9781B72DE68F7F009333AD /* ConfigurationService.swift in Sources */,
-				9E9781B82DE68F7F009333AD /* DataService.swift in Sources */,
 				9EA449D02DF0FF3C00F6CC6D /* UserPositionService.swift in Sources */,
 				9EA449D12DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift in Sources */,
 				9EA449D22DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift in Sources */,
-				9E9781B92DE68F7F009333AD /* BlendPoolDiagnosticsService.swift in Sources */,
 				9E7C24372DEAAE0D007C181D /* BackstopContractService+Functions.swift in Sources */,
 				9E7C24382DEAAE0D007C181D /* BackstopContractServiceProtocol.swift in Sources */,
 				9E7C24392DEAAE0D007C181D /* BackstopContractService+Parsing.swift in Sources */,
@@ -886,52 +657,25 @@
 				9E7C243B2DEAAE0D007C181D /* BackstopContractService.swift in Sources */,
 				9E7C243C2DEAAE0D007C181D /* BackstopModels.swift in Sources */,
 				9E9388502DF353730015BE14 /* BlendVaultError.swift in Sources */,
-				9E9781A22DE68E6C009333AD /* ConnectionState.swift in Sources */,
-				9E9781A32DE68E6C009333AD /* HealthIssue.swift in Sources */,
 				9E9781A42DE68E6C009333AD /* TimeoutConfiguration.swift in Sources */,
-				9E9781A52DE68E6C009333AD /* MigrationEvent.swift in Sources */,
-				9E9781A62DE68E6C009333AD /* VaultInitState.swift in Sources */,
-				9E9781A72DE68E6C009333AD /* HealthCheckResult.swift in Sources */,
 				9ED8DB652DE5458200CB0059 /* InterestRateConfig.swift in Sources */,
-				9ED8DB032DE5240300CB0059 /* KeyPairSigner.swift in Sources */,
 				9EDE64FD2DE7038C00B63E09 /* PoolConfig.swift in Sources */,
-				9E97817E2DE68D98009333AD /* BatchingService.swift in Sources */,
 				9E7C24272DEAAAB5007C181D /* BlendFinancialCalculator.swift in Sources */,
-				9ED8DB052DE5240300CB0059 /* DependencyContainer.swift in Sources */,
 				9ED8DB502DE5426500CB0059 /* BackstopStatus.swift in Sources */,
 				9EDE65012DE703B600B63E09 /* OraclePrice.swift in Sources */,
-				9EDE65052DE703E200B63E09 /* ValidationRules.swift in Sources */,
-				9ED8DB562DE542B500CB0059 /* AuctionType.swift in Sources */,
-				9ED8DB382DE5278D00CB0059 /* BackstopCalculatorService.swift in Sources */,
-				9ED8DB4E2DE5425100CB0059 /* EmissionsData.swift in Sources */,
-				9EDE64FB2DE7037F00B63E09 /* ReserveDataResult.swift in Sources */,
-				9ED8DB492DE541E200CB0059 /* QueuedWithdrawal.swift in Sources */,
-				9ED8DB072DE5240300CB0059 /* ReactiveRateModifier.swift in Sources */,
 				9EAD3EF62DF7D31400029CE7 /* NetworkServiceProtocol.swift in Sources */,
-				9ED8DB472DE5418A00CB0059 /* BackstopPool.swift in Sources */,
-				9ED8DB0A2DE5240300CB0059 /* BlendUSDCVault.swift in Sources */,
-				9E9781BB2DE6900E009333AD /* ServiceModels.swift in Sources */,
 				9ED8DB0D2DE5240300CB0059 /* BlendRateCalculatorProtocol.swift in Sources */,
 				9EDE65152DE729DD00B63E09 /* SorobanTransactionSimulator.swift in Sources */,
 				9ED8DB0E2DE5240300CB0059 /* FixedMath.swift in Sources */,
-				9ED8DB0F2DE5240300CB0059 /* PoolViewModel.swift in Sources */,
 				9EDE65102DE712A200B63E09 /* OracleError.swift in Sources */,
 				9EDE65112DE712A200B63E09 /* OracleAsset.swift in Sources */,
-				9ED8DB5C2DE543A100CB0059 /* BackstopPoolReserveData.swift in Sources */,
 				9EDE65252DE9246700B63E09 /* BlendAssetService.swift in Sources */,
-				9ED8DB142DE5240300CB0059 /* BlendSigner.swift in Sources */,
+				9E1C10542DFB0C800081E56D /* Logger.swift in Sources */,
 				9E93884E2DF3519B0015BE14 /* CacheServiceProtocol.swift in Sources */,
-				9ED8DB152DE5240300CB0059 /* EnhancedBlendRateCalculator.swift in Sources */,
+				9E1C104E2DFB08100081E56D /* BlendError.swift in Sources */,
 				9ED8DB162DE5240300CB0059 /* Blendv3App.swift in Sources */,
-				9ED8DB172DE5240300CB0059 /* BlendViewModel.swift in Sources */,
-				9ED8DB182DE5240300CB0059 /* BlendUSDCConstants.swift in Sources */,
-				9ED8DB362DE5278800CB0059 /* AccountChecker.swift in Sources */,
-				9ED8DB1D2DE5240300CB0059 /* Logger.swift in Sources */,
-				9ED8DB542DE5429500CB0059 /* AuctionData.swift in Sources */,
-				9E9781842DE68DF2009333AD /* BlendServiceProtocols.swift in Sources */,
-				9ED8DB202DE5240300CB0059 /* BlendDefaultSigner.swift in Sources */,
+				9ED8DB182DE5240300CB0059 /* BlendConstants.swift in Sources */,
 				9EDE65032DE703CF00B63E09 /* UserPositionData.swift in Sources */,
-				9ED8DB222DE5240300CB0059 /* BlendPoolStats.swift in Sources */,
 				9ED8DB232DE5240300CB0059 /* BlendRateCalculator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

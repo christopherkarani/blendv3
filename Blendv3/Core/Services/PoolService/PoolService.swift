@@ -11,22 +11,15 @@ import stellarsdk
 
 
 struct PoolService: PoolServiceProtocol {
-    let sorobanClient: SorobanClient
+    let networkService: NetworkService
+    let sourceKeyPair: KeyPair
     private let logger = DebugLogger(subsystem: "com.blendv3.debug", category: "Pool Service")
 
     
     // Fetch PoolConfig from the blockchain
-    func fetchPoolConfig() async throws -> PoolConfig {
-        let result = try await sorobanClient.invokeMethod(
-            name: "get_config",
-            args: [],
-            methodOptions: stellarsdk.MethodOptions(
-                fee: 100_000,
-                timeoutInSeconds: 30,
-                simulate: true,
-                restore: false
-            )
-        )
+    func fetchPoolConfig(contractId: String) async throws -> PoolConfig {
+        let result = try await networkService
+            .invokeContractFunction(contractId: contractId, functionName: "get_config", args: [], sourceKeyPair: sourceKeyPair)
         
         guard case .map(let configMapOptional) = result else {
             throw BlendVaultError.invalidResponse
@@ -71,23 +64,16 @@ struct PoolService: PoolServiceProtocol {
 }
 
 extension PoolService {
-    public func getPoolStatus() async throws  {
+    public func getPoolStatus(contractId: String) async throws  {
         do {
-            let statusResult = try await sorobanClient.invokeMethod(
-                name: "get_status",
-                args: [],
-                methodOptions: stellarsdk.MethodOptions(
-                    fee: 100_000,
-                    timeoutInSeconds: 30,
-                    simulate: true,
-                    restore: false
+            let statusResult = try await networkService
+                .invokeContractFunction(
+                    contractId: contractId,
+                    functionName: "get_status",
+                    args: [],
+                    sourceKeyPair: sourceKeyPair
                 )
-            )
-            
             logger.info("✅ Pool status retrieved: \(String(describing: statusResult))")
-            
-
-            
         } catch {
             logger.error("❌ Failed to get pool status: \(error)")
             throw BlendVaultError.networkError(error.localizedDescription)

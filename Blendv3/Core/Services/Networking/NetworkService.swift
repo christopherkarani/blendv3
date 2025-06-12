@@ -25,12 +25,12 @@ public enum NetworkSimulationError: Error, Sendable {
 
 /// Configuration for NetworkService operations
 public struct NetworkServiceConfig: Sendable {
-    public let networkType: BlendUSDCConstants.NetworkType
+    public let networkType: BlendConstants.NetworkType
     public let timeoutConfiguration: TimeoutConfiguration
     public let retryConfiguration: RetryConfiguration
     
     public init(
-        networkType: BlendUSDCConstants.NetworkType = .testnet,
+        networkType: BlendConstants.NetworkType = .testnet,
         timeoutConfiguration: TimeoutConfiguration = TimeoutConfiguration(),
         retryConfiguration: RetryConfiguration = RetryConfiguration()
     ) {
@@ -41,7 +41,7 @@ public struct NetworkServiceConfig: Sendable {
     
     /// Get the appropriate RPC endpoint for the network type
     public var rpcEndpoint: String {
-        return BlendUSDCConstants.RPC.url(for: networkType)
+        return BlendConstants.RPC.url(for: networkType)
     }
 }
 

@@ -20,7 +20,7 @@ protocol PoolServiceProtocol: Sendable {
     /// 
     /// - Returns: A `PoolConfig` object containing the complete pool configuration.
     /// - Throws: Pool-related errors such as network failures, invalid response data, or authentication issues.
-    func fetchPoolConfig() async throws -> PoolConfig
+    func fetchPoolConfig(contractId: String) async throws -> PoolConfig
     
     /// Retrieves the current status of the pool.
     /// 
@@ -28,5 +28,5 @@ protocol PoolServiceProtocol: Sendable {
     /// current exchange rates, volume statistics, and other operational metrics.
     /// 
     /// - Throws: Pool-related errors such as network failures, invalid response data, or authentication issues.
-    func getPoolStatus() async throws
+    func getPoolStatus(contractId: String) async throws
 }
