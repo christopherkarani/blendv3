@@ -12,7 +12,13 @@ class BlendVault {
     private let poolService: PoolServiceProtocol
     private let backstopService: BackstopContractServiceProtocol
     private let cacheService: CacheServiceProtocol
+    private let account: KeyPair
+    private let networkService: NetworkService
+    private let poolID: String = BlendConstants.Testnet.xlmUsdcPool
+    private var backstopContractID: String = BlendConstants.Testnet.backstop
+    private var oracleAddress: String = BlendConstants.Testnet.oracle
     
+    @MainActor
     init(oracleService: BlendOracleServiceProtocol,
          poolService: PoolServiceProtocol,
          backstopService: BackstopContractServiceProtocol,
@@ -22,6 +28,8 @@ class BlendVault {
         self.poolService = poolService
         self.backstopService = backstopService
         self.cacheService = cache
+        self.account =  try! KeyPair(secretSeed: "SATOWQKPSRAP7D77C6EMT65OIF543WQUOV6DJBPW4SGUNTP2XSIEVUKP")
+        self.networkService = NetworkService(keyPair: account)
     }
     
     func start() async {
@@ -39,8 +47,8 @@ class BlendVault {
         let prices = try! await oracleService.getPrices(assets: supportedAssets)
         
         let poolData = try! await poolService.fetchPoolConfig(contractId: BlendConstants.Testnet.xlmUsdcPool)
-        let backstop = try! await backstopService.getPoolData(pool: BlendConstants.Testnet.xlmUsdcPool)
-        
+        let backstop = try! await backstopService.getPoolData(pool: )
+        let assetService = BlendAssetService(poolID: BlendConstants.Testnet.xlmUsdcPool, networkService: networkService)
     }
 }
 
@@ -54,7 +62,7 @@ struct Start {
         let networkService: NetworkService = .init(keyPair: account)
         let cacheService = CacheService()
         let poolService = PoolService(networkService: networkService)
-        let oracleService = BlendOracleService(cacheService: cacheService, networkService: networkService, sourceKeyPair: account)
+        let oracleService = BlendOracleService(poolId: BlendConstants.Testnet.oracle, cacheService: cacheService, networkService: networkService, sourceKeyPair: account)
         var rpcEndpoint: String = BlendConstants.RPC.testnet
         
         

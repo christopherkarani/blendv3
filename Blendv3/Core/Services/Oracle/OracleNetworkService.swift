@@ -71,14 +71,9 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
         do {
             // Validate parameters
             try function.validateParameterCount(arguments.count)
-            
+            let params = ContractCallParams(contractId: contractId, functionName: function.rawValue, functionArguments: arguments)
             // Use NetworkService to invoke the contract function
-            let result = try await networkService.invokeContractFunction(
-                contractId: contractId,
-                functionName: function.rawValue,
-                args: arguments,
-                force: false
-            )
+            let result = try await networkService.invokeContractFunction(contractCall: params, force: false)
             
             debugLogger.info("🔮 ✅ Contract function \(function.rawValue) invoked successfully")
             return result
@@ -100,15 +95,12 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
         
         do {
             // Validate parameters
-            try! function.validateParameterCount(arguments.count)
+            try function.validateParameterCount(arguments.count)
             
             
+            let params = ContractCallParams(contractId: contractId, functionName: function.rawValue, functionArguments: arguments)
             // Use NetworkService to simulate the contract function
-            let simulationResult = await networkService.simulateContractFunction(
-                contractId: contractId,
-                functionName: function.rawValue,
-                args: arguments
-            )
+            let simulationResult: SimulationStatus<SCValXDR> = await networkService.simulateContractFunction(contractCall: params)
             
             switch simulationResult {
             case .success(let result):
@@ -248,3 +240,4 @@ extension OracleError {
         )
     }
 }
+

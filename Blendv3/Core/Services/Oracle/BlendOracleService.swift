@@ -29,22 +29,23 @@ public final class BlendOracleService {
     internal let retryDelay: TimeInterval = 1.0
     
     // Oracle contract configuration
-    internal let oracleAddress = BlendConstants.Testnet.oracle
+   // internal let oracleAddress = BlendConstants.Testnet.oracle
+    let oracleAddress: String
     internal let rpcUrl = BlendConstants.RPC.testnet
     internal let network = Network.testnet
     
     // Centralized parser
     private let parser = BlendParser()
     
-    let sourceKeyPair: KeyPair
+
     
     // MARK: - Initialization
     
     @MainActor
-    public init(cacheService: CacheServiceProtocol, networkService: NetworkServiceProtocol, sourceKeyPair: KeyPair) {
+    public init(poolId: String, cacheService: CacheServiceProtocol, networkService: NetworkServiceProtocol, sourceKeyPair: KeyPair) {
+        self.oracleAddress = poolId
         self.cacheService = cacheService
         self.networkService = networkService
-        self.sourceKeyPair = sourceKeyPair
         self.oracleNetworkService = OracleNetworkService(
             networkService: networkService,
             contractId: BlendConstants.Testnet.oracle,
