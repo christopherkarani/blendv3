@@ -431,8 +431,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "282"
             endingLineNumber = "282"
-            landmarkName = "NetworkService"
-            landmarkType = "3">
+            landmarkName = "simulateContractFunctionInternal(contractCall:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

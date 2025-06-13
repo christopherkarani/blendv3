@@ -7,32 +7,30 @@ extension BackstopContractService {
     
     public func gulpEmissions() async throws {
         try await withTiming(operation: "gulpEmissions", execute: {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-                let contractCall = ContractCallParams(
-                    contractId: self.config.contractAddress,
-                    functionName: "gulp_emissions",
-                    functionArguments: []
-                )
-                
-                // 1. Simulate the contract call first
-                let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
-                
-                switch simulationResult {
-                case .success(_):
-                    // 2. If simulation succeeds, invoke the actual contract
-                    do {
-                        _ = try await self.networkService.invokeContractFunction(contractCall: contractCall)
-                        // Gulp emissions doesn't return a value
-                        return
-                    } catch {
-                        self.debugLogger.error("🛡️ ❌ Gulp emissions invocation failed: \(error.localizedDescription)")
-                        throw self.convertInvocationError(error, operation: "gulpEmissions")
-                    }
-                    
-                case .failure(let error):
-                    self.debugLogger.error("🛡️ ❌ Gulp emissions simulation failed: \(error.localizedDescription)")
-                    throw self.convertNetworkError(error, operation: "gulpEmissions")
+            let contractCall = ContractCallParams(
+                contractId: self.config.contractAddress,
+                functionName: "gulp_emissions",
+                functionArguments: []
+            )
+            
+            // 1. Simulate the contract call first
+            let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
+            
+            switch simulationResult {
+            case .success(_):
+                // 2. If simulation succeeds, invoke the actual contract
+                do {
+                    _ = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                    // Gulp emissions doesn't return a value
+                    return
+                } catch {
+                    self.debugLogger.error("🛡️ ❌ Gulp emissions invocation failed: \(error.localizedDescription)")
+                    throw self.convertInvocationError(error, operation: "gulpEmissions")
                 }
+                
+            case .failure(let error):
+                self.debugLogger.error("🛡️ ❌ Gulp emissions simulation failed: \(error.localizedDescription)")
+                throw self.convertNetworkError(error, operation: "gulpEmissions")
             }
         })
     }
@@ -51,7 +49,6 @@ extension BackstopContractService {
         }
         
         try await withTiming(operation: "addReward", execute: {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
                 let contractCall = ContractCallParams(
                     contractId: self.config.contractAddress,
                     functionName: "add_reward",
@@ -80,7 +77,6 @@ extension BackstopContractService {
                     self.debugLogger.error("🛡️ ❌ Add reward simulation failed: \(error.localizedDescription)")
                     throw self.convertNetworkError(error, operation: "addReward")
                 }
-            }
         })
     }
     
@@ -88,7 +84,6 @@ extension BackstopContractService {
         try validateAddress(poolAddress, name: "poolAddress")
         
         return try await withTiming(operation: "gulpPoolEmissions", execute: {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
                 let contractCall = ContractCallParams(
                     contractId: self.config.contractAddress,
                     functionName: "gulp_pool_emissions",
@@ -115,7 +110,6 @@ extension BackstopContractService {
                     self.debugLogger.error("🛡️ ❌ Gulp pool emissions simulation failed: \(error.localizedDescription)")
                     throw self.convertNetworkError(error, operation: "gulpPoolEmissions")
                 }
-            }
         })
     }
     
@@ -129,7 +123,6 @@ extension BackstopContractService {
         }
         
         return try await withTiming(operation: "claim", execute: {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
                 // Create vector of pool addresses
                 let poolAddressParams = try poolAddresses.map { poolAddress in
                     try self.createAddressParameter(poolAddress)
@@ -164,7 +157,6 @@ extension BackstopContractService {
                     self.debugLogger.error("🛡️ ❌ Claim simulation failed: \(error.localizedDescription)")
                     throw self.convertNetworkError(error, operation: "claim")
                 }
-            }
         })
     }
 }
@@ -175,7 +167,6 @@ extension BackstopContractService {
     
     public func drop() async throws {
         try await withTiming(operation: "drop", execute: {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
                 let contractCall = ContractCallParams(
                     contractId: self.config.contractAddress,
                     functionName: "drop",
@@ -201,7 +192,6 @@ extension BackstopContractService {
                     self.debugLogger.error("🛡️ ❌ Drop simulation failed: \(error.localizedDescription)")
                     throw self.convertNetworkError(error, operation: "drop")
                 }
-            }
         })
     }
     
@@ -211,7 +201,6 @@ extension BackstopContractService {
         try validateAddress(to, name: "to")
         
         try await withTiming(operation: "draw", execute: {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
                 let contractCall = ContractCallParams(
                     contractId: self.config.contractAddress,
                     functionName: "draw",
@@ -241,7 +230,6 @@ extension BackstopContractService {
                     self.debugLogger.error("🛡️ ❌ Draw simulation failed: \(error.localizedDescription)")
                     throw self.convertNetworkError(error, operation: "draw")
                 }
-            }
         })
     }
     
@@ -251,7 +239,6 @@ extension BackstopContractService {
         try validateAmount(amount, name: "amount")
         
         try await withTiming(operation: "donate", execute: {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
                 let contractCall = ContractCallParams(
                     contractId: self.config.contractAddress,
                     functionName: "donate",
@@ -281,13 +268,11 @@ extension BackstopContractService {
                     self.debugLogger.error("🛡️ ❌ Donate simulation failed: \(error.localizedDescription)")
                     throw self.convertNetworkError(error, operation: "donate")
                 }
-            }
         })
     }
     
     public func updateTokenValues() async throws -> TokenValueUpdateResult {
         return try await withTiming(operation: "updateTokenValues", execute: {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
                 let contractCall = ContractCallParams(
                     contractId: self.config.contractAddress,
                     functionName: "update_tkn_val",
@@ -313,7 +298,6 @@ extension BackstopContractService {
                     self.debugLogger.error("🛡️ ❌ Update token values simulation failed: \(error.localizedDescription)")
                     throw self.convertNetworkError(error, operation: "updateTokenValues")
                 }
-            }
         })
     }
 }

@@ -52,9 +52,6 @@ public final class BlendOracleService {
             sourceKeyPair: sourceKeyPair
         )
         
-        debugLogger.info("🔮 Oracle service initialized with NetworkService integration")
-        debugLogger.info("🔮 Oracle address: \(oracleAddress)")
-        debugLogger.info("🔮 Using RPC: \(rpcUrl)")
     }
     
     public func getOracleDecimals() async throws -> Int {

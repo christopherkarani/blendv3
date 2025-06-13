@@ -178,6 +178,16 @@ public final class NetworkService: NetworkServiceProtocol {
         contractCall: ContractCallParams,
         force: Bool = false
     ) async throws -> SCValXDR {
+        return try await withRetry(operation: "invoke_\(contractCall.functionName)") {
+            try await self.invokeContractFunctionInternal(contractCall: contractCall, force: force)
+        }
+    }
+    
+    /// Internal contract function invocation without retry logic
+    private func invokeContractFunctionInternal(
+        contractCall: ContractCallParams,
+        force: Bool = false
+    ) async throws -> SCValXDR {
         do {
             let client = try await getSorobanClient(contractId: contractCall.contractId, sourceKeyPair: self.keyPair)
             let result = try await client.invokeMethod(name: contractCall.functionName, args: contractCall.functionArguments, force: force)
@@ -255,6 +265,19 @@ public final class NetworkService: NetworkServiceProtocol {
     ///   - contractCall: The contract call parameters.
     /// - Returns: SimulationStatus containing SimulationResult or error.
     public func simulateContractFunction<Result: Decodable>(
+        contractCall: ContractCallParams
+    ) async -> SimulationStatus<Result> {
+        do {
+            return try await withRetry(operation: "simulate_\(contractCall.functionName)") {
+                return await self.simulateContractFunctionInternal(contractCall: contractCall)
+            }
+        } catch {
+            return .failure(.unknown(error.localizedDescription))
+        }
+    }
+    
+    /// Internal contract function simulation without retry logic
+    private func simulateContractFunctionInternal<Result: Decodable>(
         contractCall: ContractCallParams
     ) async -> SimulationStatus<Result> {
         do {
@@ -407,6 +430,52 @@ public final class NetworkService: NetworkServiceProtocol {
     }
     
     // MARK: - Private Helper Methods
+    
+    /// Execute an operation with retry mechanism using exponential backoff and jitter
+    /// - Parameters:
+    ///   - operation: Name of operation for logging
+    ///   - task: Async task to execute
+    /// - Returns: Result of the operation
+    /// - Throws: Last error encountered after all retries are exhausted
+    private func withRetry<T>(
+        operation: String,
+        task: () async throws -> T
+    ) async throws -> T {
+        let retryConfig = config.retryConfiguration
+        let maxAttempts = retryConfig.maxRetries
+        let baseDelay = retryConfig.baseDelay
+        let maxDelay = retryConfig.maxDelay
+        let exponentialBase = retryConfig.exponentialBase
+        let jitterRange = retryConfig.jitterRange
+        
+        var lastError: Error?
+        
+        for attempt in 1...maxAttempts {
+            do {
+                let result = try await task()
+                if attempt > 1 {
+                    BlendLogger.info("Operation '\(operation)' succeeded on attempt \(attempt)", category: BlendLogger.network)
+                }
+                return result
+            } catch {
+                lastError = error
+                BlendLogger.warning("Attempt \(attempt)/\(maxAttempts) failed for '\(operation)': \(error.localizedDescription)", category: BlendLogger.network)
+                
+                // Don't delay on the last attempt
+                if attempt < maxAttempts {
+                    // Calculate exponential backoff with jitter
+                    let exponentialDelay = min(maxDelay, baseDelay * pow(exponentialBase, Double(attempt - 1)))
+                    let jitter = Double.random(in: jitterRange)
+                    let delay = exponentialDelay * (1.0 + jitter)
+                    
+                    try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+                }
+            }
+        }
+        
+        BlendLogger.error("Operation '\(operation)' failed after \(maxAttempts) attempts", error: lastError, category: BlendLogger.network)
+        throw lastError ?? BlendError.network(.serverError)
+    }
     
     /// Sets up default logging interceptors for requests and responses.
     private func setupDefaultInterceptors() {
