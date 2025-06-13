@@ -19,6 +19,9 @@
 		9E1C12462DFB33A70081E56D /* SimulateHostFunctionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C12422DFB33A70081E56D /* SimulateHostFunctionResult.swift */; };
 		9E1C12472DFB33A70081E56D /* SimulateTransactionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C12432DFB33A70081E56D /* SimulateTransactionResponse.swift */; };
 		9E1C13402DFCCE3E0081E56D /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C133F2DFCCE3E0081E56D /* Position.swift */; };
+		9E1C13442DFCE8220081E56D /* NetworkService+TokenMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C13422DFCE8220081E56D /* NetworkService+TokenMetadata.swift */; };
+		9E1C13452DFCE8220081E56D /* BlendParser+TokenMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C13412DFCE8220081E56D /* BlendParser+TokenMetadata.swift */; };
+		9E1C13472DFCE8330081E56D /* TokenMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C13462DFCE8330081E56D /* TokenMetadata.swift */; };
 		9E7C24272DEAAAB5007C181D /* BlendFinancialCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C24262DEAAAB5007C181D /* BlendFinancialCalculator.swift */; };
 		9E7C24372DEAAE0D007C181D /* BackstopContractService+Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C242B2DEAAE0D007C181D /* BackstopContractService+Functions.swift */; };
 		9E7C24382DEAAE0D007C181D /* BackstopContractServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C24312DEAAE0D007C181D /* BackstopContractServiceProtocol.swift */; };
@@ -109,6 +112,9 @@
 		9E1C12432DFB33A70081E56D /* SimulateTransactionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulateTransactionResponse.swift; sourceTree = "<group>"; };
 		9E1C12442DFB33A70081E56D /* SimulateTransactionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulateTransactionResult.swift; sourceTree = "<group>"; };
 		9E1C133F2DFCCE3E0081E56D /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
+		9E1C13412DFCE8220081E56D /* BlendParser+TokenMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BlendParser+TokenMetadata.swift"; sourceTree = "<group>"; };
+		9E1C13422DFCE8220081E56D /* NetworkService+TokenMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NetworkService+TokenMetadata.swift"; sourceTree = "<group>"; };
+		9E1C13462DFCE8330081E56D /* TokenMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenMetadata.swift; sourceTree = "<group>"; };
 		9E7C24262DEAAAB5007C181D /* BlendFinancialCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendFinancialCalculator.swift; sourceTree = "<group>"; };
 		9E7C242B2DEAAE0D007C181D /* BackstopContractService+Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackstopContractService+Functions.swift"; sourceTree = "<group>"; };
 		9E7C242C2DEAAE0D007C181D /* BackstopContractService+Parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackstopContractService+Parsing.swift"; sourceTree = "<group>"; };
@@ -234,6 +240,7 @@
 		9E1C104C2DFB077C0081E56D /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9E1C13462DFCE8330081E56D /* TokenMetadata.swift */,
 				9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */,
 				9E9781932DE68E6C009333AD /* RetryConfiguration.swift */,
 				9E9781942DE68E6C009333AD /* TimeoutConfiguration.swift */,
@@ -306,6 +313,15 @@
 			children = (
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		9E1C13432DFCE8220081E56D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9E1C13412DFCE8220081E56D /* BlendParser+TokenMetadata.swift */,
+				9E1C13422DFCE8220081E56D /* NetworkService+TokenMetadata.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		9E7C242E2DEAAE0D007C181D /* Extensions */ = {
@@ -386,6 +402,7 @@
 		9E9DA9BD2DFA963A009133E4 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				9E1C13432DFCE8220081E56D /* Extensions */,
 				9E1C104C2DFB077C0081E56D /* Models */,
 				9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */,
 				9EAD3EF52DF7D31400029CE7 /* NetworkServiceProtocol.swift */,
@@ -708,6 +725,8 @@
 				9E7C243C2DEAAE0D007C181D /* BackstopModels.swift in Sources */,
 				9E9388502DF353730015BE14 /* BlendVaultError.swift in Sources */,
 				9E1C123D2DFB33980081E56D /* BlendParsingError.swift in Sources */,
+				9E1C13442DFCE8220081E56D /* NetworkService+TokenMetadata.swift in Sources */,
+				9E1C13452DFCE8220081E56D /* BlendParser+TokenMetadata.swift in Sources */,
 				9E1C123E2DFB33980081E56D /* SCValXDRExtensions.swift in Sources */,
 				9E1C123F2DFB33980081E56D /* SCValXDRParsingDemo.swift in Sources */,
 				9E1C12402DFB33980081E56D /* BlendParsingContext.swift in Sources */,
@@ -732,6 +751,7 @@
 				9ED8DB162DE5240300CB0059 /* Blendv3App.swift in Sources */,
 				9ED8DB182DE5240300CB0059 /* BlendConstants.swift in Sources */,
 				9EDE65032DE703CF00B63E09 /* UserPositionData.swift in Sources */,
+				9E1C13472DFCE8330081E56D /* TokenMetadata.swift in Sources */,
 				9ED8DB232DE5240300CB0059 /* BlendRateCalculator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

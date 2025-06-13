@@ -365,33 +365,40 @@ public final class NetworkService: NetworkServiceProtocol {
             let keys: [String]
         }
         
+        struct SorobanLedgerEntry: Decodable {
+            let key: String
+            let xdr: String
+            let lastModifiedLedgerSeq: Int
+            let liveUntilLedgerSeq: Int?
+        }
+        
+        struct GetLedgerEntriesResponse: Decodable {
+            let entries: [SorobanLedgerEntry]
+            let latestLedger: Int
+        }
+        
         let params = GetLedgerEntriesParams(keys: keys)
         let response = try await performDirectRPC("getLedgerEntries", params: params)
         
-        struct GetLedgerEntriesResponse: Decodable {
-            let entries: [[String: String]]?
-            let error: String?
+        // DEBUG: Log raw response
+        if let responseString = String(data: response, encoding: .utf8) {
+            BlendLogger.debug("🔍 Raw RPC Response: \(responseString)", category: BlendLogger.network)
         }
         
-        let ledgerResponse = try JSONDecoder().decode(GetLedgerEntriesResponse.self, from: response)
-        
-        if let error = ledgerResponse.error {
-            BlendLogger.error("Get ledger entries failed: \(error)", category: BlendLogger.network)
-            throw BlendError.network(.serverError)
+        // Parse JSON-RPC response wrapper first
+        struct JSONRPCResponse: Decodable {
+            let result: GetLedgerEntriesResponse
         }
         
-        guard let entries = ledgerResponse.entries else {
-            BlendLogger.warning("No entries returned from getLedgerEntries", category: BlendLogger.network)
-            return [:]
-        }
+        let rpcResponse = try JSONDecoder().decode(JSONRPCResponse.self, from: response)
+        let ledgerResponse = rpcResponse.result
         
         var result = [String: Any]()
-        for entry in entries {
-            if let key = entry["key"], let xdr = entry["xdr"] {
-                result[key] = xdr
-            }
+        for entry in ledgerResponse.entries {
+            result[entry.key] = entry.xdr
         }
         
+        BlendLogger.debug("getLedgerEntries returned \(ledgerResponse.entries.count) entries", category: BlendLogger.network)
         return result
     }
     

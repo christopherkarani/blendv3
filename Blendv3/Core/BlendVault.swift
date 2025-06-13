@@ -61,8 +61,10 @@ class BlendVault {
         
         let positions = try! await userService.getPositions()
         let asset = BlendConstants.Testnet.xlm
-        try! await userService.submit(requestType: 2, amount: "100", asset: asset)
-        print("Positions Data: ", positions)
+        //try! await userService.submit(requestType: 2, amount: "100", asset: asset)
+        
+        let result = try! await networkService.loadTokenMetadata(contractId: BlendConstants.Testnet.usdc)
+        print("Token Data: ", result)
     }
 }
 
