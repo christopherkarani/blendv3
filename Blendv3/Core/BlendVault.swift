@@ -17,12 +17,16 @@ class BlendVault {
     private let poolID: String = BlendConstants.Testnet.xlmUsdcPool
     private var backstopContractID: String = BlendConstants.Testnet.backstop
     private var oracleAddress: String = BlendConstants.Testnet.oracle
+    private var assetService: BlendAssetServiceProtocol
+    private var userService: UserPositionService
     
     @MainActor
     init(oracleService: BlendOracleServiceProtocol,
          poolService: PoolServiceProtocol,
          backstopService: BackstopContractServiceProtocol,
-         cache: CacheServiceProtocol) {
+         cache: CacheServiceProtocol,
+         assetService: BlendAssetServiceProtocol,
+         userService: UserPositionService) {
         
         self.oracleService = oracleService
         self.poolService = poolService
@@ -30,6 +34,8 @@ class BlendVault {
         self.cacheService = cache
         self.account =  try! KeyPair(secretSeed: "SATOWQKPSRAP7D77C6EMT65OIF543WQUOV6DJBPW4SGUNTP2XSIEVUKP")
         self.networkService = NetworkService(keyPair: account)
+        self.assetService = assetService
+        self.userService = userService
     }
     
     func start() async {
@@ -53,7 +59,10 @@ class BlendVault {
         let assets = try! await assetService.getAssets()
         let assetData = try! await assetService.getAll(assets: assets)
         
-        print("Asset Data: ", assetData)
+        let positions = try! await userService.getPositions()
+        let asset = BlendConstants.Testnet.xlm
+        try! await userService.submit(requestType: 2, amount: "100", asset: asset)
+        print("Positions Data: ", positions)
     }
 }
 
@@ -68,9 +77,10 @@ struct Start {
         let cacheService = CacheService()
         let poolService = PoolService(networkService: networkService)
         let oracleService = BlendOracleService(poolId: BlendConstants.Testnet.oracle, cacheService: cacheService, networkService: networkService, sourceKeyPair: account)
-        var rpcEndpoint: String = BlendConstants.RPC.testnet
-        
-        
+        let rpcEndpoint: String = BlendConstants.RPC.testnet
+        let poolID = BlendConstants.Testnet.xlmUsdcPool
+        let assetService = BlendAssetService(poolID: BlendConstants.Testnet.xlmUsdcPool, networkService: networkService)
+        let userService: UserPositionService = UserPositionService(cacheService: cacheService, networkService: networkService, contractID: poolID, userAccountID: account.accountId)
         let backstopContractAddress = BlendConstants.Testnet.backstop
         let config = BackstopServiceConfig
             .init(
@@ -80,7 +90,7 @@ struct Start {
             )
         let backstopService = BackstopContractService(networkService: networkService, cacheService: cacheService, config: config)
 
-        let vault = BlendVault(oracleService: oracleService, poolService: poolService, backstopService: backstopService, cache: cacheService)
+        let vault = BlendVault(oracleService: oracleService, poolService: poolService, backstopService: backstopService, cache: cacheService, assetService: assetService, userService: userService)
         
         
             await  vault.start()

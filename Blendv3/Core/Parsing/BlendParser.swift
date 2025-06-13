@@ -1612,3 +1612,79 @@ extension BlendParser {
         }
     }
 }
+
+
+extension BlendParser {
+    public static  func decodePositions(from xdrData: SCValXDR) throws -> [Position] {
+        guard case let .map(entries) = xdrData, let unwrappedEntries = entries else {
+
+            throw BlendError.unknown
+        }
+        
+        let liabilities = extractAmountsMap(from: unwrappedEntries, forKey: "liabilities")
+        let collateral = extractAmountsMap(from: unwrappedEntries, forKey: "collateral")
+        let supply = extractAmountsMap(from: unwrappedEntries, forKey: "supply")
+        
+        // Build Positions: prioritize explicit collateral entries, then supply if not already present
+        var positions: [Position] = []
+        var seenAssets: Set<String> = []
+        
+        for (assetId, collateralAmount) in collateral {
+            let assetSymbol = assetIdToSymbol(assetId)
+            let borrowedAmount = liabilities[assetId] ?? 0
+            let healthFactor = calculateHealthFactor(collateralValue: collateralAmount, borrowedAmount: borrowedAmount)
+            positions.append(makePosition(asset: assetSymbol, deposited: Decimal(collateralAmount), borrowed: Decimal(borrowedAmount), collateral: Decimal(collateralAmount), health: healthFactor))
+            seenAssets.insert(assetSymbol)
+        }
+        for (assetId, supplyAmount) in supply {
+            let assetSymbol = assetIdToSymbol(assetId)
+            guard !seenAssets.contains(assetSymbol) else { continue }
+            let borrowedAmount = liabilities[assetId] ?? 0
+            let healthFactor = calculateHealthFactor(collateralValue: supplyAmount, borrowedAmount: borrowedAmount)
+            positions.append(makePosition(asset: assetSymbol, deposited: Decimal(supplyAmount), borrowed: Decimal(borrowedAmount), collateral: Decimal(supplyAmount), health: healthFactor))
+        }
+        return positions
+    }
+
+    private static func extractAmountsMap(from entries: [SCMapEntryXDR], forKey key: String) -> [UInt32: Double] {
+        guard let entry = entries.first(where: { if case .symbol(let k) = $0.key { return k == key }; return false }) else {
+            return [:]
+        }
+        guard case let .map(data) = entry.val, let unwrapped = data else {
+            return [:]
+        }
+        var result: [UInt32: Double] = [:]
+        for subEntry in unwrapped {
+            if case let .u32(assetId) = subEntry.key, case let .i128(value) = subEntry.val {
+                // This assumes value.lo is always positive and safe to convert.
+                result[assetId] = Double(value.lo) / 10_000_000.0
+            }
+        }
+        return result
+    }
+
+    private static func makePosition(asset: String, deposited: Decimal, borrowed: Decimal, collateral: Decimal, health: Double) -> Position {
+        return Position(
+            asset: asset,
+            depositedAmount: deposited,
+            borrowedAmount: borrowed,
+            collateralValue: collateral,
+            healthFactor: Decimal(health)
+        )
+    }
+    
+    private static func assetIdToSymbol(_ id: UInt32) -> String {
+        switch id {
+        case 0: return "XLM"
+        case 3: return "USDC"
+        default: return "UNKNOWN"
+        }
+    }
+
+    /// Calculates the health factor for a position
+    private static func calculateHealthFactor(collateralValue: Double, borrowedAmount: Double) -> Double {
+        guard borrowedAmount > 0 else { return 1.0 }
+        return collateralValue / borrowedAmount
+    }
+}
+
