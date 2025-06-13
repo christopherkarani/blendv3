@@ -81,7 +81,7 @@ extension BlendParser {
         
         var assetAddresses: [OracleAsset] = []
         
-        for (index, item) in array.enumerated() {
+        for (_, item) in array.enumerated() {
             
             if case .address(let addressXDR) = item {
                 
