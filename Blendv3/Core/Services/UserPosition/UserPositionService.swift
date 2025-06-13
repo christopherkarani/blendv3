@@ -14,13 +14,13 @@
 //final class UserPositionService: UserPositionServiceProtocol {
 //    
 //    // MARK: - Properties
-//    
+//
 // 
 //    private let cacheService: CacheServiceProtocol
-//    private let validation: ValidationServiceProtocol
-//    private let configuration: ConfigurationServiceProtocol
+//    private let networkService: NetworkServiceProtocol
 //    private let logger: DebugLogger
 //    
+//    let contractID: String
 //    
 //    // MARK: - Cache Keys
 //    
@@ -34,15 +34,14 @@
 //    // MARK: - Initialization
 //    
 //    init(
-//       // networkService: NetworkServiceProtocol,
+//        contractID: String,
+//        networkService: NetworkServiceProtocol,
 //        cacheService: CacheServiceProtocol,
-//        validation: ValidationServiceProtocol,
-//        configuration: ConfigurationServiceProtocol
+//
 //    ) {
 //        self.networkService = networkService
 //        self.cacheService = cacheService
-//        self.validation = validation
-//        self.configuration = configuration
+//        self.contractID = contractID
 //        self.logger = DebugLogger(subsystem: "com.blendv3.userposition", category: "UserPositionService")
 //    }
 //    
@@ -62,30 +61,6 @@
 //        let positionsResult = try await fetchUserAssetPositions(userId: userId)
 //        let positions = positionsResult
 //        
-//        // Find USDC position
-//        guard let usdcPosition = positions.first(where: { position in
-//            position.assetId == self.configuration.contractAddresses.usdcAddress
-//        }) else {
-//            // User has no USDC position
-//            let emptyPosition = UserPositionData(
-//                userId: userId,
-//                supplied: 0,
-//                borrowed: 0,
-//                collateral: 0,
-//                availableToBorrow: 0,
-//                healthFactor: Decimal.greatestFiniteMagnitude,
-//                netAPY: 0,
-//                claimableEmissions: 0
-//            )
-//            
-//            await self.cacheService.set(
-//                emptyPosition,
-//                key: cacheKey,
-//                ttl: 30 // Short TTL for empty positions
-//            )
-//            
-//            return emptyPosition
-//        }
 //        
 //        // Calculate health factor
 //        let healthFactorResult = try await calculateHealthFactor(userId: userId)
@@ -94,19 +69,12 @@
 //        // Get reserve data for APY calculations
 //        let reserveData = try await fetchReserveData()
 //        
-//        // Calculate net APY
-//        let netAPY = self.calculateNetAPY(
-//            supplied: usdcPosition.supplied,
-//            borrowed: usdcPosition.borrowed,
-//            supplyAPY: reserveData.supplyAPY,
-//            borrowAPY: reserveData.borrowAPY
-//        )
-//        
+//
 //        // Get claimable emissions
 //        let emissionsResult = try await fetchClaimableEmissions(userId: userId)
 //        let emissions = emissionsResult
 //        
-//        let position = UserPositionData(
+//        let position = UserPositionData (
 //            userId: userId,
 //            supplied: usdcPosition.supplied,
 //            borrowed: usdcPosition.borrowed,
@@ -191,23 +159,7 @@
 //    
 //    // MARK: - Calculation Methods
 //    
-//    func calculateNetAPY(
-//        supplied: Decimal,
-//        borrowed: Decimal,
-//        supplyAPY: Decimal,
-//        borrowAPY: Decimal
-//    ) -> Decimal {
-//        guard supplied > 0 || borrowed > 0 else { return 0 }
-//        
-//        let supplyEarnings = supplied * supplyAPY / 100
-//        let borrowCosts = borrowed * borrowAPY / 100
-//        let netEarnings = supplyEarnings - borrowCosts
-//        let totalValue = supplied - borrowed
-//        
-//        guard totalValue > 0 else { return -borrowAPY }
-//        
-//        return (netEarnings / totalValue) * 100
-//    }
+// 
 //    
 //    func calculateAvailableToBorrow(
 //        collateral: Decimal,
@@ -254,6 +206,10 @@
 //                SCValXDR.address(try SCAddressXDR(accountId: userId))
 //            ]
 //        )
+//        
+////        let contractParams = ContractCallParams(contractId: <#T##String#>, functionName: <#T##String#>, functionArguments: <#T##[SCValXDR]#>)
+////
+////        networkService.invokeContractFunction(contractCall: <#T##ContractCallParams#>, force: <#T##Bool#>)
 //        
 //        // Parse response
 //        guard case .map(let positionsMap) = response else {
@@ -361,45 +317,5 @@
 //        return try validation.validateI128(i128) / Decimal(10_000_000)
 //    }
 //    
-//    func fetchReserveData() async throws -> (supplyAPY: Decimal, borrowAPY: Decimal) {
-//        logger.debug("Fetching reserve data for APY calculations")
-//        
-//        let response = try await networkService.invokeContractFunction(
-//            contractId: configuration.contractAddresses.poolAddress,
-//            functionName: "get_reserve",
-//            args: [
-//                SCValXDR.address(try SCAddressXDR(contractId: configuration.contractAddresses.usdcAddress))
-//            ]
-//        )
-//        
-//        // Parse response - this is a simplified version
-//        // In practice, you'd need to parse the full reserve data structure
-//        guard case .map(let reserveMap) = response else {
-//            throw BlendError.validation(.invalidResponse)
-//        }
-//        
-//        var supplyAPY: Decimal = 0
-//        var borrowAPY: Decimal = 0
-//        
-//        // Parse the reserve data to extract APY values
-//        // This is a simplified implementation
-//        for entry in reserveMap ?? [] {
-//            guard case .symbol(let symbol) = entry.key else { continue }
-//            
-//            switch symbol {
-//            case "supply_rate":
-//                if case .u32(let rate) = entry.val {
-//                    supplyAPY = Decimal(rate) / 10000 // Convert basis points to percentage
-//                }
-//            case "borrow_rate":
-//                if case .u32(let rate) = entry.val {
-//                    borrowAPY = Decimal(rate) / 10000 // Convert basis points to percentage
-//                }
-//            default:
-//                break
-//            }
-//        }
-//        
-//        return (supplyAPY: supplyAPY, borrowAPY: borrowAPY)
-//    }
+//    
 //}

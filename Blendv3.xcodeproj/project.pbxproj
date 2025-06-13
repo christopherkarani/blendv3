@@ -33,7 +33,6 @@
 		9E9781A42DE68E6C009333AD /* TimeoutConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781942DE68E6C009333AD /* TimeoutConfiguration.swift */; };
 		9E9781B22DE68F7F009333AD /* BlendVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781B02DE68F7F009333AD /* BlendVault.swift */; };
 		9EA449D02DF0FF3C00F6CC6D /* UserPositionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CC2DF0FF3C00F6CC6D /* UserPositionService.swift */; };
-		9EA449D12DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CD2DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift */; };
 		9EA449D22DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */; };
 		9EAD3EED2DF7BDF600029CE7 /* SorobanTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */; };
 		9EAD3EF22DF7D1F000029CE7 /* OracleContractFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD3EEE2DF7D1F000029CE7 /* OracleContractFunction.swift */; };
@@ -122,7 +121,6 @@
 		9E9781942DE68E6C009333AD /* TimeoutConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutConfiguration.swift; sourceTree = "<group>"; };
 		9E9781B02DE68F7F009333AD /* BlendVault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendVault.swift; sourceTree = "<group>"; };
 		9EA449CC2DF0FF3C00F6CC6D /* UserPositionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionService.swift; sourceTree = "<group>"; };
-		9EA449CD2DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionServiceFactory.swift; sourceTree = "<group>"; };
 		9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionServiceProtocol.swift; sourceTree = "<group>"; };
 		9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SorobanTypes.swift; sourceTree = "<group>"; };
 		9EAD3EEE2DF7D1F000029CE7 /* OracleContractFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OracleContractFunction.swift; sourceTree = "<group>"; };
@@ -373,6 +371,7 @@
 		9E9781B12DE68F7F009333AD /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				9ED8DABC2DE5240300CB0059 /* Constants */,
 				9E1C123C2DFB33980081E56D /* Parsing */,
 				9ED8DB592DE5434300CB0059 /* Utilities */,
 				9E9781AF2DE68F7F009333AD /* Services */,
@@ -419,7 +418,6 @@
 				9E1C104F2DFB09360081E56D /* Models */,
 				9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */,
 				9EA449CC2DF0FF3C00F6CC6D /* UserPositionService.swift */,
-				9EA449CD2DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift */,
 			);
 			path = UserPosition;
 			sourceTree = "<group>";
@@ -443,7 +441,6 @@
 				9ED8DB602DE543FB00CB0059 /* Docs */,
 				9ED8DAAC2DE5240300CB0059 /* BlendApp.swift */,
 				9ED8DAB92DE5240300CB0059 /* Blendv3App.swift */,
-				9ED8DABC2DE5240300CB0059 /* Constants */,
 				9ED8DABE2DE5240300CB0059 /* DebugLogView.swift */,
 				9ED8DACF2DE5240300CB0059 /* Preview Assets.xcassets */,
 				9ED8DAD02DE5240300CB0059 /* Preview Content */,
@@ -696,7 +693,6 @@
 				9EDE64FF2DE703A100B63E09 /* AssetPosition.swift in Sources */,
 				9EA449D02DF0FF3C00F6CC6D /* UserPositionService.swift in Sources */,
 				9E1C12362DFB2F950081E56D /* ContractCallParams.swift in Sources */,
-				9EA449D12DF0FF3C00F6CC6D /* UserPositionServiceFactory.swift in Sources */,
 				9EA449D22DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift in Sources */,
 				9E7C24372DEAAE0D007C181D /* BackstopContractService+Functions.swift in Sources */,
 				9E7C24382DEAAE0D007C181D /* BackstopContractServiceProtocol.swift in Sources */,

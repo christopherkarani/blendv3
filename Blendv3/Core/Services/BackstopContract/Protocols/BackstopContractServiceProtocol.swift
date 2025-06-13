@@ -1,5 +1,5 @@
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 // MARK: - Backstop Contract Service Protocol
 
