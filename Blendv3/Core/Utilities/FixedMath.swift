@@ -12,6 +12,9 @@ public enum FixedMath {
     /// Scale factor for 9 decimal places (10^9)
     public static let SCALAR_9: Decimal = 1_000_000_000
     
+    /// Scale factor for 12 decimal places (10^12)
+    public static let SCALAR_12: Decimal = 1_000_000_000_000
+    
     // MARK: - Multiplication
     
     /// Multiply two fixed-point numbers with ceiling rounding

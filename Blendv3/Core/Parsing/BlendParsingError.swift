@@ -16,6 +16,13 @@ public enum BlendParsingError: Error, LocalizedError, Sendable {
     case conversionFailed(String)
     case malformedResponse(String)
     
+    // Additional error cases for Oracle parsing
+    case invalidData
+    case unsupportedType(String)
+    case decodingError(Error)
+    case invalidFormat(String)
+    case invalidResponse(String)
+    
     public var errorDescription: String? {
         switch self {
         case .invalidType(let expected, let actual):
@@ -30,6 +37,16 @@ public enum BlendParsingError: Error, LocalizedError, Sendable {
             return "Conversion failed: \(description)"
         case .malformedResponse(let description):
             return "Malformed response: \(description)"
+        case .invalidData:
+            return "Invalid data provided for parsing"
+        case .unsupportedType(let type):
+            return "Unsupported type: \(type)"
+        case .decodingError(let error):
+            return "Decoding error: \(error.localizedDescription)"
+        case .invalidFormat(let format):
+            return "Invalid format: \(format)"
+        case .invalidResponse(let message):
+            return "Invalid response: \(message)"
         }
     }
 }

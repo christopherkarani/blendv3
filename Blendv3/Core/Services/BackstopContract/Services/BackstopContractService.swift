@@ -11,26 +11,23 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
     internal let networkService: NetworkService
     internal let cacheService: CacheServiceProtocol
     internal let config: BackstopServiceConfig
+    internal let blendParser: BlendParser
     
     // Debug logging
     internal let debugLogger = DebugLogger(subsystem: "com.blendv3.backstop", category: "BackstopService")
-    
-    // Retry configuration
-    internal let maxRetries: Int
-    internal let retryDelay: TimeInterval
     
     // MARK: - Initialization
     
     public init(
         networkService: NetworkService,
         cacheService: CacheServiceProtocol,
-        config: BackstopServiceConfig
+        config: BackstopServiceConfig,
+        blendParser: BlendParser = BlendParser()
     ) {
         self.networkService = networkService
         self.cacheService = cacheService
         self.config = config
-        self.maxRetries = config.maxRetries
-        self.retryDelay = config.retryDelay
+        self.blendParser = blendParser
         
         debugLogger.info("🛡️ Backstop service initialized")
         debugLogger.info("🛡️ Contract: \(config.contractAddress)")
@@ -44,9 +41,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
         try validateAddress(poolAddress, name: "poolAddress")
         try validateAmount(amount, name: "amount")
         
-        return try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-            let sorobanServer = SorobanServer(endpoint: self.config.rpcUrl)
-            
+        return try await withTiming(operation: "deposit", execute: {
             let contractCall = ContractCallParams(
                 contractId: self.config.contractAddress,
                 functionName: "deposit",
@@ -57,11 +52,26 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
                 ]
             )
             
-            let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            let sharesReceived = try self.parseI128Response(response)
+            // 1. Simulate the contract call first
+            let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
             
-            return DepositResult(sharesReceived: sharesReceived)
-        }
+            switch simulationResult {
+            case .success(_):
+                // 2. If simulation succeeds, invoke the actual contract
+                do {
+                    let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                    let sharesReceived = try self.blendParser.parseI128Response(invocationResult)
+                    return DepositResult(sharesReceived: sharesReceived)
+                } catch {
+                    self.debugLogger.error("🛡️ ❌ Deposit invocation failed: \(error.localizedDescription)")
+                    throw self.convertInvocationError(error, operation: "deposit")
+                }
+                
+            case .failure(let error):
+                self.debugLogger.error("🛡️ ❌ Deposit simulation failed: \(error.localizedDescription)")
+                throw self.convertNetworkError(error, operation: "deposit")
+            }
+        })
     }
     
     public func queueWithdrawal(from: String, poolAddress: String, amount: Decimal) async throws -> Q4W {
@@ -69,9 +79,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
         try validateAddress(poolAddress, name: "poolAddress")
         try validateAmount(amount, name: "amount")
         
-        return try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-            let sorobanServer = SorobanServer(endpoint: self.config.rpcUrl)
-            
+        return try await withTiming(operation: "queueWithdrawal", execute: {
             let contractCall = ContractCallParams(
                 contractId: self.config.contractAddress,
                 functionName: "queue_withdrawal",
@@ -82,9 +90,25 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
                 ]
             )
             
-            let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            return try self.parseQ4WResponse(response)
-        }
+            // 1. Simulate the contract call first
+            let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
+            
+            switch simulationResult {
+            case .success(_):
+                // 2. If simulation succeeds, invoke the actual contract
+                do {
+                    let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                    return try self.blendParser.parseQ4WResponse(invocationResult)
+                } catch {
+                    self.debugLogger.error("🛡️ ❌ Queue withdrawal invocation failed: \(error.localizedDescription)")
+                    throw self.convertInvocationError(error, operation: "queueWithdrawal")
+                }
+                
+            case .failure(let error):
+                self.debugLogger.error("🛡️ ❌ Queue withdrawal simulation failed: \(error.localizedDescription)")
+                throw self.convertNetworkError(error, operation: "queueWithdrawal")
+            }
+        })
     }
     
     public func dequeueWithdrawal(from: String, poolAddress: String, amount: Decimal) async throws {
@@ -92,9 +116,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
         try validateAddress(poolAddress, name: "poolAddress")
         try validateAmount(amount, name: "amount")
         
-        try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-            let sorobanServer = SorobanServer(endpoint: self.config.rpcUrl)
-            
+        try await withTiming(operation: "dequeueWithdrawal", execute: {
             let contractCall = ContractCallParams(
                 contractId: self.config.contractAddress,
                 functionName: "dequeue_withdrawal",
@@ -105,8 +127,26 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
                 ]
             )
             
-            _ = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-        }
+            // 1. Simulate the contract call first
+            let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
+            
+            switch simulationResult {
+            case .success(_):
+                // 2. If simulation succeeds, invoke the actual contract
+                do {
+                    _ = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                    // Dequeue withdrawal doesn't return a value
+                    return
+                } catch {
+                    self.debugLogger.error("🛡️ ❌ Dequeue withdrawal invocation failed: \(error.localizedDescription)")
+                    throw self.convertInvocationError(error, operation: "dequeueWithdrawal")
+                }
+                
+            case .failure(let error):
+                self.debugLogger.error("🛡️ ❌ Dequeue withdrawal simulation failed: \(error.localizedDescription)")
+                throw self.convertNetworkError(error, operation: "dequeueWithdrawal")
+            }
+        })
     }
     
     public func withdraw(from: String, poolAddress: String, amount: Decimal) async throws -> WithdrawalResult {
@@ -114,9 +154,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
         try validateAddress(poolAddress, name: "poolAddress")
         try validateAmount(amount, name: "amount")
         
-        return try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-            let sorobanServer = SorobanServer(endpoint: self.config.rpcUrl)
-            
+        return try await withTiming(operation: "withdraw", execute: {
             let contractCall = ContractCallParams(
                 contractId: self.config.contractAddress,
                 functionName: "withdraw",
@@ -127,11 +165,26 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
                 ]
             )
             
-            let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            let amountWithdrawn = try self.parseI128Response(response)
+            // 1. Simulate the contract call first
+            let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
             
-            return WithdrawalResult(amountWithdrawn: amountWithdrawn)
-        }
+            switch simulationResult {
+            case .success(_):
+                // 2. If simulation succeeds, invoke the actual contract
+                do {
+                    let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                    let amountWithdrawn = try self.blendParser.parseI128Response(invocationResult)
+                    return WithdrawalResult(amountWithdrawn: amountWithdrawn)
+                } catch {
+                    self.debugLogger.error("🛡️ ❌ Withdraw invocation failed: \(error.localizedDescription)")
+                    throw self.convertInvocationError(error, operation: "withdraw")
+                }
+                
+            case .failure(let error):
+                self.debugLogger.error("🛡️ ❌ Withdraw simulation failed: \(error.localizedDescription)")
+                throw self.convertNetworkError(error, operation: "withdraw")
+            }
+        })
     }
     
     // MARK: - Query Functions
@@ -146,9 +199,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
             return cached
         }
         
-        let balance = try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-            let sorobanServer = SorobanServer(endpoint: self.config.rpcUrl)
-            
+        let balance = try await withTiming(operation: "getUserBalance", execute: {
             let contractCall = ContractCallParams(
                 contractId: self.config.contractAddress,
                 functionName: "user_balance",
@@ -158,9 +209,25 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
                 ]
             )
             
-            let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            return try self.parseUserBalanceResponse(response)
-        }
+            // 1. Simulate the contract call first
+            let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
+            
+            switch simulationResult {
+            case .success(_):
+                // 2. If simulation succeeds, invoke the actual contract
+                do {
+                    let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                    return try self.blendParser.parseUserBalanceResponse(invocationResult)
+                } catch {
+                    self.debugLogger.error("🛡️ ❌ Get user balance invocation failed: \(error.localizedDescription)")
+                    throw self.convertInvocationError(error, operation: "getUserBalance")
+                }
+                
+            case .failure(let error):
+                self.debugLogger.error("🛡️ ❌ Get user balance simulation failed: \(error.localizedDescription)")
+                throw self.convertNetworkError(error, operation: "getUserBalance")
+            }
+        })
         
         await cacheService.set(balance, key: cacheKey, ttl: config.cacheConfig.userBalanceTTL)
         return balance
@@ -175,9 +242,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
             return cached
         }
         
-        let poolData = try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-            let sorobanServer = SorobanServer(endpoint: self.config.rpcUrl)
-            
+        let poolData = try await withTiming(operation: "getPoolData", execute: {
             let contractCall = ContractCallParams(
                 contractId: self.config.contractAddress,
                 functionName: "pool_data",
@@ -186,10 +251,25 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
                 ]
             )
             
-            let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            dump(response)
-            return try self.parsePoolBackstopDataResponse(response)
-        }
+            // 1. Simulate the contract call first
+            let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
+            
+            switch simulationResult {
+            case .success(_):
+                // 2. If simulation succeeds, invoke the actual contract
+                do {
+                    let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                    return try self.blendParser.parsePoolBackstopDataResponse(invocationResult)
+                } catch {
+                    self.debugLogger.error("🛡️ ❌ Get pool data invocation failed: \(error.localizedDescription)")
+                    throw self.convertInvocationError(error, operation: "getPoolData")
+                }
+                
+            case .failure(let error):
+                self.debugLogger.error("🛡️ ❌ Get pool data simulation failed: \(error.localizedDescription)")
+                throw self.convertNetworkError(error, operation: "getPoolData")
+            }
+        })
         
         await cacheService.set(poolData, key: cacheKey, ttl: config.cacheConfig.poolDataTTL)
         return poolData
@@ -202,18 +282,32 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
             return cached
         }
         
-        let tokenAddress = try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-            let sorobanServer = SorobanServer(endpoint: self.config.rpcUrl)
-            
+        let tokenAddress = try await withTiming(operation: "getBackstopToken", execute: {
             let contractCall = ContractCallParams(
                 contractId: self.config.contractAddress,
                 functionName: "backstop_token",
                 functionArguments: []
             )
             
-            let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            return try self.parseAddressResponse(response)
-        }
+            // 1. Simulate the contract call first
+            let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
+            
+            switch simulationResult {
+            case .success(_):
+                // 2. If simulation succeeds, invoke the actual contract
+                do {
+                    let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                    return try self.blendParser.parseAddressResponse(invocationResult)
+                } catch {
+                    self.debugLogger.error("🛡️ ❌ Get backstop token invocation failed: \(error.localizedDescription)")
+                    throw self.convertInvocationError(error, operation: "getBackstopToken")
+                }
+                
+            case .failure(let error):
+                self.debugLogger.error("🛡️ ❌ Get backstop token simulation failed: \(error.localizedDescription)")
+                throw self.convertNetworkError(error, operation: "getBackstopToken")
+            }
+        })
         
         await cacheService.set(tokenAddress, key: cacheKey, ttl: config.cacheConfig.tokenAddressTTL)
         return tokenAddress
@@ -229,53 +323,42 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
 
 extension BackstopContractService {
     
-    /// Simulate contract call using Soroban RPC
-    internal func simulateContractCall(sorobanServer: SorobanServer, contractCall: ContractCallParams) async throws -> SCValXDR {
-        let simulator = SorobanTransactionSimulator(debugLogger: debugLogger)
-        
-        // Convert ContractCallParams to OracleContractCallBuilder
-        // This is needed because the simulator now expects OracleContractCallBuilder instead of ContractCallParams
-        guard let function = OracleContractFunction(rawValue: contractCall.functionName) else {
-            throw BackstopError.invalidParameters("Invalid function name: \(contractCall.functionName)")
+    /// Convert NetworkSimulationError to BackstopError
+    /// - Parameters:
+    ///   - error: The network simulation error
+    ///   - operation: The operation that failed for context
+    /// - Returns: BackstopError with appropriate error type
+    internal func convertNetworkError(_ error: NetworkSimulationError, operation: String) -> BackstopError {
+        switch error {
+        case .transactionFailed(let message):
+            return BackstopError.simulationError("Transaction failed during \(operation): \(message)", nil)
+        case .connectionFailed(let message):
+            return BackstopError.simulationError("Connection failed during \(operation): \(message)", nil)
+        case .invalidResponse(let message):
+            return BackstopError.simulationError("Invalid response during \(operation): \(message)", nil)
+        case .unknown(let message):
+            return BackstopError.simulationError("Unknown error during \(operation): \(message)", nil)
         }
-        
-        var builder = OracleContractCallBuilder(
-            contractId: contractCall.contractId,
-            function: function
-        )
-        
-        // Add any required arguments through the builder pattern
-        // Note: This is a simplified approach. In a complete implementation,
-        // you would need to properly map the arguments based on the function requirements.
-        
-        return try await simulator.simulate(server: sorobanServer, contractCallBuilder: builder)
     }
     
-    /// Retry mechanism with exponential backoff
-    internal func withRetry<T>(
-        maxAttempts: Int,
-        delay: TimeInterval,
-        operation: @escaping () async throws -> T
-    ) async throws -> T {
-        var lastError: Error?
-        
-        for attempt in 1...maxAttempts {
-            do {
-                let result = try await operation()
-                if attempt > 1 {
-                    debugLogger.info("🛡️ ✅ Operation succeeded on attempt \(attempt)")
-                }
-                return result
-            } catch {
-                lastError = error
-                debugLogger.warning("🛡️ ❌ Attempt \(attempt) failed: \(error.localizedDescription)")
-                
-                if attempt < maxAttempts {
-                    try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
-                }
+    /// Convert contract invocation error to BackstopError
+    /// - Parameters:
+    ///   - error: The invocation error
+    ///   - operation: The operation that failed for context
+    /// - Returns: BackstopError with appropriate error type
+    internal func convertInvocationError(_ error: Error, operation: String) -> BackstopError {
+        if let blendError = error as? BlendError {
+            switch blendError {
+            case .transaction(.failed):
+                return BackstopError.simulationError("Contract invocation failed during \(operation)", error)
+            case .validation(.invalidResponse):
+                return BackstopError.simulationError("Invalid invocation response during \(operation)", error)
+            default:
+                return BackstopError.simulationError("Invocation error during \(operation): \(blendError.localizedDescription)", error)
             }
         }
-        
-        throw BackstopError.simulationError("All attempts failed", lastError)
+        return BackstopError.simulationError("Contract invocation failed during \(operation): \(error.localizedDescription)", error)
     }
+    
+
 }

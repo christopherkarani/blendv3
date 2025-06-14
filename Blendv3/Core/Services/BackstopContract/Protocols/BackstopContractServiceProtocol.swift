@@ -1,5 +1,5 @@
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 // MARK: - Backstop Contract Service Protocol
 
@@ -313,8 +313,6 @@ public struct BackstopServiceConfig: Sendable {
     public let contractAddress: String
     public let rpcUrl: String
     public let network: Network
-    public let maxRetries: Int
-    public let retryDelay: TimeInterval
     public let timeoutInterval: TimeInterval
     public let cacheConfig: BackstopCacheConfig
     
@@ -322,16 +320,12 @@ public struct BackstopServiceConfig: Sendable {
         contractAddress: String,
         rpcUrl: String,
         network: Network,
-        maxRetries: Int = 3,
-        retryDelay: TimeInterval = 1.0,
         timeoutInterval: TimeInterval = 30.0,
         cacheConfig: BackstopCacheConfig = BackstopCacheConfig()
     ) {
         self.contractAddress = contractAddress
         self.rpcUrl = rpcUrl
         self.network = network
-        self.maxRetries = maxRetries
-        self.retryDelay = retryDelay
         self.timeoutInterval = timeoutInterval
         self.cacheConfig = cacheConfig
     }

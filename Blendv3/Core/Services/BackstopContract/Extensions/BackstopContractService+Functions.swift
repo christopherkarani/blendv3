@@ -6,19 +6,33 @@ import stellarsdk
 extension BackstopContractService {
     
     public func gulpEmissions() async throws {
-        try await withTiming(operation: "gulpEmissions") {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-                let sorobanServer = SorobanServer(endpoint: self.config.rpcUrl)
+        try await withTiming(operation: "gulpEmissions", execute: {
+            let contractCall = ContractCallParams(
+                contractId: self.config.contractAddress,
+                functionName: "gulp_emissions",
+                functionArguments: []
+            )
+            
+            // 1. Simulate the contract call first
+            let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
+            
+            switch simulationResult {
+            case .success(_):
+                // 2. If simulation succeeds, invoke the actual contract
+                do {
+                    _ = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                    // Gulp emissions doesn't return a value
+                    return
+                } catch {
+                    self.debugLogger.error("🛡️ ❌ Gulp emissions invocation failed: \(error.localizedDescription)")
+                    throw self.convertInvocationError(error, operation: "gulpEmissions")
+                }
                 
-                let contractCall = ContractCallParams(
-                    contractId: self.config.contractAddress,
-                    functionName: "gulp_emissions",
-                    functionArguments: []
-                )
-                
-                _ = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
+            case .failure(let error):
+                self.debugLogger.error("🛡️ ❌ Gulp emissions simulation failed: \(error.localizedDescription)")
+                throw self.convertNetworkError(error, operation: "gulpEmissions")
             }
-        }
+        })
     }
     
     public func addReward(toAdd: String, toRemove: String) async throws {
@@ -34,10 +48,7 @@ extension BackstopContractService {
             try validateAddress(toRemove, name: "toRemove")
         }
         
-        try await withTiming(operation: "addReward") {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-                let sorobanServer = SorobanServer(endpoint: self.config.rpcUrl)
-                
+        try await withTiming(operation: "addReward", execute: {
                 let contractCall = ContractCallParams(
                     contractId: self.config.contractAddress,
                     functionName: "add_reward",
@@ -47,18 +58,32 @@ extension BackstopContractService {
                     ]
                 )
                 
-                _ = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            }
-        }
+                // 1. Simulate the contract call first
+                let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
+                
+                switch simulationResult {
+                case .success(_):
+                    // 2. If simulation succeeds, invoke the actual contract
+                    do {
+                        _ = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                        // Add reward doesn't return a value
+                        return
+                    } catch {
+                        self.debugLogger.error("🛡️ ❌ Add reward invocation failed: \(error.localizedDescription)")
+                        throw self.convertInvocationError(error, operation: "addReward")
+                    }
+                    
+                case .failure(let error):
+                    self.debugLogger.error("🛡️ ❌ Add reward simulation failed: \(error.localizedDescription)")
+                    throw self.convertNetworkError(error, operation: "addReward")
+                }
+        })
     }
     
     public func gulpPoolEmissions(poolAddress: String) async throws -> Int128 {
         try validateAddress(poolAddress, name: "poolAddress")
         
-        return try await withTiming(operation: "gulpPoolEmissions") {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-                let sorobanServer = SorobanServer(endpoint: self.config.rpcUrl)
-                
+        return try await withTiming(operation: "gulpPoolEmissions", execute: {
                 let contractCall = ContractCallParams(
                     contractId: self.config.contractAddress,
                     functionName: "gulp_pool_emissions",
@@ -67,10 +92,25 @@ extension BackstopContractService {
                     ]
                 )
                 
-                let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-                return try self.parseI128Response(response)
-            }
-        }
+                // 1. Simulate the contract call first
+                let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
+                
+                switch simulationResult {
+                case .success(_):
+                    // 2. If simulation succeeds, invoke the actual contract
+                    do {
+                        let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                        return try self.blendParser.parseI128Response(invocationResult)
+                    } catch {
+                        self.debugLogger.error("🛡️ ❌ Gulp pool emissions invocation failed: \(error.localizedDescription)")
+                        throw self.convertInvocationError(error, operation: "gulpPoolEmissions")
+                    }
+                    
+                case .failure(let error):
+                    self.debugLogger.error("🛡️ ❌ Gulp pool emissions simulation failed: \(error.localizedDescription)")
+                    throw self.convertNetworkError(error, operation: "gulpPoolEmissions")
+                }
+        })
     }
     
     public func claim(from: String, poolAddresses: [String], to: String) async throws -> ClaimResult {
@@ -82,10 +122,7 @@ extension BackstopContractService {
             try validateAddress(poolAddress, name: "poolAddresses[\(index)]")
         }
         
-        return try await withTiming(operation: "claim") {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-                let sorobanServer = SorobanServer(endpoint: self.config.rpcUrl)
-                
+        return try await withTiming(operation: "claim", execute: {
                 // Create vector of pool addresses
                 let poolAddressParams = try poolAddresses.map { poolAddress in
                     try self.createAddressParameter(poolAddress)
@@ -101,12 +138,26 @@ extension BackstopContractService {
                     ]
                 )
                 
-                let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-                let totalClaimed = try self.parseI128Response(response)
+                // 1. Simulate the contract call first
+                let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
                 
-                return ClaimResult(totalClaimed: totalClaimed)
-            }
-        }
+                switch simulationResult {
+                case .success(_):
+                    // 2. If simulation succeeds, invoke the actual contract
+                    do {
+                        let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                        let totalClaimed = try self.blendParser.parseI128Response(invocationResult)
+                        return ClaimResult(totalClaimed: totalClaimed)
+                    } catch {
+                        self.debugLogger.error("🛡️ ❌ Claim invocation failed: \(error.localizedDescription)")
+                        throw self.convertInvocationError(error, operation: "claim")
+                    }
+                    
+                case .failure(let error):
+                    self.debugLogger.error("🛡️ ❌ Claim simulation failed: \(error.localizedDescription)")
+                    throw self.convertNetworkError(error, operation: "claim")
+                }
+        })
     }
 }
 
@@ -115,19 +166,33 @@ extension BackstopContractService {
 extension BackstopContractService {
     
     public func drop() async throws {
-        try await withTiming(operation: "drop") {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-                let sorobanServer = SorobanServer(endpoint: self.config.rpcUrl)
-                
+        try await withTiming(operation: "drop", execute: {
                 let contractCall = ContractCallParams(
                     contractId: self.config.contractAddress,
                     functionName: "drop",
                     functionArguments: []
                 )
                 
-                _ = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            }
-        }
+                // 1. Simulate the contract call first
+                let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
+                
+                switch simulationResult {
+                case .success(_):
+                    // 2. If simulation succeeds, invoke the actual contract
+                    do {
+                        _ = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                        // Drop doesn't return a value
+                        return
+                    } catch {
+                        self.debugLogger.error("🛡️ ❌ Drop invocation failed: \(error.localizedDescription)")
+                        throw self.convertInvocationError(error, operation: "drop")
+                    }
+                    
+                case .failure(let error):
+                    self.debugLogger.error("🛡️ ❌ Drop simulation failed: \(error.localizedDescription)")
+                    throw self.convertNetworkError(error, operation: "drop")
+                }
+        })
     }
     
     public func draw(poolAddress: String, amount: Decimal, to: String) async throws {
@@ -135,10 +200,7 @@ extension BackstopContractService {
         try validateAmount(amount, name: "amount")
         try validateAddress(to, name: "to")
         
-        try await withTiming(operation: "draw") {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-                let sorobanServer = SorobanServer(endpoint: self.config.rpcUrl)
-                
+        try await withTiming(operation: "draw", execute: {
                 let contractCall = ContractCallParams(
                     contractId: self.config.contractAddress,
                     functionName: "draw",
@@ -149,9 +211,26 @@ extension BackstopContractService {
                     ]
                 )
                 
-                _ = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            }
-        }
+                // 1. Simulate the contract call first
+                let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
+                
+                switch simulationResult {
+                case .success(_):
+                    // 2. If simulation succeeds, invoke the actual contract
+                    do {
+                        _ = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                        // Draw doesn't return a value
+                        return
+                    } catch {
+                        self.debugLogger.error("🛡️ ❌ Draw invocation failed: \(error.localizedDescription)")
+                        throw self.convertInvocationError(error, operation: "draw")
+                    }
+                    
+                case .failure(let error):
+                    self.debugLogger.error("🛡️ ❌ Draw simulation failed: \(error.localizedDescription)")
+                    throw self.convertNetworkError(error, operation: "draw")
+                }
+        })
     }
     
     public func donate(from: String, poolAddress: String, amount: Decimal) async throws {
@@ -159,10 +238,7 @@ extension BackstopContractService {
         try validateAddress(poolAddress, name: "poolAddress")
         try validateAmount(amount, name: "amount")
         
-        try await withTiming(operation: "donate") {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-                let sorobanServer = SorobanServer(endpoint: self.config.rpcUrl)
-                
+        try await withTiming(operation: "donate", execute: {
                 let contractCall = ContractCallParams(
                     contractId: self.config.contractAddress,
                     functionName: "donate",
@@ -173,28 +249,56 @@ extension BackstopContractService {
                     ]
                 )
                 
-                _ = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-            }
-        }
+                // 1. Simulate the contract call first
+                let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
+                
+                switch simulationResult {
+                case .success(_):
+                    // 2. If simulation succeeds, invoke the actual contract
+                    do {
+                        _ = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                        // Donate doesn't return a value
+                        return
+                    } catch {
+                        self.debugLogger.error("🛡️ ❌ Donate invocation failed: \(error.localizedDescription)")
+                        throw self.convertInvocationError(error, operation: "donate")
+                    }
+                    
+                case .failure(let error):
+                    self.debugLogger.error("🛡️ ❌ Donate simulation failed: \(error.localizedDescription)")
+                    throw self.convertNetworkError(error, operation: "donate")
+                }
+        })
     }
     
     public func updateTokenValues() async throws -> TokenValueUpdateResult {
-        return try await withTiming(operation: "updateTokenValues") {
-            try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
-                let sorobanServer = SorobanServer(endpoint: self.config.rpcUrl)
-                
+        return try await withTiming(operation: "updateTokenValues", execute: {
                 let contractCall = ContractCallParams(
                     contractId: self.config.contractAddress,
                     functionName: "update_tkn_val",
                     functionArguments: []
                 )
                 
-                let response = try await self.simulateContractCall(sorobanServer: sorobanServer, contractCall: contractCall)
-                let (blndValue, usdcValue) = try self.parseTokenValueTupleResponse(response)
+                // 1. Simulate the contract call first
+                let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
                 
-                return TokenValueUpdateResult(blndValue: blndValue, usdcValue: usdcValue)
-            }
-        }
+                switch simulationResult {
+                case .success(_):
+                    // 2. If simulation succeeds, invoke the actual contract
+                    do {
+                        let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
+                        let (blndValue, usdcValue) = try self.blendParser.parseTokenValueTupleResponse(invocationResult)
+                        return TokenValueUpdateResult(blndValue: blndValue, usdcValue: usdcValue)
+                    } catch {
+                        self.debugLogger.error("🛡️ ❌ Update token values invocation failed: \(error.localizedDescription)")
+                        throw self.convertInvocationError(error, operation: "updateTokenValues")
+                    }
+                    
+                case .failure(let error):
+                    self.debugLogger.error("🛡️ ❌ Update token values simulation failed: \(error.localizedDescription)")
+                    throw self.convertNetworkError(error, operation: "updateTokenValues")
+                }
+        })
     }
 }
 
@@ -210,7 +314,7 @@ extension BackstopContractService {
             try validateAddress(pool, name: "pools[\(index)]")
         }
         
-        return try await withTiming(operation: "getUserBalances(batch)") {
+        return try await withTiming(operation: "getUserBalances(batch)", execute: {
             var results: [String: UserBalance] = [:]
             
             // Execute requests concurrently for better performance
@@ -228,7 +332,7 @@ extension BackstopContractService {
             }
             
             return results
-        }
+        })
     }
     
     public func getPoolDataBatch(pools: [String]) async throws -> [String: PoolBackstopData] {
@@ -238,7 +342,7 @@ extension BackstopContractService {
             try validateAddress(pool, name: "pools[\(index)]")
         }
         
-        return try await withTiming(operation: "getPoolDataBatch") {
+        return try await withTiming(operation: "getPoolDataBatch", execute: {
             var results: [String: PoolBackstopData] = [:]
             
             // Execute requests concurrently for better performance
@@ -256,76 +360,8 @@ extension BackstopContractService {
             }
             
             return results
-        }
+        })
     }
 }
 
-// MARK: - Additional Parsing Functions
 
-extension BackstopContractService {
-    
-    /// Parse tuple response for token values (BLND, USDC)
-    internal func parseTokenValueTupleResponse(_ response: SCValXDR) throws -> (Int128, Int128) {
-        guard case .vec(let vecOptional) = response,
-              let vec = vecOptional,
-              vec.count == 2 else {
-            throw BackstopError.parsingError(
-                "parseTokenValueTupleResponse",
-                expectedType: "tuple<i128,i128>",
-                actualType: String(describing: type(of: response))
-            )
-        }
-        
-        let blndValue = try parseI128Response(vec[0])
-        let usdcValue = try parseI128Response(vec[1])
-        
-        return (blndValue, usdcValue)
-    }
-}
-
-// MARK: - Configuration Factory
-
-extension BackstopContractService {
-    
-    /// Create service configuration for testnet
-    public static func testnetConfig() -> BackstopServiceConfig {
-        return BackstopServiceConfig(
-            contractAddress: BlendConstants.Testnet.backstop,
-            rpcUrl: BlendConstants.RPC.testnet,
-            network: .testnet
-        )
-    }
-    
-    /// Create service configuration for mainnet
-    public static func mainnetConfig() -> BackstopServiceConfig {
-        return BackstopServiceConfig(
-            contractAddress: BlendConstants.Mainnet.backstop,
-            rpcUrl: BlendConstants.RPC.mainnet,
-            network: .public
-        )
-    }
-    
-    /// Create service instance with default testnet configuration
-    public static func createTestnetService(
-        networkService: NetworkService,
-        cacheService: CacheServiceProtocol
-    ) -> BackstopContractService {
-        return BackstopContractService(
-            networkService: networkService,
-            cacheService: cacheService,
-            config: testnetConfig()
-        )
-    }
-    
-    /// Create service instance with default mainnet configuration
-    public static func createMainnetService(
-        networkService: NetworkService,
-        cacheService: CacheServiceProtocol
-    ) -> BackstopContractService {
-        return BackstopContractService(
-            networkService: networkService,
-            cacheService: cacheService,
-            config: mainnetConfig()
-        )
-    }
-}

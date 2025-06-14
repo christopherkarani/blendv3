@@ -12,6 +12,7 @@ public enum BlendError: LocalizedError, Equatable {
     case network(NetworkErrorType)
     case validation(ValidationErrorType)
     case transaction(TransactionErrorType)
+    case tokenMetadata(TokenMetadataErrorType)
     case initialization(String)
     case serviceError(String)
     case unauthorized
@@ -30,6 +31,8 @@ public enum BlendError: LocalizedError, Equatable {
             return "Validation error: \(type.userFriendlyMessage)"
         case .transaction(let type):
             return "Transaction error: \(type.userFriendlyMessage)"
+        case .tokenMetadata(let type):
+            return "Token metadata error: \(type.userFriendlyMessage)"
         case .initialization(let message):
             return "Initialization failed: \(message)"
         case .unauthorized:
@@ -93,6 +96,20 @@ public enum TransactionErrorType: Equatable {
         case .failed: return "Transaction failed"
         case .rejected: return "Transaction was rejected"
         case .insufficientFee: return "Insufficient fee for transaction"
+        }
+    }
+}
+
+public enum TokenMetadataErrorType: Equatable {
+    case noInstance
+    case malformed
+    case invalidContractId
+    
+    var userFriendlyMessage: String {
+        switch self {
+        case .noInstance: return "Contract instance not found"
+        case .malformed: return "Malformed metadata in contract"
+        case .invalidContractId: return "Invalid contract ID format"
         }
     }
 }

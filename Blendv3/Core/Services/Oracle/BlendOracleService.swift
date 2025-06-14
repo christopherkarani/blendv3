@@ -6,18 +6,7 @@ typealias Int128XDR = Int128PartsXDR
 
 // MARK: - Soroban Contract Operations
 
-/// Contract call parameters for real Soroban operations
-public struct ContractCallParams {
-    let contractId: String
-    let functionName: String
-    let functionArguments: [SCValXDR]
-    
-    public init(contractId: String, functionName: String, functionArguments: [SCValXDR]) {
-        self.contractId = contractId
-        self.functionName = functionName
-        self.functionArguments = functionArguments
-    }
-}
+
 
 /// Oracle service implementation with NetworkService integration
 public final class BlendOracleService {
@@ -40,35 +29,29 @@ public final class BlendOracleService {
     internal let retryDelay: TimeInterval = 1.0
     
     // Oracle contract configuration
-    internal let oracleAddress = BlendConstants.Testnet.oracle
+   // internal let oracleAddress = BlendConstants.Testnet.oracle
+    let oracleAddress: String
     internal let rpcUrl = BlendConstants.RPC.testnet
     internal let network = Network.testnet
     
-    // Parsers
-    let optionalPriceDataParser = OptionalPriceDataParser()
-    let priceDataVectorParser = PriceDataVectorParser()
-    let assetVectorParser = AssetVectorParser()
-    let u32Parser = U32Parser()
-    let assetParser = AssetParser()
+    // Centralized parser
+    private let parser = BlendParser()
     
-    let sourceKeyPair: KeyPair
+
     
     // MARK: - Initialization
     
     @MainActor
-    public init(cacheService: CacheServiceProtocol, networkService: NetworkServiceProtocol, sourceKeyPair: KeyPair) {
+    public init(poolId: String, cacheService: CacheServiceProtocol, networkService: NetworkServiceProtocol, sourceKeyPair: KeyPair) {
+        self.oracleAddress = poolId
         self.cacheService = cacheService
         self.networkService = networkService
-        self.sourceKeyPair = sourceKeyPair
         self.oracleNetworkService = OracleNetworkService(
             networkService: networkService,
             contractId: BlendConstants.Testnet.oracle,
             sourceKeyPair: sourceKeyPair
         )
         
-        debugLogger.info("🔮 Oracle service initialized with NetworkService integration")
-        debugLogger.info("🔮 Oracle address: \(oracleAddress)")
-        debugLogger.info("🔮 Using RPC: \(rpcUrl)")
     }
     
     public func getOracleDecimals() async throws -> Int {
@@ -80,9 +63,8 @@ public final class BlendOracleService {
         
         return try await withRetry(maxAttempts: self.maxRetries, delay: self.retryDelay) {
             do {
-                let decimals = try await self.oracleNetworkService.simulateAndParse(
+                let decimals = try await self.oracleNetworkService.simulateAndParseU32(
                     .decimals,
-                    using: self.u32Parser,
                     context: OracleParsingContext(functionName: "decimals")
                 )
                 return Int(decimals)
@@ -161,10 +143,20 @@ public final class BlendOracleService {
         let high = i128.hi
         let low = i128.lo
         
-        // Combine high and low parts to form the full 128-bit value
-        let fullValue = (Int64(high) << 64) | Int64(low)
-        
-        return Decimal(fullValue)
+        // Handle different cases to avoid overflow
+        if high == 0 {
+            // Simple case: only low 64 bits are used
+            return Decimal(low)
+        } else if high == -1 && (low & 0x8000000000000000) != 0 {
+            // Negative number in two's complement
+            let signedLow = Int64(bitPattern: low)
+            return Decimal(signedLow)
+        } else {
+            // Large number: combine hi and lo parts using Decimal arithmetic
+            let highDecimal = Decimal(high) * Decimal(sign: .plus, exponent: 64, significand: 1)
+            let lowDecimal = Decimal(low)
+            return highDecimal + lowDecimal
+        }
     }
     
     internal func withRetry<T>(

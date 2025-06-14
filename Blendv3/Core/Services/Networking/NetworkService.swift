@@ -67,10 +67,13 @@ public final class NetworkService: NetworkServiceProtocol {
     private var requestInterceptors: [(URLRequest) -> URLRequest] = []
     private var responseInterceptors: [(Data, URLResponse) -> Void] = []
     
+    private let keyPair: KeyPair
+    
     /// Initializes the NetworkService with configuration.
     /// Configures URLSession with connection pooling and sets up interceptors.
-    public init(config: NetworkServiceConfig = NetworkServiceConfig()) {
+    public init(config: NetworkServiceConfig = NetworkServiceConfig(), keyPair: KeyPair) {
         self.config = config
+        self.keyPair = keyPair
         
         let sessionConfig = URLSessionConfiguration.default
         sessionConfig.timeoutIntervalForRequest = config.timeoutConfiguration.networkTimeout
@@ -142,7 +145,6 @@ public final class NetworkService: NetworkServiceProtocol {
     ///   - contractId: Contract ID to invoke.
     ///   - functionName: Function name to call.
     ///   - args: Function arguments as SCValXDR array.
-    ///   - sourceKeyPair: Source account keypair for signing.
     ///   - force: Whether to force execution for read-only calls.
     /// - Returns: Result of the contract invocation as SCValXDR.
     /// - Throws: `BlendError.transaction(.failed)` or `BlendError.validation(.invalidResponse)` on failure.
@@ -150,11 +152,10 @@ public final class NetworkService: NetworkServiceProtocol {
         contractId: String,
         functionName: String,
         args: [SCValXDR],
-        sourceKeyPair: KeyPair,
         force: Bool = false
     ) async throws -> SCValXDR {
         do {
-            let client = try await getSorobanClient(contractId: contractId, sourceKeyPair: sourceKeyPair)
+            let client = try await getSorobanClient(contractId: contractId, sourceKeyPair: self.keyPair)
             let result = try await client.invokeMethod(name: functionName, args: args, force: force)
             return result
             
@@ -167,38 +168,68 @@ public final class NetworkService: NetworkServiceProtocol {
         }
     }
     
-    /// Legacy method for compatibility - redirects to new SorobanClient implementation.
-    /// - Warning: Deprecated. Provide `sourceKeyPair` explicitly using the other overload.
-    @available(*, deprecated, message: "Use invokeContractFunction with explicit sourceKeyPair instead")
+    /// Invokes a contract function using a ContractCallParams object.
+    /// - Parameters:
+    ///   - contractCall: The contract call parameters.
+    ///   - force: Whether to force execution for read-only calls.
+    /// - Returns: Result of the contract invocation as SCValXDR.
+    /// - Throws: `BlendError.transaction(.failed)` or `BlendError.validation(.invalidResponse)` on failure.
     public func invokeContractFunction(
-        contractId: String,
-        functionName: String,
-        args: [SCValXDR]
+        contractCall: ContractCallParams,
+        force: Bool = false
     ) async throws -> SCValXDR {
-        let tempKeyPair = try KeyPair.generateRandomKeyPair()
-        BlendLogger.warning("Using temporary keypair for contract invocation - this should be provided by caller", category: BlendLogger.network)
-        
-        return try await invokeContractFunction(
-            contractId: contractId,
-            functionName: functionName,
-            args: args,
-            sourceKeyPair: tempKeyPair,
-            force: false
-        )
+        return try await withRetry(operation: "invoke_\(contractCall.functionName)") {
+            try await self.invokeContractFunctionInternal(contractCall: contractCall, force: force)
+        }
     }
+    
+    /// Internal contract function invocation without retry logic
+    private func invokeContractFunctionInternal(
+        contractCall: ContractCallParams,
+        force: Bool = false
+    ) async throws -> SCValXDR {
+        do {
+            let client = try await getSorobanClient(contractId: contractCall.contractId, sourceKeyPair: self.keyPair)
+            let result = try await client.invokeMethod(name: contractCall.functionName, args: contractCall.functionArguments, force: force)
+            return result
+        } catch let error as SorobanClientError {
+            BlendLogger.error("Contract function invocation failed: \(contractCall.functionName)", error: error, category: BlendLogger.network)
+            throw BlendError.transaction(.failed)
+        } catch {
+            BlendLogger.error("Contract function invocation failed with unexpected error: \(contractCall.functionName)", error: error, category: BlendLogger.network)
+            throw BlendError.validation(.invalidResponse)
+        }
+    }
+    
+//    /// Legacy method for compatibility - redirects to new SorobanClient implementation.
+//    /// - Warning: Deprecated. Provide `sourceKeyPair` explicitly using the other overload.
+//    @available(*, deprecated, message: "Use invokeContractFunction with explicit sourceKeyPair instead")
+//    public func invokeContractFunction(
+//        contractId: String,
+//        functionName: String,
+//        args: [SCValXDR]
+//    ) async throws -> SCValXDR {
+//        let tempKeyPair = try KeyPair.generateRandomKeyPair()
+//        BlendLogger.warning("Using temporary keypair for contract invocation - this should be provided by caller", category: BlendLogger.network)
+//        
+//        return try await invokeContractFunction(
+//            contractId: contractId,
+//            functionName: functionName,
+//            args: args,
+//            force: false
+//        )
+//    }
     
     /// Simulates a contract function call using SorobanClient - generic, type-safe, and extensible.
     /// - Parameters:
     ///   - contractId: Contract ID to simulate.
     ///   - functionName: Function name to simulate.
     ///   - args: Function arguments with generic type.
-    ///   - sourceKeyPair: Source account keypair.
     /// - Returns: SimulationStatus containing SimulationResult or error.
     public func simulateContractFunction<Args: Sendable, Result: Decodable>(
         contractId: String,
         functionName: String,
-        args: Args,
-        sourceKeyPair: KeyPair
+        args: Args
     ) async -> SimulationStatus<Result> {
         do {
             let parsedArgs = args as? [SCValXDR] ?? []
@@ -214,6 +245,47 @@ public final class NetworkService: NetworkServiceProtocol {
             let decodedResult: Result = try parser.parseSimulationResult(result, as: Result.self)
             return .success(SimulationResult(result: decodedResult))
             
+        } catch let error as BlendParsingError {
+            BlendLogger.error("Simulation failed with BlendParsingError: \(error)", category: BlendLogger.network)
+            return .failure(.invalidResponse(error.localizedDescription))
+        } catch let error as SorobanClientError {
+            BlendLogger.error("Simulation failed with SorobanClientError: \(error)", category: BlendLogger.network)
+            return .failure(.transactionFailed(error.localizedDescription))
+        } catch let error as DecodingError {
+            BlendLogger.error("Simulation failed with DecodingError: \(error)", category: BlendLogger.network)
+            return .failure(.invalidResponse(error.localizedDescription))
+        } catch {
+            BlendLogger.error("Simulation failed with unexpected error: \(error)", category: BlendLogger.network)
+            return .failure(.unknown(error.localizedDescription))
+        }
+    }
+    
+    /// Simulates a contract function call using SorobanClient with explicit ContractCallParams.
+    /// - Parameters:
+    ///   - contractCall: The contract call parameters.
+    /// - Returns: SimulationStatus containing SimulationResult or error.
+    public func simulateContractFunction<Result: Decodable>(
+        contractCall: ContractCallParams
+    ) async -> SimulationStatus<Result> {
+        do {
+            return try await withRetry(operation: "simulate_\(contractCall.functionName)") {
+                return await self.simulateContractFunctionInternal(contractCall: contractCall)
+            }
+        } catch {
+            return .failure(.unknown(error.localizedDescription))
+        }
+    }
+    
+    /// Internal contract function simulation without retry logic
+    private func simulateContractFunctionInternal<Result: Decodable>(
+        contractCall: ContractCallParams
+    ) async -> SimulationStatus<Result> {
+        do {
+            let result = try await transactionSimulator.simulate(server: sorobanServer, contractCall: contractCall)
+            let parser = BlendParser()
+            // Use BlendParser to convert SCValXDR to target type
+            let decodedResult: Result = try parser.parseSimulationResult(result, as: Result.self)
+            return .success(SimulationResult(result: decodedResult))
         } catch let error as BlendParsingError {
             BlendLogger.error("Simulation failed with BlendParsingError: \(error)", category: BlendLogger.network)
             return .failure(.invalidResponse(error.localizedDescription))
@@ -293,31 +365,32 @@ public final class NetworkService: NetworkServiceProtocol {
             let keys: [String]
         }
         
+        struct SorobanLedgerEntry: Decodable {
+            let key: String
+            let xdr: String
+            let lastModifiedLedgerSeq: Int
+            let liveUntilLedgerSeq: Int?
+        }
+        
+        struct GetLedgerEntriesResponse: Decodable {
+            let entries: [SorobanLedgerEntry]
+            let latestLedger: Int
+        }
+        
         let params = GetLedgerEntriesParams(keys: keys)
         let response = try await performDirectRPC("getLedgerEntries", params: params)
         
-        struct GetLedgerEntriesResponse: Decodable {
-            let entries: [[String: String]]?
-            let error: String?
+        // Parse JSON-RPC response wrapper first
+        struct JSONRPCResponse: Decodable {
+            let result: GetLedgerEntriesResponse
         }
         
-        let ledgerResponse = try JSONDecoder().decode(GetLedgerEntriesResponse.self, from: response)
-        
-        if let error = ledgerResponse.error {
-            BlendLogger.error("Get ledger entries failed: \(error)", category: BlendLogger.network)
-            throw BlendError.network(.serverError)
-        }
-        
-        guard let entries = ledgerResponse.entries else {
-            BlendLogger.warning("No entries returned from getLedgerEntries", category: BlendLogger.network)
-            return [:]
-        }
+        let rpcResponse = try JSONDecoder().decode(JSONRPCResponse.self, from: response)
+        let ledgerResponse = rpcResponse.result
         
         var result = [String: Any]()
-        for entry in entries {
-            if let key = entry["key"], let xdr = entry["xdr"] {
-                result[key] = xdr
-            }
+        for entry in ledgerResponse.entries {
+            result[entry.key] = entry.xdr
         }
         
         return result
@@ -358,6 +431,52 @@ public final class NetworkService: NetworkServiceProtocol {
     }
     
     // MARK: - Private Helper Methods
+    
+    /// Execute an operation with retry mechanism using exponential backoff and jitter
+    /// - Parameters:
+    ///   - operation: Name of operation for logging
+    ///   - task: Async task to execute
+    /// - Returns: Result of the operation
+    /// - Throws: Last error encountered after all retries are exhausted
+    private func withRetry<T>(
+        operation: String,
+        task: () async throws -> T
+    ) async throws -> T {
+        let retryConfig = config.retryConfiguration
+        let maxAttempts = retryConfig.maxRetries
+        let baseDelay = retryConfig.baseDelay
+        let maxDelay = retryConfig.maxDelay
+        let exponentialBase = retryConfig.exponentialBase
+        let jitterRange = retryConfig.jitterRange
+        
+        var lastError: Error?
+        
+        for attempt in 1...maxAttempts {
+            do {
+                let result = try await task()
+                if attempt > 1 {
+                    BlendLogger.info("Operation '\(operation)' succeeded on attempt \(attempt)", category: BlendLogger.network)
+                }
+                return result
+            } catch {
+                lastError = error
+                BlendLogger.warning("Attempt \(attempt)/\(maxAttempts) failed for '\(operation)': \(error.localizedDescription)", category: BlendLogger.network)
+                
+                // Don't delay on the last attempt
+                if attempt < maxAttempts {
+                    // Calculate exponential backoff with jitter
+                    let exponentialDelay = min(maxDelay, baseDelay * pow(exponentialBase, Double(attempt - 1)))
+                    let jitter = Double.random(in: jitterRange)
+                    let delay = exponentialDelay * (1.0 + jitter)
+                    
+                    try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+                }
+            }
+        }
+        
+        BlendLogger.error("Operation '\(operation)' failed after \(maxAttempts) attempts", error: lastError, category: BlendLogger.network)
+        throw lastError ?? BlendError.network(.serverError)
+    }
     
     /// Sets up default logging interceptors for requests and responses.
     private func setupDefaultInterceptors() {
@@ -544,3 +663,4 @@ fileprivate struct GetLedgerEntriesResponse: Decodable {
         let xdr: String
     }
 }
+

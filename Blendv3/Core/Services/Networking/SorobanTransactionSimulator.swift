@@ -10,6 +10,45 @@ import stellarsdk
 import Foundation
 import CryptoKit
 
+// MARK: - Transaction Status Support
+
+/// Represents simulation transaction status with detailed information
+public struct SimulationTransactionStatus {
+    let statusCode: String
+    let isSuccess: Bool
+    let errorDetails: String?
+    let costInfo: TransactionCost?
+    
+    init(statusCode: String, isSuccess: Bool, errorDetails: String? = nil, costInfo: TransactionCost? = nil) {
+        self.statusCode = statusCode
+        self.isSuccess = isSuccess
+        self.errorDetails = errorDetails
+        self.costInfo = costInfo
+    }
+    
+    /// Create status from simulation response
+    static func from(response: stellarsdk.SimulateTransactionResponse) -> SimulationTransactionStatus {
+        let isSuccess = response.error == nil
+        let statusCode = isSuccess ? "SUCCESS" : "FAILED"
+        
+        let costInfo: TransactionCost?
+        if let minResourceFee = response.minResourceFee {
+            let cpuInstructions = UInt64(response.transactionData?.resources.instructions ?? 0)
+            let memoryBytes = UInt64(response.transactionData?.resources.readBytes ?? 0) + UInt64(response.transactionData?.resources.writeBytes ?? 0)
+            costInfo = TransactionCost(cpuInstructions: cpuInstructions, memoryBytes: memoryBytes, resourceFee: UInt32(minResourceFee))
+        } else {
+            costInfo = nil
+        }
+        
+        return SimulationTransactionStatus(
+            statusCode: statusCode,
+            isSuccess: isSuccess,
+            errorDetails: response.error,
+            costInfo: costInfo
+        )
+    }
+}
+
 // MARK: - Transaction Builder
 
 /**
@@ -98,8 +137,6 @@ class SimulationResponseConverter {
      * - Returns: A SimulateTransactionResponse
      */
     func convertToBlendResponse(_ sdkResponse: stellarsdk.SimulateTransactionResponse) -> SimulateTransactionResponse {
-        BlendLogger.debug("🔄 Converting SDK response to Blend format", category: logger)
-        
         // Extract XDR strings from results
         let xdrStrings = extractXDRStrings(from: sdkResponse) ?? []
         
@@ -158,13 +195,11 @@ class SimulationResponseConverter {
      */
     private func extractFootprintData(from response: stellarsdk.SimulateTransactionResponse) -> TransactionFootprint? {
         guard let footprint = response.footprint else { 
-            BlendLogger.debug("🔄 No footprint available in response", category: logger)
             return nil 
         }
         
         // For now, return empty footprint arrays since the SDK structure is unclear
         // TODO: Investigate the actual structure of stellarsdk.SimulateTransactionResponse.footprint
-        BlendLogger.debug("🔄 Footprint extraction temporarily disabled - SDK structure investigation needed", category: logger)
         
         return TransactionFootprint(readOnly: [], readWrite: [])
     }
@@ -192,8 +227,6 @@ class SorobanTransactionParser {
         from response: SimulateTransactionResponse,
         contractCall: ContractCallParams
     ) throws -> SCValXDR {
-        BlendLogger.debug("📋 Parsing simulation result for \(contractCall.functionName)", category: logger)
-        
         // Validate response for errors
         try validateResponseForErrors(response)
         
@@ -205,19 +238,32 @@ class SorobanTransactionParser {
     }
     
     /**
-     * Parses an XDR string into an SCValXDR object.
+     * Parses an XDR string into an SCValXDR object with improved error handling.
      * - Parameter xdrString: The XDR string to parse
      * - Returns: The parsed SCValXDR
      * - Throws: OracleError if XDR parsing fails
      */
     func parseXDRString(_ xdrString: String) throws -> SCValXDR {
-        BlendLogger.debug("📋 Parsing XDR string", category: logger)
         do {
+            // Use enhanced XDR parsing with better error handling
             let scVal = try SCValXDR(xdr: xdrString)
-            BlendLogger.debug("📋 Successfully parsed XDR", category: logger)
+            
+            // Log success only for critical debugging
+            if !scVal.isSuccessResult {
+                BlendLogger.warning("📋 Parsed XDR contains error result: \(scVal.debugDescription)", category: logger)
+            }
+            
             return scVal
+        } catch let error as SCValXDRError {
+            // Handle our enhanced XDR errors with detailed context
+            BlendLogger.error("📋 Enhanced XDR parsing failed: \(error.localizedDescription)", category: logger)
+            throw OracleError.invalidResponse(
+                details: "XDR parsing failed: \(error.localizedDescription)",
+                rawData: xdrString
+            )
         } catch {
-            BlendLogger.error("📋 XDR parsing failed", error: error, category: logger)
+            // Handle other parsing errors
+            BlendLogger.error("📋 XDR parsing failed for string: \(xdrString.prefix(50))...", error: error, category: logger)
             throw OracleError.invalidResponse(
                 details: "Failed to parse XDR string: \(error.localizedDescription)",
                 rawData: xdrString
@@ -312,7 +358,7 @@ class SorobanTransactionParser {
     }
     
     /**
-     * Simulates a contract call and returns the result.
+     * Simulates a contract call and returns the result with transaction status.
      * - Parameters:
      *   - server: The Soroban server to use for simulation
      *   - contractCall: The contract call parameters
@@ -327,13 +373,15 @@ class SorobanTransactionParser {
             let transaction = try buildTransactionForSimulation(contractCall: contractCall)
             
             // Step 2: Execute the simulation
-            let response = try await executeSimulationRequest(server: server, transaction: transaction)
+            let (response, status) = try await executeSimulationRequestWithStatus(server: server, transaction: transaction)
             
+            // Step 3: Display transaction status
+            displayTransactionStatus(status, contractCall: contractCall)
             
-            // Step 3: Parse and return the result
+            // Step 4: Parse and return the result
             let result = try parseSimulationResponse(response, contractCall: contractCall)
             
-            BlendLogger.info("🔮 Simulation completed successfully", category: logger)
+            BlendLogger.info("🔮 Simulation completed successfully with status: \(status.statusCode)", category: logger)
             return result
             
         } catch let error as OracleError {
@@ -374,30 +422,43 @@ class SorobanTransactionParser {
      * Builds a transaction for simulation using the injected builder.
      */
     private func buildTransactionForSimulation(contractCall: ContractCallParams) throws -> Transaction {
-        BlendLogger.debug("🔮 Building simulation transaction", category: logger)
         return try transactionBuilder.buildSimulationTransaction(for: contractCall)
     }
     
     /**
-     * Executes the simulation request against the Soroban server.
+     * Executes the simulation request against the Soroban server and returns both response and status.
      */
-    private func executeSimulationRequest(
+    private func executeSimulationRequestWithStatus(
         server: SorobanServer,
         transaction: Transaction
-    ) async throws -> SimulateTransactionResponse {
-        BlendLogger.debug("🔮 Executing simulation request", category: logger)
-        
+    ) async throws -> (SimulateTransactionResponse, SimulationTransactionStatus) {
         let simulateRequest = stellarsdk.SimulateTransactionRequest(transaction: transaction)
-        let stellarResponse =  await server.simulateTransaction(simulateTxRequest: simulateRequest)
+        let stellarResponse = await server.simulateTransaction(simulateTxRequest: simulateRequest)
         
         switch stellarResponse {
         case .success(let sdkResponse):
-            BlendLogger.debug("🔮 Simulation request successful", category: logger)
-            return responseConverter.convertToBlendResponse(sdkResponse)
+            let status = SimulationTransactionStatus.from(response: sdkResponse)
+            let response = responseConverter.convertToBlendResponse(sdkResponse)
+            return (response, status)
             
         case .failure(let error):
             BlendLogger.error("🔮 Simulation request failed", error: error, category: logger)
             throw OracleError.contractError(code: 1, message: "Simulation failed: \(error.localizedDescription)")
+        }
+    }
+    
+    /**
+     * Displays the transaction status information.
+     */
+    private func displayTransactionStatus(_ status: SimulationTransactionStatus, contractCall: ContractCallParams) {
+        BlendLogger.info("📊 Transaction Status: \(status.statusCode) for \(contractCall.functionName)", category: logger)
+        
+        if let costInfo = status.costInfo {
+            BlendLogger.info("💰 Cost - CPU: \(costInfo.cpuInstructions), Memory: \(costInfo.memoryBytes), Fee: \(costInfo.resourceFee)", category: logger)
+        }
+        
+        if let errorDetails = status.errorDetails {
+            BlendLogger.error("❌ Error Details: \(errorDetails)", category: logger)
         }
     }
     
@@ -408,7 +469,6 @@ class SorobanTransactionParser {
         _ response: SimulateTransactionResponse,
         contractCall: ContractCallParams
     ) throws -> SCValXDR {
-        BlendLogger.debug("🔮 Parsing simulation response", category: logger)
         return try transactionParser.parseSimulationResult(from: response, contractCall: contractCall)
     }
 }

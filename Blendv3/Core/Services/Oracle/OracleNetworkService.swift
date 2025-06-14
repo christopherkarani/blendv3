@@ -71,15 +71,9 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
         do {
             // Validate parameters
             try function.validateParameterCount(arguments.count)
-            
+            let params = ContractCallParams(contractId: contractId, functionName: function.rawValue, functionArguments: arguments)
             // Use NetworkService to invoke the contract function
-            let result = try await networkService.invokeContractFunction(
-                contractId: contractId,
-                functionName: function.rawValue,
-                args: arguments,
-                sourceKeyPair: sourceKeyPair,
-                force: false
-            )
+            let result = try await networkService.invokeContractFunction(contractCall: params, force: false)
             
             debugLogger.info("🔮 ✅ Contract function \(function.rawValue) invoked successfully")
             return result
@@ -103,16 +97,10 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
             // Validate parameters
             try function.validateParameterCount(arguments.count)
             
-            // Create a temporary key pair for simulation (read-only operations don't need real keys)
-           
             
+            let params = ContractCallParams(contractId: contractId, functionName: function.rawValue, functionArguments: arguments)
             // Use NetworkService to simulate the contract function
-            let simulationResult = await networkService.simulateContractFunction(
-                contractId: contractId,
-                functionName: function.rawValue,
-                args: arguments,
-                sourceKeyPair: sourceKeyPair
-            )
+            let simulationResult: SimulationStatus<SCValXDR> = await networkService.simulateContractFunction(contractCall: params)
             
             switch simulationResult {
             case .success(let result):
@@ -174,44 +162,55 @@ extension OracleNetworkService {
 
 extension OracleNetworkService {
     
-    /// Simulate and parse response using a specific parser
-    /// - Parameters:
-    ///   - function: Contract function to simulate
-    ///   - arguments: Function arguments
-    ///   - parser: Response parser
-    ///   - context: Parsing context
-    /// - Returns: Parsed response
-    /// - Throws: OracleError if simulation or parsing fails
-    public func simulateAndParse<Parser: OracleResponseParserProtocol>(
+    /// Simulate and parse Optional PriceData response
+    public func simulateAndParseOptionalPriceData(
         _ function: OracleContractFunction,
         arguments: [SCValXDR] = [],
-        using parser: Parser,
         context: OracleParsingContext? = nil
-    ) async throws -> Parser.ParsedType {
-        let response = try! await simulateContractFunction(function, arguments: arguments)
+    ) async throws -> PriceData? {
+        let response = try await simulateContractFunction(function, arguments: arguments)
         let parsingContext = context ?? OracleParsingContext(functionName: function.rawValue)
-        return try parser.parse(response, context: parsingContext)
+        return try BlendParser().parseOptionalPriceData(response, context: parsingContext)
     }
     
-    /// Invoke and parse response using a specific parser
-    /// - Parameters:
-    ///   - function: Contract function to invoke
-    ///   - arguments: Function arguments
-    ///   - sourceKeyPair: Source account key pair
-    ///   - parser: Response parser
-    ///   - context: Parsing context
-    /// - Returns: Parsed response
-    /// - Throws: OracleError if invocation or parsing fails
-    public func invokeAndParse<Parser: OracleResponseParserProtocol>(
+    /// Simulate and parse PriceData vector response
+    public func simulateAndParsePriceDataVector(
         _ function: OracleContractFunction,
         arguments: [SCValXDR] = [],
-        sourceKeyPair: KeyPair,
-        using parser: Parser,
         context: OracleParsingContext? = nil
-    ) async throws -> Parser.ParsedType {
-        let response = try await invokeContractFunction(function, arguments: arguments, sourceKeyPair: sourceKeyPair)
+    ) async throws -> [PriceData] {
+        let response = try await simulateContractFunction(function, arguments: arguments)
         let parsingContext = context ?? OracleParsingContext(functionName: function.rawValue)
-        return try parser.parse(response, context: parsingContext)
+        return try BlendParser().parsePriceDataVector(response, context: parsingContext)
+    }
+    
+    /// Simulate and parse Asset vector response
+    public func simulateAndParseAssetVector(
+        _ function: OracleContractFunction,
+        arguments: [SCValXDR] = []
+    ) async throws -> [OracleAsset] {
+        let response = try await simulateContractFunction(function, arguments: arguments)
+        return try BlendParser().parseAssetVector(response)
+    }
+    
+    /// Simulate and parse u32 response
+    public func simulateAndParseU32(
+        _ function: OracleContractFunction,
+        arguments: [SCValXDR] = [],
+        context: OracleParsingContext? = nil
+    ) async throws -> UInt32 {
+        let response = try await simulateContractFunction(function, arguments: arguments)
+        let parsingContext = context ?? OracleParsingContext(functionName: function.rawValue)
+        return try BlendParser().parseU32Response(response, context: parsingContext)
+    }
+    
+    /// Simulate and parse Asset response
+    public func simulateAndParseAsset(
+        _ function: OracleContractFunction,
+        arguments: [SCValXDR] = []
+    ) async throws -> OracleAsset {
+        let response = try await simulateContractFunction(function, arguments: arguments)
+        return try BlendParser().parseAssetResponse(response)
     }
 }
 
@@ -241,3 +240,4 @@ extension OracleError {
         )
     }
 }
+
