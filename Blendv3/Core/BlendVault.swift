@@ -1,3 +1,4 @@
+import Foundation
 //
 //  BlendVault.swift
 //  Blendv3
@@ -53,7 +54,7 @@ class BlendVault {
         let prices = try! await oracleService.getPrices(assets: supportedAssets)
         
         let poolData = try! await poolService.fetchPoolConfig(contractId: BlendConstants.Testnet.xlmUsdcPool)
-        let backstop = try! await backstopService.getPoolData(pool: )
+        let backstop = try! await backstopService.getPoolData(pool: BlendConstants.Testnet.backstop)
         let assetService = BlendAssetService(poolID: BlendConstants.Testnet.xlmUsdcPool, networkService: networkService)
         
         let assets = try! await assetService.getAssets()
@@ -64,7 +65,26 @@ class BlendVault {
         //try! await userService.submit(requestType: 2, amount: "100", asset: asset)
         
         let result = try! await networkService.loadTokenMetadata(contractId: BlendConstants.Testnet.usdc)
-        print("Token Data: ", result)
+        let humanR = FixedMath.toFixed(value: Double(poolData.backstopRate), decimals: decimals)
+        
+        
+        let backstopTakeRate = Decimal(poolData.backstopRate)
+        
+        let contractName = try! StellarContractID.toStrKey(assetData[3].assetId)
+        let borrowAPY = try! assetData[3].calculateBorrowAPY()
+        let borrowAPR = try! assetData[3].calculateBorrowAPR()
+        let supplyAPY = try! assetData[3].calculateSupplyAPR(backstopTakeRate: backstopTakeRate)
+        let supplyAPR = try! assetData[3].calculateSupplyAPR(backstopTakeRate: backstopTakeRate)
+        
+        print("Contract: ", contractName)
+        print("Token Data: ", assetData[3])
+        print("backstopTakeRate:", backstopTakeRate)
+        print("borrowAPY:", borrowAPY)
+        print("borrowAPR:", borrowAPR)
+        print("supplyAPY:", supplyAPY)
+        print("supplyAPR:", supplyAPR)
+        
+       
     }
 }
 

@@ -26,14 +26,6 @@ extension NetworkService {
     public func loadTokenMetadata(contractId: String) async throws -> TokenMetadata {
         BlendLogger.info("Loading token metadata for contract: \(contractId)", category: BlendLogger.network)
         
-        // DEBUG: Test basic RPC connectivity first
-        do {
-            let connectivityState = await checkConnectivity()
-            BlendLogger.debug("🔍 Connectivity state: \(connectivityState)", category: BlendLogger.network)
-        } catch {
-            BlendLogger.error("🔍 Connectivity check failed: \(error)", category: BlendLogger.network)
-        }
-        
         do {
             // 1. Validate contract ID format
             guard !contractId.isEmpty else {
@@ -62,18 +54,12 @@ extension NetworkService {
                 throw BlendError.tokenMetadata(.invalidContractId)
             }
             
-            BlendLogger.debug("Built ledger key XDR: \(keyXdr)", category: BlendLogger.network)
-            BlendLogger.debug("Contract address: \(contractAddress)", category: BlendLogger.network)
+
             
             let response = try await getLedgerEntries(keys: [keyXdr])
             
-            // 4. Parse the response - Add debugging
-            BlendLogger.debug("getLedgerEntries response: \(response)", category: BlendLogger.network)
-            BlendLogger.debug("Response keys: \(response.keys)", category: BlendLogger.network)
-            BlendLogger.debug("Response values: \(response.values)", category: BlendLogger.network)
-            
             guard let entryData = response.values.first as? String else {
-                BlendLogger.error("❌ No contract instance found for: \(contractId). This might not be a token contract or the contract doesn't exist on this network. Response: \(response)", category: BlendLogger.network)
+                BlendLogger.error("No contract instance found for: \(contractId)", category: BlendLogger.network)
                 throw BlendError.tokenMetadata(.noInstance)
             }
             

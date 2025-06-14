@@ -59,4 +59,38 @@ extension TokenMetadata {
     public var isNative: Bool {
         return symbol == "XLM" || name == "native"
     }
+    
+    // MARK: - Classic Asset Convenience Properties
+    
+    /// Classic asset in canonical form (e.g., "USDC:GATALT...")
+    /// Returns nil if this is not a bridge adaptor token
+    public var classicAssetCanonicalForm: String? {
+        return asset?.toCanonicalForm()
+    }
+    
+    /// Classic asset code (e.g., "USDC", "XLM")
+    /// Returns nil if this is not a bridge adaptor token
+    public var classicAssetCode: String? {
+        return asset?.code
+    }
+    
+    /// Classic asset issuer account ID
+    /// Returns nil if this is not a bridge adaptor token or if it's native XLM
+    public var classicAssetIssuer: String? {
+        return asset?.issuer?.accountId
+    }
+    
+    /// Detailed classic asset information as a formatted string
+    /// Returns a user-friendly description or nil if not a bridge adaptor
+    public var classicAssetDetails: String? {
+        guard let asset = asset else { return nil }
+        
+        if asset.type == AssetType.ASSET_TYPE_NATIVE {
+            return "Native XLM"
+        } else {
+            let code = asset.code ?? "Unknown"
+            let issuer = asset.issuer?.accountId ?? "Unknown"
+            return "\(code) issued by \(issuer)"
+        }
+    }
 } 

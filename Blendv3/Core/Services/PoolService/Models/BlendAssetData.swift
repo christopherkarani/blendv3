@@ -16,28 +16,29 @@ public struct BlendAssetData: Codable, Equatable {
     public let assetId      : String          // 32-byte contract ID (hex)
     public let scalar       : Decimal         // 1e7 for Blend reserves
 
-    // Config  (all fixed-point with 7 decimals unless noted)
+    // Config (raw fixed-point integers as stored on-chain)
     public let decimals     : Int
     public let enabled      : Bool
     public let index        : Int
-    public let cFactor      : Decimal
-    public let lFactor      : Decimal
-    public let maxUtil      : Decimal
-    public let rBase        : Decimal
-    public let rOne         : Decimal
-    public let rTwo         : Decimal
-    public let rThree       : Decimal
-    public let reactivity   : Decimal
-    public let supplyCap    : Decimal
-    public let utilTarget   : Decimal
+    public let cFactor      : Decimal   // Raw fixed-point (not divided by scalar)
+    public let lFactor      : Decimal   // Raw fixed-point (not divided by scalar)
+    public let maxUtil      : Decimal   // Raw fixed-point (not divided by scalar)
+    public let rBase        : Decimal   // Raw fixed-point (not divided by scalar)
+    public let rOne         : Decimal   // Raw fixed-point (not divided by scalar)
+    public let rTwo         : Decimal   // Raw fixed-point (not divided by scalar)
+    public let rThree       : Decimal   // Raw fixed-point (not divided by scalar)
+    public let reactivity   : Decimal   // Raw fixed-point (not divided by scalar)
+    public let supplyCap    : Decimal   // Raw fixed-point (not divided by scalar)
+    public let utilTarget   : Decimal   // Raw fixed-point (not divided by scalar)
 
-    // Live data (already divided by `scalar`)
-    public let totalSupplied: Decimal
-    public let totalBorrowed: Decimal
-    public let borrowRate   : Decimal   // APY %
-    public let supplyRate   : Decimal   // APY %
-    public let backstopCredit: Decimal
-    public let irModifier   : Decimal
+    // Live data (raw values from chain)
+    public let totalSupplied: Decimal   // Raw fixed-point (not divided by scalar)
+    public let totalBorrowed: Decimal   // Raw fixed-point (not divided by scalar)
+    public let borrowRate   : Decimal   // Raw fixed-point (not divided by scalar)
+    public let supplyRate   : Decimal   // Raw fixed-point (not divided by scalar)
+    public let dRate        : Decimal   // Raw fixed-point (SCALAR_12 = 1e12)
+    public let backstopCredit: Decimal  // Raw fixed-point (not divided by scalar)
+    public let irModifier   : Decimal   // Raw fixed-point (not divided by scalar)
     public let lastUpdate   : Date
     public var pricePerToken        : Decimal = 0
 }
@@ -100,6 +101,7 @@ func parseBlendReserve(_ raw: SCValXDR) throws -> BlendAssetData {
     var totalBorrowed = Decimal.zero
     var borrowRate    = Decimal.zero
     var supplyRate    = Decimal.zero
+    var dRate         = Decimal.zero
     var backstopCred  = Decimal.zero
     var irMod         = Decimal.zero
     var lastUpdate    = Date(timeIntervalSince1970: 0)
@@ -134,17 +136,17 @@ func parseBlendReserve(_ raw: SCValXDR) throws -> BlendAssetData {
                     case "decimals":  if case .u32(let v) = item.val { decimals  = Int(v) }
                     case "enabled":   if case .bool(let v) = item.val { enabled   = v }
                     case "index":     if case .u32(let v) = item.val { index     = Int(v) }
-                    case "c_factor":  if case .u32(let v) = item.val { cFactor  = Decimal(v)/_FIXED_SCALE }
-                    case "l_factor":  if case .u32(let v) = item.val { lFactor  = Decimal(v)/_FIXED_SCALE }
-                    case "max_util":  if case .u32(let v) = item.val { maxUtil  = Decimal(v)/_FIXED_SCALE }
-                    case "r_base":    if case .u32(let v) = item.val { rBase    = Decimal(v)/_FIXED_SCALE }
-                    case "r_one":     if case .u32(let v) = item.val { rOne     = Decimal(v)/_FIXED_SCALE }
-                    case "r_two":     if case .u32(let v) = item.val { rTwo     = Decimal(v)/_FIXED_SCALE }
-                    case "r_three":   if case .u32(let v) = item.val { rThree   = Decimal(v)/_FIXED_SCALE }
-                    case "reactivity":if case .u32(let v) = item.val { reactivity = Decimal(v)/_FIXED_SCALE }
+                    case "c_factor":  if case .u32(let v) = item.val { cFactor  = Decimal(v) }
+                    case "l_factor":  if case .u32(let v) = item.val { lFactor  = Decimal(v) }
+                    case "max_util":  if case .u32(let v) = item.val { maxUtil  = Decimal(v) }
+                    case "r_base":    if case .u32(let v) = item.val { rBase    = Decimal(v) }
+                    case "r_one":     if case .u32(let v) = item.val { rOne     = Decimal(v) }
+                    case "r_two":     if case .u32(let v) = item.val { rTwo     = Decimal(v) }
+                    case "r_three":   if case .u32(let v) = item.val { rThree   = Decimal(v) }
+                    case "reactivity":if case .u32(let v) = item.val { reactivity = Decimal(v) }
                     case "supply_cap":
                         if case .i128(let v) = item.val { supplyCap = BlendParser.parseI128ToDecimal(v) }
-                    case "util":      if case .u32(let v) = item.val { utilTarget = Decimal(v)/_FIXED_SCALE }
+                    case "util":      if case .u32(let v) = item.val { utilTarget = Decimal(v) }
                     default: break
                     }
                 }
@@ -166,19 +168,19 @@ func parseBlendReserve(_ raw: SCValXDR) throws -> BlendAssetData {
                         }
                     case "b_rate":
                         if case .i128(let v) = item.val {
-                            borrowRate = BlendParser.parseI128ToDecimal(v)/_FIXED_SCALE * 100  // → percent
+                            borrowRate = BlendParser.parseI128ToDecimal(v)  // Raw fixed-point value
                         }
                     case "d_rate":
                         if case .i128(let v) = item.val {
-                            supplyRate = BlendParser.parseI128ToDecimal(v)/_FIXED_SCALE * 100
+                            dRate = BlendParser.parseI128ToDecimal(v)  // Raw fixed-point value (SCALAR_12)
                         }
                     case "backstop_credit":
                         if case .i128(let v) = item.val {
-                            backstopCred = BlendParser.parseI128ToDecimal(v)/scalar
+                            backstopCred = BlendParser.parseI128ToDecimal(v)  // Raw fixed-point value
                         }
                     case "ir_mod":
                         if case .i128(let v) = item.val {
-                            irMod = BlendParser.parseI128ToDecimal(v)/_FIXED_SCALE
+                            irMod = BlendParser.parseI128ToDecimal(v)  // Raw fixed-point value
                         }
                     case "last_time":
                         if case .u64(let v) = item.val {
@@ -194,12 +196,9 @@ func parseBlendReserve(_ raw: SCValXDR) throws -> BlendAssetData {
     }
 
     // ---------------------------------------------------------------------
-    // 2. Scale supplied & borrowed by the scalar found in the blob
+    // 2. Keep raw values without scaling (we'll scale at calculation time)
     // ---------------------------------------------------------------------
-    if scalar != 0 {
-        totalSupplied /= scalar
-        totalBorrowed /= scalar
-    }
+    // No scaling needed - we want to keep the raw fixed-point values
 
     // ---------------------------------------------------------------------
     // 3. Assemble and return
@@ -228,6 +227,7 @@ func parseBlendReserve(_ raw: SCValXDR) throws -> BlendAssetData {
         totalBorrowed:  totalBorrowed,
         borrowRate:     borrowRate,
         supplyRate:     supplyRate,
+        dRate:          dRate,
         backstopCredit: backstopCred,
         irModifier:     irMod,
         lastUpdate:     lastUpdate
@@ -237,10 +237,23 @@ func parseBlendReserve(_ raw: SCValXDR) throws -> BlendAssetData {
 
 extension BlendAssetData {
     var totalSuppliedUSD: Decimal {
-        return totalSupplied * pricePerToken
+        // Convert from raw fixed-point to human-readable before multiplying by price
+        let suppliedHuman = FixedMath.toFloat(value: totalSupplied, decimals: 7)
+        return suppliedHuman * pricePerToken
     }
     
     var totalBorrowedUSD: Decimal {
-        return totalBorrowed * pricePerToken
+        // Convert from raw fixed-point to human-readable before multiplying by price
+        let borrowedHuman = FixedMath.toFloat(value: totalBorrowed, decimals: 7)
+        return borrowedHuman * pricePerToken
+    }
+    
+    // Helper methods to get human-readable values
+    var suppliedHuman: Decimal {
+        return FixedMath.toFloat(value: totalSupplied, decimals: 7)
+    }
+    
+    var borrowedHuman: Decimal {
+        return FixedMath.toFloat(value: totalBorrowed, decimals: 7)
     }
 }

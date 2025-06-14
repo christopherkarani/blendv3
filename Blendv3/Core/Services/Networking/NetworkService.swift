@@ -380,11 +380,6 @@ public final class NetworkService: NetworkServiceProtocol {
         let params = GetLedgerEntriesParams(keys: keys)
         let response = try await performDirectRPC("getLedgerEntries", params: params)
         
-        // DEBUG: Log raw response
-        if let responseString = String(data: response, encoding: .utf8) {
-            BlendLogger.debug("🔍 Raw RPC Response: \(responseString)", category: BlendLogger.network)
-        }
-        
         // Parse JSON-RPC response wrapper first
         struct JSONRPCResponse: Decodable {
             let result: GetLedgerEntriesResponse
@@ -398,7 +393,6 @@ public final class NetworkService: NetworkServiceProtocol {
             result[entry.key] = entry.xdr
         }
         
-        BlendLogger.debug("getLedgerEntries returned \(ledgerResponse.entries.count) entries", category: BlendLogger.network)
         return result
     }
     
