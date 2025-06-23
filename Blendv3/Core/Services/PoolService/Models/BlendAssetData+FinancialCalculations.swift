@@ -40,23 +40,18 @@ extension BlendAssetData {
     public func calculateSupplyAPR(backstopTakeRate: Decimal) throws -> Decimal {
         try validateInputs(backstopTakeRate: backstopTakeRate)
         
-        // Calculate utilization with accrued interest
         let utilization = try calculateUtilizationRate(usingAccruedInterest: true)
         guard utilization > 0 else { return 0 }
         
-        // Always calculate fresh kinked rate (returns decimal, not percentage)
         let currentIR = try calculateKinkedInterestRate(utilization: utilization)
         
-        // Calculate supply capture: (1 - backstopTakeRate) * utilization
-        let backstopTakeRateFloat = FixedMath.toFloat(value: backstopTakeRate, decimals: 7)
+        let backstopTakeRateFloat = FixedMath.toFloat(value: backstopTakeRate, decimals: self.decimals)
         let supplyCapture = (1 - backstopTakeRateFloat) * utilization
         
-        // Apply backstop to fresh kinked rate
         let supplyAPR = currentIR * supplyCapture
         
-        // Apply safety bounds and convert to percentage
         let boundedAPR = min(supplyAPR, BlendFinancialConstants.maxAPR)
-        return max(boundedAPR * 100, 0) // Convert to percentage
+        return max(boundedAPR * 100, 0)
     }
     
     /// Calculate borrow Annual Percentage Rate
@@ -82,15 +77,12 @@ extension BlendAssetData {
     public func calculateBorrowAPR() throws -> Decimal {
         try validateInputs(backstopTakeRate: nil)
         
-        // Calculate utilization with accrued interest
         let utilization = try calculateUtilizationRate(usingAccruedInterest: true)
         
-        // Always calculate fresh kinked rate (returns decimal, not percentage)
         let currentIR = try calculateKinkedInterestRate(utilization: utilization)
         
-        // Apply safety bounds and convert to percentage
         let boundedAPR = min(currentIR, BlendFinancialConstants.maxAPR)
-        return max(boundedAPR * 100, 0) // Convert to percentage
+        return max(boundedAPR * 100, 0)
     }
     
     /// Calculate supply Annual Percentage Yield
@@ -115,17 +107,12 @@ extension BlendAssetData {
     /// ```
     public func calculateSupplyAPY(backstopTakeRate: Decimal) throws -> Decimal {
         let apr = try calculateSupplyAPR(backstopTakeRate: backstopTakeRate)
-        let aprDecimal = apr / 100 // Convert percentage back to decimal for calculation
+        let aprDecimal = apr / 100
         
         guard aprDecimal > 0 else { return 0 }
         
-        do {
-            let apy = try convertAPRtoAPY(aprDecimal, compoundingPeriods: BlendFinancialConstants.supplyCompoundingPeriods)
-            return apy * 100 // Convert back to percentage
-        } catch {
-            // Fallback: for very small rates, APY ≈ APR
-            return apr
-        }
+        let apy = try convertAPRtoAPY(aprDecimal, compoundingPeriods: BlendFinancialConstants.supplyCompoundingPeriods)
+        return apy * 100
     }
     
     /// Calculate borrow Annual Percentage Yield
@@ -148,17 +135,12 @@ extension BlendAssetData {
     /// ```
     public func calculateBorrowAPY() throws -> Decimal {
         let apr = try calculateBorrowAPR()
-        let aprDecimal = apr / 100 // Convert percentage back to decimal for calculation
+        let aprDecimal = apr / 100
         
         guard aprDecimal > 0 else { return 0 }
         
-        do {
-            let apy = try convertAPRtoAPY(aprDecimal, compoundingPeriods: BlendFinancialConstants.borrowCompoundingPeriods)
-            return apy * 100 // Convert back to percentage
-        } catch {
-            // Fallback: for very small rates, APY ≈ APR
-            return apr
-        }
+        let apy = try convertAPRtoAPY(aprDecimal, compoundingPeriods: BlendFinancialConstants.borrowCompoundingPeriods)
+        return apy * 100
     }
     
     // MARK: - Internal Implementation (for testing)
@@ -167,24 +149,15 @@ extension BlendAssetData {
     /// - Parameter backstopTakeRate: Optional backstop rate to validate
     /// - Throws: BlendError.validation for invalid inputs
     internal func validateInputs(backstopTakeRate: Decimal?) throws {
-        // Asset data validation - allow zero supplied for edge cases
-        guard totalSupplied >= 0 else {
+        guard bSupply >= 0, dSupply >= 0 else {
             throw BlendError.validation(.invalidInput)
         }
         
-        guard totalBorrowed >= 0 else {
-            throw BlendError.validation(.invalidInput)
-        }
-        
-        // Backstop rate validation (if provided)
         if let backstopRate = backstopTakeRate {
-            guard backstopRate >= 0 && backstopRate <= FixedMath.SCALAR_7 else {
+            guard backstopRate >= 0 && backstopRate <= FixedMath.scale(by: self.decimals) else {
                 throw BlendError.validation(.outOfBounds)
             }
         }
-        
-        // Skip utilization bounds check since we're using real chain data
-        // which might have edge cases we need to handle gracefully
     }
     
     /// Calculates utilization rate using total supplied and borrowed amounts
@@ -192,32 +165,22 @@ extension BlendAssetData {
     /// - Returns: Utilization rate as decimal (0.0 to 1.0)
     /// - Throws: BlendError.validation for calculation errors
     internal func calculateUtilizationRate(usingAccruedInterest: Bool = true) throws -> Decimal {
-        // Handle edge case where there's no supply
-        guard totalSupplied > 0 else {
-            return totalBorrowed > 0 ? 1.0 : 0.0
+        guard bSupply > 0 else {
+            return dSupply > 0 ? 1.0 : 0.0
         }
         
-        // Convert raw fixed-point values to human-readable for calculation
-        // totalSupplied and totalBorrowed are raw fixed-point values with SCALAR_7 (1e7)
-        let totalSuppliedFloat = FixedMath.toFloat(value: totalSupplied, decimals: 7)
-        let totalBorrowedFloat = FixedMath.toFloat(value: totalBorrowed, decimals: 7)
+        let bSupplyFloat = FixedMath.toFloat(value: bSupply, decimals: self.decimals)
+        let dSupplyFloat = FixedMath.toFloat(value: dSupply, decimals: self.decimals)
         
         let liabilities: Decimal
         if usingAccruedInterest {
-            // TypeScript: liabilities = dSupply * dRate
-            // Swift: liabilities = totalBorrowed * dRate (scaled properly)
-            
-            // dRate is scaled by SCALAR_12 (1e12)
             let dRateFloat = FixedMath.toFloat(value: dRate, decimals: 12)
-            
-            // Calculate liabilities with all values in native units
-            liabilities = totalBorrowedFloat * dRateFloat
+            liabilities = dSupplyFloat * dRateFloat
         } else {
-            // Traditional calculation without accrued interest
-            liabilities = totalBorrowedFloat
+            liabilities = dSupplyFloat
         }
         
-        let totalAssets = totalSuppliedFloat + liabilities
+        let totalAssets = bSupplyFloat + liabilities
         let utilization = liabilities / totalAssets
         return roundToCalculationPrecision(utilization)
     }
@@ -233,52 +196,37 @@ extension BlendAssetData {
     /// - Returns: Current interest rate as decimal (e.g., 0.08 for 8%)
     /// - Throws: BlendError.validation for invalid calculations
     internal func calculateKinkedInterestRate(utilization: Decimal) throws -> Decimal {
-        guard utilization >= 0 else {
-            throw BlendError.validation(.invalidInput)
-        }
+        guard utilization >= 0 else { throw BlendError.validation(.invalidInput) }
         
-        // Handle zero utilization
-        guard utilization > 0 else {
-            // rBase is a raw fixed-point value with SCALAR_7 (1e7)
-            return FixedMath.toFloat(value: rBase, decimals: 7)
-        }
+        let rBaseFloat = FixedMath.toFloat(value: rBase, decimals: self.decimals)
+        guard utilization > 0 else { return rBaseFloat }
         
-        // utilTarget is a raw fixed-point value with SCALAR_7 (1e7)
-        let targetUtil = FixedMath.toFloat(value: utilTarget, decimals: 7)
+        let targetUtil = FixedMath.toFloat(value: utilTarget, decimals: self.decimals)
         let emergencyThreshold = BlendFinancialConstants.emergencyUtilizationThreshold
         
-        // Convert raw fixed-point rates to float for calculation (all use SCALAR_7 = 1e7)
-        let baseRate = FixedMath.toFloat(value: rBase, decimals: 7)
-        let rateOne = FixedMath.toFloat(value: rOne, decimals: 7)
-        let rateTwo = FixedMath.toFloat(value: rTwo, decimals: 7)
-        let rateThree = FixedMath.toFloat(value: rThree, decimals: 7)
-        let irModifierFloat = FixedMath.toFloat(value: irModifier, decimals: 7)
+        let rateOne = FixedMath.toFloat(value: rOne, decimals: self.decimals)
+        let rateTwo = FixedMath.toFloat(value: rTwo, decimals: self.decimals)
+        let rateThree = FixedMath.toFloat(value: rThree, decimals: self.decimals)
+        let irModifierFloat = FixedMath.toFloat(value: irModifier, decimals: self.decimals)
         
         var currentRate: Decimal
         
         if utilization <= targetUtil {
-            // First slope: 0% to target utilization
             let utilizationScalar = utilization / targetUtil
-            let baseInterestRate = (utilizationScalar * rateOne) + baseRate
+            let baseInterestRate = (utilizationScalar * rateOne) + rBaseFloat
             currentRate = baseInterestRate * irModifierFloat
         } else if utilization <= emergencyThreshold {
-            // Second slope: target utilization to 95%
             let utilizationScalar = (utilization - targetUtil) / (emergencyThreshold - targetUtil)
-            let baseInterestRate = (utilizationScalar * rateTwo) + rateOne + baseRate
+            let baseInterestRate = (utilizationScalar * rateTwo) + rateOne + rBaseFloat
             currentRate = baseInterestRate * irModifierFloat
         } else {
-            // Third slope: 95% to 100% (emergency rates)
             let utilizationScalar = (utilization - emergencyThreshold) / (1.0 - emergencyThreshold)
             let extraRate = utilizationScalar * rateThree
-            let intersection = irModifierFloat * (rateTwo + rateOne + baseRate)
+            let intersection = irModifierFloat * (rateTwo + rateOne + rBaseFloat)
             currentRate = extraRate + intersection
         }
         
-        // Ensure non-negative rate
-        guard currentRate >= 0 else {
-            throw BlendError.validation(.invalidInput)
-        }
-        
+        guard currentRate >= 0 else { throw BlendError.validation(.invalidInput) }
         return roundToCalculationPrecision(currentRate)
     }
     
@@ -293,48 +241,26 @@ extension BlendAssetData {
     /// - Returns: Annual Percentage Yield as decimal
     /// - Throws: BlendError.validation for invalid inputs or calculation errors
     internal func convertAPRtoAPY(_ apr: Decimal, compoundingPeriods: Int) throws -> Decimal {
-        guard apr >= 0 else {
-            throw BlendError.validation(.invalidInput)
-        }
-        
-        guard compoundingPeriods > 0 else {
-            throw BlendError.validation(.invalidInput)
-        }
-        
-        // Handle zero APR
+        guard apr >= 0, compoundingPeriods > 0 else { throw BlendError.validation(.invalidInput) }
         guard apr > 0 else { return 0 }
+
+        if apr < 0.0001 { return apr }
         
-        // Cap extremely high rates to prevent overflow
-        let cappedAPR = min(apr, BlendFinancialConstants.maxAPR)
-        
-        // For very small rates, APY ≈ APR (no significant compounding effect)
-        if cappedAPR < 0.0001 { // Less than 0.01%
-            return cappedAPR
-        }
-        
-        // Use Double for the exponential calculation to avoid Decimal overflow
-        let aprDouble = Double(truncating: cappedAPR as NSNumber)
+        let aprDouble = Double(truncating: apr as NSNumber)
         let periodsDouble = Double(compoundingPeriods)
         
-        // Calculate using the standard compound interest formula
         let periodicRate = aprDouble / periodsDouble
         
-        // Additional safety check for extreme values
-        guard periodicRate < 1.0 else {
-            // If periodic rate >= 100%, cap the APY to maximum
-            return BlendFinancialConstants.maxAPY
-        }
+        guard periodicRate < 1.0 else { return BlendFinancialConstants.maxAPY }
         
         let compoundedDouble = pow(1.0 + periodicRate, periodsDouble)
         
-        // Check for infinite or NaN results
         guard compoundedDouble.isFinite && !compoundedDouble.isNaN else {
             throw BlendError.validation(.integerOverflow)
         }
         
         let apyDouble = compoundedDouble - 1.0
         
-        // Convert back to Decimal and apply bounds
         let apy = Decimal(apyDouble)
         let boundedAPY = min(apy, BlendFinancialConstants.maxAPY)
         
@@ -370,6 +296,6 @@ private enum BlendFinancialConstants {
     static let maxAPY: Decimal = 10.0          // 1000% cap (more reasonable)
     
     // Precision
-    static let calculationPrecision = 8        // Decimal places for intermediate calculations
+    static let calculationPrecision = 18        // Decimal places for intermediate calculations
 } 
 

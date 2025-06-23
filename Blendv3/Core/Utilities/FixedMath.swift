@@ -15,6 +15,10 @@ public enum FixedMath {
     /// Scale factor for 12 decimal places (10^12)
     public static let SCALAR_12: Decimal = 1_000_000_000_000
     
+    public static func scale(by decimals: Int) -> Decimal {
+        return pow(Decimal(10), decimals)
+    }
+    
     // MARK: - Multiplication
     
     /// Multiply two fixed-point numbers with ceiling rounding
@@ -77,7 +81,7 @@ public enum FixedMath {
     ///   - decimals: Number of decimal places
     /// - Returns: Floating-point representation
     public static func toFloat(value: Decimal, decimals: Int) -> Decimal {
-        let scalar = Decimal(pow(10.0, Double(decimals)))
+        let scalar = scale(by: decimals)
         return value / scalar
     }
 } 
