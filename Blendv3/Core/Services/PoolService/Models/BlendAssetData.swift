@@ -32,8 +32,8 @@ public struct BlendAssetData: Codable, Equatable {
     public let utilTarget   : Decimal   // Raw fixed-point (not divided by scalar)
 
     // Live data (raw values from chain)
-    public let totalSupplied: Decimal   // Raw fixed-point (not divided by scalar)
-    public let totalBorrowed: Decimal   // Raw fixed-point (not divided by scalar)
+    public let bSupply: Decimal   // Raw fixed-point (not divided by scalar)
+    public let dSupply: Decimal   // Raw fixed-point (not divided by scalar)
     public let borrowRate   : Decimal   // Raw fixed-point (not divided by scalar)
     public let supplyRate   : Decimal   // Raw fixed-point (not divided by scalar)
     public let dRate        : Decimal   // Raw fixed-point (SCALAR_12 = 1e12)
@@ -97,8 +97,8 @@ func parseBlendReserve(_ raw: SCValXDR) throws -> BlendAssetData {
     var utilTarget    = Decimal.zero
 
     // Data
-    var totalSupplied = Decimal.zero
-    var totalBorrowed = Decimal.zero
+    var bSupply       = Decimal.zero
+    var dSupply       = Decimal.zero
     var borrowRate    = Decimal.zero
     var supplyRate    = Decimal.zero
     var dRate         = Decimal.zero
@@ -160,11 +160,11 @@ func parseBlendReserve(_ raw: SCValXDR) throws -> BlendAssetData {
                     switch k {
                     case "b_supply":
                         if case .i128(let v) = item.val {
-                            totalSupplied = BlendParser.parseI128ToDecimal(v)
+                            bSupply = BlendParser.parseI128ToDecimal(v)
                         }
                     case "d_supply":
                         if case .i128(let v) = item.val {
-                            totalBorrowed = BlendParser.parseI128ToDecimal(v)
+                            dSupply = BlendParser.parseI128ToDecimal(v)
                         }
                     case "b_rate":
                         if case .i128(let v) = item.val {
@@ -223,8 +223,8 @@ func parseBlendReserve(_ raw: SCValXDR) throws -> BlendAssetData {
         reactivity:     reactivity,
         supplyCap:      supplyCap,
         utilTarget:     utilTarget,
-        totalSupplied:  totalSupplied,
-        totalBorrowed:  totalBorrowed,
+        bSupply:        bSupply,
+        dSupply:        dSupply,
         borrowRate:     borrowRate,
         supplyRate:     supplyRate,
         dRate:          dRate,
@@ -238,22 +238,22 @@ func parseBlendReserve(_ raw: SCValXDR) throws -> BlendAssetData {
 extension BlendAssetData {
     var totalSuppliedUSD: Decimal {
         // Convert from raw fixed-point to human-readable before multiplying by price
-        let suppliedHuman = FixedMath.toFloat(value: totalSupplied, decimals: 7)
+        let suppliedHuman = FixedMath.toFloat(value: bSupply, decimals: 7)
         return suppliedHuman * pricePerToken
     }
     
     var totalBorrowedUSD: Decimal {
         // Convert from raw fixed-point to human-readable before multiplying by price
-        let borrowedHuman = FixedMath.toFloat(value: totalBorrowed, decimals: 7)
+        let borrowedHuman = FixedMath.toFloat(value: dSupply, decimals: 7)
         return borrowedHuman * pricePerToken
     }
     
     // Helper methods to get human-readable values
     var suppliedHuman: Decimal {
-        return FixedMath.toFloat(value: totalSupplied, decimals: 7)
+        return FixedMath.toFloat(value: bSupply, decimals: 7)
     }
     
     var borrowedHuman: Decimal {
-        return FixedMath.toFloat(value: totalBorrowed, decimals: 7)
+        return FixedMath.toFloat(value: dSupply, decimals: 7)
     }
 }
