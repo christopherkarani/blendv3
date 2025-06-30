@@ -136,7 +136,7 @@ class SimulationResponseConverter {
      * - Parameter sdkResponse: The response from Stellar SDK
      * - Returns: A SimulateTransactionResponse
      */
-    func convertToBlendResponse(_ sdkResponse: stellarsdk.SimulateTransactionResponse) -> SimulateTransactionResponse {
+    func convertToBlendResponse(_ sdkResponse: stellarsdk.SimulateTransactionResponse) -> BlendSimulateTransactionResponse {
         // Extract XDR strings from results
         let xdrStrings = extractXDRStrings(from: sdkResponse) ?? []
         
@@ -148,12 +148,12 @@ class SimulationResponseConverter {
         let footprint = extractFootprintData(from: sdkResponse) ?? 
             TransactionFootprint(readOnly: [], readWrite: [])
         
-        // Convert SDK results to our SimulateTransactionResult type
+        // Convert SDK results to our BlendSimulateTransactionResult type
         let results = sdkResponse.results?.compactMap { result in
-            return SimulateTransactionResult(xdr: result.xdr)
+            return BlendSimulateTransactionResult(xdr: result.xdr)
         }
         
-        return SimulateTransactionResponse(
+        return BlendSimulateTransactionResponse(
             xdrStrings: xdrStrings,
             cost: cost,
             footprint: footprint,
@@ -224,7 +224,7 @@ class SorobanTransactionParser {
      * - Throws: OracleError if parsing fails
      */
     func parseSimulationResult(
-        from response: SimulateTransactionResponse,
+        from response: BlendSimulateTransactionResponse,
         contractCall: ContractCallParams
     ) throws -> SCValXDR {
         // Validate response for errors
@@ -276,7 +276,7 @@ class SorobanTransactionParser {
     /**
      * Validates the simulation response for any errors.
      */
-    private func validateResponseForErrors(_ response: SimulateTransactionResponse) throws {
+    private func validateResponseForErrors(_ response: BlendSimulateTransactionResponse) throws {
         if let error = response.error, !error.isEmpty {
             BlendLogger.error("📋 Simulation response contains error: \(error)", category: logger)
             throw OracleError.contractError(code: 1, message: error)
@@ -286,7 +286,7 @@ class SorobanTransactionParser {
     /**
      * Extracts and validates results from the simulation response.
      */
-    private func extractAndValidateResults(from response: SimulateTransactionResponse) throws -> [String] {
+    private func extractAndValidateResults(from response: BlendSimulateTransactionResponse) throws -> [String] {
         guard let results = response.results, !results.isEmpty else {
             BlendLogger.error("📋 No results found in simulation response", category: logger)
             throw OracleError.invalidResponse(
@@ -431,7 +431,7 @@ class SorobanTransactionParser {
     private func executeSimulationRequestWithStatus(
         server: SorobanServer,
         transaction: Transaction
-    ) async throws -> (SimulateTransactionResponse, SimulationTransactionStatus) {
+    ) async throws -> (BlendSimulateTransactionResponse, SimulationTransactionStatus) {
         let simulateRequest = stellarsdk.SimulateTransactionRequest(transaction: transaction)
         let stellarResponse = await server.simulateTransaction(simulateTxRequest: simulateRequest)
         
@@ -466,7 +466,7 @@ class SorobanTransactionParser {
      * Parses the simulation response using the injected parser.
      */
     private func parseSimulationResponse(
-        _ response: SimulateTransactionResponse,
+        _ response: BlendSimulateTransactionResponse,
         contractCall: ContractCallParams
     ) throws -> SCValXDR {
         return try transactionParser.parseSimulationResult(from: response, contractCall: contractCall)

@@ -1,0 +1,11 @@
+{
+  "": {
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendApp.build/master.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/BlendApp.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendApp.build/BlendApp.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendApp.build/BlendApp.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendApp.build/BlendApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendApp.build/BlendApp.swiftdeps"
+  }
+}

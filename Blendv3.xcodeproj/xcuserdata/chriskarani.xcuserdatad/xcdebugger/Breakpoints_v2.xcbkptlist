@@ -367,8 +367,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "232"
             endingLineNumber = "232"
-            landmarkName = "fetchOracleResolution()"
-            landmarkType = "7">
+            landmarkName = "BlendOracleService"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -384,22 +384,6 @@
             startingLineNumber = "249"
             endingLineNumber = "249"
             landmarkName = "simulateContractFunction(contractId:functionName:args:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1BAAA6FC-004A-45F0-9224-68FAB01D060E"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blendv3/Core/Services/Oracle/OracleNetworkService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
-            landmarkName = "simulateContractFunction(_:arguments:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -493,131 +477,23 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "44"
             endingLineNumber = "44"
-            landmarkName = "start()"
+            landmarkName = "init(keyPair:userAddress:config:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "30BBF13F-250F-4923-920C-782A4BDFF5F5"
+            uuid = "EC031EDF-85EF-42F4-9637-0C7B7F4699F8"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Blendv3/Core/Services/Oracle/OracleNetworkService.swift"
+            filePath = "Blendv3/Core/BlendVault.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
-            landmarkName = "simulateAndParseAssetVector(_:arguments:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D78C5927-31DA-4FCD-8B33-A9B1AF7A121F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blendv3/Core/Services/Oracle/OracleNetworkService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "simulateContractFunction(_:arguments:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "D78C5927-31DA-4FCD-8B33-A9B1AF7A121F - f031eac665c16061"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Blendv3.OracleNetworkService.simulateContractFunction(_: Blendv3.OracleContractFunction, arguments: Swift.Array&lt;stellarsdk.SCValXDR&gt;) async throws -&gt; stellarsdk.SCValXDR"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Oracle/OracleNetworkService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "106"
-                  endingLineNumber = "106">
-               </Location>
-               <Location
-                  uuid = "D78C5927-31DA-4FCD-8B33-A9B1AF7A121F - f031eac665c16061"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Blendv3.OracleNetworkService.simulateContractFunction(_: Blendv3.OracleContractFunction, arguments: Swift.Array&lt;stellarsdk.SCValXDR&gt;) async throws -&gt; stellarsdk.SCValXDR"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Oracle/OracleNetworkService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "106"
-                  endingLineNumber = "106">
-               </Location>
-               <Location
-                  uuid = "D78C5927-31DA-4FCD-8B33-A9B1AF7A121F - f031eac665c16061"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for Blendv3.OracleNetworkService.simulateContractFunction(_: Blendv3.OracleContractFunction, arguments: Swift.Array&lt;stellarsdk.SCValXDR&gt;) async throws -&gt; stellarsdk.SCValXDR"
-                  moduleName = "Blendv3.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Oracle/OracleNetworkService.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "106"
-                  endingLineNumber = "106">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3743E03A-B4B2-440B-B4A3-5D326325B70B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blendv3/Core/Services/Oracle/OracleNetworkService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
-            landmarkName = "simulateContractFunction(_:arguments:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "EC80407C-3125-4B88-A96D-6F765A48D712"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blendv3/Core/Services/Oracle/OracleNetworkService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
-            landmarkName = "simulateContractFunction(_:arguments:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A27166D5-7C22-4EB5-8BC7-6998A6DEDDA0"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Blendv3/Core/Services/Oracle/OracleNetworkService.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "simulateContractFunction(_:arguments:)"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "init(keyPair:userAddress:config:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

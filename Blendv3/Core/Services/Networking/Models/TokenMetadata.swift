@@ -22,7 +22,7 @@ public struct TokenMetadata: Sendable {
     let decimals: Int
     
     /// Classic Stellar asset if this is a bridge adaptor contract
-    let asset: Asset?
+    let asset: stellarsdk.Asset?
     
     /// Initialize TokenMetadata
     /// - Parameters:
@@ -30,7 +30,7 @@ public struct TokenMetadata: Sendable {
     ///   - symbol: Token symbol
     ///   - decimals: Number of decimal places
     ///   - asset: Optional classic Stellar asset for bridge adaptors
-    public init(name: String, symbol: String, decimals: Int, asset: Asset? = nil) {
+    public init(name: String, symbol: String, decimals: Int, asset: stellarsdk.Asset? = nil) {
         self.name = name
         self.symbol = symbol
         self.decimals = decimals

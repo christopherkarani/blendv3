@@ -134,7 +134,7 @@ extension NetworkService {
         instance: SCContractInstanceXDR,
         name: String,
         symbol: String
-    ) throws -> Asset? {
+    ) throws -> stellarsdk.Asset? {
         
         // Check if contractExecutable == token (stellar asset)
         guard case .token = instance.executable else {
@@ -143,7 +143,7 @@ extension NetworkService {
         
         // Handle native asset
         if name == "native" {
-            return Asset(type: AssetType.ASSET_TYPE_NATIVE)
+            return stellarsdk.Asset(type: AssetType.ASSET_TYPE_NATIVE)!
         }
         
         // Handle alphanumeric assets
@@ -161,7 +161,7 @@ extension NetworkService {
             let issuerKeyPair = try KeyPair(accountId: issuerAccountId)
             let assetType = code.count <= 4 ? AssetType.ASSET_TYPE_CREDIT_ALPHANUM4 : AssetType.ASSET_TYPE_CREDIT_ALPHANUM12
             
-            return Asset(type: assetType, code: code, issuer: issuerKeyPair)
+            return stellarsdk.Asset(type: assetType, code: code, issuer: issuerKeyPair)
         } catch {
             BlendLogger.warning("Failed to create classic asset for: \(name) - \(error.localizedDescription)", category: BlendLogger.network)
             return nil
