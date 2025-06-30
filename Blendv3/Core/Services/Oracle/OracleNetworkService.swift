@@ -44,7 +44,7 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
     
     private let networkService: NetworkServiceProtocol
     private let contractId: String
-    private let debugLogger = DebugLogger(subsystem: "com.blendv3.oracle", category: "OracleNetworkService")
+    // Removed DebugLogger - using BlendLogger instead
     
     let sourceKeyPair: KeyPair
     
@@ -56,7 +56,7 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
         self.networkService = networkService
         self.contractId = contractId
         self.sourceKeyPair = sourceKeyPair
-        debugLogger.info("🔮 🌐 Oracle network service initialized with contract: \(contractId)")
+        BlendLogger.info("🔮 🌐 Oracle network service initialized with contract: \(contractId)", category: BlendLogger.oracle)
     }
     
     // MARK: - OracleNetworkServiceProtocol Implementation
@@ -66,7 +66,7 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
         arguments: [SCValXDR] = [],
         sourceKeyPair: KeyPair
     ) async throws -> SCValXDR {
-        debugLogger.info("🔮 🚀 Invoking contract function: \(function.rawValue)")
+        BlendLogger.info("🔮 🚀 Invoking contract function: \(function.rawValue)", category: BlendLogger.oracle)
         
         do {
             // Validate parameters
@@ -75,14 +75,14 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
             // Use NetworkService to invoke the contract function
             let result = try await networkService.invokeContractFunction(contractCall: params, force: false)
             
-            debugLogger.info("🔮 ✅ Contract function \(function.rawValue) invoked successfully")
+            BlendLogger.info("🔮 ✅ Contract function \(function.rawValue) invoked successfully", category: BlendLogger.oracle)
             return result
             
         } catch let error as OracleError {
-            debugLogger.error("🔮 💥 Oracle error invoking \(function.rawValue): \(error.localizedDescription)")
+            BlendLogger.error("🔮 💥 Oracle error invoking \(function.rawValue): \(error.localizedDescription)", category: BlendLogger.oracle)
             throw error
         } catch {
-            debugLogger.error("🔮 💥 Network error invoking \(function.rawValue): \(error.localizedDescription)")
+            BlendLogger.error("🔮 💥 Network error invoking \(function.rawValue): \(error.localizedDescription)", category: BlendLogger.oracle)
             throw OracleError.networkError(error.localizedDescription)
         }
     }
@@ -91,7 +91,7 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
         _ function: OracleContractFunction,
         arguments: [SCValXDR] = []
     ) async throws -> SCValXDR {
-        debugLogger.info("🔮 🔍 Simulating contract function: \(function.rawValue)")
+        BlendLogger.info("🔮 🔍 Simulating contract function: \(function.rawValue)", category: BlendLogger.oracle)
         
         do {
             // Validate parameters
@@ -104,18 +104,18 @@ public final class OracleNetworkService: OracleNetworkServiceProtocol {
             
             switch simulationResult {
             case .success(let result):
-                debugLogger.info("🔮 ✅ Contract function \(function.rawValue) simulated successfully")
+                BlendLogger.info("🔮 ✅ Contract function \(function.rawValue) simulated successfully", category: BlendLogger.oracle)
                 return result.result
                 
             case .failure(let error):
-                debugLogger.error("🔮 💥 Simulation failed for \(function.rawValue): \(error.localizedDescription)")
+                BlendLogger.error("🔮 💥 Simulation failed for \(function.rawValue): \(error.localizedDescription)", category: BlendLogger.oracle)
                 throw OracleError.simulationFailed(error.localizedDescription)
             }
         } catch let error as OracleError {
-            debugLogger.error("🔮 💥 Oracle error simulating \(function.rawValue): \(error.localizedDescription)")
+            BlendLogger.error("🔮 💥 Oracle error simulating \(function.rawValue): \(error.localizedDescription)", category: BlendLogger.oracle)
             throw error
         } catch {
-            debugLogger.error("🔮 💥 Network error simulating \(function.rawValue): \(error.localizedDescription)")
+            BlendLogger.error("🔮 💥 Network error simulating \(function.rawValue): \(error.localizedDescription)", category: BlendLogger.oracle)
             throw OracleError.networkError(error.localizedDescription)
         }
     }

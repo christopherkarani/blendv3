@@ -79,5 +79,11 @@
     "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/EnhancedBlendRateCalculatorTests.swift.o",
     "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/EnhancedBlendRateCalculatorTests~partial.swiftmodule",
     "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/EnhancedBlendRateCalculatorTests.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3Tests/Core/Services/PoolService/Models/BlendAssetDataFinancialCalculationsTests.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendAssetDataFinancialCalculationsTests.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendAssetDataFinancialCalculationsTests.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendAssetDataFinancialCalculationsTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCoreTests.build/BlendAssetDataFinancialCalculationsTests.swiftdeps"
   }
 }

@@ -10,13 +10,13 @@ let package = Package(
         .macOS(.v13)
     ],
     products: [
+        .executable(
+            name: "BlendApp",
+            targets: ["BlendApp"]
+        ),
         .library(
             name: "BlendCore",
             targets: ["BlendCore"]
-        ),
-        .library(
-            name: "BlendUI",
-            targets: ["BlendUI"]
         )
     ],
     dependencies: [
@@ -24,6 +24,17 @@ let package = Package(
         .package(url: "https://github.com/Soneso/stellar-ios-mac-sdk", from: "2.5.0")
     ],
     targets: [
+        // Main executable target
+        .executableTarget(
+            name: "BlendApp",
+            dependencies: [
+                "BlendCore",
+                .product(name: "stellarsdk", package: "stellar-ios-mac-sdk")
+            ],
+            path: "Blendv3",
+            sources: ["BlendApp.swift"]
+        ),
+        
         // Core functionality target
         .target(
             name: "BlendCore",
@@ -31,13 +42,6 @@ let package = Package(
                 .product(name: "stellarsdk", package: "stellar-ios-mac-sdk")
             ],
             path: "Blendv3/Core"
-        ),
-        
-        // UI components target
-        .target(
-            name: "BlendUI",
-            dependencies: ["BlendCore"],
-            path: "Blendv3/Views"
         ),
         
         // Test target

@@ -41,7 +41,7 @@ public struct BlendConstants {
         }
         
         /// Corresponding Stellar network enum
-        public var stellarNetwork: Network {
+        public var stellarNetwork: stellarsdk.Network {
             switch self {
             case .testnet:
                 return .testnet
@@ -86,6 +86,9 @@ public struct BlendConstants {
         
         /// YieldBlox Pool contract address on mainnet
         public static let yieldBloxPool = "CBP7NO6F7FRDHSOFQBT2L2UWYIZ2PU76JKVRYAQTG3KZSQLYAOKIF2WB"
+        
+        /// Oracle contract address on mainnet (using fixed XLM-USDC pool as oracle source)
+        public static let oracle = fixedXlmUsdcPool
         
         /// Log all mainnet contract addresses
         public static func logAddresses() {
