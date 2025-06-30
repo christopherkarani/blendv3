@@ -109,11 +109,12 @@ class SorobanTransactionParserTests: XCTestCase {
     func testParseSimulationResult_Success() throws {
         // Given
         let validXDR = "AAAABAAAAAEAAAAGAAAADwAAAAdCYWxhbmNlAAAAAA=="  // Example XDR
-        let response = Blendv3.SimulateTransactionResponse(
-            error: nil,
-            results: [validXDR],
-            cost: 100,
-            footprint: nil
+        let response = Blendv3.BlendSimulateTransactionResponse(
+            xdrStrings: [validXDR],
+            cost: TransactionCost(cpuInstructions: 100, memoryBytes: 1000, resourceFee: 100),
+            footprint: TransactionFootprint(readOnly: [], readWrite: []),
+            results: nil,
+            error: nil
         )
         
         // When
@@ -125,11 +126,12 @@ class SorobanTransactionParserTests: XCTestCase {
     
     func testParseSimulationResult_WithError() {
         // Given
-        let response = Blendv3.SimulateTransactionResponse(
-            error: "Contract execution failed",
+        let response = Blendv3.BlendSimulateTransactionResponse(
+            xdrStrings: [],
+            cost: TransactionCost(cpuInstructions: 0, memoryBytes: 0, resourceFee: 0),
+            footprint: TransactionFootprint(readOnly: [], readWrite: []),
             results: nil,
-            cost: nil,
-            footprint: nil
+            error: "Contract execution failed"
         )
         
         // When/Then
@@ -144,11 +146,12 @@ class SorobanTransactionParserTests: XCTestCase {
     
     func testParseSimulationResult_NoResults() {
         // Given
-        let response = Blendv3.SimulateTransactionResponse(
-            error: nil,
+        let response = Blendv3.BlendSimulateTransactionResponse(
+            xdrStrings: [],
+            cost: TransactionCost(cpuInstructions: 0, memoryBytes: 0, resourceFee: 0),
+            footprint: TransactionFootprint(readOnly: [], readWrite: []),
             results: [],
-            cost: nil,
-            footprint: nil
+            error: nil
         )
         
         // When/Then
@@ -259,12 +262,24 @@ class MockResponseConverter: SimulationResponseConverter {
     var shouldSucceed = true
     var convertCalled = false
     
-    override func convertToBlendResponse(_ sdkResponse: stellarsdk.SimulateTransactionResponse) -> Blendv3.SimulateTransactionResponse {
+    override func convertToBlendResponse(_ sdkResponse: stellarsdk.SimulateTransactionResponse) -> Blendv3.BlendSimulateTransactionResponse {
         convertCalled = true
         if shouldSucceed {
-            return Blendv3.SimulateTransactionResponse(error: nil, results: ["mock_result"], cost: 100, footprint: nil)
+            return Blendv3.BlendSimulateTransactionResponse(
+                xdrStrings: ["mock_result"],
+                cost: TransactionCost(cpuInstructions: 100, memoryBytes: 1000, resourceFee: 100),
+                footprint: TransactionFootprint(readOnly: [], readWrite: []),
+                results: nil,
+                error: nil
+            )
         } else {
-            return Blendv3.SimulateTransactionResponse(error: "Mock error", results: nil, cost: nil, footprint: nil)
+            return Blendv3.BlendSimulateTransactionResponse(
+                xdrStrings: [],
+                cost: TransactionCost(cpuInstructions: 0, memoryBytes: 0, resourceFee: 0),
+                footprint: TransactionFootprint(readOnly: [], readWrite: []),
+                results: nil,
+                error: "Mock error"
+            )
         }
     }
 }
@@ -273,7 +288,7 @@ class MockTransactionParser: SorobanTransactionParser {
     var shouldSucceed = true
     var parseCalled = false
     
-    override func parseSimulationResult(from response: Blendv3.SimulateTransactionResponse, contractCall: ContractCallParams) throws -> SCValXDR {
+    override func parseSimulationResult(from response: Blendv3.BlendSimulateTransactionResponse, contractCall: ContractCallParams) throws -> SCValXDR {
         parseCalled = true
         if shouldSucceed {
             // Return a mock SCValXDR - you'll need to create this based on your actual implementation

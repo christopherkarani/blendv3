@@ -31,7 +31,7 @@ public final class BlendOracleService {
     // Oracle contract configuration
    // internal let oracleAddress = BlendConstants.Testnet.oracle
     let oracleAddress: String
-    internal let rpcUrl = BlendConstants.RPC.testnet
+    internal let rpcUrl = "https://soroban-testnet.stellar.org"
     internal let network = Network.testnet
     
     // Centralized parser

@@ -60,12 +60,10 @@ public final class NetworkService: NetworkServiceProtocol {
     private let sorobanClientCache = SorobanClientCacheActor()
     private let sorobanServer: SorobanServer
     private let transactionSimulator: SorobanTransactionSimulator
+    private let interceptorManager = InterceptorManagerActor()
     
     private var connectionState: ConnectionState = .disconnected
     private let connectionStateSubject = CurrentValueSubject<ConnectionState, Never>(.disconnected)
-    
-    private var requestInterceptors: [(URLRequest) -> URLRequest] = []
-    private var responseInterceptors: [(Data, URLResponse) -> Void] = []
     
     private let keyPair: KeyPair
     
@@ -420,14 +418,18 @@ public final class NetworkService: NetworkServiceProtocol {
     
     /// Adds a request interceptor to modify URLRequests before sending.
     /// - Parameter interceptor: Closure that takes and returns a URLRequest.
-    public func addRequestInterceptor(_ interceptor: @escaping (URLRequest) -> URLRequest) {
-        requestInterceptors.append(interceptor)
+    nonisolated public func addRequestInterceptor(_ interceptor: @escaping (URLRequest) -> URLRequest) {
+        Task {
+            await interceptorManager.addRequestInterceptor(interceptor)
+        }
     }
     
     /// Adds a response interceptor to process response data and URLResponse.
     /// - Parameter interceptor: Closure receiving Data and URLResponse.
-    public func addResponseInterceptor(_ interceptor: @escaping (Data, URLResponse) -> Void) {
-        responseInterceptors.append(interceptor)
+    nonisolated public func addResponseInterceptor(_ interceptor: @escaping (Data, URLResponse) -> Void) {
+        Task {
+            await interceptorManager.addResponseInterceptor(interceptor)
+        }
     }
     
     // MARK: - Private Helper Methods
@@ -480,17 +482,19 @@ public final class NetworkService: NetworkServiceProtocol {
     
     /// Sets up default logging interceptors for requests and responses.
     private func setupDefaultInterceptors() {
-        addRequestInterceptor { request in
-            // Minimal logging for critical requests only
-            if let url = request.url?.absoluteString, url.contains("health") {
-                BlendLogger.debug("→ Health check: \(request.httpMethod ?? "?")", category: BlendLogger.network)
+        Task {
+            await interceptorManager.addRequestInterceptor { request in
+                // Minimal logging for critical requests only
+                if let url = request.url?.absoluteString, url.contains("health") {
+                    BlendLogger.debug("→ Health check: \(request.httpMethod ?? "?")", category: BlendLogger.network)
+                }
+                return request
             }
-            return request
-        }
-        
-        addResponseInterceptor { data, response in
-            if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode >= 400 {
-                BlendLogger.error("← HTTP Error \(httpResponse.statusCode)", category: BlendLogger.network)
+            
+            await interceptorManager.addResponseInterceptor { data, response in
+                if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode >= 400 {
+                    BlendLogger.error("← HTTP Error \(httpResponse.statusCode)", category: BlendLogger.network)
+                }
             }
         }
     }
@@ -542,7 +546,7 @@ public final class NetworkService: NetworkServiceProtocol {
         request.setValue("BlendProtocol/2.0", forHTTPHeaderField: "User-Agent")
         request.httpBody = try JSONEncoder().encode(rpcRequest)
         
-        return requestInterceptors.reduce(request) { $1($0) }
+        return request
     }
     
     /// Performs a network request and applies response interceptors.
@@ -551,8 +555,12 @@ public final class NetworkService: NetworkServiceProtocol {
     /// - Throws: `BlendError.network(.connectionFailed)` or server errors.
     private func performRequest(_ request: URLRequest) async throws -> Data {
         do {
-            let (data, response) = try await session.data(for: request)
-            responseInterceptors.forEach { $0(data, response) }
+            // Apply request interceptors
+            let interceptedRequest = await interceptorManager.intercept(request: request)
+            let (data, response) = try await session.data(for: interceptedRequest)
+            
+            // Apply response interceptors
+            await interceptorManager.intercept(data: data, response: response)
             
             guard let httpResponse = response as? HTTPURLResponse else {
                 BlendLogger.error("Invalid HTTP response", category: BlendLogger.network)
@@ -624,6 +632,28 @@ fileprivate actor SorobanClientCacheActor {
     
     func store(client: SorobanClient, for key: String) {
         clients[key] = client
+    }
+}
+
+/// Actor to provide thread-safe access to interceptors.
+fileprivate actor InterceptorManagerActor {
+    private var requestInterceptors: [(URLRequest) -> URLRequest] = []
+    private var responseInterceptors: [(Data, URLResponse) -> Void] = []
+    
+    func addRequestInterceptor(_ interceptor: @escaping (URLRequest) -> URLRequest) {
+        requestInterceptors.append(interceptor)
+    }
+    
+    func addResponseInterceptor(_ interceptor: @escaping (Data, URLResponse) -> Void) {
+        responseInterceptors.append(interceptor)
+    }
+    
+    func intercept(request: URLRequest) -> URLRequest {
+        return requestInterceptors.reduce(request) { $1($0) }
+    }
+    
+    func intercept(data: Data, response: URLResponse) {
+        responseInterceptors.forEach { $0(data, response) }
     }
 }
 

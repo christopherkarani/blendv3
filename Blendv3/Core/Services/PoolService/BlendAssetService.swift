@@ -27,7 +27,7 @@ struct BlendAssetService: BlendAssetServiceProtocol {
         self.networkService = networkService
         self.parser = parser
     }
-    private let logger = DebugLogger(subsystem: "com.blendv3.debug", category: "Pool Service")
+    // Removed DebugLogger - using BlendLogger instead
     
     /// Get detailed reserve data with extensive logging
     /// Lightweight wrapper around `get_reserve` that returns

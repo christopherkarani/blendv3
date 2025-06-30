@@ -1,0 +1,58 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Blendv3}",
+            "name": "Debug BlendMain",
+            "program": "${workspaceFolder:Blendv3}/.build/debug/BlendMain",
+            "preLaunchTask": "swift: Build Debug BlendMain"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Blendv3}",
+            "name": "Release BlendMain",
+            "program": "${workspaceFolder:Blendv3}/.build/release/BlendMain",
+            "preLaunchTask": "swift: Build Release BlendMain"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Blendv3}",
+            "name": "Debug BlendVault",
+            "program": "${workspaceFolder:Blendv3}/.build/debug/BlendVault",
+            "preLaunchTask": "swift: Build Debug BlendVault"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Blendv3}",
+            "name": "Release BlendVault",
+            "program": "${workspaceFolder:Blendv3}/.build/release/BlendVault",
+            "preLaunchTask": "swift: Build Release BlendVault"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Blendv3}",
+            "name": "Debug BlendApp",
+            "program": "${workspaceFolder:Blendv3}/.build/debug/BlendApp",
+            "preLaunchTask": "swift: Build Debug BlendApp"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Blendv3}",
+            "name": "Release BlendApp",
+            "program": "${workspaceFolder:Blendv3}/.build/release/BlendApp",
+            "preLaunchTask": "swift: Build Release BlendApp"
+        }
+    ]
+}
