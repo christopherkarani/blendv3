@@ -56,7 +56,7 @@ struct BlendApp {
         do {
             // Initialize KeyPair
             print("🔑 Initializing KeyPair...")
-            let account = try KeyPair(secretSeed: "SATOWQKPSRAP7D77C6EMT65OIF543WQUOV6DJBPW4SGUNTP2XSIEVUKP")
+            let account = try KeyPair(secretSeed: "SAPFYGD7H3RMFMBVU37SPD6YTNS5IE5NIRLW2PJAUOGCOSBGMJDPBA3I")
             print("✅ KeyPair initialized for account: \(account.accountId)")
             
             // Create configuration

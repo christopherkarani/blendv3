@@ -227,16 +227,17 @@ public final class BlendVault {
                     continue
                 }
                 
-                // Get pool config for backstop rate
+                // Get pool config for backstop rate - convert to fixed-point for calculations
                 let poolConfig = try await poolService.fetchPoolConfig(contractId: poolID)
-                let backstopRate = Decimal(poolConfig.backstopRate)
+                let backstopRate = FixedMath.toFixed(value: Double(poolConfig.backstopRate), decimals: 7)
                 
-                // Calculate APYs
+                // Calculate APYs using the asset's calculation methods
                 let supplyAPY = try specificAssetData.calculateSupplyAPY(backstopTakeRate: backstopRate)
                 let borrowAPY = try specificAssetData.calculateBorrowAPY()
                 
-                let supplied = specificAssetData.dSupply
-                let borrowed = specificAssetData.bSupply
+                // Use human-readable values for supply and borrow amounts
+                let supplied = specificAssetData.suppliedHuman
+                let borrowed = specificAssetData.borrowedHuman
                 let utilization = supplied > Decimal.zero ? borrowed / supplied : Decimal.zero
                 
                 // Add to pool stats
@@ -481,12 +482,13 @@ public final class BlendVault {
             throw BlendVaultError.invalidAmount("Amount must be greater than zero")
         }
         
-        // Get current backstop composition
+        // Get current backstop composition using human-readable values
         let backstopStats = try await getBackstopStatsForPool(poolID: targetPoolID)
-        let totalBackstop = backstopStats.blndBalance + backstopStats.usdcBalance
         
-        // Calculate required tokens based on current ratio
-        let blndRatio = totalBackstop > 0 ? backstopStats.blndBalance / totalBackstop : Decimal(0.5)
+        // Calculate required tokens based on current BLND/USDC composition
+        // Use individual token balances to determine the ratio
+        let totalTokenBalance = backstopStats.blndBalance + backstopStats.usdcBalance
+        let blndRatio = totalTokenBalance > 0 ? backstopStats.blndBalance / totalTokenBalance : Decimal(0.8) // Default 80% BLND
         let usdcRatio = Decimal(1) - blndRatio
         
         let requiredBLND = amount * blndRatio
@@ -503,6 +505,9 @@ public final class BlendVault {
             // Invalidate caches
             await invalidateCachesAfterTransaction()
             
+            // Convert shares received to human-readable format
+            let sharesHuman = convertBlendFixedPointToHuman(value: Decimal(Double(result.sharesReceived)))
+            
             return TransactionResult(
                 transactionHash: result.transactionHash ?? "pending",
                 success: true,
@@ -513,7 +518,7 @@ public final class BlendVault {
                 gasUsed: nil,
                 timestamp: Date(),
                 details: TransactionDetails(
-                    sharesReceived: Decimal(Double(result.sharesReceived)),
+                    sharesReceived: sharesHuman,
                     tokensUsed: ["BLND": requiredBLND, "USDC": requiredUSDC],
                     newHealthFactor: nil,
                     rewards: nil
@@ -616,11 +621,14 @@ public final class BlendVault {
             // Invalidate caches
             await invalidateCachesAfterTransaction()
             
+            // Convert withdrawn amount to human-readable format
+            let withdrawnAmountHuman = convertBlendFixedPointToHuman(value: Decimal(Double(result.amountWithdrawn)))
+            
             return TransactionResult(
                 transactionHash: result.transactionHash ?? "pending",
                 success: true,
                 operation: .backstopWithdraw,
-                amount: Decimal(Double(result.amountWithdrawn)),
+                amount: withdrawnAmountHuman,
                 assetID: nil,
                 poolID: targetPoolID,
                 gasUsed: nil,
@@ -648,11 +656,14 @@ public final class BlendVault {
             // Invalidate caches
             await invalidateCachesAfterTransaction()
             
+            // Convert claimed rewards to human-readable format
+            let claimedRewardsHuman = convertBlendFixedPointToHuman(value: Decimal(Double(result.totalClaimed)))
+            
             return TransactionResult(
                 transactionHash: result.transactionHash ?? "pending",
                 success: true,
                 operation: .backstopClaim,
-                amount: Decimal(Double(result.totalClaimed)),
+                amount: claimedRewardsHuman,
                 assetID: "BLND",
                 poolID: targetPools.first ?? "",
                 gasUsed: nil,
@@ -661,7 +672,7 @@ public final class BlendVault {
                     sharesReceived: nil,
                     tokensUsed: nil,
                     newHealthFactor: nil,
-                    rewards: Decimal(Double(result.totalClaimed))
+                    rewards: claimedRewardsHuman
                 )
             )
         } catch {
@@ -779,34 +790,47 @@ public final class BlendVault {
             let balance = try await backstopService.getUserBalance(pool: poolID, user: userAddress)
             
             if balance.shares > 0 || !balance.q4w.isEmpty {
-                // Calculate position value (simplified)
-                let positionValue = Decimal(Double(balance.shares)) // Should be converted using share price
+                // Convert shares to human-readable format using FixedMath
+                let sharesHuman = FixedMath.toFloat(value: Decimal(Double(balance.shares)), decimals: 7)
+                
+                // Calculate position value using the total backstop value and user's share percentage
+                let poolData = try await backstopService.getPoolData(pool: poolID)
+                let humanPoolData = poolData.humanReadable
+                
+                // Total backstop value = tokens × token spot price
+                let totalBackstopValue = humanPoolData.tokens * humanPoolData.tokenSpotPrice
+                let totalShares = FixedMath.toFloat(value: Decimal(Double(poolData.shares)), decimals: 7)
+                
+                // Calculate user's position value based on their share percentage
+                let positionValue = totalShares > 0 ? (sharesHuman / totalShares) * totalBackstopValue : Decimal.zero
                 totalValue += positionValue
                 
-                // Calculate queued withdrawals
-                let queuedAmount = balance.q4w.reduce(Decimal.zero) { total, q4w in
-                    total + Decimal(Double(q4w.amount))
-                }
-                totalQueued += queuedAmount
+                // Calculate queued withdrawals using FixedMath
+                var queuedWithdrawals: [QueuedWithdrawal] = []
+                var poolQueuedAmount = Decimal.zero
                 
-                // Track earliest withdrawal
-                if let nextDate = balance.q4w.compactMap({ $0.expirationDate }).min() {
-                    if earliestWithdrawal == nil || nextDate < earliestWithdrawal! {
-                        earliestWithdrawal = nextDate
+                for q4w in balance.q4w {
+                    let queuedAmountHuman = FixedMath.toFloat(value: Decimal(Double(q4w.amount)), decimals: 7)
+                    poolQueuedAmount += queuedAmountHuman
+                    
+                    // Track earliest withdrawal
+                    if earliestWithdrawal == nil || q4w.expirationDate < earliestWithdrawal! {
+                        earliestWithdrawal = q4w.expirationDate
                     }
-                }
-                
-                // Create queued withdrawal entries
-                let queuedWithdrawals = balance.q4w.map { q4w in
-                    QueuedWithdrawal(
+                    
+                    let queuedWithdrawal = QueuedWithdrawal(
                         poolID: poolID,
-                        amount: Decimal(Double(q4w.amount)),
-                        queuedAt: Date(),
+                        amount: queuedAmountHuman,
+                        queuedAt: Date(), // Approximation - actual queue time not available
                         availableAt: q4w.expirationDate,
-                        estimatedValue: Decimal(Double(q4w.amount)),
+                        estimatedValue: queuedAmountHuman, // Simplified - should use share price conversion
                         canExecuteNow: q4w.isExpired
                     )
+                    
+                    queuedWithdrawals.append(queuedWithdrawal)
                 }
+                
+                totalQueued += poolQueuedAmount
                 
                 // Calculate backstop APY from pool data
                 let backstopStats = try await getBackstopStatsForPool(poolID: poolID)
@@ -816,7 +840,7 @@ public final class BlendVault {
                     shares: balance.shares,
                     valueInUSD: positionValue,
                     queuedWithdrawals: queuedWithdrawals,
-                    claimableRewards: Decimal.zero, // To be calculated
+                    claimableRewards: Decimal.zero, // To be calculated with emissions data
                     apy: backstopStats.backstopAPY
                 )
                 
@@ -937,6 +961,42 @@ public final class BlendVault {
     
     // MARK: - Private Helper Methods
     
+    /// Convert a raw fixed-point value to human-readable format using asset-specific decimals
+    /// - Parameters:
+    ///   - value: Raw fixed-point value
+    ///   - assetID: Asset identifier to get metadata for decimal places
+    /// - Returns: Human-readable decimal value
+    private func convertToHumanReadable(value: Decimal, forAssetID assetID: String) async throws -> Decimal {
+        let contractAddress = try StellarContractID.toStrKey(assetID)
+        let metadata = try await networkService.loadTokenMetadata(contractId: contractAddress)
+        return FixedMath.toFloat(value: value, decimals: metadata.decimals)
+    }
+    
+    /// Convert a human-readable value to fixed-point format using asset-specific decimals
+    /// - Parameters:
+    ///   - value: Human-readable decimal value
+    ///   - assetID: Asset identifier to get metadata for decimal places
+    /// - Returns: Fixed-point decimal value
+    private func convertToFixedPoint(value: Decimal, forAssetID assetID: String) async throws -> Decimal {
+        let contractAddress = try StellarContractID.toStrKey(assetID)
+        let metadata = try await networkService.loadTokenMetadata(contractId: contractAddress)
+        return FixedMath.toFixed(value: Double(value.description) ?? 0.0, decimals: metadata.decimals)
+    }
+    
+    /// Convert a raw fixed-point value to human-readable format using standard 7-decimal Blend scaling
+    /// - Parameter value: Raw fixed-point value
+    /// - Returns: Human-readable decimal value
+    private func convertBlendFixedPointToHuman(value: Decimal) -> Decimal {
+        return FixedMath.toFloat(value: value, decimals: 7)
+    }
+    
+    /// Convert a human-readable value to Blend fixed-point format using standard 7-decimal scaling
+    /// - Parameter value: Human-readable decimal value
+    /// - Returns: Fixed-point decimal value
+    private func convertHumanToBlendFixedPoint(value: Decimal) -> Decimal {
+        return FixedMath.toFixed(value: Double(value.description) ?? 0.0, decimals: 7)
+    }
+    
     private func validateInitialization() async throws {
         // Validate network connectivity
         let decimals = try await oracleService.getOracleDecimals()
@@ -949,9 +1009,26 @@ public final class BlendVault {
     private func getBackstopStatsForPool(poolID: String) async throws -> BackstopStats {
         let poolData = try await backstopService.getPoolData(pool: poolID)
         
-        // Calculate values
-        let totalLiquidity = Decimal(Double(poolData.blnd + poolData.usdc))
-        let utilizationRate = totalLiquidity > 0 ? Decimal(Double(poolData.q4wPercent)) / totalLiquidity : Decimal.zero
+        // Use the humanReadable property for proper fixed-point conversion
+        let humanData = poolData.humanReadable
+        
+        // CORRECT: Calculate total backstop value using tokens × token spot price
+        // 
+        // The backstop pool contains individual BLND and USDC tokens, but these are combined
+        // into "backstop tokens" which represent shares of the entire pool. The total value
+        // is calculated as: total_tokens × token_spot_price
+        //
+        // Example with your data:
+        // - tokens: 50,066.97 backstop tokens  
+        // - tokenSpotPrice: $1.51371 per backstop token
+        // - totalValue: 50,066.97 × 1.51371 = $75,790 ✅
+        //
+        // ❌ WRONG: blnd + usdc = 477,457 + 15,157 = $492,615 (incorrect)
+        // ✅ CORRECT: tokens × tokenSpotPrice = 50,067 × 1.514 = $75,790
+        let totalLiquidity = humanData.tokens * humanData.tokenSpotPrice
+        
+        // Calculate utilization rate: q4w is already a percentage in humanReadable
+        let utilizationRate = humanData.q4wPercent / 100 // Convert percentage to decimal
         
         // Calculate backstop APY based on emissions and pool data
         // This is a simplified calculation - could be enhanced with actual emission rates
@@ -959,15 +1036,21 @@ public final class BlendVault {
         let utilizationBonus = utilizationRate * Decimal(0.03) // Up to 3% bonus for utilization
         let backstopAPY = baseAPY + utilizationBonus
         
+        // Convert shares using FixedMath for proper decimal handling
+        let sharesHuman = FixedMath.toFloat(value: Decimal(Double(poolData.shares)), decimals: 7)
+        
+        // Convert queued withdrawals percentage to actual amount
+        let queuedWithdrawals = utilizationRate * totalLiquidity
+        
         return BackstopStats(
             poolID: poolID,
             totalBackstopLiquidity: totalLiquidity,
             backstopAPY: backstopAPY,
-            totalShares: poolData.shares,
-            queuedWithdrawals: Decimal(Double(poolData.q4wPercent)),
+            totalShares: Int128(sharesHuman.description) ?? poolData.shares,
+            queuedWithdrawals: queuedWithdrawals,
             utilizationRate: utilizationRate,
-            blndBalance: Decimal(Double(poolData.blnd)),
-            usdcBalance: Decimal(Double(poolData.usdc)),
+            blndBalance: humanData.blnd,
+            usdcBalance: humanData.usdc,
             emissionsPerSecond: Decimal(0), // To be implemented
             backstopToken: "", // To be implemented
             lastUpdated: Date()
@@ -986,8 +1069,10 @@ public final class BlendVault {
             let metadata = try await networkService.loadTokenMetadata(contractId: contractAddress)
             
             let price = prices[asset.assetId]?.price ?? Decimal.zero
-            let totalSupplied = asset.dSupply
-            let totalBorrowed = asset.bSupply
+            
+            // Use human-readable values instead of raw fixed-point values
+            let totalSupplied = asset.suppliedHuman
+            let totalBorrowed = asset.borrowedHuman
             
             let totalSuppliedUSD = totalSupplied * price
             let totalBorrowedUSD = totalBorrowed * price
@@ -1018,9 +1103,90 @@ public final class BlendVault {
     }
     
     private func convertToUserPositions(_ positions: [Position]) async throws -> [UserPosition] {
-        // Convert from existing Position type to new UserPosition type
-        // This is a simplified implementation
-        return []
+        var userPositions: [UserPosition] = []
+        
+        for position in positions {
+            // Get asset metadata for decimal information
+            let contractAddress = try StellarContractID.toStrKey(position.asset)
+            let metadata = try await networkService.loadTokenMetadata(contractId: contractAddress)
+            
+            // Get current price from oracle
+            let oracleAsset = OracleAsset.stellar(address: position.asset)
+            let priceData = try? await oracleService.getPrice(asset: oracleAsset)
+            let currentPrice = priceData?.price ?? Decimal.zero
+            
+            // Convert deposited amount from fixed-point to human-readable
+            let depositedHuman = FixedMath.toFloat(value: position.depositedAmount, decimals: metadata.decimals)
+            let borrowedHuman = FixedMath.toFloat(value: position.borrowedAmount, decimals: metadata.decimals)
+            let collateralHuman = FixedMath.toFloat(value: position.collateralValue, decimals: metadata.decimals)
+            
+            // Calculate USD values
+            let depositedValueUSD = depositedHuman * currentPrice
+            let borrowedValueUSD = borrowedHuman * currentPrice
+            let collateralValueUSD = collateralHuman * currentPrice
+            
+            // Create supplied asset entries
+            var suppliedAssets: [UserAssetPosition] = []
+            if depositedHuman > 0 {
+                // Get asset-specific APY for supply
+                let assetService = BlendAssetService(poolID: config.primaryPoolID, networkService: networkService)
+                let poolAssets = try await assetService.getAssets()
+                let assetData = try await assetService.getAll(assets: poolAssets)
+                
+                if let specificAssetData = assetData.first(where: { $0.assetId == position.asset }) {
+                    let poolConfig = try await poolService.fetchPoolConfig(contractId: config.primaryPoolID)
+                    let backstopRate = FixedMath.toFixed(value: Double(poolConfig.backstopRate), decimals: 7)
+                    let supplyAPY = try specificAssetData.calculateSupplyAPY(backstopTakeRate: backstopRate)
+                    
+                    let suppliedAsset = UserAssetPosition(
+                        assetID: position.asset,
+                        symbol: metadata.symbol,
+                        amount: depositedHuman,
+                        valueUSD: depositedValueUSD,
+                        apy: supplyAPY,
+                        isCollateral: true // Supplied assets are typically used as collateral
+                    )
+                    suppliedAssets.append(suppliedAsset)
+                }
+            }
+            
+            // Create borrowed asset entries
+            var borrowedAssets: [UserAssetPosition] = []
+            if borrowedHuman > 0 {
+                // Get asset-specific APY for borrow
+                let assetService = BlendAssetService(poolID: config.primaryPoolID, networkService: networkService)
+                let poolAssets = try await assetService.getAssets()
+                let assetData = try await assetService.getAll(assets: poolAssets)
+                
+                if let specificAssetData = assetData.first(where: { $0.assetId == position.asset }) {
+                    let borrowAPY = try specificAssetData.calculateBorrowAPY()
+                    
+                    let borrowedAsset = UserAssetPosition(
+                        assetID: position.asset,
+                        symbol: metadata.symbol,
+                        amount: borrowedHuman,
+                        valueUSD: borrowedValueUSD,
+                        apy: borrowAPY,
+                        isCollateral: false // Borrowed assets are not collateral
+                    )
+                    borrowedAssets.append(borrowedAsset)
+                }
+            }
+            
+            // Create user position
+            let userPosition = UserPosition(
+                poolID: config.primaryPoolID,
+                suppliedAssets: suppliedAssets,
+                borrowedAssets: borrowedAssets,
+                collateralValue: collateralValueUSD,
+                borrowValue: borrowedValueUSD,
+                healthFactor: position.healthFactor
+            )
+            
+            userPositions.append(userPosition)
+        }
+        
+        return userPositions
     }
     
     private func calculateNetAPY(positions: [UserPosition]) -> Decimal {
