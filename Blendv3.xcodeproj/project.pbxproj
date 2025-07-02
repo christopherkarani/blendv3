@@ -23,7 +23,6 @@
 		9E1C13452DFCE8220081E56D /* BlendParser+TokenMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C13412DFCE8220081E56D /* BlendParser+TokenMetadata.swift */; };
 		9E1C13472DFCE8330081E56D /* TokenMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C13462DFCE8330081E56D /* TokenMetadata.swift */; };
 		9E1C134F2DFD0D230081E56D /* BlendAssetData+FinancialCalculations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C134E2DFD0D230081E56D /* BlendAssetData+FinancialCalculations.swift */; };
-
 		9E2B1DB62E1330CE00B2AD5D /* BlendModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2B1DAE2E1330CE00B2AD5D /* BlendModels.swift */; };
 		9E7C24272DEAAAB5007C181D /* BlendFinancialCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C24262DEAAAB5007C181D /* BlendFinancialCalculator.swift */; };
 		9E7C24372DEAAE0D007C181D /* BackstopContractService+Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E7C242B2DEAAE0D007C181D /* BackstopContractService+Functions.swift */; };
@@ -80,7 +79,6 @@
 		9EDE65152DE729DD00B63E09 /* SorobanTransactionSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */; };
 		9EDE651F2DE773DB00B63E09 /* PoolService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE651E2DE773DB00B63E09 /* PoolService.swift */; };
 		9EDE65212DE9220B00B63E09 /* BlendAssetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65202DE9220B00B63E09 /* BlendAssetData.swift */; };
-		9EDE65232DE9225900B63E09 /* BlendParser1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65222DE9225400B63E09 /* BlendParser1.swift */; };
 		9EDE65252DE9246700B63E09 /* BlendAssetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65242DE9246000B63E09 /* BlendAssetService.swift */; };
 		9EDE65272DE9338D00B63E09 /* PoolServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDE65262DE9338D00B63E09 /* PoolServiceProtocol.swift */; };
 /* End PBXBuildFile section */
@@ -120,7 +118,6 @@
 		9E1C13462DFCE8330081E56D /* TokenMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenMetadata.swift; sourceTree = "<group>"; };
 		9E1C134E2DFD0D230081E56D /* BlendAssetData+FinancialCalculations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BlendAssetData+FinancialCalculations.swift"; sourceTree = "<group>"; };
 		9E2B1DAE2E1330CE00B2AD5D /* BlendModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendModels.swift; sourceTree = "<group>"; };
-
 		9E7C24262DEAAAB5007C181D /* BlendFinancialCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendFinancialCalculator.swift; sourceTree = "<group>"; };
 		9E7C242B2DEAAE0D007C181D /* BackstopContractService+Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackstopContractService+Functions.swift"; sourceTree = "<group>"; };
 		9E7C242C2DEAAE0D007C181D /* BackstopContractService+Parsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BackstopContractService+Parsing.swift"; sourceTree = "<group>"; };
@@ -174,7 +171,6 @@
 		9EDE65142DE729DD00B63E09 /* SorobanTransactionSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SorobanTransactionSimulator.swift; sourceTree = "<group>"; };
 		9EDE651E2DE773DB00B63E09 /* PoolService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoolService.swift; sourceTree = "<group>"; };
 		9EDE65202DE9220B00B63E09 /* BlendAssetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendAssetData.swift; sourceTree = "<group>"; };
-		9EDE65222DE9225400B63E09 /* BlendParser1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendParser1.swift; sourceTree = "<group>"; };
 		9EDE65242DE9246000B63E09 /* BlendAssetService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendAssetService.swift; sourceTree = "<group>"; };
 		9EDE65262DE9338D00B63E09 /* PoolServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoolServiceProtocol.swift; sourceTree = "<group>"; };
 		9EE4A0E92DDFB939004BD597 /* Blendv3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blendv3.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -507,7 +503,6 @@
 				9E1C104D2DFB08100081E56D /* BlendError.swift */,
 				9E93884F2DF353730015BE14 /* BlendVaultError.swift */,
 				9E7C24262DEAAAB5007C181D /* BlendFinancialCalculator.swift */,
-				9EDE65222DE9225400B63E09 /* BlendParser1.swift */,
 				9ED8DB662DE54FCA00CB0059 /* StellarContractID.swift */,
 				9ED8DAC52DE5240300CB0059 /* FixedMath.swift */,
 				9ED8DAB32DE5240300CB0059 /* BlendRateCalculator.swift */,
@@ -711,7 +706,6 @@
 			files = (
 				9ED8DAF32DE5240300CB0059 /* BlendOracleService.swift in Sources */,
 				9EDE64F92DE7035400B63E09 /* PriceData.swift in Sources */,
-				9EDE65232DE9225900B63E09 /* BlendParser1.swift in Sources */,
 				9ED8DAF62DE5240300CB0059 /* NetworkService.swift in Sources */,
 				9EDE651F2DE773DB00B63E09 /* PoolService.swift in Sources */,
 				9EDE65272DE9338D00B63E09 /* PoolServiceProtocol.swift in Sources */,
