@@ -38,6 +38,7 @@
 		9E97819E2DE68E6C009333AD /* RetryConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781932DE68E6C009333AD /* RetryConfiguration.swift */; };
 		9E9781A42DE68E6C009333AD /* TimeoutConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781942DE68E6C009333AD /* TimeoutConfiguration.swift */; };
 		9E9781B22DE68F7F009333AD /* BlendVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781B02DE68F7F009333AD /* BlendVault.swift */; };
+		9E9D8D7A2E15A3440065B72F /* DebugLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9D8D792E15A3440065B72F /* DebugLogger.swift */; };
 		9EA449D02DF0FF3C00F6CC6D /* UserPositionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CC2DF0FF3C00F6CC6D /* UserPositionService.swift */; };
 		9EA449D22DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */; };
 		9EAD3EED2DF7BDF600029CE7 /* SorobanTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */; };
@@ -53,7 +54,6 @@
 		9ED8DAFE2DE5240300CB0059 /* DebugLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DABE2DE5240300CB0059 /* DebugLogView.swift */; };
 		9ED8DB0D2DE5240300CB0059 /* BlendRateCalculatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB42DE5240300CB0059 /* BlendRateCalculatorProtocol.swift */; };
 		9ED8DB0E2DE5240300CB0059 /* FixedMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC52DE5240300CB0059 /* FixedMath.swift */; };
-		9ED8DB162DE5240300CB0059 /* Blendv3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB92DE5240300CB0059 /* Blendv3App.swift */; };
 		9ED8DB182DE5240300CB0059 /* BlendConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB72DE5240300CB0059 /* BlendConstants.swift */; };
 		9ED8DB232DE5240300CB0059 /* BlendRateCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB32DE5240300CB0059 /* BlendRateCalculator.swift */; };
 		9ED8DB252DE5240300CB0059 /* SmartContractDebugSystem-README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9ED8DADD2DE5240300CB0059 /* SmartContractDebugSystem-README.md */; };
@@ -131,6 +131,7 @@
 		9E9781932DE68E6C009333AD /* RetryConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryConfiguration.swift; sourceTree = "<group>"; };
 		9E9781942DE68E6C009333AD /* TimeoutConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutConfiguration.swift; sourceTree = "<group>"; };
 		9E9781B02DE68F7F009333AD /* BlendVault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendVault.swift; sourceTree = "<group>"; };
+		9E9D8D792E15A3440065B72F /* DebugLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogger.swift; sourceTree = "<group>"; };
 		9EA449CC2DF0FF3C00F6CC6D /* UserPositionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionService.swift; sourceTree = "<group>"; };
 		9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionServiceProtocol.swift; sourceTree = "<group>"; };
 		9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SorobanTypes.swift; sourceTree = "<group>"; };
@@ -144,7 +145,6 @@
 		9ED8DAB32DE5240300CB0059 /* BlendRateCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendRateCalculator.swift; sourceTree = "<group>"; };
 		9ED8DAB42DE5240300CB0059 /* BlendRateCalculatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendRateCalculatorProtocol.swift; sourceTree = "<group>"; };
 		9ED8DAB72DE5240300CB0059 /* BlendConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendConstants.swift; sourceTree = "<group>"; };
-		9ED8DAB92DE5240300CB0059 /* Blendv3App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Blendv3App.swift; sourceTree = "<group>"; };
 		9ED8DABB2DE5240300CB0059 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		9ED8DABD2DE5240300CB0059 /* DataAvailabilityAnalysis.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DataAvailabilityAnalysis.md; sourceTree = "<group>"; };
 		9ED8DABE2DE5240300CB0059 /* DebugLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogView.swift; sourceTree = "<group>"; };
@@ -472,7 +472,6 @@
 				9E9781B12DE68F7F009333AD /* Core */,
 				9ED8DB602DE543FB00CB0059 /* Docs */,
 				9ED8DAAC2DE5240300CB0059 /* BlendApp.swift */,
-				9ED8DAB92DE5240300CB0059 /* Blendv3App.swift */,
 				9ED8DABE2DE5240300CB0059 /* DebugLogView.swift */,
 				9ED8DACF2DE5240300CB0059 /* Preview Assets.xcassets */,
 				9ED8DAD02DE5240300CB0059 /* Preview Content */,
@@ -498,6 +497,7 @@
 		9ED8DB592DE5434300CB0059 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				9E9D8D792E15A3440065B72F /* DebugLogger.swift */,
 				9E1C10532DFB0C800081E56D /* Logger.swift */,
 				9EDE650F2DE712A200B63E09 /* OracleError.swift */,
 				9E1C104D2DFB08100081E56D /* BlendError.swift */,
@@ -705,6 +705,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ED8DAF32DE5240300CB0059 /* BlendOracleService.swift in Sources */,
+				9E9D8D7A2E15A3440065B72F /* DebugLogger.swift in Sources */,
 				9EDE64F92DE7035400B63E09 /* PriceData.swift in Sources */,
 				9ED8DAF62DE5240300CB0059 /* NetworkService.swift in Sources */,
 				9EDE651F2DE773DB00B63E09 /* PoolService.swift in Sources */,
@@ -760,7 +761,6 @@
 				9E1C10542DFB0C800081E56D /* Logger.swift in Sources */,
 				9E93884E2DF3519B0015BE14 /* CacheServiceProtocol.swift in Sources */,
 				9E1C104E2DFB08100081E56D /* BlendError.swift in Sources */,
-				9ED8DB162DE5240300CB0059 /* Blendv3App.swift in Sources */,
 				9ED8DB182DE5240300CB0059 /* BlendConstants.swift in Sources */,
 				9EDE65032DE703CF00B63E09 /* UserPositionData.swift in Sources */,
 				9E1C13472DFCE8330081E56D /* TokenMetadata.swift in Sources */,
