@@ -8,14 +8,22 @@ extension BackstopContractService {
     // MARK: - Parameter Creation
     
     /// Create address parameter for contract calls
+    /// Automatically detects address type (Account ID vs Contract ID) and creates appropriate XDR
     internal func createAddressParameter(_ address: String) throws -> SCValXDR {
         guard !address.isEmpty else {
             throw BackstopError.invalidAddress("Address cannot be empty")
         }
         
         do {
-            let contractAddressXdr = try SCAddressXDR(contractId: address)
-            return SCValXDR.address(contractAddressXdr)
+            if StellarContractID.isStrKeyContract(address) {
+                // Contract address (starts with 'C')
+                let contractAddressXdr = try SCAddressXDR(contractId: address)
+                return SCValXDR.address(contractAddressXdr)
+            } else {
+                // Account address (starts with 'G') or other format
+                let accountAddressXdr = try SCAddressXDR(accountId: address)
+                return SCValXDR.address(accountAddressXdr)
+            }
         } catch {
             throw BackstopError.invalidAddress("Invalid address format: \(address)")
         }
