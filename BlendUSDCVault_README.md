@@ -19,7 +19,7 @@
 ```
 Blendv3/Core/
 ├── Constants/
-│   └── BlendUSDCConstants.swift    # Contract addresses, function names, scaling
+│   └── BlendConstants.swift    # Contract addresses, function names, scaling
 ├── Models/
 │   └── BlendPoolStats.swift        # Pool statistics data model
 ├── Protocols/
@@ -32,7 +32,7 @@ Blendv3/Core/
 
 1. **BlendUSDCVault**: Main service class using Combine for reactive state management
 2. **BlendSigner Protocol**: Allows different wallet implementations
-3. **BlendUSDCConstants**: Isolated contract-specific constants
+3. **BlendConstants**: Isolated contract-specific constants
 4. **BlendPoolStats**: Type-safe pool statistics model
 
 ## Setup
@@ -245,3 +245,12 @@ For questions or issues:
 The implementation fetches real-time data using Blend's view functions:
 - `get_reserve`: Returns reserve data including total supplied and borrowed amounts
 - `get_pool_config`: Returns pool configuration including backstop rate 
+
+## Architecture Overview
+
+The BlendVault provides a clean Swift interface for interacting with Blend Protocol liquidity pools:
+
+1. **BlendVault**: Main interface with deposit/withdraw operations
+2. **NetworkService**: Handles Soroban contract calls and transaction simulation  
+3. **BlendConstants**: Isolated contract-specific constants
+4. **PoolStatsService**: Real-time pool statistics and monitoring 

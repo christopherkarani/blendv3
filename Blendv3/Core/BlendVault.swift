@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 /// Primary interface for interacting with Blend Protocol liquidity pools and backstop
 @MainActor
@@ -534,7 +534,7 @@ public final class BlendVault {
         
         // Queue the withdrawal
         do {
-            let q4w = try await backstopService.queueWithdrawal(
+            let _ = try await backstopService.queueWithdrawal(
                 from: userAddress,
                 poolAddress: targetPoolID,
                 amount: amount
@@ -771,7 +771,7 @@ public final class BlendVault {
     public func getUserBackstopStats() async throws -> UserBackstopStats {
         var positions: [UserBackstopPosition] = []
         var totalValue = Decimal.zero
-        var totalRewards = Decimal.zero
+        let totalRewards = Decimal.zero
         var totalQueued = Decimal.zero
         var earliestWithdrawal: Date?
         
@@ -801,8 +801,8 @@ public final class BlendVault {
                     QueuedWithdrawal(
                         poolID: poolID,
                         amount: Decimal(Double(q4w.amount)),
-                        queuedAt: Date(), // Not available in Q4W
-                        availableAt: q4w.expirationDate ?? Date(),
+                        queuedAt: Date(),
+                        availableAt: q4w.expirationDate,
                         estimatedValue: Decimal(Double(q4w.amount)),
                         canExecuteNow: q4w.isExpired
                     )

@@ -12,7 +12,7 @@
 //  ```
 
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 // MARK: - NetworkService Token Metadata Extension
 

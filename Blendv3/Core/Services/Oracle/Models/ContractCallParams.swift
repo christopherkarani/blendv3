@@ -4,10 +4,10 @@
 //
 //  Created by Chris Karani on 12/06/2025.
 //
-import stellarsdk
+@preconcurrency import stellarsdk
 
 /// Contract call parameters for real Soroban operations
-public struct ContractCallParams {
+public struct ContractCallParams: Sendable {
     let contractId: String
     let functionName: String
     let functionArguments: [SCValXDR]

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 /// Represents token metadata loaded from a Soroban contract instance
 /// Contains name, symbol, decimals, and optional classic Stellar asset information

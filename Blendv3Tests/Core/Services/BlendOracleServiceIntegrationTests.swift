@@ -14,12 +14,12 @@ final class BlendOracleServiceIntegrationTests: XCTestCase {
     
     // Test configuration
     private let testTimeout: TimeInterval = 30.0
-    private let testAssets = [
-        BlendUSDCConstants.Testnet.usdc,
-        BlendUSDCConstants.Testnet.xlm,
-        BlendUSDCConstants.Testnet.blnd,
-        BlendUSDCConstants.Testnet.wbtc,
-        BlendUSDCConstants.Testnet.weth
+    private static let testAssets = [
+        BlendConstants.Testnet.usdc,
+        BlendConstants.Testnet.xlm,
+        BlendConstants.Testnet.blnd,
+        BlendConstants.Testnet.wbtc,
+        BlendConstants.Testnet.weth
     ]
     
     // MARK: - Setup & Teardown
@@ -51,7 +51,7 @@ final class BlendOracleServiceIntegrationTests: XCTestCase {
     
     func testGetPrice_withRealOracle_returnsValidPrice() async throws {
         // Given
-        let asset = BlendUSDCConstants.Testnet.usdc
+        let asset = BlendConstants.Testnet.usdc
         
         // When
         let result = try await sut.getPrice(asset: asset)
@@ -75,7 +75,7 @@ final class BlendOracleServiceIntegrationTests: XCTestCase {
     
     func testGetPrices_withMultipleRealAssets_returnsValidPrices() async throws {
         // Given
-        let assets = testAssets
+        let assets = Self.testAssets
         
         // When
         let result = try await sut.getPrices(assets: assets)
@@ -91,15 +91,15 @@ final class BlendOracleServiceIntegrationTests: XCTestCase {
             // Validate price ranges for known assets
             let humanPrice = priceData.priceInUSD
             switch asset {
-            case BlendUSDCConstants.Testnet.usdc:
+            case BlendConstants.Testnet.usdc:
                 XCTAssertGreaterThan(humanPrice, 0.95, "USDC price should be close to $1.00")
                 XCTAssertLessThan(humanPrice, 1.05, "USDC price should be close to $1.00")
                 
-            case BlendUSDCConstants.Testnet.xlm:
+            case BlendConstants.Testnet.xlm:
                 XCTAssertGreaterThan(humanPrice, 0.05, "XLM price should be reasonable")
                 XCTAssertLessThan(humanPrice, 1.00, "XLM price should be reasonable")
                 
-            case BlendUSDCConstants.Testnet.blnd:
+            case BlendConstants.Testnet.blnd:
                 XCTAssertGreaterThan(humanPrice, 0.001, "BLND price should be reasonable")
                 XCTAssertLessThan(humanPrice, 1.00, "BLND price should be reasonable")
                 
@@ -111,7 +111,7 @@ final class BlendOracleServiceIntegrationTests: XCTestCase {
     
     func testGetPriceAtTimestamp_withRealOracle_returnsHistoricalPrice() async throws {
         // Given
-        let asset = BlendUSDCConstants.Testnet.usdc
+        let asset = BlendConstants.Testnet.usdc
         let oneDayAgo = UInt64(Date().timeIntervalSince1970 - 86400)
         
         // When
@@ -131,7 +131,7 @@ final class BlendOracleServiceIntegrationTests: XCTestCase {
     
     func testGetPricesWithRecords_withRealOracle_returnsHistoricalData() async throws {
         // Given
-        let asset = BlendUSDCConstants.Testnet.usdc
+        let asset = BlendConstants.Testnet.usdc
         let recordCount: UInt32 = 10
         
         // When
@@ -183,9 +183,9 @@ final class BlendOracleServiceIntegrationTests: XCTestCase {
     func testGetPrices_withMixedValidInvalidAssets_returnsPartialResults() async throws {
         // Given
         let mixedAssets = [
-            BlendUSDCConstants.Testnet.usdc, // Valid
+            BlendConstants.Testnet.usdc, // Valid
             "INVALID_ASSET_1", // Invalid
-            BlendUSDCConstants.Testnet.xlm, // Valid
+            BlendConstants.Testnet.xlm, // Valid
             "INVALID_ASSET_2" // Invalid
         ]
         
@@ -197,7 +197,7 @@ final class BlendOracleServiceIntegrationTests: XCTestCase {
         XCTAssertLessThan(result.count, mixedAssets.count, "Should not return prices for all assets")
         
         // Valid assets should have prices
-        XCTAssertNotNil(result[BlendUSDCConstants.Testnet.usdc])
+        XCTAssertNotNil(result[BlendConstants.Testnet.usdc])
         
         // Invalid assets should not have prices
         XCTAssertNil(result["INVALID_ASSET_1"])
@@ -208,7 +208,7 @@ final class BlendOracleServiceIntegrationTests: XCTestCase {
     
     func testGetPrices_realOraclePerformance_completesWithinTimeLimit() async throws {
         // Given
-        let assets = testAssets
+        let assets = Self.testAssets
         let maxDuration: TimeInterval = 10.0 // 10 seconds for real network calls
         
         // When
@@ -225,7 +225,7 @@ final class BlendOracleServiceIntegrationTests: XCTestCase {
     
     func testGetPrices_withRealOracleAndCache_usesCacheOnSecondCall() async throws {
         // Given
-        let asset = BlendUSDCConstants.Testnet.usdc
+        let asset = BlendConstants.Testnet.usdc
         
         // When - First call (should hit oracle)
         let startTime1 = CFAbsoluteTimeGetCurrent()
@@ -252,7 +252,7 @@ final class BlendOracleServiceIntegrationTests: XCTestCase {
     
     func testAssetParameterCreation_withDifferentAssetTypes_worksCorrectly() async throws {
         // Test with Stellar asset (contract address)
-        let stellarAsset = BlendUSDCConstants.Testnet.usdc
+        let stellarAsset = BlendConstants.Testnet.usdc
         let stellarResult = try await sut.getPrice(asset: stellarAsset)
         
         // Should work with valid Stellar asset
@@ -268,7 +268,7 @@ final class BlendOracleServiceIntegrationTests: XCTestCase {
     
     func testGetPrices_withManyAssets_handlesLargeRequests() async throws {
         // Given
-        let manyAssets = Array(repeating: testAssets, count: 10).flatMap { $0 } // 30 assets
+        let manyAssets = Array(repeating: Self.testAssets, count: 10).flatMap { $0 } // 30 assets
         let maxDuration: TimeInterval = 30.0
         
         // When
@@ -289,7 +289,7 @@ final class BlendOracleServiceIntegrationTests: XCTestCase {
     
     func testPriceData_validation_ensuresDataIntegrity() async throws {
         // Given
-        let asset = BlendUSDCConstants.Testnet.usdc
+        let asset = BlendConstants.Testnet.usdc
         
         // When
         let result = try await sut.getPrice(asset: asset)

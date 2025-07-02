@@ -68,7 +68,7 @@ final class NetworkServiceTests: XCTestCase {
         
         // Then
         XCTAssertNotNil(mainnetService)
-        XCTAssertEqual(mainnetConfig.rpcEndpoint, BlendUSDCConstants.RPC.mainnet)
+        XCTAssertEqual(mainnetConfig.rpcEndpoint, BlendConstants.RPC.mainnet)
     }
     
     // MARK: - Configuration Tests
@@ -78,7 +78,7 @@ final class NetworkServiceTests: XCTestCase {
         let config = NetworkServiceConfig(networkType: .testnet)
         
         // Then
-        XCTAssertEqual(config.rpcEndpoint, BlendUSDCConstants.RPC.testnet)
+        XCTAssertEqual(config.rpcEndpoint, BlendConstants.RPC.testnet)
     }
     
     func testNetworkServiceConfig_MainnetEndpoint_IsCorrect() {
@@ -86,7 +86,7 @@ final class NetworkServiceTests: XCTestCase {
         let config = NetworkServiceConfig(networkType: .mainnet)
         
         // Then
-        XCTAssertEqual(config.rpcEndpoint, BlendUSDCConstants.RPC.mainnet)
+        XCTAssertEqual(config.rpcEndpoint, BlendConstants.RPC.mainnet)
     }
     
     // MARK: - Connectivity Tests

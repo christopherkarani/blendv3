@@ -8,7 +8,7 @@
 import Foundation
 
 ///// Sanitized error type that never exposes internal implementation details
-public enum BlendError: LocalizedError, Equatable {
+public enum BlendError: LocalizedError, Equatable, Sendable {
     case network(NetworkErrorType)
     case validation(ValidationErrorType)
     case transaction(TransactionErrorType)
@@ -56,7 +56,7 @@ public enum BlendError: LocalizedError, Equatable {
     }
 }
 
-public enum NetworkErrorType: Equatable {
+public enum NetworkErrorType: Equatable, Sendable {
     case connectionFailed
     case timeout
     case serverError
@@ -70,7 +70,7 @@ public enum NetworkErrorType: Equatable {
     }
 }
 //
-public enum ValidationErrorType: Equatable {
+public enum ValidationErrorType: Equatable, Sendable {
     case invalidInput
     case invalidResponse
     case integerOverflow
@@ -86,7 +86,7 @@ public enum ValidationErrorType: Equatable {
     }
 }
 //
-public enum TransactionErrorType: Equatable {
+public enum TransactionErrorType: Equatable, Sendable {
     case failed
     case rejected
     case insufficientFee
@@ -100,7 +100,7 @@ public enum TransactionErrorType: Equatable {
     }
 }
 
-public enum TokenMetadataErrorType: Equatable {
+public enum TokenMetadataErrorType: Equatable, Sendable {
     case noInstance
     case malformed
     case invalidContractId

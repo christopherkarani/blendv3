@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 // MARK: - BlendParser Token Metadata Extensions
 

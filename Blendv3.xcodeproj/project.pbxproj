@@ -51,7 +51,6 @@
 		9ED8DAF92DE5240300CB0059 /* BlendOracleServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB02DE5240300CB0059 /* BlendOracleServiceProtocol.swift */; };
 		9ED8DAFA2DE5240300CB0059 /* BlendApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAAC2DE5240300CB0059 /* BlendApp.swift */; };
 		9ED8DAFD2DE5240300CB0059 /* CacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DABB2DE5240300CB0059 /* CacheService.swift */; };
-		9ED8DAFE2DE5240300CB0059 /* DebugLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DABE2DE5240300CB0059 /* DebugLogView.swift */; };
 		9ED8DB0D2DE5240300CB0059 /* BlendRateCalculatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB42DE5240300CB0059 /* BlendRateCalculatorProtocol.swift */; };
 		9ED8DB0E2DE5240300CB0059 /* FixedMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAC52DE5240300CB0059 /* FixedMath.swift */; };
 		9ED8DB182DE5240300CB0059 /* BlendConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ED8DAB72DE5240300CB0059 /* BlendConstants.swift */; };
@@ -147,7 +146,6 @@
 		9ED8DAB72DE5240300CB0059 /* BlendConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendConstants.swift; sourceTree = "<group>"; };
 		9ED8DABB2DE5240300CB0059 /* CacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheService.swift; sourceTree = "<group>"; };
 		9ED8DABD2DE5240300CB0059 /* DataAvailabilityAnalysis.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DataAvailabilityAnalysis.md; sourceTree = "<group>"; };
-		9ED8DABE2DE5240300CB0059 /* DebugLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogView.swift; sourceTree = "<group>"; };
 		9ED8DAC22DE5240300CB0059 /* DEVELOPER_QUICK_START.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DEVELOPER_QUICK_START.md; sourceTree = "<group>"; };
 		9ED8DAC52DE5240300CB0059 /* FixedMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedMath.swift; sourceTree = "<group>"; };
 		9ED8DAC62DE5240300CB0059 /* IMPLEMENTATION_SUMMARY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = IMPLEMENTATION_SUMMARY.md; sourceTree = "<group>"; };
@@ -472,7 +470,6 @@
 				9E9781B12DE68F7F009333AD /* Core */,
 				9ED8DB602DE543FB00CB0059 /* Docs */,
 				9ED8DAAC2DE5240300CB0059 /* BlendApp.swift */,
-				9ED8DABE2DE5240300CB0059 /* DebugLogView.swift */,
 				9ED8DACF2DE5240300CB0059 /* Preview Assets.xcassets */,
 				9ED8DAD02DE5240300CB0059 /* Preview Content */,
 			);
@@ -714,7 +711,6 @@
 				9ED8DAFA2DE5240300CB0059 /* BlendApp.swift in Sources */,
 				9EDE65212DE9220B00B63E09 /* BlendAssetData.swift in Sources */,
 				9ED8DAFD2DE5240300CB0059 /* CacheService.swift in Sources */,
-				9ED8DAFE2DE5240300CB0059 /* DebugLogView.swift in Sources */,
 				9EAD3EF22DF7D1F000029CE7 /* OracleContractFunction.swift in Sources */,
 				9EAD3EF42DF7D1F000029CE7 /* OracleNetworkService.swift in Sources */,
 				9ED8DB672DE54FCA00CB0059 /* StellarContractID.swift in Sources */,

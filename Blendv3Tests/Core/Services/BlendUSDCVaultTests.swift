@@ -704,7 +704,7 @@ final class BlendUSDCVaultTests: XCTestCase {
     private func createMockTruePoolStats() -> TruePoolStats {
         let reserves = [
             PoolReserveData(
-                asset: BlendUSDCConstants.usdcAssetContractAddress,
+                asset: BlendConstants.Testnet.usdc,
                 symbol: "USDC",
                 totalSupplied: Decimal(100000),
                 totalBorrowed: Decimal(50000),
@@ -738,7 +738,7 @@ final class BlendUSDCVaultTests: XCTestCase {
         
         let usdcReserve = AssetReserveData(
             symbol: "USDC",
-            contractAddress: BlendUSDCConstants.usdcAssetContractAddress,
+            contractAddress: BlendConstants.Testnet.usdc,
             totalSupplied: Decimal(100000),
             totalBorrowed: Decimal(50000),
             utilizationRate: Decimal(0.5),
@@ -752,7 +752,7 @@ final class BlendUSDCVaultTests: XCTestCase {
         
         let xlmReserve = AssetReserveData(
             symbol: "XLM",
-            contractAddress: BlendUSDCConstants.Testnet.xlm,
+            contractAddress: BlendConstants.Testnet.xlm,
             totalSupplied: Decimal(50000),
             totalBorrowed: Decimal(25000),
             utilizationRate: Decimal(0.5),
@@ -766,7 +766,7 @@ final class BlendUSDCVaultTests: XCTestCase {
         
         let blndReserve = AssetReserveData(
             symbol: "BLND",
-            contractAddress: BlendUSDCConstants.Testnet.blnd,
+            contractAddress: BlendConstants.Testnet.blnd,
             totalSupplied: Decimal(25000),
             totalBorrowed: Decimal(10000),
             utilizationRate: Decimal(0.4),

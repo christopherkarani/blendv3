@@ -31,7 +31,7 @@ public protocol CacheServiceProtocol: Sendable {
     ///   - type: The expected type of the cached value (must conform to `Codable`).
     /// - Returns: The cached value of type `T` if it exists and hasn't expired, otherwise `nil`.
     /// - Note: This method safely handles decoding failures by returning `nil` rather than throwing.
-    func get<T: Codable>(_ key: String, type: T.Type) async -> T?
+    func get<T: Codable & Sendable>(_ key: String, type: T.Type) async -> T?
     
     /// Stores a value in the cache with an associated key and time-to-live duration.
     ///
@@ -45,7 +45,7 @@ public protocol CacheServiceProtocol: Sendable {
     ///   - ttl: Time-to-live duration in seconds after which the cached value expires.
     ///          Use `TimeInterval.infinity` for values that should never expire.
     /// - Note: Implementation should handle serialization failures gracefully.
-    func set<T: Codable>(_ value: T, key: String, ttl: TimeInterval) async
+    func set<T: Codable & Sendable>(_ value: T, key: String, ttl: TimeInterval) async
     
     /// Removes a specific cached value associated with the given key.
     ///

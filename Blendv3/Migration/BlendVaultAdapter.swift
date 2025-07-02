@@ -7,7 +7,7 @@
 
 import Foundation
 import Combine
-import stellarsdk
+@preconcurrency import stellarsdk
 
 /// Adapter that provides a bridge between the legacy BlendUSDCVault and the new service architecture
 public class BlendVaultAdapter {

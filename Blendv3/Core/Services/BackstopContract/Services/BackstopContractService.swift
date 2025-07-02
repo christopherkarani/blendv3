@@ -1,5 +1,5 @@
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 import os
 
 /// Main Backstop contract service implementation

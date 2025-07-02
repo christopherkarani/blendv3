@@ -6,7 +6,7 @@
 //
 
 
-import stellarsdk
+@preconcurrency import stellarsdk
 import Foundation
 import CryptoKit
 

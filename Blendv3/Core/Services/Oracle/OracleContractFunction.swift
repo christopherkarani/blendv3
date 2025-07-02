@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 /// Type-safe enumeration of Oracle contract functions
 /// Provides compile-time safety for contract function names and parameter validation

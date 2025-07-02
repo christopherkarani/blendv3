@@ -262,8 +262,7 @@ xcodebuild test -scheme Blendv3 -destination 'platform=iOS Simulator,name=iPhone
 ping soroban-testnet.stellar.org
 
 # Verify contract addresses
-echo "Pool: $(grep poolContractAddress Blendv3/Core/Constants/BlendUSDCConstants.swift)"
-echo "Oracle: CBJSXNC2PL5LRMGWBOJVCWZFRNFPQXX4JWCUPSGEVZELZDNSEOM7Q6IQ"
+echo "Pool: $(grep poolContractAddress Blendv3/Core/Constants/BlendConstants.swift)"
 
 # Enable verbose logging
 export VERBOSE_TEST_LOGGING=1
@@ -341,30 +340,6 @@ func testDeposit_withValidAmount_returnsTransactionHash() async throws {
 ## Contract Information
 
 ### Pool Contract
-- **Contract Address**: See `BlendUSDCConstants.poolContractAddress`
+- **Contract Address**: See `BlendConstants.Testnet.xlmUsdcPool`
 - **Network**: Stellar Testnet
 - **RPC Endpoint**: `https://soroban-testnet.stellar.org`
-- **Functions**: `submit`, `get_reserve`, `get_config`, `get_status`, etc.
-
-### Oracle Contract
-- **Contract Address**: `CBJSXNC2PL5LRMGWBOJVCWZFRNFPQXX4JWCUPSGEVZELZDNSEOM7Q6IQ`
-- **Network**: Stellar Testnet
-- **RPC Endpoint**: `https://soroban-testnet.stellar.org`
-- **Functions**: `lastprice`, `price`, `prices`, `decimals`
-- **Asset Format**: `Asset::Stellar(contract_address)`
-- **Return Format**: `Option<PriceData>` or `Option<Vec<PriceData>>`
-
-## Test Results
-
-Run tests and check results:
-```bash
-# Generate test report
-xcodebuild test -scheme Blendv3 -destination 'platform=iOS Simulator,name=iPhone 15' -resultBundlePath TestResults.xcresult
-
-# View results
-open TestResults.xcresult
-```
-
----
-
-**🎯 10x Engineer Achievement Unlocked**: Comprehensive test suite with 95%+ coverage, real contract integration, performance benchmarks, and production-ready error handling for both Oracle and Vault services! 🚀 

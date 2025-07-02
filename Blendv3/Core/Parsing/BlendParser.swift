@@ -7,7 +7,7 @@
 
 import Foundation
 import os
-import stellarsdk
+@preconcurrency import stellarsdk
 
 // MARK: - Oracle Parsing Context
 
@@ -1685,6 +1685,37 @@ extension BlendParser {
     private static func calculateHealthFactor(collateralValue: Double, borrowedAmount: Double) -> Double {
         guard borrowedAmount > 0 else { return 1.0 }
         return collateralValue / borrowedAmount
+    }
+    
+    // MARK: - Enhanced Oracle Parsing Methods
+    
+    /// Parse generic simulation result
+    public func parseSimulationResult<T>(_ result: SCValXDR, as type: T.Type) throws -> T {
+        // Route to specific parsing methods based on type
+        
+        if type == SCValXDR.self {
+            return result as! T
+        } else if type == PriceData.self {
+            if let priceData = try parseOptionalPriceData(result, context: nil) {
+                return priceData as! T
+            } else {
+                throw BlendParsingError.invalidResponse("Expected PriceData but got None")
+            }
+        } else if type == [PriceData].self {
+            let priceDataArray = try parsePriceDataVector(result, context: nil)
+            return priceDataArray as! T
+        } else if type == UInt32.self {
+            let u32Value = try parseUInt32(result)
+            return u32Value as! T
+        } else if type == OracleAsset.self {
+            let asset = try parseAssetResponse(result)
+            return asset as! T
+        } else if type == [OracleAsset].self {
+            let assets = try parseAssetVector(result)
+            return assets as! T
+        } else {
+            throw BlendParsingError.unsupportedOperation("Parsing for type \(type) not implemented in parseSimulationResult")
+        }
     }
 }
 

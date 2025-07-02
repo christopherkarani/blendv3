@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 /// Service for managing user positions and related calculations
 @MainActor

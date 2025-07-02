@@ -5,13 +5,13 @@
 //  Created by Chris Karani on 30/05/2025.
 //
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 // MARK: - Model -------------------------------------------------------------
 
 /// Everything we care about from the reserve blob, already scaled
 /// to human-readable decimals.
-public struct BlendAssetData: Codable, Equatable {
+public struct BlendAssetData: Codable, Equatable, Sendable {
     // Top-level
     public let assetId      : String          // 32-byte contract ID (hex)
     public let scalar       : Decimal         // 1e7 for Blend reserves
@@ -100,7 +100,7 @@ func parseBlendReserve(_ raw: SCValXDR) throws -> BlendAssetData {
     var bSupply       = Decimal.zero
     var dSupply       = Decimal.zero
     var borrowRate    = Decimal.zero
-    var supplyRate    = Decimal.zero
+    let supplyRate    = Decimal.zero
     var dRate         = Decimal.zero
     var backstopCred  = Decimal.zero
     var irMod         = Decimal.zero

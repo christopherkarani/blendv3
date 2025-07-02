@@ -7,10 +7,10 @@
 
 import Foundation
 import Combine
-import stellarsdk
+@preconcurrency import stellarsdk
 
 /// Enum representing the result of a simulation: success or failure.
-public enum SimulationStatus<Success> {
+public enum SimulationStatus<Success>: Sendable where Success: Sendable {
     case success(SimulationResult<Success>)
     case failure(NetworkSimulationError)
 }
@@ -224,7 +224,7 @@ public final class NetworkService: NetworkServiceProtocol {
     ///   - functionName: Function name to simulate.
     ///   - args: Function arguments with generic type.
     /// - Returns: SimulationStatus containing SimulationResult or error.
-    public func simulateContractFunction<Args: Sendable, Result: Decodable>(
+    public func simulateContractFunction<Args: Sendable, Result: Decodable & Sendable>(
         contractId: String,
         functionName: String,
         args: Args
@@ -262,7 +262,7 @@ public final class NetworkService: NetworkServiceProtocol {
     /// - Parameters:
     ///   - contractCall: The contract call parameters.
     /// - Returns: SimulationStatus containing SimulationResult or error.
-    public func simulateContractFunction<Result: Decodable>(
+    public func simulateContractFunction<Result: Decodable & Sendable>(
         contractCall: ContractCallParams
     ) async -> SimulationStatus<Result> {
         do {
@@ -275,7 +275,7 @@ public final class NetworkService: NetworkServiceProtocol {
     }
     
     /// Internal contract function simulation without retry logic
-    private func simulateContractFunctionInternal<Result: Decodable>(
+    private func simulateContractFunctionInternal<Result: Decodable & Sendable>(
         contractCall: ContractCallParams
     ) async -> SimulationStatus<Result> {
         do {
@@ -358,7 +358,7 @@ public final class NetworkService: NetworkServiceProtocol {
     /// - Parameter keys: Ledger entry keys.
     /// - Returns: Dictionary mapping keys to corresponding XDR strings.
     /// - Throws: `BlendError.network(.serverError)` on RPC failure.
-    public func getLedgerEntries(keys: [String]) async throws -> [String: Any] {
+    public func getLedgerEntries(keys: [String]) async throws -> [String: String] {
         struct GetLedgerEntriesParams: Encodable {
             let keys: [String]
         }
@@ -386,7 +386,7 @@ public final class NetworkService: NetworkServiceProtocol {
         let rpcResponse = try JSONDecoder().decode(JSONRPCResponse.self, from: response)
         let ledgerResponse = rpcResponse.result
         
-        var result = [String: Any]()
+        var result = [String: String]()
         for entry in ledgerResponse.entries {
             result[entry.key] = entry.xdr
         }
@@ -440,7 +440,7 @@ public final class NetworkService: NetworkServiceProtocol {
     ///   - task: Async task to execute
     /// - Returns: Result of the operation
     /// - Throws: Last error encountered after all retries are exhausted
-    private func withRetry<T>(
+    private func withRetry<T: Sendable>(
         operation: String,
         task: () async throws -> T
     ) async throws -> T {

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 // MARK: - Data Extension for Hex Conversion
 
@@ -40,7 +40,7 @@ fileprivate extension Data {
 
 /// Represents the Asset enum from the smart contract
 /// Maps to the contract's Asset union type with Stellar(address) and Other(symbol) cases
-public enum OracleAsset: Codable, Equatable, CustomStringConvertible {
+public enum OracleAsset: Codable, Equatable, CustomStringConvertible, Sendable {
     case stellar(address: String)
     case other(symbol: String)
     
@@ -153,7 +153,7 @@ public enum OracleAsset: Codable, Equatable, CustomStringConvertible {
             case SCAddressType.account.rawValue:
                 // For account type SCAddressXDR
                 switch address {
-                case .account(let publicKey):
+                case .account(let _):
                     // We need to handle account ID encoding differently since StellarContractID only handles contract addresses
                     // Use a placeholder implementation or throw an error since we're focusing on contract addresses
                     throw OracleError.invalidAssetFormat("Account addresses not currently supported")

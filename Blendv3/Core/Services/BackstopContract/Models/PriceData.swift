@@ -5,10 +5,10 @@
 //  Created by Chris Karani on 28/05/2025.
 //
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 /// Price data structure that aligns with the smart contract's PriceData struct
-public struct PriceData: Codable {
+public struct PriceData: Codable, Sendable {
     public let price: Decimal
     public let timestamp: Date
     public let contractID: String

@@ -26,11 +26,11 @@ public struct TestConfiguration {
     
     public struct Oracle {
         public static let testAssets = [
-            BlendUSDCConstants.Testnet.usdc,
-            BlendUSDCConstants.Testnet.xlm,
-            BlendUSDCConstants.Testnet.blnd,
-            BlendUSDCConstants.Testnet.weth,
-            BlendUSDCConstants.Testnet.wbtc
+            BlendConstants.Testnet.usdc,
+            BlendConstants.Testnet.xlm,
+            BlendConstants.Testnet.blnd,
+            BlendConstants.Testnet.weth,
+            BlendConstants.Testnet.wbtc
         ]
         
         public static let invalidAssets = [
@@ -40,11 +40,11 @@ public struct TestConfiguration {
         ]
         
         public static let expectedPriceRanges: [String: (min: Decimal, max: Decimal)] = [
-            BlendUSDCConstants.Testnet.usdc: (0.95, 1.05),  // USDC ~$1.00
-            BlendUSDCConstants.Testnet.xlm: (0.05, 1.00),   // XLM reasonable range
-            BlendUSDCConstants.Testnet.blnd: (0.001, 1.00), // BLND reasonable range
-            BlendUSDCConstants.Testnet.weth: (1000, 5000),  // ETH reasonable range
-            BlendUSDCConstants.Testnet.wbtc: (20000, 80000) // BTC reasonable range
+            BlendConstants.Testnet.usdc: (0.95, 1.05),  // USDC ~$1.00
+            BlendConstants.Testnet.xlm: (0.05, 1.00),   // XLM reasonable range
+            BlendConstants.Testnet.blnd: (0.001, 1.00), // BLND reasonable range
+            BlendConstants.Testnet.weth: (1000, 5000),  // ETH reasonable range
+            BlendConstants.Testnet.wbtc: (20000, 80000) // BTC reasonable range
         ]
     }
     
@@ -64,17 +64,79 @@ public struct TestConfiguration {
     
     // MARK: - Test Utilities
     
+    /// Create a test configuration for networking services
+    public static func createTestNetworkConfig() -> NetworkServiceConfiguration {
+        return NetworkServiceConfiguration(
+            rpcEndpoint: BlendConstants.RPC.testnet,
+            network: .testnet,
+            timeoutConfiguration: TimeoutConfiguration.default,
+            retryConfiguration: RetryConfiguration.default
+        )
+    }
+    
+    /// Create a test oracle service configuration
+    public static func createTestOracleConfig() -> (poolId: String, cacheService: CacheServiceProtocol, networkService: NetworkService, sourceKeyPair: KeyPair) {
+        let keyPair = try! KeyPair.generateRandomKeyPair()
+        let networkService = NetworkService(keyPair: keyPair)
+        let cacheService = CacheService()
+        
+        return (
+            poolId: BlendConstants.Testnet.oracle,
+            cacheService: cacheService,
+            networkService: networkService,
+            sourceKeyPair: keyPair
+        )
+    }
+    
+    /// Create a test backstop service configuration
+    public static func createTestBackstopConfig() -> BackstopServiceConfig {
+        return BackstopServiceConfig(
+            contractAddress: BlendConstants.Testnet.backstop,
+            rpcUrl: BlendConstants.RPC.testnet,
+            network: .testnet
+        )
+    }
+    
+    // MARK: - Test Data Factories
+    
+    /// Generate test user address
+    public static func generateTestUserAddress() -> String {
+        return try! KeyPair.generateRandomKeyPair().accountId
+    }
+    
+    /// Generate test amounts for different scenarios
+    public static func generateTestAmounts() -> (small: Decimal, medium: Decimal, large: Decimal) {
+        return (
+            small: Decimal(string: "10.0")!,
+            medium: Decimal(string: "100.0")!,
+            large: Decimal(string: "1000.0")!
+        )
+    }
+    
+    // MARK: - Environment Helpers
+    
+    /// Check if running in CI environment
+    public static var isRunningInCI: Bool {
+        return ProcessInfo.processInfo.environment["CI"] == "true" ||
+               ProcessInfo.processInfo.environment["GITHUB_ACTIONS"] == "true"
+    }
+    
+    /// Get test timeout based on environment
+    public static var testTimeout: TimeInterval {
+        return isRunningInCI ? 60.0 : 30.0
+    }
+    
     /// Skip test if integration tests are disabled
     public static func skipIfIntegrationTestsDisabled() throws {
         guard runIntegrationTests else {
-            throw XCTSkip("Integration tests disabled. Set RUN_INTEGRATION_TESTS=1 to enable.")
+            throw XCTSkip("Integration tests are disabled. Set RUN_INTEGRATION_TESTS=1 to enable.")
         }
     }
     
     /// Skip test if performance tests are disabled
     public static func skipIfPerformanceTestsDisabled() throws {
         guard runPerformanceTests else {
-            throw XCTSkip("Performance tests disabled. Set RUN_PERFORMANCE_TESTS=1 to enable.")
+            throw XCTSkip("Performance tests are disabled. Set RUN_PERFORMANCE_TESTS=1 to enable.")
         }
     }
     
@@ -307,5 +369,47 @@ public struct TestEnvironment {
     private static func clearTestCaches() {
         // Clear test caches
         // This would be implemented based on your caching layer
+    }
+}
+
+// MARK: - Test Extensions
+
+extension XCTestCase {
+    
+    /// Assert that a decimal is within expected range
+    func assertDecimalInRange(_ value: Decimal, min: Decimal, max: Decimal, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertGreaterThanOrEqual(value, min, "Value \(value) should be >= \(min)", file: file, line: line)
+        XCTAssertLessThanOrEqual(value, max, "Value \(value) should be <= \(max)", file: file, line: line)
+    }
+    
+    /// Assert that a price is reasonable for a given asset
+    func assertReasonablePrice(for asset: String, price: Decimal, file: StaticString = #filePath, line: UInt = #line) {
+        guard let range = TestConfiguration.Oracle.expectedPriceRanges[asset] else {
+            XCTFail("No expected price range defined for asset: \(asset)", file: file, line: line)
+            return
+        }
+        
+        assertDecimalInRange(price, min: range.min, max: range.max, file: file, line: line)
+    }
+    
+    /// Setup test with timeout handling
+    func runAsyncTest(timeout: TimeInterval = TestConfiguration.testTimeout, 
+                     file: StaticString = #filePath, 
+                     line: UInt = #line, 
+                     test: @escaping () async throws -> Void) {
+        
+        let expectation = XCTestExpectation(description: "Async test completion")
+        
+        Task {
+            do {
+                try await test()
+                expectation.fulfill()
+            } catch {
+                XCTFail("Test failed with error: \(error)", file: file, line: line)
+                expectation.fulfill()
+            }
+        }
+        
+        wait(for: [expectation], timeout: timeout)
     }
 } 

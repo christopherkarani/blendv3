@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 /// Protocol for Stellar/Soroban network operations
 public protocol NetworkServiceProtocol: Sendable {
@@ -35,9 +35,9 @@ public protocol NetworkServiceProtocol: Sendable {
     
     /// Retrieves ledger entries by keys
     /// - Parameter keys: Ledger entry keys
-    /// - Returns: Dictionary of ledger entries with keys and associated data
+    /// - Returns: Dictionary of ledger entries with keys and associated XDR strings
     /// - Throws: Network errors
-    func getLedgerEntries(keys: [String]) async throws -> [String: Any]
+    func getLedgerEntries(keys: [String]) async throws -> [String: String]
     
     // MARK: - Account
     

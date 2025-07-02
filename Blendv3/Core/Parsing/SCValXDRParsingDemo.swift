@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 /// Demonstration class for enhanced SCValXDR parsing
 public final class SCValXDRParsingDemo {

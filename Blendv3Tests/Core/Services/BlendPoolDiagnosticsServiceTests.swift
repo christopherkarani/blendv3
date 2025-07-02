@@ -148,10 +148,10 @@ final class BlendPoolDiagnosticsServiceTests: XCTestCase {
     
     func testAssetSymbolMapping() {
         // Test that asset symbols are correctly mapped
-        let testnetUSDC = BlendUSDCConstants.Testnet.usdc
-        let testnetWBTC = BlendUSDCConstants.Testnet.wbtc
-        let testnetWETH = BlendUSDCConstants.Testnet.weth
-        let testnetXLM = BlendUSDCConstants.Testnet.xlm
+        let testnetUSDC = BlendConstants.Testnet.usdc
+        let testnetWBTC = BlendConstants.Testnet.wbtc
+        let testnetWETH = BlendConstants.Testnet.weth
+        let testnetXLM = BlendConstants.Testnet.xlm
         
         // These would be tested through the getAssetSymbol method
         XCTAssertNotNil(testnetUSDC)

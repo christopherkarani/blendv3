@@ -5,7 +5,7 @@
 // Copyright © 2025 Blend. All rights reserved.
 
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 /// Result model for Soroban host function simulation with Blend-specific processing
 public final class BlendSimulateHostFunctionResult: Sendable {

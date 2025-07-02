@@ -8,7 +8,7 @@
 import Foundation
 
 /// Pool configuration
-public struct PoolConfig: Codable {
+public struct PoolConfig: Codable, Sendable {
     public let backstopRate: UInt32
     public let maxPositions: UInt32
     public let minCollateral: Decimal

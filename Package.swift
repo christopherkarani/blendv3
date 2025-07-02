@@ -21,7 +21,7 @@ let package = Package(
     ],
     dependencies: [
         // Stellar SDK dependency
-        .package(url: "https://github.com/Soneso/stellar-ios-mac-sdk", from: "2.5.0")
+        .package(url: "https://github.com/Soneso/stellar-ios-mac-sdk", from: "3.1.0")
     ],
     targets: [
         // Main executable target

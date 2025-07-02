@@ -1,5 +1,5 @@
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 import os
 
 typealias Int128XDR = Int128PartsXDR
@@ -9,6 +9,7 @@ typealias Int128XDR = Int128PartsXDR
 
 
 /// Oracle service implementation with NetworkService integration
+@MainActor
 public final class BlendOracleService {
     
     // MARK: - Properties
@@ -41,7 +42,6 @@ public final class BlendOracleService {
     
     // MARK: - Initialization
     
-    @MainActor
     public init(poolId: String, cacheService: CacheServiceProtocol, networkService: NetworkServiceProtocol, sourceKeyPair: KeyPair) {
         self.oracleAddress = poolId
         self.cacheService = cacheService
@@ -159,7 +159,7 @@ public final class BlendOracleService {
         }
     }
     
-    internal func withRetry<T>(
+    internal func withRetry<T: Sendable>(
         maxAttempts: Int,
         delay: TimeInterval,
         operation: @escaping () async throws -> T
@@ -245,7 +245,7 @@ public enum ErrorSeverity: String, CaseIterable {
 
 extension BlendOracleService {
     /// Measure performance of an async operation
-    private func measurePerformance<T>(
+    private func measurePerformance<T: Sendable>(
         operation: String,
         category: OSLog,
         work: () async throws -> T

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 /// Oracle price structure that aligns with the smart contract's PriceData
 public struct OraclePrice {

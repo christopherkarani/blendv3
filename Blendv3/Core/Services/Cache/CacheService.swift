@@ -61,14 +61,13 @@ public actor CacheService: CacheServiceProtocol {
     }
     
     deinit {
-        if let observer = memoryPressureObserver {
-            NotificationCenter.default.removeObserver(observer)
-        }
+        // Note: memoryPressureObserver cleanup handled automatically by NotificationCenter
+        // when the observer is deallocated
     }
     
     // MARK: - CacheServiceProtocol
     
-    public func get<T: Codable>(_ key: String, type: T.Type) async -> T? {
+    public func get<T: Codable & Sendable>(_ key: String, type: T.Type) async -> T? {
         BlendLogger.debug("Attempting to retrieve cache entry for key: \(key)", category: BlendLogger.cache)
         
         guard let data = storage[key] else {
@@ -103,7 +102,7 @@ public actor CacheService: CacheServiceProtocol {
         }
     }
     
-    public func set<T: Codable>(_ value: T, key: String, ttl: TimeInterval) async {
+    public func set<T: Codable & Sendable>(_ value: T, key: String, ttl: TimeInterval) async {
         BlendLogger.debug("Setting cache entry for key: \(key) with TTL: \(ttl)s", category: BlendLogger.cache)
         
         let expirationDate = Date().addingTimeInterval(ttl)

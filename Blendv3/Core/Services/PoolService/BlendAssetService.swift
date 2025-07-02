@@ -5,7 +5,7 @@
 //  Created by Chris Karani on 30/05/2025.
 //
 
-import stellarsdk
+@preconcurrency import stellarsdk
 
 
 

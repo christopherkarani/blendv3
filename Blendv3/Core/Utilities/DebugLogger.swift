@@ -7,7 +7,7 @@
 import os.log
 import Foundation
 
-public struct DebugLogger {
+public struct DebugLogger: Sendable {
     private let subsystem: String
     private let category: String
     private let osLogger: Logger
@@ -59,7 +59,7 @@ public struct DebugLogger {
     }
 }
 
-public struct LogEntry: Identifiable {
+public struct LogEntry: Identifiable, Sendable {
     public let id = UUID()
     public let timestamp: Date
     public let category: String
@@ -67,7 +67,7 @@ public struct LogEntry: Identifiable {
     public let message: String
 }
 
-public enum LogLevel {
+public enum LogLevel: Sendable {
     case debug
     case info
     case warning
@@ -87,7 +87,7 @@ public enum LogLevel {
     }
 }
 
-public class LogStore {
+public class LogStore: @unchecked Sendable {
     public static let shared = LogStore()
     
     public var entries: [LogEntry] = []

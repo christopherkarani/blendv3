@@ -1,8 +1,9 @@
 import Foundation
-import stellarsdk
+@preconcurrency import stellarsdk
 
 /// Protocol defining oracle price retrieval methods for Blend Protocol
 /// Aligned with the Soroban smart contract functions
+@MainActor
 public protocol BlendOracleServiceProtocol {
     
     // MARK: - Legacy Methods (Maintained for backward compatibility)
@@ -186,19 +187,13 @@ extension BlendOracleService: BlendOracleServiceProtocol {
             return cachedAsset
         }
         
-        return try await measurePerformance(operation: "getBaseAsset", category: BlendLogger.oracle) {
-            let context = OracleParsingContext(functionName: "base")
-            
-            let asset = try await self.oracleNetworkService.simulateAndParseAsset(
-                .base
-            )
-            
-            // Cache the result
-            await cacheService.set(asset, key: cacheKey, ttl: 3600)
-            
-            BlendLogger.info("Fetched and cached base asset: \(asset)", category: BlendLogger.oracle)
-            return asset
-        }
+        let asset = try await self.oracleNetworkService.simulateAndParseAsset(.base)
+        
+        // Cache the result
+        await cacheService.set(asset, key: cacheKey, ttl: 3600)
+        
+        BlendLogger.info("Fetched and cached base asset: \(asset)", category: BlendLogger.oracle)
+        return asset
     }
     
     /// Get all supported assets by the oracle
@@ -214,18 +209,12 @@ extension BlendOracleService: BlendOracleServiceProtocol {
         
         
         
-        return await measurePerformance(operation: "getSupportedAssets", category: BlendLogger.oracle) {
-            let context = OracleParsingContext(functionName: "assets")
-            
-            let oracleAssets = try! await self.oracleNetworkService.simulateAndParseAssetVector(
-                .assets
-            )
-            
-            // Cache the result
-            await cacheService.set(oracleAssets, key: cacheKey, ttl: 3600)
- 
-            return oracleAssets
-        }
+        let oracleAssets = try await self.oracleNetworkService.simulateAndParseAssetVector(.assets)
+        
+        // Cache the result
+        await cacheService.set(oracleAssets, key: cacheKey, ttl: 3600)
+
+        return oracleAssets
     }
     
     // MARK: - Private Helpers
