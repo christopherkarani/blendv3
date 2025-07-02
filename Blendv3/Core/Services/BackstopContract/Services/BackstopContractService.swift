@@ -213,15 +213,9 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
             let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
             
             switch simulationResult {
-            case .success(_):
-                // 2. If simulation succeeds, invoke the actual contract
-                do {
-                    let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
-                    return try self.blendParser.parseUserBalanceResponse(invocationResult)
-                } catch {
-                    self.debugLogger.error("🛡️ ❌ Get user balance invocation failed: \(error.localizedDescription)")
-                    throw self.convertInvocationError(error, operation: "getUserBalance")
-                }
+            case .success(let result):
+                // ✅ FIX: Use simulation result directly for read-only operations
+                return try self.blendParser.parseUserBalanceResponse(result.result)
                 
             case .failure(let error):
                 self.debugLogger.error("🛡️ ❌ Get user balance simulation failed: \(error.localizedDescription)")
@@ -255,15 +249,9 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
             let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
             
             switch simulationResult {
-            case .success(_):
-                // 2. If simulation succeeds, invoke the actual contract
-                do {
-                    let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
-                    return try self.blendParser.parsePoolBackstopDataResponse(invocationResult)
-                } catch {
-                    self.debugLogger.error("🛡️ ❌ Get pool data invocation failed: \(error.localizedDescription)")
-                    throw self.convertInvocationError(error, operation: "getPoolData")
-                }
+            case .success(let result):
+                // ✅ FIX: Use simulation result directly for read-only operations
+                return try self.blendParser.parsePoolBackstopDataResponse(result.result)
                 
             case .failure(let error):
                 self.debugLogger.error("🛡️ ❌ Get pool data simulation failed: \(error.localizedDescription)")
@@ -293,15 +281,9 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
             let simulationResult: SimulationStatus<SCValXDR> = await self.networkService.simulateContractFunction(contractCall: contractCall)
             
             switch simulationResult {
-            case .success(_):
-                // 2. If simulation succeeds, invoke the actual contract
-                do {
-                    let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
-                    return try self.blendParser.parseAddressResponse(invocationResult)
-                } catch {
-                    self.debugLogger.error("🛡️ ❌ Get backstop token invocation failed: \(error.localizedDescription)")
-                    throw self.convertInvocationError(error, operation: "getBackstopToken")
-                }
+            case .success(let result):
+                // ✅ FIX: Use simulation result directly for read-only operations
+                return try self.blendParser.parseAddressResponse(result.result)
                 
             case .failure(let error):
                 self.debugLogger.error("🛡️ ❌ Get backstop token simulation failed: \(error.localizedDescription)")

@@ -33,9 +33,8 @@ final class UserPositionService: UserPositionServiceProtocol {
         let contractCall = ContractCallParams(contractId: contractID, functionName: "get_positions", functionArguments: arguments)
         let simulateResult: SimulationStatus<SCValXDR> = await networkService.simulateContractFunction(contractCall: contractCall)
         switch simulateResult {
-        case .success(_):
-            let result = try await networkService.invokeContractFunction(contractCall: contractCall, force: false)
-            let decodedPositions = try BlendParser.decodePositions(from: result)
+        case .success(let result):
+            let decodedPositions = try BlendParser.decodePositions(from: result.result)
             return filterValidPositions(decodedPositions)
         case .failure(let error):
             throw error
