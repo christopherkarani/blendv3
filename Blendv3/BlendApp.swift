@@ -283,8 +283,72 @@ struct BlendApp {
             print("Number of Assets: \(allStats.numberOfAssets)")
             print("Last Updated: \(allStats.lastUpdated)")
             
+            // Display detailed asset breakdown
+            await displayDetailedAssetStats(vault: vault)
+            
         } catch {
             print("❌ Failed to get protocol stats: \(error.localizedDescription)")
+        }
+    }
+    
+    /// Display detailed asset statistics in table format matching the provided image
+    static func displayDetailedAssetStats(vault: BlendVault) async {
+        print("\n📊 DETAILED ASSET BREAKDOWN")
+        print("-" * 100)
+        
+        do {
+            let poolStats = try await vault.getPoolStats()
+            
+            // Print table header
+            let header = String(format: "%-15@ %-15@ %-15@ %-18@ %-17@ %@",
+                              "Asset", "Total Supplied", "Total Borrowed", "Collateral Factor", "Liability Factor", "APY")
+            print(header)
+            print("-" * 100)
+            
+            // Print each asset's data
+            for reserve in poolStats.reserves {
+                // DEBUG: Print raw values for comparison
+                print("🔍 DEBUG - \(reserve.symbol):")
+                print("  Supplied: \(reserve.totalSupplied)")
+                print("  Borrowed: \(reserve.totalBorrowed)")
+                print("  Collateral Factor: \(reserve.collateralFactor)%")
+                print("  Liability Factor: \(reserve.liabilityFactor)%")
+                print("  Supply APY: \(reserve.supplyAPY)%")
+                print("  Borrow APY: \(reserve.borrowAPY)%")
+                
+                // Format supplied and borrowed amounts (e.g., "35.25k")
+                let suppliedFormatted = formatLargeNumber(reserve.totalSupplied)
+                let borrowedFormatted = formatLargeNumber(reserve.totalBorrowed)
+                
+                // Format factors as percentages
+                let collateralFactorFormatted = String(format: "%.2f%%", NSDecimalNumber(decimal: reserve.collateralFactor).doubleValue)
+                let liabilityFactorFormatted = String(format: "%.2f%%", NSDecimalNumber(decimal: reserve.liabilityFactor).doubleValue)
+                
+                // Format APY with S/B indicators
+                let supplyAPYFormatted = String(format: "%.2f%% S", NSDecimalNumber(decimal: reserve.supplyAPY).doubleValue)
+                let borrowAPYFormatted = String(format: "%.2f%% B", NSDecimalNumber(decimal: reserve.borrowAPY).doubleValue)
+                
+                // Print asset name and main data
+                let mainLine = String(format: "%-15@ %-15@ %-15@ %-18@ %-17@ %@",
+                                    reserve.symbol,
+                                    suppliedFormatted,
+                                    borrowedFormatted,
+                                    collateralFactorFormatted,
+                                    liabilityFactorFormatted,
+                                    supplyAPYFormatted)
+                print(mainLine)
+                
+                // Print contract address and borrow APY on second line
+                let contractLine = String(format: "%-15@ %-15@ %-15@ %-18@ %-17@ %@",
+                                        reserve.contractAddress,
+                                        "", "", "", "",
+                                        borrowAPYFormatted)
+                print(contractLine)
+                print("") // Empty line for spacing
+            }
+            
+        } catch {
+            print("❌ Failed to get detailed asset stats: \(error.localizedDescription)")
         }
     }
 }
@@ -294,6 +358,24 @@ struct BlendApp {
 extension String {
     static func *(lhs: String, rhs: Int) -> String {
         return String(repeating: lhs, count: rhs)
+    }
+}
+
+// MARK: - Number Formatting Helpers
+
+/// Format large numbers with k/M suffix (e.g., 35250 -> "35.25k")
+func formatLargeNumber(_ number: Decimal) -> String {
+    let doubleValue = NSDecimalNumber(decimal: number).doubleValue
+    
+    if doubleValue >= 1_000_000 {
+        return String(format: "%.2fM", doubleValue / 1_000_000)
+    } else if doubleValue >= 1_000 {
+        return String(format: "%.2fk", doubleValue / 1_000)
+    } else if doubleValue >= 1 {
+        return String(format: "%.2f", doubleValue)
+    } else {
+        // For very small numbers, show more precision (like 0.5501105)
+        return String(format: "%.7f", doubleValue)
     }
 } 
 

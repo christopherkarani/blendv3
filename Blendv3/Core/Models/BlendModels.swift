@@ -84,6 +84,9 @@ public struct PoolReserveData: Sendable, Codable {
     public let borrowAPY: Decimal
     public let price: Decimal
     public let scalar: Decimal
+    public let collateralFactor: Decimal
+    public let liabilityFactor: Decimal
+    public let contractAddress: String
 }
 
 // MARK: - Backstop Statistics Models
