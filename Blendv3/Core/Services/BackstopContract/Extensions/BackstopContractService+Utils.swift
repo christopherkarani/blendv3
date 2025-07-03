@@ -186,54 +186,22 @@ extension BackstopContractService {
         return BackstopError.simulationError("Contract call failed", error)
     }
     
-    /// Log operation start
-    internal func logOperationStart(_ operation: String, parameters: [String: Any] = [:]) {
-        debugLogger.info("🛡️ ▶️ Starting \(operation)")
-        for (key, value) in parameters {
-            debugLogger.debug("🛡️ 📝 \(key): \(value)")
-        }
-    }
-    
-    /// Log operation success
-    internal func logOperationSuccess(_ operation: String, result: Any? = nil, duration: TimeInterval? = nil) {
-        if let duration = duration {
-            debugLogger.info("🛡️ ✅ \(operation) completed in \(String(format: "%.2f", duration))s")
-        } else {
-            debugLogger.info("🛡️ ✅ \(operation) completed")
-        }
-        
-        if let result = result {
-            debugLogger.debug("🛡️ 📊 Result: \(result)")
-        }
-    }
-    
-    /// Log operation failure
-    internal func logOperationFailure(_ operation: String, error: Error, duration: TimeInterval? = nil) {
-        if let duration = duration {
-            debugLogger.error("🛡️ ❌ \(operation) failed after \(String(format: "%.2f", duration))s: \(error.localizedDescription)")
-        } else {
-            debugLogger.error("🛡️ ❌ \(operation) failed: \(error.localizedDescription)")
-        }
+    /// Log operation failure (critical errors only)
+    internal func logOperationFailure(_ operation: String, error: Error) {
+        BlendLogger.error("Backstop \(operation) failed", error: error, category: BlendLogger.backstop)
     }
     
     // MARK: - Performance Monitoring
     
-    /// Execute operation with timing
+    /// Execute operation with error logging only
     internal func withTiming<T>(
         operation: String,
         execute: () async throws -> T
     ) async rethrows -> T {
-        let startTime = Date()
-        logOperationStart(operation)
-        
         do {
-            let result = try await execute()
-            let duration = Date().timeIntervalSince(startTime)
-            logOperationSuccess(operation, result: result, duration: duration)
-            return result
+            return try await execute()
         } catch {
-            let duration = Date().timeIntervalSince(startTime)
-            logOperationFailure(operation, error: error, duration: duration)
+            logOperationFailure(operation, error: error)
             throw error
         }
     }

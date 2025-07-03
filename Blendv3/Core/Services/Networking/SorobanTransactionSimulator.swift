@@ -329,7 +329,6 @@ class SorobanTransactionParser {
 @objc class SorobanTransactionSimulator: NSObject {
     
     private let logger = BlendLogger.oracle
-    private let debugLogger: DebugLogger
     
     // Injected dependencies for better testability
     private let transactionBuilder: SorobanTransactionBuilder
@@ -339,18 +338,15 @@ class SorobanTransactionParser {
     /**
      * Initializes the simulator with required dependencies.
      * - Parameters:
-     *   - debugLogger: Logger for debug information
      *   - transactionBuilder: Builder for creating transactions (optional, uses default if nil)
      *   - responseConverter: Converter for response formats (optional, uses default if nil)
      *   - transactionParser: Parser for transaction results (optional, uses default if nil)
      */
     init(
-        debugLogger: DebugLogger,
         transactionBuilder: SorobanTransactionBuilder? = nil,
         responseConverter: SimulationResponseConverter? = nil,
         transactionParser: SorobanTransactionParser? = nil
     ) {
-        self.debugLogger = debugLogger
         self.transactionBuilder = transactionBuilder ?? SorobanTransactionBuilder()
         self.responseConverter = responseConverter ?? SimulationResponseConverter()
         self.transactionParser = transactionParser ?? SorobanTransactionParser()
@@ -366,7 +362,6 @@ class SorobanTransactionParser {
      * - Throws: OracleError for various failure scenarios
      */
     func simulate(server: SorobanServer, contractCall: ContractCallParams) async throws -> SCValXDR {
-        BlendLogger.info("🔮 Starting simulation for: \(contractCall.functionName)", category: logger)
         
         do {
             // Step 1: Build the transaction
@@ -380,18 +375,16 @@ class SorobanTransactionParser {
             
             // Step 4: Parse and return the result
             let result = try parseSimulationResponse(response, contractCall: contractCall)
-            
-            BlendLogger.info("🔮 Simulation completed successfully with status: \(status.statusCode)", category: logger)
             return result
             
         } catch let error as OracleError {
             // Re-throw already formatted Oracle errors
-            BlendLogger.error("🔮 Simulation failed with Oracle error", error: error, category: logger)
+            BlendLogger.error("Simulation failed with Oracle error", error: error, category: logger)
             throw error
         } catch {
             // Wrap unexpected errors with context
             let context = "Contract: \(contractCall.contractId), Function: \(contractCall.functionName)"
-            BlendLogger.error("🔮 Simulation failed with unexpected error", error: error, category: logger)
+            BlendLogger.error("Simulation failed with unexpected error", error: error, category: logger)
             throw OracleError.networkError(error, context: context)
         }
     }
@@ -442,7 +435,7 @@ class SorobanTransactionParser {
             return (response, status)
             
         case .failure(let error):
-            BlendLogger.error("🔮 Simulation request failed", error: error, category: logger)
+            BlendLogger.error("Simulation request failed", error: error, category: logger)
             throw OracleError.contractError(code: 1, message: "Simulation failed: \(error.localizedDescription)")
         }
     }

@@ -13,9 +13,6 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
     internal let config: BackstopServiceConfig
     internal let blendParser: BlendParser
     
-    // Debug logging
-    internal let debugLogger = DebugLogger(subsystem: "com.blendv3.backstop", category: "BackstopService")
-    
     // MARK: - Initialization
     
     public init(
@@ -28,10 +25,6 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
         self.cacheService = cacheService
         self.config = config
         self.blendParser = blendParser
-        
-        debugLogger.info("🛡️ Backstop service initialized")
-        debugLogger.info("🛡️ Contract: \(config.contractAddress)")
-        debugLogger.info("🛡️ RPC: \(config.rpcUrl)")
     }
     
     // MARK: - Core Functions
@@ -63,12 +56,12 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
                     let sharesReceived = try self.blendParser.parseI128Response(invocationResult)
                     return DepositResult(sharesReceived: sharesReceived)
                 } catch {
-                    self.debugLogger.error("🛡️ ❌ Deposit invocation failed: \(error.localizedDescription)")
+                    BlendLogger.error("Backstop deposit invocation failed", error: error, category: BlendLogger.backstop)
                     throw self.convertInvocationError(error, operation: "deposit")
                 }
                 
             case .failure(let error):
-                self.debugLogger.error("🛡️ ❌ Deposit simulation failed: \(error.localizedDescription)")
+                BlendLogger.error("Backstop deposit simulation failed", error: error, category: BlendLogger.backstop)
                 throw self.convertNetworkError(error, operation: "deposit")
             }
         })
@@ -100,12 +93,12 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
                     let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
                     return try self.blendParser.parseQ4WResponse(invocationResult)
                 } catch {
-                    self.debugLogger.error("🛡️ ❌ Queue withdrawal invocation failed: \(error.localizedDescription)")
+                    BlendLogger.error("Backstop queue withdrawal invocation failed", error: error, category: BlendLogger.backstop)
                     throw self.convertInvocationError(error, operation: "queueWithdrawal")
                 }
                 
             case .failure(let error):
-                self.debugLogger.error("🛡️ ❌ Queue withdrawal simulation failed: \(error.localizedDescription)")
+                BlendLogger.error("Backstop queue withdrawal simulation failed", error: error, category: BlendLogger.backstop)
                 throw self.convertNetworkError(error, operation: "queueWithdrawal")
             }
         })
@@ -138,12 +131,12 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
                     // Dequeue withdrawal doesn't return a value
                     return
                 } catch {
-                    self.debugLogger.error("🛡️ ❌ Dequeue withdrawal invocation failed: \(error.localizedDescription)")
+                    BlendLogger.error("Backstop dequeue withdrawal invocation failed", error: error, category: BlendLogger.backstop)
                     throw self.convertInvocationError(error, operation: "dequeueWithdrawal")
                 }
                 
             case .failure(let error):
-                self.debugLogger.error("🛡️ ❌ Dequeue withdrawal simulation failed: \(error.localizedDescription)")
+                BlendLogger.error("Backstop dequeue withdrawal simulation failed", error: error, category: BlendLogger.backstop)
                 throw self.convertNetworkError(error, operation: "dequeueWithdrawal")
             }
         })
@@ -176,12 +169,12 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
                     let amountWithdrawn = try self.blendParser.parseI128Response(invocationResult)
                     return WithdrawalResult(amountWithdrawn: amountWithdrawn)
                 } catch {
-                    self.debugLogger.error("🛡️ ❌ Withdraw invocation failed: \(error.localizedDescription)")
+                    BlendLogger.error("Backstop withdraw invocation failed", error: error, category: BlendLogger.backstop)
                     throw self.convertInvocationError(error, operation: "withdraw")
                 }
                 
             case .failure(let error):
-                self.debugLogger.error("🛡️ ❌ Withdraw simulation failed: \(error.localizedDescription)")
+                BlendLogger.error("Backstop withdraw simulation failed", error: error, category: BlendLogger.backstop)
                 throw self.convertNetworkError(error, operation: "withdraw")
             }
         })
@@ -218,7 +211,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
                 return try self.blendParser.parseUserBalanceResponse(result.result)
                 
             case .failure(let error):
-                self.debugLogger.error("🛡️ ❌ Get user balance simulation failed: \(error.localizedDescription)")
+                BlendLogger.error("Backstop get user balance simulation failed", error: error, category: BlendLogger.backstop)
                 throw self.convertNetworkError(error, operation: "getUserBalance")
             }
         })
@@ -254,7 +247,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
                 return try self.blendParser.parsePoolBackstopDataResponse(result.result)
                 
             case .failure(let error):
-                self.debugLogger.error("🛡️ ❌ Get pool data simulation failed: \(error.localizedDescription)")
+                BlendLogger.error("Backstop get pool data simulation failed", error: error, category: BlendLogger.backstop)
                 throw self.convertNetworkError(error, operation: "getPoolData")
             }
         })
@@ -286,7 +279,7 @@ public final class BackstopContractService: BackstopContractServiceProtocol {
                 return try self.blendParser.parseAddressResponse(result.result)
                 
             case .failure(let error):
-                self.debugLogger.error("🛡️ ❌ Get backstop token simulation failed: \(error.localizedDescription)")
+                BlendLogger.error("Backstop get backstop token simulation failed", error: error, category: BlendLogger.backstop)
                 throw self.convertNetworkError(error, operation: "getBackstopToken")
             }
         })

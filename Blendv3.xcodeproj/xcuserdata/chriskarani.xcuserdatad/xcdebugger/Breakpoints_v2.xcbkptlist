@@ -401,6 +401,36 @@
             endingLineNumber = "239"
             landmarkName = "simulateContractFunction(contractId:functionName:args:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "003EECD1-8C8F-4C62-BA22-05132E9D99C8 - 2976da1be8ea644"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.NetworkService.simulateContractFunction&lt;&#x3c4;_0_0, &#x3c4;_0_1 where &#x3c4;_0_0: Swift.Sendable, &#x3c4;_0_1: Swift.Decodable, &#x3c4;_0_1: Swift.Sendable&gt;(contractId: Swift.String, functionName: Swift.String, args: &#x3c4;_0_0) async -&gt; Blendv3.SimulationStatus&lt;&#x3c4;_0_1&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/NetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "242"
+                  endingLineNumber = "242">
+               </Location>
+               <Location
+                  uuid = "003EECD1-8C8F-4C62-BA22-05132E9D99C8 - 2976da1be8ea621"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Blendv3.NetworkService.simulateContractFunction&lt;&#x3c4;_0_0, &#x3c4;_0_1 where &#x3c4;_0_0: Swift.Sendable, &#x3c4;_0_1: Swift.Decodable, &#x3c4;_0_1: Swift.Sendable&gt;(contractId: Swift.String, functionName: Swift.String, args: &#x3c4;_0_0) async -&gt; Blendv3.SimulationStatus&lt;&#x3c4;_0_1&gt;"
+                  moduleName = "Blendv3.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/NetworkService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "239"
+                  endingLineNumber = "239">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

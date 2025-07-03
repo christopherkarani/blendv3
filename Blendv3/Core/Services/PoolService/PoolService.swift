@@ -13,8 +13,6 @@ import Foundation
 struct PoolService: PoolServiceProtocol {
     let networkService: NetworkService
 
-    private let logger = DebugLogger(subsystem: "com.blendv3.debug", category: "Pool Service")
-
     
     // Fetch PoolConfig from the blockchain
     func fetchPoolConfig(contractId: String) async throws -> PoolConfig {
@@ -70,7 +68,7 @@ struct PoolService: PoolServiceProtocol {
             )
             
         case .failure(let error):
-            logger.error("❌ Failed to get pool config: \(error)")
+            BlendLogger.error("Failed to get pool config", error: error, category: BlendLogger.network)
             throw BlendVaultError.networkError(error.localizedDescription)
         }
     }
@@ -88,10 +86,11 @@ extension PoolService {
         let simulationResult: SimulationStatus<SCValXDR> = await networkService.simulateContractFunction(contractCall: contractCall)
         
         switch simulationResult {
-        case .success(let result):
-            logger.info("✅ Pool status retrieved: \(String(describing: result.result))")
+        case .success:
+            // Pool status retrieved successfully
+            break
         case .failure(let error):
-            logger.error("❌ Failed to get pool status: \(error)")
+            BlendLogger.error("Failed to get pool status", error: error, category: BlendLogger.network)
             throw BlendVaultError.networkError(error.localizedDescription)
         }
     }

@@ -145,34 +145,34 @@ public enum SCValXDRError: Error, LocalizedError {
 extension SCValXDR {
     
     /// Log detailed debugging information about this SCValXDR
-    public func logDebugInfo(logger: DebugLogger) {
-        logger.info("🔍 SCValXDR Debug Info:")
-        logger.info("  Type discriminant: \(self.type())")
-        logger.info("  Description: \(self.debugDescription)")
+    public func logDebugInfo() {
+        BlendLogger.debug("SCValXDR Debug Info:", category: BlendLogger.parsing)
+        BlendLogger.debug("  Type discriminant: \(self.type())", category: BlendLogger.parsing)
+        BlendLogger.debug("  Description: \(self.debugDescription)", category: BlendLogger.parsing)
         
         // Log additional type-specific information
         switch self {
         case .u32(let value):
-            logger.info("  U32 value: \(value) (0x\(String(value, radix: 16)))")
+            BlendLogger.debug("  U32 value: \(value) (0x\(String(value, radix: 16)))", category: BlendLogger.parsing)
         case .i32(let value):
-            logger.info("  I32 value: \(value) (0x\(String(UInt32(bitPattern: value), radix: 16)))")
+            BlendLogger.debug("  I32 value: \(value) (0x\(String(UInt32(bitPattern: value), radix: 16)))", category: BlendLogger.parsing)
         case .vec(let array):
             if let array = array {
-                logger.info("  Vector contents:")
+                BlendLogger.debug("  Vector contents:", category: BlendLogger.parsing)
                 for (index, item) in array.enumerated() {
-                    logger.info("    [\(index)]: \(item.debugDescription)")
+                    BlendLogger.debug("    [\(index)]: \(item.debugDescription)", category: BlendLogger.parsing)
                 }
             } else {
-                logger.info("  Vector is nil")
+                BlendLogger.debug("  Vector is nil", category: BlendLogger.parsing)
             }
         case .map(let map):
             if let map = map {
-                logger.info("  Map contents:")
+                BlendLogger.debug("  Map contents:", category: BlendLogger.parsing)
                 for entry in map {
-                    logger.info("    \(entry.key.debugDescription) -> \(entry.val.debugDescription)")
+                    BlendLogger.debug("    \(entry.key.debugDescription) -> \(entry.val.debugDescription)", category: BlendLogger.parsing)
                 }
             } else {
-                logger.info("  Map is nil")
+                BlendLogger.debug("  Map is nil", category: BlendLogger.parsing)
             }
         default:
             break

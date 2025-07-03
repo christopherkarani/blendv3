@@ -1,0 +1,30 @@
+{
+  "name": "blend-utils",
+  "version": "1.0.0",
+  "description": "Deployment and utility scripts for the Blend Protocol",
+  "type": "module",
+  "scripts": {
+    "build": "rm -rf lib && tsc"
+  },
+  "license": "MIT",
+  "engines": {
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
+  },
+  "devDependencies": {
+    "@stellar/tsconfig": "^1.0.2",
+    "@types/node": "^20.8.2",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "eslint": "^8.38.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.8.7",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@blend-capital/blend-sdk": "3.0.0-beta.8",
+    "@stellar/stellar-sdk": "13.1.0",
+    "dotenv": "^16.1.4"
+  }
+}

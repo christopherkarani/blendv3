@@ -18,9 +18,6 @@ public final class BlendOracleService {
     private let networkService: NetworkServiceProtocol
     let oracleNetworkService: OracleNetworkService
     
-    // Debug logging
-    internal let debugLogger = DebugLogger(subsystem: "com.blendv3.oracle", category: "OracleService")
-    
     // Cache TTL configurations
     internal let priceCacheTTL: TimeInterval = 300 // 5 minutes
     internal let decimalsCacheTTL: TimeInterval = 3600 // 1 hour
@@ -94,7 +91,6 @@ public final class BlendOracleService {
     /// Create Asset::Stellar(contract_address) parameter for oracle calls
     /// Based on Blend Protocol documentation, Asset::Stellar is represented as an enum variant
     internal func createAssetParameter(contractAddress: String) throws -> SCValXDR {
-        debugLogger.info("🔮 📝 createAssetParameter called with: \(contractAddress)")
         
         // Normalize the contract address to ensure it's in proper Soroban format
         //  let normalizedAddress = normalizeContractAddress(contractAddress) ?? contractAddress
@@ -166,44 +162,20 @@ public final class BlendOracleService {
     ) async throws -> T {
         var lastError: Error?
         
-        BlendLogger.debug("🔮 🔄 Starting retry mechanism (max: \(maxAttempts), delay: \(delay)s)", category: BlendLogger.oracle)
-        debugLogger.info("🔮 🔄 withRetry called - maxAttempts: \(maxAttempts), delay: \(delay)s")
-        
         for attempt in 1...maxAttempts {
             do {
-                BlendLogger.debug("🔮 🎯 Attempt \(attempt)/\(maxAttempts)", category: BlendLogger.oracle)
-                debugLogger.info("🔮 🎯 Starting attempt \(attempt) of \(maxAttempts)")
-                
-                let result = try await operation()
-                
-                if attempt > 1 {
-                    BlendLogger.info("🔮 ✅ Operation succeeded on attempt \(attempt)", category: BlendLogger.oracle)
-                    debugLogger.info("🔮 ✅ Success after \(attempt) attempts")
-                } else {
-                    BlendLogger.debug("🔮 ✅ Operation succeeded on first attempt", category: BlendLogger.oracle)
-                    debugLogger.info("🔮 ✅ Success on first attempt")
-                }
-                
-                return result
+                return try await operation()
             } catch {
                 lastError = error
-                BlendLogger.warning("🔮 ❌ Attempt \(attempt) failed: \(error.localizedDescription)", category: BlendLogger.oracle)
-                debugLogger.warning("🔮 ❌ Attempt \(attempt) failed with error: \(type(of: error))")
-                debugLogger.warning("🔮 ❌ Error details: \(error.localizedDescription)")
                 
                 if attempt < maxAttempts {
-                    BlendLogger.debug("🔮 ⏳ Retrying in \(delay) seconds...", category: BlendLogger.oracle)
-                    debugLogger.info("🔮 ⏳ Waiting \(delay)s before retry \(attempt + 1)")
                     try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
                 } else {
-                    BlendLogger.error("🔮 💥 All \(maxAttempts) attempts failed", category: BlendLogger.oracle)
-                    debugLogger.error("🔮 💥 Maximum retry attempts (\(maxAttempts)) exceeded")
+                    BlendLogger.error("Oracle operation failed after \(maxAttempts) attempts", error: error, category: BlendLogger.oracle)
                 }
             }
         }
         
-        BlendLogger.error("🔮 💥 Retry mechanism exhausted, throwing last error", category: BlendLogger.oracle)
-        debugLogger.error("🔮 💥 Final error: \(lastError?.localizedDescription ?? "Unknown")")
         throw OracleError.maxRetriesExceeded(attempts: maxAttempts, lastError: lastError)
     }
     
@@ -244,7 +216,7 @@ public enum ErrorSeverity: String, CaseIterable {
 // MARK: - Performance Measurement Extension
 
 extension BlendOracleService {
-    /// Measure performance of an async operation
+    /// Measure performance of an async operation (only logs if >2 seconds)
     private func measurePerformance<T: Sendable>(
         operation: String,
         category: OSLog,
@@ -254,38 +226,13 @@ extension BlendOracleService {
         let result = try await work()
         let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
         
-        BlendLogger.debug("⏱️ \(operation) completed in \(String(format: "%.3f", timeElapsed))s", category: category)
+        // Only log slow operations (>2 seconds)
+        if timeElapsed > 2.0 {
+            BlendLogger.warning("Slow operation: \(operation) took \(String(format: "%.3f", timeElapsed))s", category: category)
+        }
         return result
     }
     
-    /// Log successful operations with metrics
-    private func logSuccess(operation: String, asset: String? = nil, duration: TimeInterval? = nil, additionalInfo: [String: Any] = [:]) {
-        let symbol = asset != nil ? getAssetSymbol(for: asset!) : nil
-        let assetInfo = symbol != nil ? " [\(symbol!)]" : ""
-        let durationInfo = duration != nil ? " in \(String(format: "%.3f", duration!))s" : ""
-        
-        BlendLogger.info("✅ \(operation)\(assetInfo) completed successfully\(durationInfo)", category: BlendLogger.oracle)
-        
-        if !additionalInfo.isEmpty {
-            for (key, value) in additionalInfo {
-                debugLogger.info("📊 \(key): \(value)")
-            }
-        }
-    }
-    
-    /// Log operation start with context
-    private func logOperationStart(operation: String, asset: String? = nil, parameters: [String: Any] = [:]) {
-        let symbol = asset != nil ? getAssetSymbol(for: asset!) : nil
-        let assetInfo = symbol != nil ? " [\(symbol!)]" : ""
-        
-        BlendLogger.debug("🚀 Starting \(operation)\(assetInfo)", category: BlendLogger.oracle)
-        
-        if !parameters.isEmpty {
-            debugLogger.info("📋 Parameters:")
-            for (key, value) in parameters {
-                debugLogger.info("  - \(key): \(value)")
-            }
-        }
-    }
+
 }
 

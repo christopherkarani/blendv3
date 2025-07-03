@@ -37,11 +37,6 @@ public final class BlendParser: @unchecked Sendable {
 
     // MARK: - Properties
 
-    private let debugLogger = DebugLogger(
-        subsystem: "com.blendv3.parsing",
-        category: "BlendParser"
-    )
-
     // MARK: - Initialization
 
     public init() {
@@ -155,10 +150,7 @@ public final class BlendParser: @unchecked Sendable {
         do {
             return try value.validateAndExtractNumericAsU32()
         } catch {
-            // Log detailed debugging information for troubleshooting
-            debugLogger.error(
-                "🔍 ⚠️ Failed to parse UInt32 from: \(value.debugDescription)"
-            )
+            BlendLogger.error("Failed to parse UInt32 from SCVal", error: error, category: BlendLogger.parsing)
             throw BlendParsingError.invalidType(
                 expected: "u32",
                 actual: value.debugDescription
@@ -207,8 +199,7 @@ public final class BlendParser: @unchecked Sendable {
         } else if let accountId = address.accountId {
             return accountId
         } else {
-            // Critical logging only
-            debugLogger.error("🔍 ⚠️ Address has no contractId or accountId")
+            BlendLogger.error("Address has no contractId or accountId", category: BlendLogger.parsing)
             return ""
         }
     }
@@ -334,8 +325,6 @@ public final class BlendParser: @unchecked Sendable {
         case .void:
             return NSNull()
         default:
-            // Critical logging only
-            debugLogger.warning("🔍 ⚠️ Unsupported SCVal type: \(value)")
             return String(describing: value)
         }
     }
@@ -491,12 +480,6 @@ extension BlendParser {
             case ("usdc", .i128(let i128)):
                 usdc = BlendParser.parseI128ToDecimal(i128)
             default:
-                // Only log unknown fields that might be important
-                if !["id", "timestamp", "version"].contains(key) {
-                    debugLogger.warning(
-                        "🔍 Unknown field in PoolBackstopData: \(key)"
-                    )
-                }
                 continue
             }
         }
@@ -697,9 +680,7 @@ extension BlendParser {
                     }
                 } catch {
                     // Continue parsing other items instead of failing completely
-                    debugLogger.warning(
-                        "⚠️ Failed to parse price data at index \(index): \(error)"
-                    )
+                    continue
                 }
             }
 
@@ -792,10 +773,8 @@ extension BlendParser {
                 let asset = try OracleAsset.fromSCVal(assetXDR)
                 oracleAssets.append(asset)
             } catch {
-                debugLogger.warning(
-                    "⚠️ Failed to parse asset at index \(index): \(error)"
-                )
                 // Continue parsing other assets
+                continue
             }
         }
 
@@ -862,9 +841,7 @@ extension BlendParser {
             throw error
         } catch let decodingError as DecodingError {
             // Handle decoding errors with more context and attempt recovery
-            debugLogger.error(
-                "🔍 Decoding failed for type \(targetType): \(decodingError)"
-            )
+            BlendLogger.error("Decoding failed for type \(targetType)", error: decodingError, category: BlendLogger.parsing)
 
             // Try to provide a more helpful error or attempt recovery
             if let recoveredResult = try? attemptDecodingRecovery(
@@ -878,9 +855,7 @@ extension BlendParser {
             throw BlendParsingError.decodingError(decodingError)
         } catch {
             // Handle any other errors
-            debugLogger.error(
-                "🔍 Unexpected error in parseSimulationResult: \(error)"
-            )
+            BlendLogger.error("Unexpected error in parseSimulationResult", error: error, category: BlendLogger.parsing)
             throw BlendParsingError.conversionFailed(
                 "Unexpected error: \(error.localizedDescription)"
             )
@@ -950,14 +925,9 @@ extension BlendParser {
         targetType: T.Type,
         originalError: DecodingError
     ) throws -> T {
-        debugLogger.info("🔍 Attempting decoding recovery for \(targetType)")
-
         // Analyze the decoding error to understand what went wrong
         switch originalError {
         case .typeMismatch(let expectedType, let context):
-            debugLogger.info(
-                "🔍 Type mismatch: expected \(expectedType), context: \(context.debugDescription)"
-            )
 
             // If expecting an array but got a dictionary, try wrapping in array
             if expectedType is [Any].Type
@@ -976,26 +946,20 @@ extension BlendParser {
                 )
             }
 
-        case .keyNotFound(let key, let context):
-            debugLogger.info(
-                "🔍 Key not found: \(key), context: \(context.debugDescription)"
-            )
-        // Could try providing default values for missing keys
+        case .keyNotFound(_, _):
+            // Could try providing default values for missing keys
+            break
 
-        case .valueNotFound(let type, let context):
-            debugLogger.info(
-                "🔍 Value not found for type: \(type), context: \(context.debugDescription)"
-            )
-        // Could try providing default values for missing values
+        case .valueNotFound(_, _):
+            // Could try providing default values for missing values
+            break
 
-        case .dataCorrupted(let context):
-            debugLogger.info(
-                "🔍 Data corrupted, context: \(context.debugDescription)"
-            )
-        // Could try alternative parsing approaches
+        case .dataCorrupted(_):
+            // Could try alternative parsing approaches
+            break
 
         @unknown default:
-            debugLogger.info("🔍 Unknown decoding error type")
+            break
         }
 
         // If no specific recovery worked, throw the original error
@@ -1007,7 +971,6 @@ extension BlendParser {
         _ result: SCValXDR,
         targetType: T.Type
     ) throws -> T {
-        debugLogger.info("🔍 Attempting array mismatch recovery")
 
         // Convert the SCValXDR to human-readable format
         let humanReadable = try convertSCValXDRToHumanReadable(result)
@@ -1034,7 +997,6 @@ extension BlendParser {
         _ result: SCValXDR,
         targetType: T.Type
     ) throws -> T {
-        debugLogger.info("🔍 Attempting dictionary mismatch recovery")
 
         // Convert the SCValXDR to human-readable format
         let humanReadable = try convertSCValXDRToHumanReadable(result)
@@ -1082,7 +1044,7 @@ extension BlendParser {
         do {
             // Validate before serialization
             guard JSONSerialization.isValidJSONObject(jsonCompatible) else {
-                debugLogger.error("🔍 Invalid JSON object: \(jsonCompatible)")
+                BlendLogger.error("Invalid JSON object: \(type(of: jsonCompatible))", category: BlendLogger.parsing)
                 throw BlendParsingError.conversionFailed(
                     "Object is not JSON serializable: \(type(of: jsonCompatible))"
                 )
@@ -1093,11 +1055,7 @@ extension BlendParser {
                 options: []
             )
         } catch let error as NSError {
-            debugLogger.error(
-                "🔍 JSON serialization failed: \(error.localizedDescription)"
-            )
-            debugLogger.error("🔍 Object type: \(type(of: jsonCompatible))")
-            debugLogger.error("🔍 Object description: \(jsonCompatible)")
+            BlendLogger.error("JSON serialization failed", error: error, category: BlendLogger.parsing)
             throw BlendParsingError.conversionFailed(
                 "Failed to convert to JSON: \(error.localizedDescription)"
             )

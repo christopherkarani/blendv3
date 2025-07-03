@@ -12,7 +12,6 @@
 		9E1C12362DFB2F950081E56D /* ContractCallParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C12352DFB2F950081E56D /* ContractCallParams.swift */; };
 		9E1C123D2DFB33980081E56D /* BlendParsingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C12392DFB33980081E56D /* BlendParsingError.swift */; };
 		9E1C123E2DFB33980081E56D /* SCValXDRExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C123A2DFB33980081E56D /* SCValXDRExtensions.swift */; };
-		9E1C123F2DFB33980081E56D /* SCValXDRParsingDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C123B2DFB33980081E56D /* SCValXDRParsingDemo.swift */; };
 		9E1C12402DFB33980081E56D /* BlendParsingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C12382DFB33980081E56D /* BlendParsingContext.swift */; };
 		9E1C12412DFB33980081E56D /* BlendParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C12372DFB33980081E56D /* BlendParser.swift */; };
 		9E1C12452DFB33A70081E56D /* BlendSimulateTransactionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C12442DFB33A70081E56D /* BlendSimulateTransactionResult.swift */; };
@@ -38,7 +37,8 @@
 		9E97819E2DE68E6C009333AD /* RetryConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781932DE68E6C009333AD /* RetryConfiguration.swift */; };
 		9E9781A42DE68E6C009333AD /* TimeoutConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781942DE68E6C009333AD /* TimeoutConfiguration.swift */; };
 		9E9781B22DE68F7F009333AD /* BlendVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9781B02DE68F7F009333AD /* BlendVault.swift */; };
-		9E9D8D7A2E15A3440065B72F /* DebugLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9D8D792E15A3440065B72F /* DebugLogger.swift */; };
+		9E9D8DD62E162BED0065B72F /* BlendProtocolFinancialCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9D8DD52E162BED0065B72F /* BlendProtocolFinancialCalculator.swift */; };
+		9E9D8DD82E162C090065B72F /* BlendProtocolFinancialCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9D8DD72E162C090065B72F /* BlendProtocolFinancialCalculatorTests.swift */; };
 		9EA449D02DF0FF3C00F6CC6D /* UserPositionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CC2DF0FF3C00F6CC6D /* UserPositionService.swift */; };
 		9EA449D22DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */; };
 		9EAD3EED2DF7BDF600029CE7 /* SorobanTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */; };
@@ -107,7 +107,6 @@
 		9E1C12382DFB33980081E56D /* BlendParsingContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendParsingContext.swift; sourceTree = "<group>"; };
 		9E1C12392DFB33980081E56D /* BlendParsingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendParsingError.swift; sourceTree = "<group>"; };
 		9E1C123A2DFB33980081E56D /* SCValXDRExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCValXDRExtensions.swift; sourceTree = "<group>"; };
-		9E1C123B2DFB33980081E56D /* SCValXDRParsingDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCValXDRParsingDemo.swift; sourceTree = "<group>"; };
 		9E1C12422DFB33A70081E56D /* BlendSimulateHostFunctionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendSimulateHostFunctionResult.swift; sourceTree = "<group>"; };
 		9E1C12432DFB33A70081E56D /* BlendSimulateTransactionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendSimulateTransactionResponse.swift; sourceTree = "<group>"; };
 		9E1C12442DFB33A70081E56D /* BlendSimulateTransactionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendSimulateTransactionResult.swift; sourceTree = "<group>"; };
@@ -130,7 +129,8 @@
 		9E9781932DE68E6C009333AD /* RetryConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetryConfiguration.swift; sourceTree = "<group>"; };
 		9E9781942DE68E6C009333AD /* TimeoutConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeoutConfiguration.swift; sourceTree = "<group>"; };
 		9E9781B02DE68F7F009333AD /* BlendVault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendVault.swift; sourceTree = "<group>"; };
-		9E9D8D792E15A3440065B72F /* DebugLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLogger.swift; sourceTree = "<group>"; };
+		9E9D8DD52E162BED0065B72F /* BlendProtocolFinancialCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendProtocolFinancialCalculator.swift; sourceTree = "<group>"; };
+		9E9D8DD72E162C090065B72F /* BlendProtocolFinancialCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlendProtocolFinancialCalculatorTests.swift; sourceTree = "<group>"; };
 		9EA449CC2DF0FF3C00F6CC6D /* UserPositionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionService.swift; sourceTree = "<group>"; };
 		9EA449CE2DF0FF3C00F6CC6D /* UserPositionServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPositionServiceProtocol.swift; sourceTree = "<group>"; };
 		9EAD3EEC2DF7BDF600029CE7 /* SorobanTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SorobanTypes.swift; sourceTree = "<group>"; };
@@ -303,7 +303,6 @@
 				9E1C12382DFB33980081E56D /* BlendParsingContext.swift */,
 				9E1C12392DFB33980081E56D /* BlendParsingError.swift */,
 				9E1C123A2DFB33980081E56D /* SCValXDRExtensions.swift */,
-				9E1C123B2DFB33980081E56D /* SCValXDRParsingDemo.swift */,
 			);
 			path = Parsing;
 			sourceTree = "<group>";
@@ -494,7 +493,8 @@
 		9ED8DB592DE5434300CB0059 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				9E9D8D792E15A3440065B72F /* DebugLogger.swift */,
+				9E9D8DD72E162C090065B72F /* BlendProtocolFinancialCalculatorTests.swift */,
+				9E9D8DD52E162BED0065B72F /* BlendProtocolFinancialCalculator.swift */,
 				9E1C10532DFB0C800081E56D /* Logger.swift */,
 				9EDE650F2DE712A200B63E09 /* OracleError.swift */,
 				9E1C104D2DFB08100081E56D /* BlendError.swift */,
@@ -702,7 +702,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ED8DAF32DE5240300CB0059 /* BlendOracleService.swift in Sources */,
-				9E9D8D7A2E15A3440065B72F /* DebugLogger.swift in Sources */,
 				9EDE64F92DE7035400B63E09 /* PriceData.swift in Sources */,
 				9ED8DAF62DE5240300CB0059 /* NetworkService.swift in Sources */,
 				9EDE651F2DE773DB00B63E09 /* PoolService.swift in Sources */,
@@ -736,7 +735,6 @@
 				9E1C134F2DFD0D230081E56D /* BlendAssetData+FinancialCalculations.swift in Sources */,
 				9E1C13452DFCE8220081E56D /* BlendParser+TokenMetadata.swift in Sources */,
 				9E1C123E2DFB33980081E56D /* SCValXDRExtensions.swift in Sources */,
-				9E1C123F2DFB33980081E56D /* SCValXDRParsingDemo.swift in Sources */,
 				9E1C12402DFB33980081E56D /* BlendParsingContext.swift in Sources */,
 				9E1C13402DFCCE3E0081E56D /* Position.swift in Sources */,
 				9E1C12412DFB33980081E56D /* BlendParser.swift in Sources */,
@@ -749,10 +747,12 @@
 				9E2B1DB62E1330CE00B2AD5D /* BlendModels.swift in Sources */,
 				9EAD3EF62DF7D31400029CE7 /* NetworkServiceProtocol.swift in Sources */,
 				9ED8DB0D2DE5240300CB0059 /* BlendRateCalculatorProtocol.swift in Sources */,
+				9E9D8DD62E162BED0065B72F /* BlendProtocolFinancialCalculator.swift in Sources */,
 				9EDE65152DE729DD00B63E09 /* SorobanTransactionSimulator.swift in Sources */,
 				9ED8DB0E2DE5240300CB0059 /* FixedMath.swift in Sources */,
 				9EDE65102DE712A200B63E09 /* OracleError.swift in Sources */,
 				9EDE65112DE712A200B63E09 /* OracleAsset.swift in Sources */,
+				9E9D8DD82E162C090065B72F /* BlendProtocolFinancialCalculatorTests.swift in Sources */,
 				9EDE65252DE9246700B63E09 /* BlendAssetService.swift in Sources */,
 				9E1C10542DFB0C800081E56D /* Logger.swift in Sources */,
 				9E93884E2DF3519B0015BE14 /* CacheServiceProtocol.swift in Sources */,

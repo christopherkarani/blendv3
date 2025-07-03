@@ -1,0 +1,53 @@
+name: Build and Release to IPFS
+
+on:
+  push:
+    tags:
+      - 'v*' # triggered whenever a new tag (previxed with "v") is pushed to the repository
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run build script
+        run: npm run build:mainnet
+
+      - name: Create tarball
+        run: tar -czf app.tar.gz ./out/
+
+      - name: pinata
+        id: pinata
+        uses: aave/pinata-action@a3409e26f4cb859a2d9984109317caac53db5f68
+        with:
+          PINATA_API_KEY: ${{ secrets.PINATA_API_KEY }}
+          PINATA_SECRET_KEY: ${{ secrets.PINATA_SECRET_KEY }}
+          PIN_ALIAS: 'app-blend-${{ github.ref_name }}'
+          BUILD_LOCATION: './out'
+          CID_VERSION: 1
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: ipfs-${{ github.ref_name }}
+          body: |
+            ## Blend UI Release
+
+            This release contains the latest build of the Blend UI.
+
+            IPFS CID: `${{ steps.pinata.outputs.hash }}`
+          draft: false
+          prerelease: false
+          files: app.tar.gz

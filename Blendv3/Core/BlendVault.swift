@@ -10,7 +10,7 @@ import Foundation
 
 /// Primary interface for interacting with Blend Protocol liquidity pools and backstop
 @MainActor
-public final class BlendVault {
+public final class BlendVault: ObservableObject, Sendable {
 
     // MARK: - Private Properties
 
@@ -25,6 +25,9 @@ public final class BlendVault {
     private let keyPair: KeyPair
     private let userAddress: String
     private let config: BlendVaultConfig
+    
+    // Add the new financial calculator
+    private let financialCalculator = BlendProtocolFinancialCalculator()
     
     // MARK: - Public Initialization
     
@@ -231,9 +234,17 @@ public final class BlendVault {
                 let poolConfig = try await poolService.fetchPoolConfig(contractId: poolID)
                 let backstopRate = FixedMath.toFixed(value: Double(poolConfig.backstopRate), decimals: 7)
                 
-                // Calculate APYs using the asset's calculation methods
-                let supplyAPY = try specificAssetData.calculateSupplyAPY(backstopTakeRate: backstopRate)
-                let borrowAPY = try specificAssetData.calculateBorrowAPY()
+                // Calculate APYs using the new unified financial calculator
+                let supplyAPY = financialCalculator.calculateAPYFromAssetData(
+                    specificAssetData,
+                    backstopTakeRate: backstopRate,
+                    isSupply: true
+                )
+                let borrowAPY = financialCalculator.calculateAPYFromAssetData(
+                    specificAssetData,
+                    backstopTakeRate: backstopRate,
+                    isSupply: false
+                )
                 
                 // Use human-readable values for supply and borrow amounts
                 let supplied = specificAssetData.suppliedHuman
@@ -1086,7 +1097,7 @@ public final class BlendVault {
             
             // Calculate actual borrowed amount including accrued interest
             let dSupplyHuman = FixedMath.toFloat(value: asset.dSupply, decimals: 7)
-            let dRateHuman = FixedMath.toFloat(value: asset.dRate, decimals: 12) // dRate uses 12 decimals
+            let dRateHuman = FixedMath.toFloat(value: asset.dRate, decimals: 9)
             let totalBorrowed = dSupplyHuman * dRateHuman
             
             let totalSuppliedUSD = totalSupplied * price
@@ -1094,27 +1105,24 @@ public final class BlendVault {
             
             let utilizationRate = totalSupplied > Decimal.zero ? totalBorrowed / totalSupplied : Decimal.zero
             
-            let borrowAPY = try asset.calculateBorrowAPY()
-            let supplyAPY = try asset.calculateSupplyAPY(backstopTakeRate: backstopRate)
+            // Use the new unified calculator for APY calculations
+            let borrowAPY = financialCalculator.calculateAPYFromAssetData(
+                asset,
+                backstopTakeRate: backstopRate,
+                isSupply: false
+            )
+            let supplyAPY = financialCalculator.calculateAPYFromAssetData(
+                asset,
+                backstopTakeRate: backstopRate,
+                isSupply: true
+            )
             
             // APY DEBUG: Add additional debugging for APY calculations
             print("💹 APY Debug - \(metadata.symbol):")
-            print("  Raw Supply APY: \(supplyAPY)")
-            print("  Raw Borrow APY: \(borrowAPY)")
-            
-            // Try alternative APY calculation using higher scaling
-            let utilization = try asset.calculateUtilizationRate(usingAccruedInterest: true)
-            print("  Utilization: \(utilization)")
-            let backstopRateFloat = FixedMath.toFloat(value: backstopRate, decimals: 7)
-            print("  Backstop Rate: \(backstopRateFloat)")
-            
-            // EXPERIMENTAL: Try enhanced APY calculation
-            if utilization > 0 {
-                let enhancedSupplyAPY = utilization * 12.0 * (1.0 - backstopRateFloat) // Rough estimate
-                let enhancedBorrowAPY = utilization * 15.0 // Rough estimate
-                print("  Enhanced Supply APY estimate: \(enhancedSupplyAPY * 100)%")
-                print("  Enhanced Borrow APY estimate: \(enhancedBorrowAPY * 100)%")
-            }
+            print("  Supply APY: \(supplyAPY)%")
+            print("  Borrow APY: \(borrowAPY)%")
+            print("  Utilization: \(utilizationRate)")
+            print("  Backstop Rate: \(FixedMath.toFloat(value: backstopRate, decimals: 7))")
             
             // Convert collateral and liability factors from raw fixed-point to percentages
             let collateralFactor = FixedMath.toFloat(value: asset.cFactor, decimals: 7) * 100
@@ -1191,7 +1199,11 @@ public final class BlendVault {
                 if let specificAssetData = assetData.first(where: { $0.assetId == position.asset }) {
                     let poolConfig = try await poolService.fetchPoolConfig(contractId: config.primaryPoolID)
                     let backstopRate = FixedMath.toFixed(value: Double(poolConfig.backstopRate), decimals: 7)
-                    let supplyAPY = try specificAssetData.calculateSupplyAPY(backstopTakeRate: backstopRate)
+                    let supplyAPY = financialCalculator.calculateAPYFromAssetData(
+                        specificAssetData,
+                        backstopTakeRate: backstopRate,
+                        isSupply: true
+                    )
                     
                     let suppliedAsset = UserAssetPosition(
                         assetID: position.asset,
@@ -1293,6 +1305,59 @@ public final class BlendVault {
             return .poolError(blendError)
         } else {
             return .unknown(error.localizedDescription)
+        }
+    }
+    
+    // MARK: - Debugging & Testing
+    
+    /// Run financial calculator validation tests
+    public func runCalculatorValidationTests() {
+        let tests = BlendProtocolFinancialCalculatorTests()
+        tests.runAllTests()
+    }
+    
+    /// Test the new calculator with live data from a specific asset
+    public func testCalculatorWithLiveData(assetID: String) async {
+        do {
+            let assetService = BlendAssetService(poolID: config.primaryPoolID, networkService: networkService)
+            let poolAssets = try await assetService.getAssets()
+            let assetData = try await assetService.getAll(assets: poolAssets)
+            
+            guard let specificAssetData = assetData.first(where: { $0.assetId == assetID }) else {
+                print("❌ Asset \(assetID) not found in primary pool")
+                return
+            }
+            
+            let poolConfig = try await poolService.fetchPoolConfig(contractId: config.primaryPoolID)
+            let backstopRate = FixedMath.toFixed(value: Double(poolConfig.backstopRate), decimals: 7)
+            
+            // Test new calculator
+            let newSupplyAPY = financialCalculator.calculateAPYFromAssetData(
+                specificAssetData,
+                backstopTakeRate: backstopRate,
+                isSupply: true
+            )
+            let newBorrowAPY = financialCalculator.calculateAPYFromAssetData(
+                specificAssetData,
+                backstopTakeRate: backstopRate,
+                isSupply: false
+            )
+            
+            // Test old calculator for comparison
+            let oldSupplyAPY = try specificAssetData.calculateSupplyAPY(backstopTakeRate: backstopRate)
+            let oldBorrowAPY = try specificAssetData.calculateBorrowAPY()
+            
+            print("\n🧪 Calculator Comparison for \(assetID):")
+            print("📊 NEW Calculator:")
+            print("  Supply APY: \(String(format: "%.4f", Double(truncating: newSupplyAPY as NSNumber)))%")
+            print("  Borrow APY: \(String(format: "%.4f", Double(truncating: newBorrowAPY as NSNumber)))%")
+            print("📈 OLD Calculator:")
+            print("  Supply APY: \(String(format: "%.4f", Double(truncating: oldSupplyAPY as NSNumber)))%")
+            print("  Borrow APY: \(String(format: "%.4f", Double(truncating: oldBorrowAPY as NSNumber)))%")
+            print("🔍 Utilization: \(String(format: "%.4f", Double(truncating: (specificAssetData.suppliedHuman > 0 ? (specificAssetData.borrowedHuman / specificAssetData.suppliedHuman) : Decimal.zero) as NSNumber)))")
+            
+        } catch {
+            print("❌ Error testing calculator: \(error)")
         }
     }
 }

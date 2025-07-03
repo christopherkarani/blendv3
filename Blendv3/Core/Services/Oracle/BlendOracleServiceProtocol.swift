@@ -77,7 +77,6 @@ extension BlendOracleService: BlendOracleServiceProtocol {
     public func getPrice(asset: OracleAsset) async throws -> PriceData {
         // Use current timestamp (seconds since epoch)
         let currentTimestamp = UInt64(Date().timeIntervalSince1970)
-        self.debugLogger.info("🔮 Using current timestamp: \(currentTimestamp) for asset: \(asset.description)")
         
         // Call the timestamp-specific function and handle the optional result
         guard let priceData = try await getLastPrice(asset: asset) else {
@@ -111,7 +110,6 @@ extension BlendOracleService: BlendOracleServiceProtocol {
     /// Get price for an asset at a specific timestamp
     /// Maps to contract's price(asset: Asset, timestamp: u64) function
     public func getPrice(asset: OracleAsset, timestamp: UInt64) async throws -> PriceData? {
-        debugLogger.info("🔮 Getting price for asset: \(asset.description) at timestamp: \(timestamp)")
         
         return try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
             let assetParam = try OracleContractFunction.createAssetParameter(asset)
@@ -134,8 +132,6 @@ extension BlendOracleService: BlendOracleServiceProtocol {
     /// Get historical prices for an asset
     /// Maps to contract's prices(asset: Asset, records: u32) function
     public func getPriceHistory(asset: OracleAsset, records: UInt32) async throws -> [PriceData]? {
-        let assetDescription = asset.description
-        BlendLogger.info("🔮 Fetching price history for asset: \(assetDescription) with \(records) records", category: BlendLogger.oracle)
         
         return try await withRetry(maxAttempts: self.maxRetries, delay: self.retryDelay) {
             let assetParam = try OracleContractFunction.createAssetParameter(asset)
@@ -158,7 +154,6 @@ extension BlendOracleService: BlendOracleServiceProtocol {
     /// Get the last recorded price for an asset
     /// Maps to contract's lastprice(asset: Asset) function
     public func getLastPrice(asset: OracleAsset) async throws -> PriceData? {
-        debugLogger.info("🔮 Getting last price for asset: \(asset.description)")
         
         return try await withRetry(maxAttempts: maxRetries, delay: retryDelay) {
             let assetParam = try OracleContractFunction.createAssetParameter(asset)
@@ -179,11 +174,9 @@ extension BlendOracleService: BlendOracleServiceProtocol {
     /// Get the base asset used by the oracle
     /// Maps to contract's base() function
     public func getBaseAsset() async throws -> OracleAsset {
-        BlendLogger.info("🔮 Fetching base asset", category: BlendLogger.oracle)
         
         let cacheKey = "oracle_base_asset"
         if let cachedAsset = await cacheService.get(cacheKey, type: OracleAsset.self) {
-            BlendLogger.info("Using cached base asset: \(cachedAsset)", category: BlendLogger.oracle)
             return cachedAsset
         }
         
@@ -191,19 +184,15 @@ extension BlendOracleService: BlendOracleServiceProtocol {
         
         // Cache the result
         await cacheService.set(asset, key: cacheKey, ttl: 3600)
-        
-        BlendLogger.info("Fetched and cached base asset: \(asset)", category: BlendLogger.oracle)
         return asset
     }
     
     /// Get all supported assets by the oracle
     /// Maps to contract's assets() function
     public func getSupportedAssets() async throws -> [OracleAsset] {
-        BlendLogger.info("🔮 Fetching supported assets", category: BlendLogger.oracle)
         
         let cacheKey = "oracle_supported_assets"
         if let cachedAssets = await cacheService.get(cacheKey, type: [OracleAsset].self) {
-            BlendLogger.info("Using cached supported assets: \(cachedAssets.count)", category: BlendLogger.oracle)
             return cachedAssets
         }
         

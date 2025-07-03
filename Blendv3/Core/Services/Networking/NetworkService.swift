@@ -84,8 +84,7 @@ public final class NetworkService: NetworkServiceProtocol {
         
         // Initialize Soroban server and transaction simulator
         self.sorobanServer = SorobanServer(endpoint: config.rpcEndpoint)
-        let debugLogger = DebugLogger(subsystem: "com.blendv3.network", category: "TransactionSimulator")
-        self.transactionSimulator = SorobanTransactionSimulator(debugLogger: debugLogger)
+        self.transactionSimulator = SorobanTransactionSimulator()
         
         setupDefaultInterceptors()
         BlendLogger.info("NetworkService initialized with endpoint: \(config.rpcEndpoint)", category: BlendLogger.network)

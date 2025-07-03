@@ -14,6 +14,8 @@ public enum BlendLogger {
     public static let cache = OSLog(subsystem: subsystem, category: "Cache")
     public static let ui = OSLog(subsystem: subsystem, category: "UI")
     public static let error = OSLog(subsystem: subsystem, category: "Error")
+    public static let parsing = OSLog(subsystem: subsystem, category: "Parsing")
+    public static let backstop = OSLog(subsystem: subsystem, category: "Backstop")
     
     // MARK: - Logging Methods
     

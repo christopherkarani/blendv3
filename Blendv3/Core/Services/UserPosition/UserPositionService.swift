@@ -44,7 +44,7 @@ final class UserPositionService: UserPositionServiceProtocol {
     private func filterValidPositions(_ positions: [Position]) -> [Position] {
         positions.filter { position in
             if !position.isValid {
-                print("Warning: Dropping invalid position for asset \(position.asset)")
+                BlendLogger.warning("Dropping invalid position for asset \(position.asset)", category: BlendLogger.parsing)
                 return false
             }
             return true
@@ -100,7 +100,6 @@ extension UserPositionService {
         switch simulationResult {
         case .success(_):
             let result = try await networkService.invokeContractFunction(contractCall: contractCall, force: false)
-          //  print("Result of Submit: ", result)
         case .failure(let error):
             throw error
         }

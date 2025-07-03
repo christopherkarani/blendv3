@@ -24,12 +24,12 @@ extension BackstopContractService {
                     // Gulp emissions doesn't return a value
                     return
                 } catch {
-                    self.debugLogger.error("🛡️ ❌ Gulp emissions invocation failed: \(error.localizedDescription)")
+                    BlendLogger.error("Backstop gulp emissions invocation failed", error: error, category: BlendLogger.backstop)
                     throw self.convertInvocationError(error, operation: "gulpEmissions")
                 }
                 
             case .failure(let error):
-                self.debugLogger.error("🛡️ ❌ Gulp emissions simulation failed: \(error.localizedDescription)")
+                BlendLogger.error("Backstop gulp emissions simulation failed", error: error, category: BlendLogger.backstop)
                 throw self.convertNetworkError(error, operation: "gulpEmissions")
             }
         })
@@ -69,12 +69,12 @@ extension BackstopContractService {
                         // Add reward doesn't return a value
                         return
                     } catch {
-                        self.debugLogger.error("🛡️ ❌ Add reward invocation failed: \(error.localizedDescription)")
+                        BlendLogger.error("Backstop add reward invocation failed", error: error, category: BlendLogger.backstop)
                         throw self.convertInvocationError(error, operation: "addReward")
                     }
                     
                 case .failure(let error):
-                    self.debugLogger.error("🛡️ ❌ Add reward simulation failed: \(error.localizedDescription)")
+                    BlendLogger.error("Backstop add reward simulation failed", error: error, category: BlendLogger.backstop)
                     throw self.convertNetworkError(error, operation: "addReward")
                 }
         })
@@ -102,12 +102,12 @@ extension BackstopContractService {
                         let invocationResult = try await self.networkService.invokeContractFunction(contractCall: contractCall)
                         return try self.blendParser.parseI128Response(invocationResult)
                     } catch {
-                        self.debugLogger.error("🛡️ ❌ Gulp pool emissions invocation failed: \(error.localizedDescription)")
+                        BlendLogger.error("Backstop gulp pool emissions invocation failed", error: error, category: BlendLogger.backstop)
                         throw self.convertInvocationError(error, operation: "gulpPoolEmissions")
                     }
                     
                 case .failure(let error):
-                    self.debugLogger.error("🛡️ ❌ Gulp pool emissions simulation failed: \(error.localizedDescription)")
+                    BlendLogger.error("Backstop gulp pool emissions simulation failed", error: error, category: BlendLogger.backstop)
                     throw self.convertNetworkError(error, operation: "gulpPoolEmissions")
                 }
         })
@@ -149,12 +149,12 @@ extension BackstopContractService {
                         let totalClaimed = try self.blendParser.parseI128Response(invocationResult)
                         return ClaimResult(totalClaimed: totalClaimed)
                     } catch {
-                        self.debugLogger.error("🛡️ ❌ Claim invocation failed: \(error.localizedDescription)")
+                        BlendLogger.error("Backstop claim invocation failed", error: error, category: BlendLogger.backstop)
                         throw self.convertInvocationError(error, operation: "claim")
                     }
                     
                 case .failure(let error):
-                    self.debugLogger.error("🛡️ ❌ Claim simulation failed: \(error.localizedDescription)")
+                    BlendLogger.error("Backstop claim simulation failed", error: error, category: BlendLogger.backstop)
                     throw self.convertNetworkError(error, operation: "claim")
                 }
         })
@@ -184,12 +184,12 @@ extension BackstopContractService {
                         // Drop doesn't return a value
                         return
                     } catch {
-                        self.debugLogger.error("🛡️ ❌ Drop invocation failed: \(error.localizedDescription)")
+                        BlendLogger.error("Backstop drop invocation failed", error: error, category: BlendLogger.backstop)
                         throw self.convertInvocationError(error, operation: "drop")
                     }
                     
                 case .failure(let error):
-                    self.debugLogger.error("🛡️ ❌ Drop simulation failed: \(error.localizedDescription)")
+                    BlendLogger.error("Backstop drop simulation failed", error: error, category: BlendLogger.backstop)
                     throw self.convertNetworkError(error, operation: "drop")
                 }
         })
@@ -222,12 +222,12 @@ extension BackstopContractService {
                         // Draw doesn't return a value
                         return
                     } catch {
-                        self.debugLogger.error("🛡️ ❌ Draw invocation failed: \(error.localizedDescription)")
+                        BlendLogger.error("Backstop draw invocation failed", error: error, category: BlendLogger.backstop)
                         throw self.convertInvocationError(error, operation: "draw")
                     }
                     
                 case .failure(let error):
-                    self.debugLogger.error("🛡️ ❌ Draw simulation failed: \(error.localizedDescription)")
+                    BlendLogger.error("Backstop draw simulation failed", error: error, category: BlendLogger.backstop)
                     throw self.convertNetworkError(error, operation: "draw")
                 }
         })
@@ -260,12 +260,12 @@ extension BackstopContractService {
                         // Donate doesn't return a value
                         return
                     } catch {
-                        self.debugLogger.error("🛡️ ❌ Donate invocation failed: \(error.localizedDescription)")
+                        BlendLogger.error("Backstop donate invocation failed", error: error, category: BlendLogger.backstop)
                         throw self.convertInvocationError(error, operation: "donate")
                     }
                     
                 case .failure(let error):
-                    self.debugLogger.error("🛡️ ❌ Donate simulation failed: \(error.localizedDescription)")
+                    BlendLogger.error("Backstop donate simulation failed", error: error, category: BlendLogger.backstop)
                     throw self.convertNetworkError(error, operation: "donate")
                 }
         })
@@ -290,12 +290,12 @@ extension BackstopContractService {
                         let (blndValue, usdcValue) = try self.blendParser.parseTokenValueTupleResponse(invocationResult)
                         return TokenValueUpdateResult(blndValue: blndValue, usdcValue: usdcValue)
                     } catch {
-                        self.debugLogger.error("🛡️ ❌ Update token values invocation failed: \(error.localizedDescription)")
+                        BlendLogger.error("Backstop update token values invocation failed", error: error, category: BlendLogger.backstop)
                         throw self.convertInvocationError(error, operation: "updateTokenValues")
                     }
                     
                 case .failure(let error):
-                    self.debugLogger.error("🛡️ ❌ Update token values simulation failed: \(error.localizedDescription)")
+                    BlendLogger.error("Backstop update token values simulation failed", error: error, category: BlendLogger.backstop)
                     throw self.convertNetworkError(error, operation: "updateTokenValues")
                 }
         })
