@@ -1091,14 +1091,10 @@ public final class BlendVault: ObservableObject, Sendable {
             
             let price = prices[asset.assetId]?.price ?? Decimal.zero
             
-            // BORROWED AMOUNT CALCULATION FIX:
-            // Use actual borrowed amount with accrued interest (dSupply * dRate) for more precision
+            // FIXED: Use corrected human-readable properties from BlendAssetData
+            // These now use asset.decimals and proper dSupply * dRate calculation
             let totalSupplied = asset.suppliedHuman
-            
-            // Calculate actual borrowed amount including accrued interest
-            let dSupplyHuman = FixedMath.toFloat(value: asset.dSupply, decimals: 7)
-            let dRateHuman = FixedMath.toFloat(value: asset.dRate, decimals: 9)
-            let totalBorrowed = dSupplyHuman * dRateHuman
+            let totalBorrowed = asset.borrowedHuman
             
             let totalSuppliedUSD = totalSupplied * price
             let totalBorrowedUSD = totalBorrowed * price
@@ -1116,6 +1112,9 @@ public final class BlendVault: ObservableObject, Sendable {
                 backstopTakeRate: backstopRate,
                 isSupply: true
             )
+            
+            // DEBUG: Use the new validation helper for comprehensive debugging
+            asset.debugCalculations(symbol: metadata.symbol)
             
             // APY DEBUG: Add additional debugging for APY calculations
             print("💹 APY Debug - \(metadata.symbol):")

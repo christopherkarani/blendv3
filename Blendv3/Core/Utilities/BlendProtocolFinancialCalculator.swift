@@ -62,11 +62,11 @@ public final class BlendProtocolFinancialCalculator {
         // Calculate utilization using fixed-point arithmetic
         let totalSupply = assetData.bSupply
         
-        // CRITICAL FIX: Always use SCALAR_9 for dRate multiplication (per FAQ)
+        // CRITICAL FIX: Use SCALAR_12 for dRate multiplication (dRate is SCALAR_12)
         let totalLiabilities = mulFloor(
             assetData.dSupply,
             assetData.dRate,
-            Self.SCALAR_9
+            Self.SCALAR_12
         )
         
         guard totalSupply > 0 else {
@@ -150,7 +150,7 @@ public final class BlendProtocolFinancialCalculator {
         
         // Calculate utilization
         let totalSupply = bSupply
-        let totalLiabilities = mulFloor(dSupply, dRate, Self.SCALAR_9)
+        let totalLiabilities = mulFloor(dSupply, dRate, Self.SCALAR_12)
         
         guard totalSupply > 0 else {
             return 0

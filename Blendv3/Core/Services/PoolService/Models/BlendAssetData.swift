@@ -237,23 +237,73 @@ func parseBlendReserve(_ raw: SCValXDR) throws -> BlendAssetData {
 
 extension BlendAssetData {
     var totalSuppliedUSD: Decimal {
-        // Convert from raw fixed-point to human-readable before multiplying by price
-        let suppliedHuman = FixedMath.toFloat(value: bSupply, decimals: 7)
+        // Use corrected suppliedHuman calculation
         return suppliedHuman * pricePerToken
     }
     
     var totalBorrowedUSD: Decimal {
-        // Convert from raw fixed-point to human-readable before multiplying by price
-        let borrowedHuman = FixedMath.toFloat(value: dSupply, decimals: 7)
+        // Use corrected borrowedHuman calculation  
         return borrowedHuman * pricePerToken
     }
     
-    // Helper methods to get human-readable values
+    // FIXED: Use asset's actual decimals instead of hardcoded 7
     var suppliedHuman: Decimal {
-        return FixedMath.toFloat(value: bSupply, decimals: 7)
+        return FixedMath.toFloat(value: bSupply, decimals: self.decimals)
     }
     
+    // CRITICAL FIX: Calculate actual borrowed amount using dSupply * dRate
     var borrowedHuman: Decimal {
-        return FixedMath.toFloat(value: dSupply, decimals: 7)
+        // dSupply represents debt shares, not actual debt amount
+        // Must multiply by dRate to get actual borrowed amount
+        let dSupplyHuman = FixedMath.toFloat(value: dSupply, decimals: self.decimals)
+        let dRateHuman = FixedMath.toFloat(value: dRate, decimals: 12)  // dRate is SCALAR_12
+        return dSupplyHuman * dRateHuman
+    }
+    
+    /// Validation helper to ensure calculations are reasonable
+    func validateCalculations() -> (isValid: Bool, errors: [String]) {
+        var errors: [String] = []
+        
+        // Check for negative values
+        if suppliedHuman < 0 {
+            errors.append("Negative supplied amount: \(suppliedHuman)")
+        }
+        if borrowedHuman < 0 {
+            errors.append("Negative borrowed amount: \(borrowedHuman)")
+        }
+        
+        // Check utilization rate bounds
+        let utilization = suppliedHuman > 0 ? borrowedHuman / suppliedHuman : 0
+        if utilization > 1.0 {
+            errors.append("Utilization exceeds 100%: \(utilization * 100)%")
+        }
+        
+        // Check that decimals are reasonable
+        if decimals < 0 || decimals > 18 {
+            errors.append("Unreasonable decimals value: \(decimals)")
+        }
+        
+        return (errors.isEmpty, errors)
+    }
+    
+    /// Debug helper to trace calculation values
+    func debugCalculations(symbol: String = "Unknown") {
+        print("🔍 DEBUG - \(symbol):")
+        print("  Asset Decimals: \(decimals)")
+        print("  Raw bSupply: \(bSupply)")
+        print("  Raw dSupply: \(dSupply)")
+        print("  Raw dRate: \(dRate)")
+        print("  Supplied Human: \(suppliedHuman)")
+        print("  Borrowed Human: \(borrowedHuman)")
+        
+        let utilization = suppliedHuman > 0 ? borrowedHuman / suppliedHuman : 0
+        print("  Utilization: \(utilization * 100)%")
+        
+        let validation = validateCalculations()
+        if !validation.isValid {
+            print("  ⚠️ Validation Errors: \(validation.errors.joined(separator: ", "))")
+        } else {
+            print("  ✅ Validation: PASSED")
+        }
     }
 }
