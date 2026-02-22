@@ -1,0 +1,365 @@
+{
+  "": {
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/master.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/BlendVault.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendVault.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendVault.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendVault~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendVault.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Constants/BlendConstants.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendConstants.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendConstants.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendConstants~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendConstants.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Models/BlendExtensions.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendExtensions.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendExtensions.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendExtensions.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Models/BlendModels.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendModels.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendModels.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendModels~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendModels.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Parsing/BlendParser.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParser.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParser.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParser~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParser.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Parsing/BlendParsingContext.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParsingContext.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParsingContext.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParsingContext~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParsingContext.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Parsing/BlendParsingError.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParsingError.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParsingError.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParsingError~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParsingError.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Parsing/BlendSimulateHostFunctionResult.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendSimulateHostFunctionResult.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendSimulateHostFunctionResult.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendSimulateHostFunctionResult~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendSimulateHostFunctionResult.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Parsing/BlendSimulateTransactionResponse.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendSimulateTransactionResponse.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendSimulateTransactionResponse.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendSimulateTransactionResponse~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendSimulateTransactionResponse.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Parsing/BlendSimulateTransactionResult.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendSimulateTransactionResult.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendSimulateTransactionResult.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendSimulateTransactionResult~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendSimulateTransactionResult.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Parsing/SCValXDRExtensions.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SCValXDRExtensions.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SCValXDRExtensions.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SCValXDRExtensions~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SCValXDRExtensions.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Parsing/SCValXDRParsingDemo.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SCValXDRParsingDemo.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SCValXDRParsingDemo.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SCValXDRParsingDemo~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SCValXDRParsingDemo.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/BackstopContract/Extensions/BackstopContractService+Functions.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService+Functions.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService+Functions.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService+Functions~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService+Functions.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/BackstopContract/Extensions/BackstopContractService+Parsing.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService+Parsing.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService+Parsing.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService+Parsing~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService+Parsing.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/BackstopContract/Extensions/BackstopContractService+Utils.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService+Utils.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService+Utils.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService+Utils~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService+Utils.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/BackstopContract/Models/BackstopModels.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopModels.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopModels.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopModels~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopModels.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/BackstopContract/Models/BackstopStatus.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopStatus.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopStatus.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopStatus~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopStatus.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/BackstopContract/Models/OraclePrice.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OraclePrice.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OraclePrice.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OraclePrice~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OraclePrice.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/BackstopContract/Models/PriceData.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PriceData.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PriceData.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PriceData~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PriceData.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/BackstopContract/Protocols/BackstopContractServiceProtocol.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractServiceProtocol.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractServiceProtocol.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractServiceProtocol~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractServiceProtocol.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/BackstopContract/Services/BackstopContractService.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BackstopContractService.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Cache/CacheService.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/CacheService.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/CacheService.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/CacheService~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/CacheService.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Cache/CacheServiceProtocol.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/CacheServiceProtocol.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/CacheServiceProtocol.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/CacheServiceProtocol~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/CacheServiceProtocol.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Calculator/BlendRateCalculatorProtocol.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendRateCalculatorProtocol.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendRateCalculatorProtocol.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendRateCalculatorProtocol~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendRateCalculatorProtocol.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Calculator/Models/InterestRateConfig.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/InterestRateConfig.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/InterestRateConfig.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/InterestRateConfig~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/InterestRateConfig.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/Extensions/BlendParser+TokenMetadata.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParser+TokenMetadata.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParser+TokenMetadata.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParser+TokenMetadata~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParser+TokenMetadata.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/Extensions/NetworkService+TokenMetadata.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/NetworkService+TokenMetadata.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/NetworkService+TokenMetadata.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/NetworkService+TokenMetadata~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/NetworkService+TokenMetadata.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/Models/RetryConfiguration.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/RetryConfiguration.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/RetryConfiguration.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/RetryConfiguration~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/RetryConfiguration.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/Models/SorobanTypes.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SorobanTypes.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SorobanTypes.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SorobanTypes~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SorobanTypes.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/Models/TimeoutConfiguration.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/TimeoutConfiguration.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/TimeoutConfiguration.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/TimeoutConfiguration~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/TimeoutConfiguration.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/Models/TokenMetadata.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/TokenMetadata.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/TokenMetadata.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/TokenMetadata~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/TokenMetadata.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/NetworkService.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/NetworkService.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/NetworkService.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/NetworkService~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/NetworkService.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/NetworkServiceProtocol.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/NetworkServiceProtocol.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/NetworkServiceProtocol.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/NetworkServiceProtocol~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/NetworkServiceProtocol.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Networking/SorobanTransactionSimulator.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SorobanTransactionSimulator.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SorobanTransactionSimulator.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SorobanTransactionSimulator~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/SorobanTransactionSimulator.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Oracle/BlendOracleService.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendOracleService.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendOracleService.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendOracleService~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendOracleService.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Oracle/BlendOracleServiceProtocol.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendOracleServiceProtocol.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendOracleServiceProtocol.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendOracleServiceProtocol~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendOracleServiceProtocol.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Oracle/Models/ContractCallParams.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/ContractCallParams.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/ContractCallParams.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/ContractCallParams~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/ContractCallParams.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Oracle/OracleContractFunction.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleContractFunction.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleContractFunction.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleContractFunction~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleContractFunction.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Oracle/OracleNetworkService.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleNetworkService.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleNetworkService.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleNetworkService~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleNetworkService.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/PoolService/BlendAssetService.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendAssetService.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendAssetService.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendAssetService~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendAssetService.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/PoolService/Models/BlendAssetData+FinancialCalculations.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendAssetData+FinancialCalculations.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendAssetData+FinancialCalculations.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendAssetData+FinancialCalculations~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendAssetData+FinancialCalculations.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/PoolService/Models/BlendAssetData.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendAssetData.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendAssetData.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendAssetData~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendAssetData.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/PoolService/Models/OracleAsset.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleAsset.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleAsset.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleAsset~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleAsset.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/PoolService/Models/PoolConfig.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PoolConfig.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PoolConfig.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PoolConfig~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PoolConfig.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/PoolService/PoolService.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PoolService.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PoolService.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PoolService~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PoolService.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/PoolService/PoolServiceProtocol.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PoolServiceProtocol.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PoolServiceProtocol.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PoolServiceProtocol~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/PoolServiceProtocol.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/UserPosition/Models/AssetPosition.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/AssetPosition.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/AssetPosition.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/AssetPosition~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/AssetPosition.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/UserPosition/Models/Position.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/Position.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/Position.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/Position~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/Position.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/UserPosition/Models/UserPositionData.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/UserPositionData.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/UserPositionData.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/UserPositionData~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/UserPositionData.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/UserPosition/UserPositionService.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/UserPositionService.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/UserPositionService.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/UserPositionService~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/UserPositionService.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/UserPosition/UserPositionServiceProtocol.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/UserPositionServiceProtocol.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/UserPositionServiceProtocol.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/UserPositionServiceProtocol~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/UserPositionServiceProtocol.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/BlendError.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendError.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendError.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendError~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendError.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/BlendFinancialCalculator.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendFinancialCalculator.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendFinancialCalculator.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendFinancialCalculator~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendFinancialCalculator.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/BlendParser1.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParser1.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParser1.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParser1~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendParser1.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/BlendRateCalculator.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendRateCalculator.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendRateCalculator.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendRateCalculator~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendRateCalculator.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/BlendVaultError.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendVaultError.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendVaultError.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendVaultError~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/BlendVaultError.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/FixedMath.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/FixedMath.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/FixedMath.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/FixedMath~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/FixedMath.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/Logger.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/Logger.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/Logger.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/Logger~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/Logger.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/OracleError.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleError.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleError.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleError~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/OracleError.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/StellarContractID.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/StellarContractID.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/StellarContractID.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/StellarContractID~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendCore.build/StellarContractID.swiftdeps"
+  }
+}

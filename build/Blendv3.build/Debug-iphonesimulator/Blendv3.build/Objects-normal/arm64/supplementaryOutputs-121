@@ -1,0 +1,42 @@
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/ValidationService.swift":
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ValidationService.o"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ValidationService.swiftconstvalues"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ValidationService.d"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ValidationService.swiftdeps"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ValidationService.dia"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/ErrorBoundaryService.swift":
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ErrorBoundaryService.dia"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ErrorBoundaryService.swiftconstvalues"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ErrorBoundaryService.swiftdeps"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ErrorBoundaryService.o"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ErrorBoundaryService.d"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/UserPosition/UserPositionService.swift":
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/UserPositionService.d"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/UserPositionService.swiftconstvalues"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/UserPositionService.swiftdeps"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/UserPositionService.dia"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/UserPositionService.o"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/UserPosition/UserPositionServiceFactory.swift":
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/UserPositionServiceFactory.o"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/UserPositionServiceFactory.swiftconstvalues"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/UserPositionServiceFactory.swiftdeps"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/UserPositionServiceFactory.d"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/UserPositionServiceFactory.dia"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/DataService.swift":
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/DataService.o"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/DataService.dia"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/DataService.d"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/DataService.swiftdeps"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/DataService.swiftconstvalues"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/ConfigurationService.swift":
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ConfigurationService.swiftconstvalues"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ConfigurationService.dia"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ConfigurationService.swiftdeps"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ConfigurationService.d"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ConfigurationService.o"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/UserPosition/UserPositionServiceProtocol.swift":
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/UserPositionServiceProtocol.swiftdeps"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/UserPositionServiceProtocol.o"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/UserPositionServiceProtocol.swiftconstvalues"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/UserPositionServiceProtocol.d"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/UserPositionServiceProtocol.dia"

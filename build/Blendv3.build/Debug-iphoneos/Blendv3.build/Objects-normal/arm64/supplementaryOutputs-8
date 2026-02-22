@@ -1,0 +1,30 @@
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Utilities/FixedMath.swift":
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/FixedMath.dia"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/FixedMath.swiftdeps"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/FixedMath.o"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/FixedMath.swiftconstvalues"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/FixedMath.d"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/TestView.swift":
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/TestView.d"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/TestView.o"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/TestView.dia"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/TestView.swiftconstvalues"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/TestView.swiftdeps"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/SmartContractExplorer.swift":
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/SmartContractExplorer.d"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/SmartContractExplorer.dia"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/SmartContractExplorer.o"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/SmartContractExplorer.swiftdeps"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/SmartContractExplorer.swiftconstvalues"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/BlendUSDCVault.swift":
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendUSDCVault.swiftdeps"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendUSDCVault.dia"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendUSDCVault.swiftconstvalues"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendUSDCVault.o"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendUSDCVault.d"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Protocols/BlendRateCalculatorProtocol.swift":
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendRateCalculatorProtocol.d"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendRateCalculatorProtocol.swiftdeps"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendRateCalculatorProtocol.swiftconstvalues"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendRateCalculatorProtocol.o"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendRateCalculatorProtocol.dia"

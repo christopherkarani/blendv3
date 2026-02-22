@@ -1,0 +1,4 @@
+module ed25519C {
+    umbrella "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/checkouts/stellar-ios-mac-sdk/stellarsdk/stellarsdk/libs/ed25519-C/include"
+    export *
+}

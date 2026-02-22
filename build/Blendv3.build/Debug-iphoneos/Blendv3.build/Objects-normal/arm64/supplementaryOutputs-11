@@ -1,0 +1,24 @@
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/BlendViewModel.swift":
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendViewModel.d"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendViewModel.dia"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendViewModel.swiftdeps"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendViewModel.o"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendViewModel.swiftconstvalues"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Constants/BlendUSDCConstants.swift":
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendUSDCConstants.swiftconstvalues"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendUSDCConstants.d"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendUSDCConstants.dia"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendUSDCConstants.o"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendUSDCConstants.swiftdeps"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Views/PoolStatisticsView.swift":
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/PoolStatisticsView.dia"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/PoolStatisticsView.d"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/PoolStatisticsView.o"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/PoolStatisticsView.swiftconstvalues"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/PoolStatisticsView.swiftdeps"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/SmartContractInoutParameterFix.swift":
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/SmartContractInoutParameterFix.d"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/SmartContractInoutParameterFix.swiftconstvalues"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/SmartContractInoutParameterFix.o"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/SmartContractInoutParameterFix.swiftdeps"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/SmartContractInoutParameterFix.dia"

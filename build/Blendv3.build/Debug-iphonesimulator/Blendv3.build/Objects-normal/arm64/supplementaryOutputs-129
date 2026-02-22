@@ -1,0 +1,36 @@
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/Logger.swift":
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/Logger.swiftconstvalues"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/Logger.swiftdeps"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/Logger.dia"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/Logger.d"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/Logger.o"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Models/Backstop/AuctionData.swift":
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/AuctionData.dia"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/AuctionData.d"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/AuctionData.swiftconstvalues"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/AuctionData.o"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/AuctionData.swiftdeps"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Un/AccountChecker.swift":
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/AccountChecker.swiftconstvalues"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/AccountChecker.o"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/AccountChecker.dia"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/AccountChecker.d"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/AccountChecker.swiftdeps"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/BlendViewModel.swift":
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendViewModel.o"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendViewModel.swiftdeps"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendViewModel.d"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendViewModel.dia"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendViewModel.swiftconstvalues"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Blendv3App.swift":
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/Blendv3App.d"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/Blendv3App.o"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/Blendv3App.swiftdeps"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/Blendv3App.dia"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/Blendv3App.swiftconstvalues"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Constants/BlendUSDCConstants.swift":
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendUSDCConstants.swiftdeps"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendUSDCConstants.dia"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendUSDCConstants.d"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendUSDCConstants.swiftconstvalues"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendUSDCConstants.o"

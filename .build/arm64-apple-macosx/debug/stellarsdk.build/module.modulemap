@@ -1,0 +1,4 @@
+module stellarsdk {
+    header "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/stellarsdk.build/stellarsdk-Swift.h"
+    requires objc
+}

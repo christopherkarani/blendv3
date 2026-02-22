@@ -1,0 +1,42 @@
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Models/Data/VaultInitState.swift":
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/VaultInitState.swiftdeps"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/VaultInitState.swiftconstvalues"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/VaultInitState.o"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/VaultInitState.dia"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/VaultInitState.d"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Models/Diagnostics/HealthIssue.swift":
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/HealthIssue.o"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/HealthIssue.swiftconstvalues"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/HealthIssue.swiftdeps"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/HealthIssue.d"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/HealthIssue.dia"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Models/Migration/MigrationEvent.swift":
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/MigrationEvent.o"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/MigrationEvent.swiftconstvalues"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/MigrationEvent.d"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/MigrationEvent.swiftdeps"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/MigrationEvent.dia"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Models/Network/ConnectionState.swift":
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ConnectionState.dia"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ConnectionState.swiftdeps"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ConnectionState.swiftconstvalues"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ConnectionState.d"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ConnectionState.o"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3Tests/Services/SorobanServerProtocol.swift":
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/SorobanServerProtocol.d"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/SorobanServerProtocol.o"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/SorobanServerProtocol.swiftconstvalues"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/SorobanServerProtocol.swiftdeps"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/SorobanServerProtocol.dia"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/BlendVaultError.swift":
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendVaultError.dia"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendVaultError.d"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendVaultError.swiftconstvalues"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendVaultError.swiftdeps"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendVaultError.o"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Models/Network/TimeoutConfiguration.swift":
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/TimeoutConfiguration.swiftdeps"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/TimeoutConfiguration.swiftconstvalues"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/TimeoutConfiguration.d"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/TimeoutConfiguration.o"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/TimeoutConfiguration.dia"

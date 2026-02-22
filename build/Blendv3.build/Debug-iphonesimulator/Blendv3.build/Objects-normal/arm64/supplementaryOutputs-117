@@ -1,0 +1,42 @@
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Models/Backstop/WithdrawalStatus.swift":
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/WithdrawalStatus.d"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/WithdrawalStatus.swiftdeps"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/WithdrawalStatus.dia"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/WithdrawalStatus.o"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/WithdrawalStatus.swiftconstvalues"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/BlendOracleService.swift":
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendOracleService.swiftdeps"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendOracleService.o"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendOracleService.dia"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendOracleService.swiftconstvalues"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendOracleService.d"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/BlendParser.swift":
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendParser.swiftdeps"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendParser.dia"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendParser.swiftconstvalues"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendParser.d"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendParser.o"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Models/Backstop/AuctionStatus.swift":
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/AuctionStatus.o"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/AuctionStatus.d"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/AuctionStatus.swiftconstvalues"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/AuctionStatus.swiftdeps"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/AuctionStatus.dia"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Models/Pool/PriceData.swift":
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/PriceData.d"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/PriceData.o"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/PriceData.swiftdeps"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/PriceData.dia"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/PriceData.swiftconstvalues"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/NetworkService.swift":
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/NetworkService.swiftconstvalues"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/NetworkService.o"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/NetworkService.swiftdeps"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/NetworkService.d"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/NetworkService.dia"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/PoolService.swift":
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/PoolService.swiftconstvalues"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/PoolService.swiftdeps"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/PoolService.d"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/PoolService.dia"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/PoolService.o"

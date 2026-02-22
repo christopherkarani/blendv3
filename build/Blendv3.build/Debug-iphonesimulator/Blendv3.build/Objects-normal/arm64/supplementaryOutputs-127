@@ -1,0 +1,36 @@
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Utilities/FixedMath.swift":
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/FixedMath.o"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/FixedMath.d"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/FixedMath.swiftconstvalues"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/FixedMath.swiftdeps"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/FixedMath.dia"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Models/ServiceModels.swift":
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ServiceModels.o"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ServiceModels.swiftconstvalues"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ServiceModels.dia"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ServiceModels.d"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/ServiceModels.swiftdeps"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Models/Pool/OracleError.swift":
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/OracleError.d"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/OracleError.swiftdeps"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/OracleError.swiftconstvalues"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/OracleError.o"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/OracleError.dia"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Services/SorobanTransactionSimulator.swift":
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/SorobanTransactionSimulator.d"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/SorobanTransactionSimulator.swiftdeps"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/SorobanTransactionSimulator.o"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/SorobanTransactionSimulator.swiftconstvalues"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/SorobanTransactionSimulator.dia"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/PoolViewModel.swift":
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/PoolViewModel.o"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/PoolViewModel.dia"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/PoolViewModel.swiftdeps"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/PoolViewModel.swiftconstvalues"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/PoolViewModel.d"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Core/Protocols/BlendRateCalculatorProtocol.swift":
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendRateCalculatorProtocol.swiftdeps"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendRateCalculatorProtocol.swiftconstvalues"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendRateCalculatorProtocol.d"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendRateCalculatorProtocol.o"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphonesimulator/Blendv3.build/Objects-normal/arm64/BlendRateCalculatorProtocol.dia"

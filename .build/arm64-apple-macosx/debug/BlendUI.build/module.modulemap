@@ -1,0 +1,4 @@
+module BlendUI {
+    header "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendUI.build/BlendUI-Swift.h"
+    requires objc
+}

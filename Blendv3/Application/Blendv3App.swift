@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-@main
+//@main
 struct Blendv3App: App {
     var body: some Scene {
+        //SATOWQKPSRAP7D77C6EMT65OIF543WQUOV6DJBPW4SGUNTP2XSIEVUKP
         WindowGroup {
             HomeView()
         }

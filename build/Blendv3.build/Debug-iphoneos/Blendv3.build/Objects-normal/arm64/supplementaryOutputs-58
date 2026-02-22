@@ -1,0 +1,24 @@
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/DerivedSources/GeneratedAssetSymbols.swift":
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/GeneratedAssetSymbols.dia"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/GeneratedAssetSymbols.d"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/GeneratedAssetSymbols.o"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Utilities/BlendRateCalculator.swift":
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendRateCalculator.d"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendRateCalculator.swiftdeps"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendRateCalculator.swiftconstvalues"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendRateCalculator.dia"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendRateCalculator.o"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/BlendPoolStats.swift":
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendPoolStats.o"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendPoolStats.swiftconstvalues"
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendPoolStats.swiftdeps"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendPoolStats.dia"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/BlendPoolStats.d"
+"/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/TransactionHistoryView.swift":
+  swift-dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/TransactionHistoryView.swiftdeps"
+  dependencies: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/TransactionHistoryView.d"
+  object: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/TransactionHistoryView.o"
+  const-values: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/TransactionHistoryView.swiftconstvalues"
+  diagnostics: "/Users/chriskarani/Documents/XCodeProjects/Blendv3/build/Blendv3.build/Debug-iphoneos/Blendv3.build/Objects-normal/arm64/TransactionHistoryView.dia"

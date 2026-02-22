@@ -1,0 +1,23 @@
+{
+  "": {
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendUI.build/master.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Views/BlendAnalyticsDashboard.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendUI.build/BlendAnalyticsDashboard.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendUI.build/BlendAnalyticsDashboard.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendUI.build/BlendAnalyticsDashboard~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendUI.build/BlendAnalyticsDashboard.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Views/BlendDashboardView.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendUI.build/BlendDashboardView.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendUI.build/BlendDashboardView.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendUI.build/BlendDashboardView~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendUI.build/BlendDashboardView.swiftdeps"
+  },
+  "/Users/chriskarani/Documents/XCodeProjects/Blendv3/Blendv3/Views/PoolStatisticsView.swift": {
+    "dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendUI.build/PoolStatisticsView.d",
+    "object": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendUI.build/PoolStatisticsView.swift.o",
+    "swiftmodule": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendUI.build/PoolStatisticsView~partial.swiftmodule",
+    "swift-dependencies": "/Users/chriskarani/Documents/XCodeProjects/Blendv3/.build/arm64-apple-macosx/debug/BlendUI.build/PoolStatisticsView.swiftdeps"
+  }
+}
